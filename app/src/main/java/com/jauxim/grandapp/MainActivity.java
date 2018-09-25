@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.main_layout, ActivitiesDashboardFragment.newInstance("", ""));
+            fragmentTransaction.replace(R.id.contain_main, ActivitiesDashboardFragment.newInstance("", ""));
             fragmentTransaction.commit();
         } else if (id == R.id.nav_gallery) {
 
