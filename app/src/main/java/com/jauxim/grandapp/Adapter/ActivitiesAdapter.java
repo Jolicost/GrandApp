@@ -22,7 +22,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, author, distance;
-        public ImageView image;
+        public ImageView image, star;
         public RatingBar ratingBar;
 
         public MyViewHolder(View view) {
@@ -32,9 +32,9 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.My
             title = view.findViewById(R.id.title_activity);
             distance = view.findViewById(R.id.distance_activity);
             ratingBar = view.findViewById(R.id.rating_activity);
+            star = view.findViewById(R.id.star);
         }
     }
-
 
     public ActivitiesAdapter(Context context, List<ActivityModel> moviesList) {
         this.activityList = moviesList;
@@ -57,6 +57,12 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.My
         holder.distance.setText(activity.getLocation().first+"m");
         holder.ratingBar.setRating(activity.getRating());
         Picasso.get().load(activity.getUrl()).into(holder.image);
+
+        if (activity.getOrganizer().toLowerCase().contains("Ayuntamiento".toLowerCase())){
+            holder.star.setVisibility(View.VISIBLE);
+        }else{
+            holder.star.setVisibility(View.GONE);
+        }
     }
 
     @Override

@@ -33,6 +33,14 @@
                     android:layout_width="10dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/gradient_transparent_effect"/>
+
+                <ImageView
+                    android:id="@+id/star"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="#ffea00"
+                    android:layout_margin="5dp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -75,7 +83,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@+id/organizer_activity"
                     android:text="54km" />
-
 
             </RelativeLayout>
         </LinearLayout>
