@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.jauxim.grandapp.ActivityInfo;
 import com.jauxim.grandapp.ActivityModel;
 import com.jauxim.grandapp.R;
 import com.squareup.picasso.Picasso;
@@ -63,6 +65,14 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.My
         }else{
             holder.star.setVisibility(View.GONE);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ActivityInfo.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

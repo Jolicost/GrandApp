@@ -11,12 +11,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActivityEditActivity extends AppCompatActivity {
+public class ActivityInfo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_info);
         ButterKnife.bind(this);
 
         getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
