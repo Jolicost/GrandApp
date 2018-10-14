@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardUseCompatPadding="false"
+        app:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:id="@+id/image_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@color/colorPrimary"/>
+
+                <View
+                    android:layout_alignParentRight="true"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_transparent_effect"/>
+
+                <ImageView
+                    android:id="@+id/star"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="#ffea00"
+                    android:layout_margin="5dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/title_activity"
+                    style="@style/textTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Petanca nivel 4" />
+
+                <TextView
+                    android:id="@+id/organizer_activity"
+                    style="@style/textDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title_activity"
+                    android:text="Mariví Padilla" />
+
+                <RatingBar
+                    android:id="@+id/rating_activity"
+                    style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="8dp"
+                    android:rating="4" />
+
+                <TextView
+                    android:id="@+id/distance_activity"
+                    style="@style/textDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/organizer_activity"
+                    android:text="54km" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
