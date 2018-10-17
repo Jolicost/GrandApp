@@ -1,9 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Layers</string>
-    <string name="reload">Reload</string>
-    <string name="last_visited_date">Last visited date: %s</string>
-    <string name="main_reload_dialog_message">Are you sure you want to reload?</string>
-    <string name="main_reload_dialog_no">No</string>
-    <string name="main_reload_dialog_yes">Yes</string>
+    <string name="app_name">Clean Android Code</string>
 </resources>

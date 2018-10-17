@@ -1,40 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>
-        <item name="android:textColorSecondary">@color/textColorSecondary</item>
-        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>
-        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
-    <style name="AppTheme" parent="AppTheme.Base" />
-
-    <style name="AppTheme.AppCompatDialogStyle.NoTitle" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="windowNoTitle">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-
-    <style name="AppTheme.TransparentDialogStyle.NoTitle" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-
-    <style name="AppTheme.ScrollBar">
-        <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
-        <item name="android:scrollbarStyle">insideOverlay</item>
-        <item name="android:scrollbars">vertical</item>
-        <item name="android:fadeScrollbars">true</item>
-        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_vertical_thumb</item>
-        <item name="android:scrollbarTrackVertical">@drawable/scrollbar_vertical_track</item>
-        <item name="android:scrollbarSize">8dp</item>
-        <item name="android:scrollbarFadeDuration">1000</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">1000</item>
-    </style>
 </resources>
