@@ -62,11 +62,12 @@ public class ActivitiesDashboardFragment extends Fragment {
         activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
-        prepareData();
+        //prepareData();
 
         return view;
     }
 
+    /*
     private void prepareData(){
         activitiesList.add(new ActivityModel("https://www.masqueabuelos.com/wp-content/uploads/2018/02/la-petanca.jpg", "Petanca Aérea", "", 4.3f, "Manuél", new Pair(4, 0)));
         activitiesList.add(new ActivityModel("http://www.fallaalqueriadebellver.com/blog/wp-content/uploads/Bolos-003.jpg", "Bolera extrema", "", 3.5f, "Isabel Ordóñez", new Pair(50, 0)));
@@ -78,5 +79,6 @@ public class ActivitiesDashboardFragment extends Fragment {
         activitiesList.add(new ActivityModel("https://saposyprincesas.elmundo.es/wp-content/uploads/2017/11/relacion-abuelos-nietos.jpg", "Partido Parchís", "", 2.5f, "José Gabriel", new Pair(423, 0)));
         mAdapter.notifyDataSetChanged();
     }
+    */
 
 }

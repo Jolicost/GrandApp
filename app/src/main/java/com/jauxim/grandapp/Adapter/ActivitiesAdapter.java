@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.jauxim.grandapp.ActivityInfo;
 import com.jauxim.grandapp.ActivityModel;
 import com.jauxim.grandapp.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -58,7 +57,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.My
         holder.author.setText(activity.getOrganizer());
         holder.distance.setText(activity.getLocation().first+"m");
         holder.ratingBar.setRating(activity.getRating());
-        Picasso.get().load(activity.getUrl()).into(holder.image);
+        //Picasso.get().load(activity.getUrl()).into(holder.image);
 
         if (activity.getOrganizer().toLowerCase().contains("Ayuntamiento".toLowerCase())){
             holder.star.setVisibility(View.VISIBLE);
