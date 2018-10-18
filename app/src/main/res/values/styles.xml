@@ -25,4 +25,10 @@
     <style name="textDescription" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textSize">23sp</item>
     </style>
+
+    <style name="CustomDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:typeface">serif</item>
+    </style>
 </resources>

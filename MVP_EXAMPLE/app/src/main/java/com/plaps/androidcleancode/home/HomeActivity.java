@@ -51,7 +51,7 @@ public class HomeActivity extends BaseApp implements HomeView {
 
     @Override
     public void removeWait() {
-        progressBar.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.GONE);
     }
 
     @Override
