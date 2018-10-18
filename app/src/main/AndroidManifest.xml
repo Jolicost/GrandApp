@@ -26,7 +26,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
         <activity
-            android:name=".ActivityInfo"
+            android:name=".ActivityInfo.ActivityInfo"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
     </application>

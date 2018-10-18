@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.jauxim.grandapp.ActivityInfo;
+import com.jauxim.grandapp.ActivityInfo.ActivityInfo;
 import com.jauxim.grandapp.ActivityModel;
 import com.jauxim.grandapp.R;
 

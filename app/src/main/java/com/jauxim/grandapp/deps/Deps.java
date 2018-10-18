@@ -1,7 +1,7 @@
 package com.jauxim.grandapp.deps;
 
 
-import com.jauxim.grandapp.ActivityInfo;
+import com.jauxim.grandapp.ActivityInfo.ActivityInfo;
 import com.jauxim.grandapp.BaseApp;
 import com.jauxim.grandapp.networking.NetworkModule;
 
@@ -15,5 +15,5 @@ import dagger.Component;
 @Singleton
 @Component(modules = {NetworkModule.class,})
 public interface Deps {
-    void inject(BaseApp baseApp);
+    void inject(ActivityInfo activityInfo);
 }
