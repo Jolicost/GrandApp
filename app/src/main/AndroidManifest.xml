@@ -13,17 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ActivityInfo.ActivityInfo"
+            android:name=".ui.Activity.ActivityInfo.ActivityInfo"
             android:label="@string/activities"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
         <activity
             android:name=".ActivityEditActivity"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
         <activity
-            android:name=".ActivityList.ActivityList"
+            android:name=".ui.Activity.ActivityList.Main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
