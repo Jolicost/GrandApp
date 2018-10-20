@@ -1,6 +1,6 @@
 package com.jauxim.grandapp.ActivityInfo;
 
-import com.jauxim.grandapp.models.CityListResponse;
+import com.jauxim.grandapp.models.ActivityModel;
 
 /**
  * Created by ennur on 6/25/16.
@@ -12,6 +12,6 @@ public interface ActivityInfoView {
 
     void onFailure(String appErrorMessage);
 
-    void getCityListSuccess(CityListResponse cityListResponse);
+    void getActivityInfoSuccess(ActivityModel activityModel);
 
 }

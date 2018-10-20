@@ -37,7 +37,6 @@ public class ProgressLayer extends ProgressDialog {
 
     @Override
     public void show() {
-
         super.show();
         animation.start();
     }

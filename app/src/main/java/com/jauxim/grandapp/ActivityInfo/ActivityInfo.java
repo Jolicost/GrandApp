@@ -1,12 +1,13 @@
 package com.jauxim.grandapp.ActivityInfo;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.jauxim.grandapp.BaseApp;
 import com.jauxim.grandapp.R;
-import com.jauxim.grandapp.Utils.ProgressLayer;
-import com.jauxim.grandapp.models.CityListResponse;
+import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
 
 import javax.inject.Inject;
@@ -17,41 +18,53 @@ public class ActivityInfo extends BaseApp implements ActivityInfoView {
     @Inject
     public Service service;
 
+    private TextView tvTitle, tvPrice, tvDescription, tvRatingValue, idDirection;
+    private RatingBar rbValue;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getDeps().inject(this);
-
-        setContentView(R.layout.activity_info);
-        //ButterKnife.bind(this);
-
         getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
 
+        getDeps().inject(this);
+        renderView();
+
         ActivityInfoPresenter presenter = new ActivityInfoPresenter(service, this);
-        presenter.getCityList();
+        presenter.getActivityInfo();
     }
 
     @Override
     public void showWait() {
-        Log.d("activityThings", "show wait");
         showProgress();
     }
 
     @Override
     public void removeWait() {
-        Log.d("activityThings", "remove wait");
         hideProgress();
     }
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Log.d("activityThings", "call fail "+appErrorMessage);
+        Dialog.createDialog(this).title("server error").description(appErrorMessage).build();
+    }
 
+    public void renderView() {
+        setContentView(R.layout.activity_info);
+
+        tvTitle = findViewById(R.id.tvTitle);
+        tvPrice = findViewById(R.id.tvPrice);
+        tvDescription = findViewById(R.id.tvDescription);
+        rbValue = findViewById(R.id.rbValue);
+        tvRatingValue = findViewById(R.id.tvRatingValue);
+        idDirection = findViewById(R.id.idDirection);
     }
 
     @Override
-    public void getCityListSuccess(CityListResponse cityListResponse) {
-        Log.d("activityThings", "call  "+cityListResponse.getData().size());
-
+    public void getActivityInfoSuccess(ActivityModel activityModel) {
+        /*
+        tvTitle.setText(activityModel.getTitle());
+        tvDescription.setText(activityModel.getDescription());
+        tvPrice.setText(Utils.getPriceFormated(activityModel.getPrice()));
+        */
     }
 }

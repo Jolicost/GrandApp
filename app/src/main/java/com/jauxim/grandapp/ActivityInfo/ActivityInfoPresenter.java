@@ -1,6 +1,6 @@
 package com.jauxim.grandapp.ActivityInfo;
 
-import com.jauxim.grandapp.models.CityListResponse;
+import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
 
@@ -21,20 +21,20 @@ public class ActivityInfoPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void getCityList() {
+    public void getActivityInfo() {
         view.showWait();
 
-        Subscription subscription = service.getCityList(new Service.GetCityListCallback() {
+        Subscription subscription = service.getActivityInfo(new Service.ActivityInfoCallback() {
             @Override
-            public void onSuccess(CityListResponse cityListResponse) {
+            public void onSuccess(ActivityModel activityModel) {
                 view.removeWait();
-                view.getCityListSuccess(cityListResponse);
+                view.getActivityInfoSuccess(activityModel);
             }
 
             @Override
             public void onError(NetworkError networkError) {
                 view.removeWait();
-                view.onFailure(networkError.getAppErrorMessage());
+                view.onFailure(networkError.getMessage());
             }
 
         });

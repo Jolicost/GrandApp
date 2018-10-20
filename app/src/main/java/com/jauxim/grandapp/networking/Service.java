@@ -1,5 +1,6 @@
 package com.jauxim.grandapp.networking;
 
+import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.CityListResponse;
 
 import rx.Observable;
@@ -17,6 +18,36 @@ public class Service {
 
     public Service(NetworkService networkService) {
         this.networkService = networkService;
+    }
+
+    public Subscription getActivityInfo(final ActivityInfoCallback callback){
+        return networkService.getActivityInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends ActivityModel>>() {
+                    @Override
+                    public Observable<? extends ActivityModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<ActivityModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(ActivityModel activityModel) {
+                        callback.onSuccess(activityModel);
+
+                    }
+                });
     }
 
     public Subscription getCityList(final GetCityListCallback callback) {
@@ -52,6 +83,12 @@ public class Service {
 
     public interface GetCityListCallback{
         void onSuccess(CityListResponse cityListResponse);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface ActivityInfoCallback{
+        void onSuccess(ActivityModel activityModel);
 
         void onError(NetworkError networkError);
     }

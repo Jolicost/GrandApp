@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/input_title"
+                    android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Title"
@@ -60,7 +60,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/input_price"
+                    android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -72,7 +72,7 @@
 
 
             <TextView
-                android:id="@+id/input_description"
+                android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -137,6 +137,7 @@
                         android:orientation="horizontal">
 
                         <RatingBar
+                            android:id="@+id/rbValue"
                             style="@style/Base.Widget.AppCompat.RatingBar.Small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -144,6 +145,7 @@
                             android:rating="4.2" />
 
                         <TextView
+                            android:id="@+id/tvRatingValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4.2"
@@ -170,6 +172,7 @@
                 android:src="@drawable/map3" />
 
             <TextView
+                android:id="@+id/idDirection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
