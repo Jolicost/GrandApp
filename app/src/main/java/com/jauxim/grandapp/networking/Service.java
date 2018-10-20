@@ -1,7 +1,10 @@
 package com.jauxim.grandapp.networking;
 
+import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.CityListResponse;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -50,6 +53,37 @@ public class Service {
                 });
     }
 
+
+    public Subscription getActivityList(final ActivityListCallback callback){
+        return networkService.getActivityList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {
+                    @Override
+                    public Observable<? extends List<ActivityListItemModel>> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<List<ActivityListItemModel>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(List<ActivityListItemModel> activityModel) {
+                        callback.onSuccess(activityModel);
+
+                    }
+                });
+    }
+
     public Subscription getCityList(final GetCityListCallback callback) {
 
         return networkService.getCityList()
@@ -89,6 +123,12 @@ public class Service {
 
     public interface ActivityInfoCallback{
         void onSuccess(ActivityModel activityModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface ActivityListCallback{
+        void onSuccess(List<ActivityListItemModel> activityModel);
 
         void onError(NetworkError networkError);
     }

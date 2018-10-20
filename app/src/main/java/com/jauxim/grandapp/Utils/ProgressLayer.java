@@ -48,5 +48,4 @@ public class ProgressLayer extends ProgressDialog {
 
         if (animation != null) animation.stop();
     }
-
 }

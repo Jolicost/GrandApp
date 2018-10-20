@@ -1,9 +1,8 @@
-package com.jauxim.grandapp;
+package com.jauxim.grandapp.ActivityList;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -11,43 +10,74 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jauxim.grandapp.ActivityInfo.ActivityInfo;
+import com.jauxim.grandapp.BaseApp;
 import com.jauxim.grandapp.Fragments.ActivitiesDashboardFragment;
+import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.models.ActivityListItemModel;
+import com.jauxim.grandapp.networking.Service;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.List;
+
+import javax.inject.Inject;
+
+public class ActivityList extends BaseApp implements ActivityListView, NavigationView.OnNavigationItemSelectedListener {
+
+    @Inject
+    public Service service;
+
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        getDeps().inject(this);
+
+        renderView();
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityEditActivity.class);
+                /*
+                Intent intent = new Intent(ActivityList.this, ActivityEditActivity.class);
+                startActivity(intent);
+                */
+
+                Intent intent = new Intent(ActivityList.this, ActivityInfo.class);
                 startActivity(intent);
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         MenuItem item =  navigationView.getMenu().getItem(0);
         onNavigationItemSelected(item);
+
+        ActivityListPresenter presenter = new ActivityListPresenter(service, this);
+        presenter.getActivityList();
+    }
+
+    private void renderView(){
+        setContentView(R.layout.activity_main);
+
+        fab = findViewById(R.id.fab);
+        toolbar = findViewById(R.id.toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
     }
 
     @Override
@@ -111,5 +141,25 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void showWait() {
+        showProgress();
+    }
+
+    @Override
+    public void removeWait() {
+        hideProgress();
+    }
+
+    @Override
+    public void onFailure(String appErrorMessage) {
+        Dialog.createDialog(this).title("server error").description(appErrorMessage).build();
+    }
+
+    @Override
+    public void getActivityListSuccess(List<ActivityListItemModel> activities) {
+        //TODO: inflate the list
     }
 }

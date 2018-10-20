@@ -1,8 +1,11 @@
 package com.jauxim.grandapp.networking;
 
 
+import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.CityListResponse;
+
+import java.util.List;
 
 import retrofit2.http.GET;
 import rx.Observable;
@@ -18,4 +21,6 @@ public interface NetworkService {
     @GET("/activity")
     Observable<ActivityModel> getActivityInfo();
 
+    @GET("/activity/list")
+    Observable<List<ActivityListItemModel>> getActivityList();
 }

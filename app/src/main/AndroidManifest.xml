@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ActivityInfo.ActivityInfo"
             android:label="@string/activities"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -23,7 +23,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
         <activity
-            android:name=".ActivityInfo.ActivityInfo"
+            android:name=".ActivityList.ActivityList"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

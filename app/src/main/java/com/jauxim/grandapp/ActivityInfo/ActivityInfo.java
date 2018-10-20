@@ -25,8 +25,8 @@ public class ActivityInfo extends BaseApp implements ActivityInfoView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
-
         getDeps().inject(this);
+
         renderView();
 
         ActivityInfoPresenter presenter = new ActivityInfoPresenter(service, this);
