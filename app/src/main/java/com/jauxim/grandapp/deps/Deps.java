@@ -2,8 +2,9 @@ package com.jauxim.grandapp.deps;
 
 
 import com.jauxim.grandapp.networking.NetworkModule;
-import com.jauxim.grandapp.ui.Activity.ActivityList.Main;
+import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
+import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
 
 import javax.inject.Singleton;
 
@@ -17,4 +18,5 @@ import dagger.Component;
 public interface Deps {
     void inject(Main activityInfo);
     void inject(ActivityInfo activityInfo);
+    void inject(ActivitiesList activityInfo);
 }

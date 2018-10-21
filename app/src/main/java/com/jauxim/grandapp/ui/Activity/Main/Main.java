@@ -1,4 +1,4 @@
-package com.jauxim.grandapp.ui.Activity.ActivityList;
+package com.jauxim.grandapp.ui.Activity.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,45 +14,58 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.jauxim.grandapp.BaseApp;
+import com.jauxim.grandapp.ActivityEditActivity;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
-import com.jauxim.grandapp.ui.Fragment.ActivityList.ActivitiesDashboardFragment;
+import com.jauxim.grandapp.ui.Activity.BaseActivity;
+import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class Main extends BaseApp implements MainView, NavigationView.OnNavigationItemSelectedListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class Main extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     public Service service;
 
-    private FloatingActionButton fab;
-    private Toolbar toolbar;
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         getDeps().inject(this);
+        ButterKnife.bind(this);
 
-        renderView();
         setSupportActionBar(toolbar);
+        setUp();
 
+        MainPresenter presenter = new MainPresenter(service, this);
+        presenter.getActivityList();
+    }
+
+    private void setUp() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
                 Intent intent = new Intent(Main.this, ActivityEditActivity.class);
-                startActivity(intent);
-                */
-
-                Intent intent = new Intent(Main.this, ActivityInfo.class);
                 startActivity(intent);
             }
         });
@@ -64,20 +77,8 @@ public class Main extends BaseApp implements MainView, NavigationView.OnNavigati
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        MenuItem item =  navigationView.getMenu().getItem(0);
+        MenuItem item = navigationView.getMenu().getItem(0);
         onNavigationItemSelected(item);
-
-        MainPresenter presenter = new MainPresenter(service, this);
-        presenter.getActivityList();
-    }
-
-    private void renderView(){
-        setContentView(R.layout.activity_main);
-
-        fab = findViewById(R.id.fab);
-        toolbar = findViewById(R.id.toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
     }
 
     @Override
@@ -92,16 +93,12 @@ public class Main extends BaseApp implements MainView, NavigationView.OnNavigati
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -122,10 +119,7 @@ public class Main extends BaseApp implements MainView, NavigationView.OnNavigati
         FragmentTransaction fragmentTransaction;
 
         if (id == R.id.nav_camera) {
-            fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.contain_main, ActivitiesDashboardFragment.newInstance("", ""));
-            fragmentTransaction.commit();
+            showActivitiesListFragment();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -138,7 +132,7 @@ public class Main extends BaseApp implements MainView, NavigationView.OnNavigati
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -161,5 +155,33 @@ public class Main extends BaseApp implements MainView, NavigationView.OnNavigati
     @Override
     public void getActivityListSuccess(List<ActivityListItemModel> activities) {
         //TODO: inflate the list
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        unlockDrawer();
+    }
+
+    @Override
+    public void lockDrawer() {
+        if (drawer != null)
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    @Override
+    public void unlockDrawer() {
+        if (drawer != null)
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    public void showActivitiesListFragment() {
+        lockDrawer();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .add(R.id.contain_main, ActivitiesList.newInstance("", ""), ActivitiesList.TAG)
+                .commit();
     }
 }

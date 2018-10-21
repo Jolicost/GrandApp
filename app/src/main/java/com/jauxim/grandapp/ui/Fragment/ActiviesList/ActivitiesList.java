@@ -1,26 +1,34 @@
-package com.jauxim.grandapp.ui.Fragment.ActivityList;
+package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jauxim.grandapp.ActivityModel;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.deps.Deps;
+import com.jauxim.grandapp.ui.Fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivitiesDashboardFragment extends Fragment {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    public ActivitiesDashboardFragment() {
+public class ActivitiesList extends BaseFragment {
+
+    public static String TAG = "ActivitiesList";
+
+    public ActivitiesList() {
         // Required empty public constructor
     }
 
+    @BindView(R.id.list_activities)
     RecyclerView activityesRecyclerView;
 
     private List<ActivityModel> activitiesList = new ArrayList<>();
@@ -32,11 +40,11 @@ public class ActivitiesDashboardFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ActivitiesDashboardFragment.
+     * @return A new instance of fragment ActivitiesList.
      */
     // TODO: Rename and change types and number of parameters
-    public static ActivitiesDashboardFragment newInstance(String param1, String param2) {
-        ActivitiesDashboardFragment fragment = new ActivitiesDashboardFragment();
+    public static ActivitiesList newInstance(String param1, String param2) {
+        ActivitiesList fragment = new ActivitiesList();
         return fragment;
     }
 
@@ -46,27 +54,37 @@ public class ActivitiesDashboardFragment extends Fragment {
     }
 
     @Override
+    protected void setUp(View view) {
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_activities, container, false);
 
-        activityesRecyclerView = view.findViewById(R.id.list_activities);
+        Deps component = getActivityComponent();
+        if (component != null) {
+            component.inject(this);
+            setUnBinder(ButterKnife.bind(this, view));
+            //mPresenter.onAttach(this);
+            //mBlogAdapter.setCallback(this);
+        }
 
         mAdapter = new ActivityAdapter(getActivity(), activitiesList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        activityesRecyclerView.setLayoutManager(mLayoutManager);
+        activityesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
-        //prepareData();
+        prepareData();
 
         return view;
     }
 
-    /*
-    private void prepareData(){
+
+    private void prepareData() {
         activitiesList.add(new ActivityModel("https://www.masqueabuelos.com/wp-content/uploads/2018/02/la-petanca.jpg", "Petanca Aérea", "", 4.3f, "Manuél", new Pair(4, 0)));
         activitiesList.add(new ActivityModel("http://www.fallaalqueriadebellver.com/blog/wp-content/uploads/Bolos-003.jpg", "Bolera extrema", "", 3.5f, "Isabel Ordóñez", new Pair(50, 0)));
         activitiesList.add(new ActivityModel("https://www.diariolaprovinciasj.com/u/fotografias/m/2016/3/4/f768x0-87765_87783_22.jpg", "Cumple Geltrudis", "", 2f, "Isabel", new Pair(74, 0)));
@@ -77,6 +95,4 @@ public class ActivitiesDashboardFragment extends Fragment {
         activitiesList.add(new ActivityModel("https://saposyprincesas.elmundo.es/wp-content/uploads/2017/11/relacion-abuelos-nietos.jpg", "Partido Parchís", "", 2.5f, "José Gabriel", new Pair(423, 0)));
         mAdapter.notifyDataSetChanged();
     }
-    */
-
 }

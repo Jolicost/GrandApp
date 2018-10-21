@@ -1,4 +1,4 @@
-package com.jauxim.grandapp.ui.Activity.ActivityList;
+package com.jauxim.grandapp.ui.Activity.Main;
 
 import com.jauxim.grandapp.models.ActivityListItemModel;
 
@@ -16,4 +16,7 @@ public interface MainView {
 
     void getActivityListSuccess(List<ActivityListItemModel> activities);
 
+    void lockDrawer();
+
+    void unlockDrawer();
 }

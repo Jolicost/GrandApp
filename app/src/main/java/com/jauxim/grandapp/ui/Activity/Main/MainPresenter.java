@@ -1,4 +1,4 @@
-package com.jauxim.grandapp.ui.Activity.ActivityList;
+package com.jauxim.grandapp.ui.Activity.Main;
 
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.NetworkError;

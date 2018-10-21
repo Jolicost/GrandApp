@@ -1,4 +1,4 @@
-package com.jauxim.grandapp.ui.Fragment.ActivityList;
+package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.jauxim.grandapp.ActivityModel;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ActivityAdapter.class);
+                Intent intent = new Intent(context, ActivityInfo.class);
                 context.startActivity(intent);
             }
         });

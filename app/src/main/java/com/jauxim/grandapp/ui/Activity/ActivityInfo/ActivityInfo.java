@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -12,22 +13,41 @@ import com.jauxim.grandapp.networking.Service;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ActivityInfo extends BaseApp implements ActivityInfoView {
 
     @Inject
     public Service service;
 
-    private TextView tvTitle, tvPrice, tvDescription, tvRatingValue, idDirection;
-    private RatingBar rbValue;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+
+    @BindView(R.id.tvPrice)
+    TextView tvPrice;
+
+    @BindView(R.id.tvDescription)
+    TextView tvDescription;
+
+    @BindView(R.id.rbValue)
+    RatingBar rbValue;
+
+    @BindView(R.id.tvRatingValue)
+    TextView tvRatingValue;
+
+    @BindView(R.id.idDirection)
+    TextView idDirection;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+        setContentView(R.layout.activity_info);
         getDeps().inject(this);
-
-        renderView();
+        ButterKnife.bind(this);
 
         ActivityInfoPresenter presenter = new ActivityInfoPresenter(service, this);
         presenter.getActivityInfo();
@@ -48,17 +68,6 @@ public class ActivityInfo extends BaseApp implements ActivityInfoView {
         Dialog.createDialog(this).title("server error").description(appErrorMessage).build();
     }
 
-    public void renderView() {
-        setContentView(R.layout.activity_info);
-
-        tvTitle = findViewById(R.id.tvTitle);
-        tvPrice = findViewById(R.id.tvPrice);
-        tvDescription = findViewById(R.id.tvDescription);
-        rbValue = findViewById(R.id.rbValue);
-        tvRatingValue = findViewById(R.id.tvRatingValue);
-        idDirection = findViewById(R.id.idDirection);
-    }
-
     @Override
     public void getActivityInfoSuccess(ActivityModel activityModel) {
         /*
@@ -66,5 +75,10 @@ public class ActivityInfo extends BaseApp implements ActivityInfoView {
         tvDescription.setText(activityModel.getDescription());
         tvPrice.setText(Utils.getPriceFormated(activityModel.getPrice()));
         */
+    }
+
+    @OnClick(R.id.ivClose)
+    void closeButtonClick(View view) {
+        onBackPressed();
     }
 }

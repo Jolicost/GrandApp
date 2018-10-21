@@ -19,7 +19,7 @@
             android:layout_height="56dp">
 
             <ImageView
-                android:id="@+id/close_button"
+                android:id="@+id/ivClose"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:background="@drawable/btn_simple"

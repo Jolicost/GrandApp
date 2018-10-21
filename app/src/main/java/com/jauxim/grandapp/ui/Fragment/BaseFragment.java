@@ -13,24 +13,26 @@
  * limitations under the License
  */
 
-package com.mindorks.framework.mvp.ui.base;
+package com.jauxim.grandapp.ui.Fragment;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 
-import com.mindorks.framework.mvp.di.component.ActivityComponent;
-import com.mindorks.framework.mvp.utils.CommonUtils;
+import com.jauxim.grandapp.deps.Deps;
+import com.jauxim.grandapp.ui.Activity.BaseActivity;
+
+import butterknife.Unbinder;
 
 /**
  * Created by janisharali on 27/01/17.
  */
 
-public abstract class BaseFragment extends Fragment implements MvpView {
+public abstract class BaseFragment extends Fragment {
 
     private BaseActivity mActivity;
     private Unbinder mUnBinder;
@@ -52,59 +54,20 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof BaseActivity) {
+
             BaseActivity activity = (BaseActivity) context;
             this.mActivity = activity;
-            activity.onFragmentAttached();
         }
     }
 
-    @Override
     public void showLoading() {
-        hideLoading();
-        mProgressDialog = CommonUtils.showLoadingDialog(this.getContext());
+        if (mActivity != null)
+            mActivity.showProgress();
     }
 
-    @Override
     public void hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
-        }
-    }
-
-    @Override
-    public void onError(String message) {
-        if (mActivity != null) {
-            mActivity.onError(message);
-        }
-    }
-
-    @Override
-    public void onError(@StringRes int resId) {
-        if (mActivity != null) {
-            mActivity.onError(resId);
-        }
-    }
-
-    @Override
-    public void showMessage(String message) {
-        if (mActivity != null) {
-            mActivity.showMessage(message);
-        }
-    }
-
-    @Override
-    public void showMessage(@StringRes int resId) {
-        if (mActivity != null) {
-            mActivity.showMessage(resId);
-        }
-    }
-
-    @Override
-    public boolean isNetworkConnected() {
-        if (mActivity != null) {
-            return mActivity.isNetworkConnected();
-        }
-        return false;
+        if (mActivity != null)
+            mActivity.hideProgress();
     }
 
     @Override
@@ -113,25 +76,10 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         super.onDetach();
     }
 
-    @Override
     public void hideKeyboard() {
         if (mActivity != null) {
             mActivity.hideKeyboard();
         }
-    }
-
-    @Override
-    public void openActivityOnTokenExpire() {
-        if (mActivity != null) {
-            mActivity.openActivityOnTokenExpire();
-        }
-    }
-
-    public ActivityComponent getActivityComponent() {
-        if (mActivity != null) {
-            return mActivity.getActivityComponent();
-        }
-        return null;
     }
 
     public BaseActivity getBaseActivity() {
@@ -152,10 +100,11 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         super.onDestroy();
     }
 
-    public interface Callback {
+    public Deps getActivityComponent() {
+        if (mActivity != null) {
+            return mActivity.getDeps();
+        }
 
-        void onFragmentAttached();
-
-        void onFragmentDetached(String tag);
+        return null;
     }
 }
