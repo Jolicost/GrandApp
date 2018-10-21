@@ -8,9 +8,9 @@ import javax.annotation.Generated;
 @Generated("org.jsonschema2pojo")
 public class ActivityModel {
 
-    @SerializedName("id")
+    @SerializedName("_id")
     @Expose
-    private Long id;
+    private String id;
 
     @SerializedName("title")
     @Expose
@@ -52,11 +52,11 @@ public class ActivityModel {
     @Expose
     private Long capacity;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

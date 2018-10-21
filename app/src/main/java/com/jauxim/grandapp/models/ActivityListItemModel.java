@@ -1,5 +1,7 @@
 package com.jauxim.grandapp.models;
 
+import android.util.Pair;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,9 +10,9 @@ import javax.annotation.Generated;
 @Generated("org.jsonschema2pojo")
 public class ActivityListItemModel {
 
-    @SerializedName("id")
+    @SerializedName("_id")
     @Expose
-    private Long id;
+    private String id;
 
     @SerializedName("title")
     @Expose
@@ -22,7 +24,7 @@ public class ActivityListItemModel {
 
     @SerializedName("rating")
     @Expose
-    private Long rating;
+    private double rating;
 
     @SerializedName("type")
     @Expose
@@ -36,11 +38,21 @@ public class ActivityListItemModel {
     @Expose
     private Long members;
 
-    public Long getId() {
+    @SerializedName("image")
+    @Expose
+    private String image;
+
+    public ActivityListItemModel(String urlImage, String name, String description, float rating, String organizer, Pair<Long, Long> location){
+        this.image = urlImage;
+        this.title = name;
+        this.rating = rating;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -60,11 +72,11 @@ public class ActivityListItemModel {
         this.userId = userId;
     }
 
-    public Long getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(Long rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
@@ -90,5 +102,13 @@ public class ActivityListItemModel {
 
     public void setMembers(Long members) {
         this.members = members;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -10,15 +10,17 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.ActivityModel;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 
 import java.util.List;
 
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyViewHolder> {
 
-    private List<ActivityModel> activityList;
+    private List<ActivityListItemModel> activityList;
     public Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -37,7 +39,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         }
     }
 
-    public ActivityAdapter(Context context, List<ActivityModel> moviesList) {
+    public ActivityAdapter(Context context, List<ActivityListItemModel> moviesList) {
         this.activityList = moviesList;
         this.context = context;
     }
@@ -52,18 +54,22 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ActivityModel activity = activityList.get(position);
-        holder.title.setText(activity.getName());
-        holder.author.setText(activity.getOrganizer());
-        holder.distance.setText(activity.getLocation().first+"m");
-        holder.ratingBar.setRating(activity.getRating());
-        //Picasso.get().load(activity.getUrl()).into(holder.image);
+        ActivityListItemModel activity = activityList.get(position);
+        holder.title.setText(activity.getTitle());
+        //holder.author.setText(activity.get());
+        //holder.distance.setText(activity.get().first+"m");
+        holder.ratingBar.setRating((float) (activity.getRating()));
+        Glide.with(holder.image.getContext())
+                .load(activity.getImage())
+                .into(holder.image);
 
+        /*
         if (activity.getOrganizer().toLowerCase().contains("Ayuntamiento".toLowerCase())){
             holder.star.setVisibility(View.VISIBLE);
         }else{
             holder.star.setVisibility(View.GONE);
         }
+        */
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
