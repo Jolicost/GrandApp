@@ -1,5 +1,7 @@
 package com.jauxim.grandapp.networking;
 
+import android.util.Log;
+
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.CityListResponse;

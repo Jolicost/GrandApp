@@ -18,9 +18,9 @@ public interface NetworkService {
     @GET("v1/city")
     Observable<CityListResponse> getCityList();
 
-    @GET("/activity/:1")
+    @GET("/activities/1")
     Observable<ActivityModel> getActivityInfo();
 
-    @GET("/activity/list")
+    @GET("/activities")
     Observable<List<ActivityListItemModel>> getActivityList();
 }

@@ -86,25 +86,10 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
-        prepareData();
-
-        ActivityListPresenter presenter = new ActivityListPresenter(service, (MainView) getActivity());
+        ActivityListPresenter presenter = new ActivityListPresenter(service, this);
         presenter.getActivityList();
 
         return view;
-    }
-
-
-    private void prepareData() {
-        activitiesList.add(new ActivityListItemModel("https://www.masqueabuelos.com/wp-content/uploads/2018/02/la-petanca.jpg", "Petanca Aérea", "", 4.3f, "Manuél", new Pair(4, 0)));
-        activitiesList.add(new ActivityListItemModel("http://www.fallaalqueriadebellver.com/blog/wp-content/uploads/Bolos-003.jpg", "Bolera extrema", "", 3.5f, "Isabel Ordóñez", new Pair(50, 0)));
-        activitiesList.add(new ActivityListItemModel("https://www.diariolaprovinciasj.com/u/fotografias/m/2016/3/4/f768x0-87765_87783_22.jpg", "Cumple Geltrudis", "", 2f, "Isabel", new Pair(74, 0)));
-        activitiesList.add(new ActivityListItemModel("https://www.radioactiva.cl/wp-content/uploads/2018/01/abuelos-830x400.jpg", "Baile nocturno", "", 4.3f, "Lucas & Irene", new Pair(213, 0)));
-        activitiesList.add(new ActivityListItemModel("https://www.clinicadelaasuncion.com/wp-content/uploads/2013/07/abuelos_ipad.jpg", "Torneo Clash", "", 4.8f, "Ignacio", new Pair(240, 0)));
-        activitiesList.add(new ActivityListItemModel("https://www.diarioderivas.es/wp-content/uploads/2018/05/paellada.gif", "Paellada popular", "", 5f, "Ayuntamiento", new Pair(257, 0)));
-        activitiesList.add(new ActivityListItemModel("http://4.bp.blogspot.com/-6dNk1OPYRk4/T9jVyjf__bI/AAAAAAAAAHA/Axo4xPafOko/s640/abuela+maquillada.jpg", "Clases Maquillaje", "", 1.5f, "Gabriela", new Pair(297, 0)));
-        activitiesList.add(new ActivityListItemModel("https://saposyprincesas.elmundo.es/wp-content/uploads/2017/11/relacion-abuelos-nietos.jpg", "Partido Parchís", "", 2.5f, "José Gabriel", new Pair(423, 0)));
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -124,7 +109,8 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
     @Override
     public void getActivityListSuccess(List<ActivityListItemModel> activities) {
-        Log.d("listActivities", "success: " + (activities != null));
-        //TODO: inflate the list
+        activitiesList.clear();
+        activitiesList.addAll(activities);
+        mAdapter.notifyDataSetChanged();
     }
 }

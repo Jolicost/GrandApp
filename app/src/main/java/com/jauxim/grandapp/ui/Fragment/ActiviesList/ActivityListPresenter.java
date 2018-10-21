@@ -1,5 +1,7 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
+import android.util.Log;
+
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -15,10 +17,10 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class ActivityListPresenter {
     private final Service service;
-    private final MainView view;
+    private final ActivitiesListView view;
     private CompositeSubscription subscriptions;
 
-    public ActivityListPresenter(Service service, MainView view) {
+    public ActivityListPresenter(Service service, ActivitiesListView view) {
         this.service = service;
         this.view = view;
         this.subscriptions = new CompositeSubscription();

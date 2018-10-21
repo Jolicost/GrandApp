@@ -40,6 +40,7 @@
                     android:layout_height="25dp"
                     android:src="@drawable/ic_star"
                     android:tint="#ffea00"
+                    android:visibility="gone"
                     android:layout_margin="5dp"/>
             </RelativeLayout>
 
@@ -55,7 +56,7 @@
                     style="@style/textTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Petanca nivel 4" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/organizer_activity"
@@ -63,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_activity"
-                    android:text="Mariví Padilla" />
+                    android:text="" />
 
                 <RatingBar
                     android:id="@+id/rating_activity"
@@ -82,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@+id/organizer_activity"
-                    android:text="54km" />
+                    android:text="" />
 
             </RelativeLayout>
         </LinearLayout>

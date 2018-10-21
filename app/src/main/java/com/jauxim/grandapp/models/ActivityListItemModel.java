@@ -1,9 +1,9 @@
 package com.jauxim.grandapp.models;
 
-import android.util.Pair;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 import javax.annotation.Generated;
 
@@ -38,15 +38,9 @@ public class ActivityListItemModel {
     @Expose
     private Long members;
 
-    @SerializedName("image")
+    @SerializedName("images")
     @Expose
-    private String image;
-
-    public ActivityListItemModel(String urlImage, String name, String description, float rating, String organizer, Pair<Long, Long> location){
-        this.image = urlImage;
-        this.title = name;
-        this.rating = rating;
-    }
+    private List<String> images;
 
     public String getId() {
         return id;
@@ -104,11 +98,11 @@ public class ActivityListItemModel {
         this.members = members;
     }
 
-    public String getImage() {
-        return image;
+    public List<String> getImage() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(List<String> images) {
+        this.images = images;
     }
 }

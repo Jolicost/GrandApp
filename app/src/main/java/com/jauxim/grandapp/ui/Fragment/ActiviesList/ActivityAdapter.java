@@ -11,7 +11,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jauxim.grandapp.ActivityModel;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
@@ -59,9 +58,12 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         //holder.author.setText(activity.get());
         //holder.distance.setText(activity.get().first+"m");
         holder.ratingBar.setRating((float) (activity.getRating()));
-        Glide.with(holder.image.getContext())
-                .load(activity.getImage())
-                .into(holder.image);
+
+        if (activity.getImage() != null && activity.getImage().size() > 0) {
+            Glide.with(holder.image.getContext())
+                    .load(activity.getImage().get(0))
+                    .into(holder.image);
+        }
 
         /*
         if (activity.getOrganizer().toLowerCase().contains("Ayuntamiento".toLowerCase())){
