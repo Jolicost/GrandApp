@@ -26,6 +26,8 @@ import android.view.View;
 import com.mindorks.framework.mvp.di.component.ActivityComponent;
 import com.mindorks.framework.mvp.utils.CommonUtils;
 
+import butterknife.Unbinder;
+
 /**
  * Created by janisharali on 27/01/17.
  */

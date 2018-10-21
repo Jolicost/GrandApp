@@ -19,6 +19,7 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
 
@@ -57,7 +58,6 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         setUp();
 
         MainPresenter presenter = new MainPresenter(service, this);
-        presenter.getActivityList();
     }
 
     private void setUp() {

@@ -4,30 +4,37 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jauxim.grandapp.ActivityModel;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.deps.Deps;
 import com.jauxim.grandapp.models.ActivityListItemModel;
+import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.Main.MainView;
 import com.jauxim.grandapp.ui.Fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivitiesList extends BaseFragment {
+public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
     public static String TAG = "ActivitiesList";
 
     public ActivitiesList() {
-        // Required empty public constructor
     }
+
+    @Inject
+    public Service service;
 
     @BindView(R.id.list_activities)
     RecyclerView activityesRecyclerView;
@@ -81,6 +88,9 @@ public class ActivitiesList extends BaseFragment {
 
         prepareData();
 
+        ActivityListPresenter presenter = new ActivityListPresenter(service, (MainView) getActivity());
+        presenter.getActivityList();
+
         return view;
     }
 
@@ -95,5 +105,26 @@ public class ActivitiesList extends BaseFragment {
         activitiesList.add(new ActivityListItemModel("http://4.bp.blogspot.com/-6dNk1OPYRk4/T9jVyjf__bI/AAAAAAAAAHA/Axo4xPafOko/s640/abuela+maquillada.jpg", "Clases Maquillaje", "", 1.5f, "Gabriela", new Pair(297, 0)));
         activitiesList.add(new ActivityListItemModel("https://saposyprincesas.elmundo.es/wp-content/uploads/2017/11/relacion-abuelos-nietos.jpg", "Partido Parchís", "", 2.5f, "José Gabriel", new Pair(423, 0)));
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showWait() {
+        showProgress();
+    }
+
+    @Override
+    public void removeWait() {
+        hideProgress();
+    }
+
+    @Override
+    public void onFailure(String appErrorMessage) {
+        Dialog.createDialog(getActivity()).title("server error in act. list").description(appErrorMessage).build();
+    }
+
+    @Override
+    public void getActivityListSuccess(List<ActivityListItemModel> activities) {
+        Log.d("listActivities", "success: " + (activities != null));
+        //TODO: inflate the list
     }
 }

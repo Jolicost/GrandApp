@@ -65,7 +65,7 @@ public class ActivityInfo extends BaseApp implements ActivityInfoView {
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error").description(appErrorMessage).build();
+        Dialog.createDialog(this).title("server error int act. info").description(appErrorMessage).build();
     }
 
     @Override

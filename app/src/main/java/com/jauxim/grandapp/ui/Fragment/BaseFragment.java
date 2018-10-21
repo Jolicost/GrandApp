@@ -60,12 +60,12 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    public void showLoading() {
+    public void showProgress() {
         if (mActivity != null)
             mActivity.showProgress();
     }
 
-    public void hideLoading() {
+    public void hideProgress() {
         if (mActivity != null)
             mActivity.hideProgress();
     }
