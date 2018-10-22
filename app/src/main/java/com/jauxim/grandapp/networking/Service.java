@@ -25,8 +25,8 @@ public class Service {
         this.networkService = networkService;
     }
 
-    public Subscription getActivityInfo(final ActivityInfoCallback callback){
-        return networkService.getActivityInfo()
+    public Subscription getActivityInfo(String activityId, final ActivityInfoCallback callback){
+        return networkService.getActivityInfo(activityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends ActivityModel>>() {

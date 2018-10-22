@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
@@ -53,7 +54,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ActivityListItemModel activity = activityList.get(position);
+        final ActivityListItemModel activity = activityList.get(position);
         holder.title.setText(activity.getTitle());
         //holder.author.setText(activity.get());
         //holder.distance.setText(activity.get().first+"m");
@@ -77,6 +78,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ActivityInfo.class);
+                intent.putExtra(Constants.ACTIVITY_ID, activity.getId());
                 context.startActivity(intent);
             }
         });

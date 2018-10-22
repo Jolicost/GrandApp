@@ -3,6 +3,8 @@ package com.jauxim.grandapp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -51,6 +53,10 @@ public class ActivityModel {
     @SerializedName("capacity")
     @Expose
     private Long capacity;
+
+    @SerializedName("images")
+    @Expose
+    private List<String> images;
 
     public String getId() {
         return id;
@@ -138,5 +144,13 @@ public class ActivityModel {
 
     public void setCapacity(Long capacity) {
         this.capacity = capacity;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

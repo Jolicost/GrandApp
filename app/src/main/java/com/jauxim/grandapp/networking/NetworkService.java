@@ -8,6 +8,7 @@ import com.jauxim.grandapp.models.CityListResponse;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -18,8 +19,8 @@ public interface NetworkService {
     @GET("v1/city")
     Observable<CityListResponse> getCityList();
 
-    @GET("/activities/1")
-    Observable<ActivityModel> getActivityInfo();
+    @GET("/activities/{id}")
+    Observable<ActivityModel> getActivityInfo( @Path("id") String activityId);
 
     @GET("/activities")
     Observable<List<ActivityListItemModel>> getActivityList();

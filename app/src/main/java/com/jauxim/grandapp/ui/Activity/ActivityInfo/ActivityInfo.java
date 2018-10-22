@@ -1,15 +1,22 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.jauxim.grandapp.BaseApp;
+import com.bumptech.glide.Glide;
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.BaseActivity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -17,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActivityInfo extends BaseApp implements ActivityInfoView {
+public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Inject
     public Service service;
@@ -40,6 +47,13 @@ public class ActivityInfo extends BaseApp implements ActivityInfoView {
     @BindView(R.id.idDirection)
     TextView idDirection;
 
+    @BindView(R.id.image1)
+    ImageView image1;
+
+    @BindView(R.id.image2)
+    ImageView image2;
+
+    private String activityId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,8 +63,14 @@ public class ActivityInfo extends BaseApp implements ActivityInfoView {
         getDeps().inject(this);
         ButterKnife.bind(this);
 
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            activityId = getIntent().getExtras().getString(Constants.ACTIVITY_ID);
+        }
+
+        Log.d("activityInfo", "id: "+activityId);
+
         ActivityInfoPresenter presenter = new ActivityInfoPresenter(service, this);
-        presenter.getActivityInfo();
+        presenter.getActivityInfo(activityId);
     }
 
     @Override
@@ -70,11 +90,19 @@ public class ActivityInfo extends BaseApp implements ActivityInfoView {
 
     @Override
     public void getActivityInfoSuccess(ActivityModel activityModel) {
-        /*
         tvTitle.setText(activityModel.getTitle());
         tvDescription.setText(activityModel.getDescription());
-        tvPrice.setText(Utils.getPriceFormated(activityModel.getPrice()));
-        */
+        //tvPrice.setText(Utils.getPriceFormated(activityModel.getPrice()));
+        tvRatingValue.setText(activityModel.getRating()+"");
+        rbValue.setRating(activityModel.getRating());
+
+        List<String> urls = activityModel.getImages();
+        if (urls!=null){
+            if (urls.size()>=1)
+                Glide.with(this).load(urls.get(0)).into(image1);
+            if (urls.size()>=2)
+                Glide.with(this).load(urls.get(1)).into(image2);
+        }
     }
 
     @OnClick(R.id.ivClose)

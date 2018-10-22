@@ -21,10 +21,10 @@ public class ActivityInfoPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void getActivityInfo() {
+    public void getActivityInfo(String id) {
         view.showWait();
 
-        Subscription subscription = service.getActivityInfo(new Service.ActivityInfoCallback() {
+        Subscription subscription = service.getActivityInfo(id, new Service.ActivityInfoCallback() {
             @Override
             public void onSuccess(ActivityModel activityModel) {
                 view.removeWait();
