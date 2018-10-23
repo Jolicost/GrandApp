@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name=".ActivityEditActivity"
+            android:name=".ui.Activity.ActivityEdit.ActivityEditActivity"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
         <activity
