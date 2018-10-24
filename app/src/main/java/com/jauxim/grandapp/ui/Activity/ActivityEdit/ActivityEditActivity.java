@@ -1,6 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 
@@ -12,6 +14,7 @@ import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ActivityEditActivity extends BaseActivity implements ActivityEditView {
@@ -19,23 +22,24 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @Inject
     public Service service;
 
-    @BindView(R.id.etTitle)
-    EditText etTitle;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
 
-    @BindView(R.id.etDescription)
-    EditText etDescription;
-
-    @BindView(R.id.etPrice)
-    EditText etPrice;
+    @BindView(R.id.indicator)
+    TabLayout indicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+        ButterKnife.bind(this);
 
         ActivityEditPresenter presenter = new ActivityEditPresenter(service, this);
         //presenter.getActivityInfo();
+
+        viewPager.setAdapter(new ActivityStepsAdapter(this));
+        indicator.setupWithViewPager(viewPager, true);
     }
 
     @Override
@@ -63,12 +67,15 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         onBackPressed();
     }
 
+    /*
     @OnClick(R.id.btUpdate)
     void updateButton(View view) {
         updateModel();
     }
+    */
 
     private void updateModel(){
+        /*
         String title = etTitle.getText().toString();
         String desdription = etDescription.getText().toString();
         Long price = Long.parseLong(etPrice.getText().toString());
@@ -77,5 +84,6 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         model.setTitle(title);
         model.setDescription(desdription);
         model.setPrice(price);
+        */
     }
 }
