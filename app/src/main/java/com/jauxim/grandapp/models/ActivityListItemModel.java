@@ -3,8 +3,6 @@ package com.jauxim.grandapp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -18,29 +16,29 @@ public class ActivityListItemModel {
     @Expose
     private String title;
 
-    @SerializedName("userId")
+    @SerializedName("maxCapacity")
     @Expose
-    private Long userId;
+    private Long maxCapacity;
 
-    @SerializedName("rating")
+    @SerializedName("nUsers")
     @Expose
-    private double rating;
+    private Long nUsers;
 
-    @SerializedName("type")
+    @SerializedName("image")
     @Expose
-    private Long type;
+    private String image;
 
-    @SerializedName("capacity")
+    @SerializedName("lat")
     @Expose
-    private Long capacity;
+    private Double latitude;
 
-    @SerializedName("members")
+    @SerializedName("long")
     @Expose
-    private Long members;
+    private Double longitude;
 
-    @SerializedName("images")
+    @SerializedName("timestampStart")
     @Expose
-    private List<String> images;
+    private Long timestampStart;
 
     public String getId() {
         return id;
@@ -58,51 +56,51 @@ public class ActivityListItemModel {
         this.title = title;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getMaxCapacity() {
+        return maxCapacity;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setMaxCapacity(Long maxCapacity) {
+        this.maxCapacity = maxCapacity;
     }
 
-    public double getRating() {
-        return rating;
+    public Long getnUsers() {
+        return nUsers;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
+    public void setnUsers(Long nUsers) {
+        this.nUsers = nUsers;
     }
 
-    public Long getType() {
-        return type;
+    public String getImage() {
+        return image;
     }
 
-    public void setType(Long type) {
-        this.type = type;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public Long getCapacity() {
-        return capacity;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setCapacity(Long capacity) {
-        this.capacity = capacity;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
-    public Long getMembers() {
-        return members;
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setMembers(Long members) {
-        this.members = members;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
-    public List<String> getImage() {
-        return images;
+    public Long getTimestampStart() {
+        return timestampStart;
     }
 
-    public void setImage(List<String> images) {
-        this.images = images;
+    public void setTimestampStart(Long timestampStart) {
+        this.timestampStart = timestampStart;
     }
 }

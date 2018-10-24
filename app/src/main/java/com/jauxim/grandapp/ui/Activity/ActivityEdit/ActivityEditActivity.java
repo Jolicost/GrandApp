@@ -65,6 +65,17 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     @OnClick(R.id.btUpdate)
     void updateButton(View view) {
-        onBackPressed();
+        updateModel();
+    }
+
+    private void updateModel(){
+        String title = etTitle.getText().toString();
+        String desdription = etDescription.getText().toString();
+        Long price = Long.parseLong(etPrice.getText().toString());
+
+        ActivityModel model = new ActivityModel();
+        model.setTitle(title);
+        model.setDescription(desdription);
+        model.setPrice(price);
     }
 }
