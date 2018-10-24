@@ -92,7 +92,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     public void getActivityInfoSuccess(ActivityModel activityModel) {
         tvTitle.setText(activityModel.getTitle());
         tvDescription.setText(activityModel.getDescription());
-        //tvPrice.setText(Utils.getPriceFormated(activityModel.getPrice()));
+        tvPrice.setText(activityModel.getPrice()+"");
         tvRatingValue.setText(activityModel.getRating()+"");
         rbValue.setRating(activityModel.getRating());
 
