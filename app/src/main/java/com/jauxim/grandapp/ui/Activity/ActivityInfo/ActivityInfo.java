@@ -44,8 +44,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.tvRatingValue)
     TextView tvRatingValue;
 
-    @BindView(R.id.idDirection)
-    TextView idDirection;
+    @BindView(R.id.tvDirection)
+    TextView tvDirection;
 
     @BindView(R.id.image1)
     ImageView image1;
@@ -94,6 +94,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         tvDescription.setText(activityModel.getDescription());
         tvPrice.setText(activityModel.getPrice()+"");
         tvRatingValue.setText(activityModel.getRating()+"");
+        tvDirection.setText(activityModel.getAddress());
         rbValue.setRating(activityModel.getRating());
 
         List<String> urls = activityModel.getImages();

@@ -36,6 +36,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
             title = view.findViewById(R.id.tvTitle);
             distance = view.findViewById(R.id.tvDistance);
             star = view.findViewById(R.id.ivStar);
+
+
         }
     }
 
@@ -57,13 +59,14 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         final ActivityListItemModel activity = activityList.get(position);
         holder.title.setText(activity.getTitle());
         //holder.author.setText(activity.get());
-        //holder.distance.setText(activity.get().first+"m");
-        holder.time.setText(Utils.getCountDownTime(activity.getTimestampStart()));
-        holder.gauge.setText(activity.getnUsers()+"/"+activity.getMaxCapacity());
+        String distanceWalked = Utils.getWalkingDistance(41.501598, 2.387201, 41.529333, 2.435116);
+        //String distanceWalked = Utils.getWalkingDistance(userLat, userLong, activity.getLatitude(), activity.getLongitude());
 
-        Glide.with(holder.image.getContext())
-                .load(activity.getImage())
-                .into(holder.image);
+        holder.distance.setText(distanceWalked);
+        holder.time.setText(Utils.getCountDownTime(activity.getTimestampStart()));
+        holder.gauge.setText(activity.getnUsers() + "/" + activity.getMaxCapacity());
+
+        Glide.with(holder.image.getContext()).load(activity.getImage()).into(holder.image);
 
         /*
         if (activity.getOrganizer().toLowerCase().contains("Ayuntamiento".toLowerCase())){

@@ -42,9 +42,9 @@ public class ActivityModel {
     @Expose
     private Long longitude;
 
-    @SerializedName("adress")
+    @SerializedName("address")
     @Expose
-    private Long adress;
+    private String address;
 
     @SerializedName("type")
     @Expose
@@ -122,12 +122,12 @@ public class ActivityModel {
         this.longitude = longitude;
     }
 
-    public Long getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(Long adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
 
     public Long getType() {
