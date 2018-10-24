@@ -41,13 +41,17 @@ public class ActivityStepsAdapter extends PagerAdapter {
         View view = inflater.inflate(R.layout.edit_activity_step_item, null);
 
         View main = view.findViewById(R.id.main);
+        View vTitle = view.findViewById(R.id.vTitle);
+        View vDescription = view.findViewById(R.id.vDescription);
 
         switch (position){
             case stepsEditActivity.STEP_TITLE:
-                main.setBackgroundColor(Color.parseColor("#AACCAA"));
+                vTitle.setVisibility(View.VISIBLE);
+                vDescription.setVisibility(View.GONE);
                 break;
             case stepsEditActivity.STEP_DESCRIPTION:
-                main.setBackgroundColor(Color.parseColor("#CCDDCC"));
+                vTitle.setVisibility(View.GONE);
+                vDescription.setVisibility(View.VISIBLE);
 
                 break;
             case stepsEditActivity.STEP_IMAGES:

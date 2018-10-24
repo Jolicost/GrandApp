@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.jauxim.grandapp.R;
@@ -27,6 +28,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     @BindView(R.id.indicator)
     TabLayout indicator;
+
+    @BindView(R.id.bNext)
+    Button bNext;
+
+    @BindView(R.id.bPrevious)
+    Button bPrevious;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,5 +92,15 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         model.setDescription(desdription);
         model.setPrice(price);
         */
+    }
+
+    @OnClick(R.id.bNext)
+    void nextButtonClick(View view) {
+        viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+    }
+
+    @OnClick(R.id.bPrevious)
+    void previousButtonClick(View view) {
+        viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
     }
 }
