@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 
@@ -24,18 +25,19 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
     public Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, author, distance;
+        public TextView title, gauge, distance, time;
         public ImageView image, star;
-        public RatingBar ratingBar;
 
         public MyViewHolder(View view) {
             super(view);
-            image = view.findViewById(R.id.image_activity);
-            author = view.findViewById(R.id.organizer_activity);
-            title = view.findViewById(R.id.title_activity);
-            distance = view.findViewById(R.id.distance_activity);
-            ratingBar = view.findViewById(R.id.rating_activity);
-            star = view.findViewById(R.id.star);
+            time = view.findViewById(R.id.tvTime);
+            image = view.findViewById(R.id.ivImage);
+            gauge = view.findViewById(R.id.tvGauge);
+            title = view.findViewById(R.id.tvTitle);
+            distance = view.findViewById(R.id.tvDistance);
+            star = view.findViewById(R.id.ivStar);
+
+
         }
     }
 
@@ -57,14 +59,14 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         final ActivityListItemModel activity = activityList.get(position);
         holder.title.setText(activity.getTitle());
         //holder.author.setText(activity.get());
-        //holder.distance.setText(activity.get().first+"m");
-        holder.ratingBar.setRating((float) (activity.getRating()));
+        String distanceWalked = Utils.getWalkingDistance(41.501598, 2.387201, 41.529333, 2.435116);
+        //String distanceWalked = Utils.getWalkingDistance(userLat, userLong, activity.getLatitude(), activity.getLongitude());
 
-        if (activity.getImage() != null && activity.getImage().size() > 0) {
-            Glide.with(holder.image.getContext())
-                    .load(activity.getImage().get(0))
-                    .into(holder.image);
-        }
+        holder.distance.setText(distanceWalked);
+        holder.time.setText(Utils.getCountDownTime(activity.getTimestampStart()));
+        holder.gauge.setText(activity.getnUsers() + "/" + activity.getMaxCapacity());
+
+        Glide.with(holder.image.getContext()).load(activity.getImage()).into(holder.image);
 
         /*
         if (activity.getOrganizer().toLowerCase().contains("Ayuntamiento".toLowerCase())){

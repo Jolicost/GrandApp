@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardCornerRadius="4dp"
-    tools:context=".ActivityEditActivity">
+    tools:context=".ui.Activity.ActivityEdit.ActivityEditActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -166,11 +166,10 @@
                 android:src="@drawable/map3" />
 
             <TextView
-                android:id="@+id/idDirection"
+                android:id="@+id/tvDirection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Carrer Modern, 28, 08902 L'Hospitalet de Llobregat, Barcelona"
                 android:textSize="16sp" />
 
         </LinearLayout>

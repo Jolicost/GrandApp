@@ -22,7 +22,7 @@
                 android:layout_height="80dp">
 
                 <ImageView
-                    android:id="@+id/image_activity"
+                    android:id="@+id/ivImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -35,7 +35,7 @@
                     android:background="@drawable/gradient_transparent_effect"/>
 
                 <ImageView
-                    android:id="@+id/star"
+                    android:id="@+id/ivStar"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_star"
@@ -52,38 +52,39 @@
                 android:layout_marginBottom="5dp">
 
                 <TextView
-                    android:id="@+id/title_activity"
+                    android:id="@+id/tvTitle"
                     style="@style/textTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="" />
-
-                <TextView
-                    android:id="@+id/organizer_activity"
-                    style="@style/textDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/title_activity"
-                    android:text="" />
-
-                <RatingBar
-                    android:id="@+id/rating_activity"
-                    style="@style/Base.Widget.AppCompat.RatingBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="8dp"
-                    android:rating="4" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_toStartOf="@+id/tvTime"
+                    android:text="title" />
 
                 <TextView
-                    android:id="@+id/distance_activity"
+                    android:id="@+id/tvTime"
+                    style="@style/textTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="time" />
+
+                <TextView
+                    android:id="@+id/tvGauge"
+                    style="@style/textDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTitle"
+                    android:text="gauge" />
+
+                <TextView
+                    android:id="@+id/tvDistance"
                     style="@style/textDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@+id/organizer_activity"
-                    android:text="" />
+                    android:layout_alignTop="@+id/tvGauge"
+                    android:text="dist" />
 
             </RelativeLayout>
         </LinearLayout>
