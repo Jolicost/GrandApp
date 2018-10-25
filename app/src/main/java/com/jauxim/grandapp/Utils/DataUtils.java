@@ -2,6 +2,7 @@ package com.jauxim.grandapp.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -13,7 +14,6 @@ public class DataUtils {
 
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(KEY_USER_SHARED_PREFERENCES, MODE_PRIVATE);
-
     }
 
     private static void setString(Context context, String key, String value) {
@@ -55,5 +55,13 @@ public class DataUtils {
         if (coordinates == null) return;
         setFloat(context, KEY_LATITUDE, coordinates.latitude);
         setFloat(context, KEY_LONGITUDE, coordinates.longitude);
+        RxBus.instanceOf().setLocation(new SingleShotLocationProvider.GPSCoordinates(getFloat(context, KEY_LATITUDE), getFloat(context, KEY_LONGITUDE)));
     }
+
+    public static SingleShotLocationProvider.GPSCoordinates getLocation(Context context){
+        if (getFloat(context, KEY_LATITUDE)==null || getFloat(context, KEY_LONGITUDE)==null)
+            return null;
+        return new SingleShotLocationProvider.GPSCoordinates(getFloat(context, KEY_LATITUDE), getFloat(context, KEY_LONGITUDE));
+    }
+
 }

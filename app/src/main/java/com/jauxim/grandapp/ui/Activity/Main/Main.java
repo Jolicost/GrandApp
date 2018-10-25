@@ -1,21 +1,13 @@
 package com.jauxim.grandapp.ui.Activity.Main;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,8 +19,8 @@ import android.view.View;
 
 import com.jauxim.grandapp.ActivityEditActivity;
 import com.jauxim.grandapp.R;
-import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.Utils.RxBus;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
@@ -93,6 +85,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
 
         MenuItem item = navigationView.getMenu().getItem(0);
         onNavigationItemSelected(item);
+
     }
 
     @Override
@@ -216,7 +209,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    if (presenter!=null)
+                    if (presenter != null)
                         presenter.updateLocation();
 
                 } else {

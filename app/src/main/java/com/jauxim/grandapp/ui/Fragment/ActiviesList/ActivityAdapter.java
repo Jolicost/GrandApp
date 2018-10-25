@@ -1,6 +1,6 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,15 +13,23 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.Utils.RxBus;
+import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 
 import java.util.List;
 
+import rx.Observer;
+
+
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyViewHolder> {
 
     private List<ActivityListItemModel> activityList;
-    public Context context;
+    public Activity context;
+    private SingleShotLocationProvider.GPSCoordinates userLocation;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, author, distance;
@@ -39,9 +47,25 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         }
     }
 
-    public ActivityAdapter(Context context, List<ActivityListItemModel> moviesList) {
+    public ActivityAdapter(Activity context, List<ActivityListItemModel> moviesList) {
         this.activityList = moviesList;
         this.context = context;
+        userLocation = DataUtils.getLocation(context);
+        RxBus.instanceOf().getLocationObservable().subscribe(new Observer<SingleShotLocationProvider.GPSCoordinates>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(SingleShotLocationProvider.GPSCoordinates newLoc) {
+                userLocation = newLoc;
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -55,7 +79,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final ActivityListItemModel activity = activityList.get(position);
-        holder.title.setText(activity.getTitle());
+        holder.title.setText("" + userLocation.latitude);
         //holder.author.setText(activity.get());
         //holder.distance.setText(activity.get().first+"m");
         holder.ratingBar.setRating((float) (activity.getRating()));
