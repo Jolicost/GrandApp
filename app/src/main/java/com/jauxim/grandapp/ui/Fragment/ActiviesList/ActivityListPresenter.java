@@ -1,11 +1,8 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
-import android.util.Log;
-
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.Main.MainView;
 
 import java.util.List;
 

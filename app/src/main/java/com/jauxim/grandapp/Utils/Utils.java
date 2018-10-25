@@ -50,7 +50,7 @@ public class Utils {
                     //Log.i("Output2", String.valueOf(lon1));
                     //Log.i("Output3", String.valueOf(lat2));
                     //Log.i("Output4", String.valueOf(lon2));
-                    URL url = new URL("https://maps.googleapis.com/maps/api/directions/json?origin=" + lat1 + "," + lon1 + "&destination=" + lat2 + "," + lon2 + "&units=metric&key=AIzaSyCNhz3l4i6fPHxw0rvNpT_YUVZtsyGXs6o");
+                    URL url = new URL("https://maps.googleapis.com/maps/api/directions/json?origin=" + lat1 + "," + lon1 + "&destination=" + lat2 + "," + lon2 + "&units=metric&mode=walking&key=AIzaSyCNhz3l4i6fPHxw0rvNpT_YUVZtsyGXs6o");
                     //Log.i("Output4.5", url.toString());
                     final HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
@@ -98,16 +98,16 @@ public class Utils {
 
         Long min = diff/(60*1000);
         if (min<60)
-            return min+"min";
+            return min+" min";
 
         Long hours = min/60;
         if (hours<24)
-            return hours+"hours";
+            return hours+" hours";
 
         Long days = hours/24;
         if (days<7)
-            return days+"days";
+            return days+" days";
 
-        return days/7+"weeks";
+        return days/7+" weeks";
     }
 }
