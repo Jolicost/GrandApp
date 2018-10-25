@@ -1,5 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.Main;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.jauxim.grandapp.models.ActivityListItemModel;
 
 import java.util.List;
@@ -19,4 +22,6 @@ public interface MainView {
     void lockDrawer();
 
     void unlockDrawer();
+
+    Activity getContext();
 }
