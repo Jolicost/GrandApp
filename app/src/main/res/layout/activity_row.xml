@@ -59,6 +59,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_toStartOf="@+id/tvTime"
+                    android:padding="5dp"
                     android:text="title" />
 
                 <TextView

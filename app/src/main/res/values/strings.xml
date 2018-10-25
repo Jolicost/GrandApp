@@ -19,5 +19,7 @@
     <string name="title_location_permission">Location permission</string>
     <string name="text_location_permission">Allow GRANDAPP to access yout location?</string>
     <string name="ok">Ok</string>
+    <string name="free_price">Free</string>
+    <string name="upperTag">Information</string>
 
 </resources>

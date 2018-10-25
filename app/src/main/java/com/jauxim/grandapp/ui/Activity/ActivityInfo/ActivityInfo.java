@@ -24,10 +24,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.graphics.Color.rgb;
+
 public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Inject
     public Service service;
+
+    @BindView(R.id.tvUpperTag)
+    TextView tvUpperTag;
 
     @BindView(R.id.tvTitle)
     TextView tvTitle;
@@ -90,9 +95,24 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Override
     public void getActivityInfoSuccess(ActivityModel activityModel) {
+        tvUpperTag.setText(R.string.upperTag);
+
         tvTitle.setText(activityModel.getTitle());
+        tvTitle.setPadding(10, 10, 10 ,10);
+
         tvDescription.setText(activityModel.getDescription());
-        tvPrice.setText(activityModel.getPrice()+"");
+        tvDescription.setPadding(10, 10, 10 ,10);
+
+        Long price = activityModel.getPrice();
+        if(price == 0) {
+            tvPrice.setText(R.string.free_price);
+            tvPrice.setTextColor(rgb(11, 188, 37));
+        } else {
+            tvPrice.setText(String.valueOf(price) + "€");
+            tvPrice.setTextColor(rgb(216, 19, 19));
+        }
+        tvPrice.setPadding(10, 10, 10 ,10);
+
         tvRatingValue.setText(activityModel.getRating()+"");
         tvDirection.setText(activityModel.getAddress());
         rbValue.setRating(activityModel.getRating());

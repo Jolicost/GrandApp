@@ -64,11 +64,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         holder.title.setPadding(5, 5, 5 ,5);
 
         //holder.author.setText(activity.get());
+        /*
         UserLocationUtils userLocUtils = new UserLocationUtils();
         Pair<Double, Double> userLoc = userLocUtils.getActualUserPosition();
+        */
 
-        float distance = Utils.getAbsoluteDistance(userLoc.first, userLoc.second, 41.529333, 2.435116);
-        //float distance = Utils.getAbsoluteDistance(41.501598, 2.387201, 41.529333, 2.435116);
+        //float distance = Utils.getAbsoluteDistance(userLoc.first, userLoc.second, 41.529333, 2.435116);
+        float distance = Utils.getAbsoluteDistance(41.501598, 2.387201, 41.529333, 2.435116);
         //String distanceWalked = String.valueOf(Utils.getAbsoluteDistance(41.501598, 2.387201, 41.529333, 2.435116));
         //String distanceWalked = Utils.getWalkingDistance(userLat, userLong, activity.getLatitude(), activity.getLongitude());
         String distanceWalked;
