@@ -98,10 +98,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         tvUpperTag.setText(R.string.upperTag);
 
         tvTitle.setText(activityModel.getTitle());
-        tvTitle.setPadding(10, 10, 10 ,10);
 
         tvDescription.setText(activityModel.getDescription());
-        tvDescription.setPadding(10, 10, 10 ,10);
 
         Long price = activityModel.getPrice();
         if(price == 0) {
@@ -111,7 +109,6 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
             tvPrice.setText(String.valueOf(price) + "€");
             tvPrice.setTextColor(rgb(216, 19, 19));
         }
-        tvPrice.setPadding(10, 10, 10 ,10);
 
         tvRatingValue.setText(activityModel.getRating()+"");
         tvDirection.setText(activityModel.getAddress());

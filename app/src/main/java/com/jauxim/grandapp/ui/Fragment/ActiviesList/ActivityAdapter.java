@@ -3,7 +3,6 @@ package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
-import com.jauxim.grandapp.Utils.UserLocationUtils;
 import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
@@ -29,7 +27,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, gauge, distance, time;
-        public ImageView image, star;
+        public ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
@@ -38,8 +36,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
             gauge = view.findViewById(R.id.tvGauge);
             title = view.findViewById(R.id.tvTitle);
             distance = view.findViewById(R.id.tvDistance);
-            star = view.findViewById(R.id.ivStar);
-
 
         }
     }
@@ -61,9 +57,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final ActivityListItemModel activity = activityList.get(position);
         holder.title.setText(activity.getTitle());
-        holder.title.setPadding(5, 5, 5 ,5);
 
-        //holder.author.setText(activity.get());
         /*
         UserLocationUtils userLocUtils = new UserLocationUtils();
         Pair<Double, Double> userLoc = userLocUtils.getActualUserPosition();
@@ -73,6 +67,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         float distance = Utils.getAbsoluteDistance(41.501598, 2.387201, 41.529333, 2.435116);
         //String distanceWalked = String.valueOf(Utils.getAbsoluteDistance(41.501598, 2.387201, 41.529333, 2.435116));
         //String distanceWalked = Utils.getWalkingDistance(userLat, userLong, activity.getLatitude(), activity.getLongitude());
+
         String distanceWalked;
         if(distance >= 1000) {
             distanceWalked = String.format("%.2f", distance/1000) + " km";
@@ -81,13 +76,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         }
 
         holder.distance.setText(distanceWalked);
-        holder.distance.setPadding(5, 5, 5 ,5);
 
         String countDownTime = Utils.getCountDownTime(activity.getTimestampStart());
 
         holder.time.setText(countDownTime);
-        holder.time.setTextSize(22);
-        holder.time.setPadding(5, 5, 5 ,5);
 
         if(countDownTime.equalsIgnoreCase("gone!")) {
             holder.time.setTextColor(rgb(216, 19, 19));
@@ -96,18 +88,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         }
 
         holder.gauge.setText(activity.getnUsers() + "/" + activity.getMaxCapacity());
-        holder.gauge.setTextSize(20);
-        holder.gauge.setPadding(5, 5, 5 ,5);
 
         Glide.with(holder.image.getContext()).load(activity.getImage()).into(holder.image);
-
-        /*
-        if (activity.getOrganizer().toLowerCase().contains("Ayuntamiento".toLowerCase())){
-            holder.star.setVisibility(View.VISIBLE);
-        }else{
-            holder.star.setVisibility(View.GONE);
-        }
-        */
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
