@@ -2,8 +2,8 @@ package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.UserLocationUtils;
 import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
@@ -63,8 +64,11 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         holder.title.setPadding(5, 5, 5 ,5);
 
         //holder.author.setText(activity.get());
+        UserLocationUtils userLocUtils = new UserLocationUtils();
+        Pair<Double, Double> userLoc = userLocUtils.getActualUserPosition();
 
-        float distance = Utils.getAbsoluteDistance(41.501598, 2.387201, 41.529333, 2.435116);
+        float distance = Utils.getAbsoluteDistance(userLoc.first, userLoc.second, 41.529333, 2.435116);
+        //float distance = Utils.getAbsoluteDistance(41.501598, 2.387201, 41.529333, 2.435116);
         //String distanceWalked = String.valueOf(Utils.getAbsoluteDistance(41.501598, 2.387201, 41.529333, 2.435116));
         //String distanceWalked = Utils.getWalkingDistance(userLat, userLong, activity.getLatitude(), activity.getLongitude());
         String distanceWalked;
