@@ -82,7 +82,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         holder.title.setText(activity.getTitle());
 
         if (userLocation != null) {
-            float distance = Utils.getAbsoluteDistance(41.501598, 2.387201, userLocation.latitude, userLocation.longitude);
+            float distance = Utils.getAbsoluteDistance(activity.getLatitude(), activity.getLongitude(), userLocation.latitude, userLocation.longitude);
             //float distance = Float.parseFloat(Utils.getWalkingDistance(userLocation.latitude, userLocation.longitude, 41.501598, 2.387201));
 
             String distanceWalked;

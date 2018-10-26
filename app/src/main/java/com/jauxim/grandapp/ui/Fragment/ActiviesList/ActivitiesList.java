@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,9 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
     @BindView(R.id.list_activities)
     RecyclerView activityesRecyclerView;
+
+    @BindView(R.id.srlRefresh)
+    SwipeRefreshLayout srlRefresh;
 
     private List<ActivityListItemModel> activitiesList = new ArrayList<>();
     private ActivityAdapter mAdapter;
@@ -91,9 +95,16 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
-        ActivityListPresenter presenter = new ActivityListPresenter(service, this);
+        final ActivityListPresenter presenter = new ActivityListPresenter(service, this);
         presenter.getActivityList();
 
+
+        srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getActivityList();
+            }
+        });
         return view;
     }
 
@@ -117,5 +128,6 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activitiesList.clear();
         activitiesList.addAll(activities);
         mAdapter.notifyDataSetChanged();
+        srlRefresh.setRefreshing(false);
     }
 }
