@@ -2,6 +2,19 @@ package com.jauxim.grandapp.Utils;
 
 import android.location.Location;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
 
 public class Utils {
 
@@ -29,7 +42,7 @@ public class Utils {
     public static String getWalkingDistance(final double lat1, final double lon1, final double lat2, final double lon2) {
         final String[] parsedDistance = {null};
         final String[] response = {null};
-        /*
+
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
@@ -75,7 +88,7 @@ public class Utils {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        */
+
         return parsedDistance[0];
     }
 
