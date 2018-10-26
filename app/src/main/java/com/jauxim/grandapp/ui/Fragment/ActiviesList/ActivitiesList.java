@@ -1,11 +1,17 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +21,6 @@ import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.deps.Deps;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.Main.MainView;
 import com.jauxim.grandapp.ui.Fragment.BaseFragment;
 
 import java.util.ArrayList;
