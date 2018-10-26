@@ -1,10 +1,9 @@
-package com.jauxim.grandapp.ui.Fragment.ActiviesList;
+package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
-import com.jauxim.grandapp.models.ActivityListItemModel;
+import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
-
-import java.util.List;
+import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfoView;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -12,25 +11,25 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by ennur on 6/25/16.
  */
-public class ActivityListPresenter {
+public class ActivityEditPresenter {
     private final Service service;
-    private final ActivitiesListView view;
+    private final ActivityEditView view;
     private CompositeSubscription subscriptions;
 
-    public ActivityListPresenter(Service service, ActivitiesListView view) {
+    public ActivityEditPresenter(Service service, ActivityEditView view) {
         this.service = service;
         this.view = view;
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void getActivityList() {
+    public void getActivityInfo() {
         view.showWait();
 
-        Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
+        Subscription subscription = service.getActivityInfo("", new Service.ActivityInfoCallback() {
             @Override
-            public void onSuccess(List<ActivityListItemModel> activities) {
+            public void onSuccess(ActivityModel activityModel) {
                 view.removeWait();
-                view.getActivityListSuccess(activities);
+                view.getActivityInfoSuccess(activityModel);
             }
 
             @Override

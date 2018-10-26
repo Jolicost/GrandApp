@@ -24,10 +24,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.graphics.Color.rgb;
+
 public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Inject
     public Service service;
+
+    @BindView(R.id.tvUpperTag)
+    TextView tvUpperTag;
 
     @BindView(R.id.tvTitle)
     TextView tvTitle;
@@ -44,8 +49,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.tvRatingValue)
     TextView tvRatingValue;
 
-    @BindView(R.id.idDirection)
-    TextView idDirection;
+    @BindView(R.id.tvDirection)
+    TextView tvDirection;
 
     @BindView(R.id.image1)
     ImageView image1;
@@ -90,10 +95,23 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Override
     public void getActivityInfoSuccess(ActivityModel activityModel) {
+        tvUpperTag.setText(R.string.upperTag);
+
         tvTitle.setText(activityModel.getTitle());
+
         tvDescription.setText(activityModel.getDescription());
-        //tvPrice.setText(Utils.getPriceFormated(activityModel.getPrice()));
+
+        Long price = activityModel.getPrice();
+        if(price == 0) {
+            tvPrice.setText(R.string.free_price);
+            tvPrice.setTextColor(rgb(11, 188, 37));
+        } else {
+            tvPrice.setText(String.valueOf(price) + "€");
+            tvPrice.setTextColor(rgb(216, 19, 19));
+        }
+
         tvRatingValue.setText(activityModel.getRating()+"");
+        tvDirection.setText(activityModel.getAddress());
         rbValue.setRating(activityModel.getRating());
 
         List<String> urls = activityModel.getImages();

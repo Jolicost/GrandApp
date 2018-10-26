@@ -7,4 +7,18 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="update">UPDATE</string>
+    <string name="next">NEXT</string>
+    <string name="previous">PREVIOUS</string>
+    <string name="title">TITLE</string>
+    <string name="title_write">write the title here</string>
+    <string name="description_write">write the description here</string>
+    <string name="title_description">Write the title of the activity. This has to be short (between 5 and 8 words) to resume the main action of the activity that you want to create</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="description_description">Write the description of the activity. This has to be enought long to describe between 5 and 8 lines the details of the activity.\nDon\'t write information about the where or when, you will do it in the next steps!</string>
+    <string name="title_location_permission">Location permission</string>
+    <string name="text_location_permission">Allow GRANDAPP to access yout location?</string>
+    <string name="ok">Ok</string>
+    <string name="free_price">Free</string>
+    <string name="upperTag">Information</string>
 </resources>
