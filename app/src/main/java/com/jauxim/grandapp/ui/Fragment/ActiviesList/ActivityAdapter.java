@@ -79,7 +79,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final ActivityListItemModel activity = activityList.get(position);
-        holder.title.setText("" + userLocation.latitude);
+        holder.title.setText(activity.getTitle());
         //holder.author.setText(activity.get());
         //holder.distance.setText(activity.get().first+"m");
         holder.ratingBar.setRating((float) (activity.getRating()));
