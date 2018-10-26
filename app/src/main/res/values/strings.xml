@@ -21,4 +21,9 @@
     <string name="ok">Ok</string>
     <string name="free_price">Free</string>
     <string name="upperTag">Information</string>
+    <string name="images_title">Add some images</string>
+    <string name="location_title">Pick the Location of your activity</string>
+    <string name="date_picker_title">Pick the Date for your activity</string>
+    <string name="miscelania_title">More Information</string>
+    <string name="miscelania_description">We are about to finish! Just let us know...  How many people does de activity allow?</string>
 </resources>

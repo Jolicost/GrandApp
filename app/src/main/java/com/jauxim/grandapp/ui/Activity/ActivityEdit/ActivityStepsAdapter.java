@@ -43,6 +43,10 @@ public class ActivityStepsAdapter extends PagerAdapter {
         View main = view.findViewById(R.id.main);
         View vTitle = view.findViewById(R.id.vTitle);
         View vDescription = view.findViewById(R.id.vDescription);
+        View vImages = view.findViewById(R.id.vImages);
+        View vLocation = view.findViewById(R.id.vLocation);
+        View vDate = view.findViewById(R.id.vDate);
+        View vMiscelania = view.findViewById(R.id.vMiscelania);
 
         switch (position){
             case stepsEditActivity.STEP_TITLE:
@@ -55,6 +59,7 @@ public class ActivityStepsAdapter extends PagerAdapter {
 
                 break;
             case stepsEditActivity.STEP_IMAGES:
+                vTitle.setVisibility(View.GONE);
                 main.setBackgroundColor(Color.parseColor("#88AA88"));
 
                 break;
