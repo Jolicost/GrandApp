@@ -1,5 +1,6 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
@@ -7,12 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.Utils;
 
 public class ActivityStepsAdapter extends PagerAdapter {
 
-    private Context context;
+    private Activity context;
 
     private @interface stepsEditActivity{
         int STEP_TITLE = 0;
@@ -21,7 +24,7 @@ public class ActivityStepsAdapter extends PagerAdapter {
         int STEP_PEOPLE_LOCATION = 3;
     }
 
-    public ActivityStepsAdapter(Context context) {
+    public ActivityStepsAdapter(Activity context) {
         this.context = context;
     }
 
@@ -48,19 +51,24 @@ public class ActivityStepsAdapter extends PagerAdapter {
         View vDate = view.findViewById(R.id.vDate);
         View vMiscelania = view.findViewById(R.id.vMiscelania);
 
+        Button bImage = view.findViewById(R.id.bImage);
+
         switch (position){
             case stepsEditActivity.STEP_TITLE:
                 vTitle.setVisibility(View.VISIBLE);
                 vDescription.setVisibility(View.GONE);
+                vImages.setVisibility(View.GONE);
                 break;
             case stepsEditActivity.STEP_DESCRIPTION:
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.VISIBLE);
+                vImages.setVisibility(View.GONE);
 
                 break;
             case stepsEditActivity.STEP_IMAGES:
                 vTitle.setVisibility(View.GONE);
-                main.setBackgroundColor(Color.parseColor("#88AA88"));
+                vDescription.setVisibility(View.GONE);
+                vImages.setVisibility(View.VISIBLE);
 
                 break;
             case stepsEditActivity.STEP_PEOPLE_LOCATION:
@@ -68,6 +76,13 @@ public class ActivityStepsAdapter extends PagerAdapter {
 
                 break;
         }
+
+        bImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.createCropCamera(false).start(context);
+            }
+        });
 
         ViewPager viewPager = (ViewPager) container;
         viewPager.addView(view, 0);

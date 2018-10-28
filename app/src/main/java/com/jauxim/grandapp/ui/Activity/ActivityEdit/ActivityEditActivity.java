@@ -1,14 +1,18 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
@@ -64,7 +68,6 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         activityInfo.setUserId("userId");
         presenter.createActivityInfo(activityInfo);
         */
-
 
         viewPager.setAdapter(new ActivityStepsAdapter(this));
         indicator.setupWithViewPager(viewPager, true);
@@ -123,5 +126,24 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @OnClick(R.id.bPrevious)
     void previousButtonClick(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    Bitmap bitmap = Utils.getBitmapFromUri(this, result.getUri());
+                    //TODO: do something with the image, send to the adapter f.e
+                } catch (Exception e) {
+                    Log.e("croppingError", "Error preparing camera: ", e);
+                }
+            } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Log.e("croppingError", "error: " + result.getError());
+            }
+        }
     }
 }

@@ -1,12 +1,23 @@
 package com.jauxim.grandapp.Utils;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+
+import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -111,5 +122,33 @@ public class Utils {
             return days + " days";
 
         return days / 7 + " weeks";
+    }
+
+    public static CropImage.ActivityBuilder createCropCamera(boolean ovalMask){
+        CropImage.ActivityBuilder builder = com.theartofdev.edmodo.cropper.CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setActivityTitle("Crop Image")
+                //.setCropMenuCropButtonIcon(R.drawable.check)
+                .setScaleType(CropImageView.ScaleType.CENTER_INSIDE)
+                .setMultiTouchEnabled(false);
+
+        if (ovalMask) {
+            builder.setAspectRatio(1, 1);
+            builder.setCropShape(CropImageView.CropShape.OVAL);
+            builder.setFixAspectRatio(true);
+        } else {
+            builder.setCropShape(CropImageView.CropShape.RECTANGLE);
+        }
+
+        return builder;
+    }
+
+    public static Bitmap getBitmapFromUri(Context context, Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                context.getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
     }
 }

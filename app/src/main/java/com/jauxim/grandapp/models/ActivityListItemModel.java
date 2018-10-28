@@ -75,7 +75,9 @@ public class ActivityListItemModel {
     }
 
     public String getImage() {
-        return images.get(0);
+        if (images!=null && !images.isEmpty())
+            return images.get(0);
+        return "";
     }
 
     public void setImage(String image) {
