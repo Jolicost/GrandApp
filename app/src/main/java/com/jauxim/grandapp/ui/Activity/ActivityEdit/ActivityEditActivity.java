@@ -8,9 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -40,10 +44,27 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+        getDeps().inject(this);
         ButterKnife.bind(this);
 
         ActivityEditPresenter presenter = new ActivityEditPresenter(service, this);
-        //presenter.getActivityInfo();
+
+        /*
+        //TEST POST
+        ActivityModel activityInfo = new ActivityModel();
+        activityInfo.setTitle("prova amb android");
+        activityInfo.setDescription("hola!! això és una prova amb android usant el POST. Avui es diumenge, fa fred i tinc gana. Bona nit");
+        activityInfo.setAddress("carrer del madamás al-halad Haidím, 25 bis 3º-4º");
+        activityInfo.setCapacity(9283l);
+        activityInfo.setImages(new ArrayList<String>());
+        activityInfo.setPrice(4712l);
+        activityInfo.setLatitude(41.3);
+        activityInfo.setLongitude(2.1);
+        activityInfo.setRating(2l);
+        activityInfo.setUserId("userId");
+        presenter.createActivityInfo(activityInfo);
+        */
+
 
         viewPager.setAdapter(new ActivityStepsAdapter(this));
         indicator.setupWithViewPager(viewPager, true);
@@ -61,7 +82,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     @Override
     public void onFailure(String appErrorMessage) {
-
+        Dialog.createDialog(this).title("server error").description(appErrorMessage).build();
     }
 
     @Override

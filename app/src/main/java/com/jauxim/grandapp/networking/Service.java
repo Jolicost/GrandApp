@@ -1,7 +1,5 @@
 package com.jauxim.grandapp.networking;
 
-import android.util.Log;
-
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.CityListResponse;
@@ -25,7 +23,7 @@ public class Service {
         this.networkService = networkService;
     }
 
-    public Subscription getActivityInfo(String activityId, final ActivityInfoCallback callback){
+    public Subscription getActivityInfo(String activityId, final ActivityInfoCallback callback) {
         return networkService.getActivityInfo(activityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,8 +53,37 @@ public class Service {
                 });
     }
 
+    public Subscription createActivityInfo(ActivityModel activityInfo, final ActivityInfoCallback callback) {
+        return networkService.createActivityInfo(activityInfo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends ActivityModel>>() {
+                    @Override
+                    public Observable<? extends ActivityModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<ActivityModel>() {
+                    @Override
+                    public void onCompleted() {
 
-    public Subscription getActivityList(final ActivityListCallback callback){
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(ActivityModel activityModel) {
+                        callback.onSuccess(activityModel);
+
+                    }
+                });
+    }
+
+    public Subscription getActivityList(final ActivityListCallback callback) {
         return networkService.getActivityList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -117,19 +144,19 @@ public class Service {
                 });
     }
 
-    public interface GetCityListCallback{
+    public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
         void onError(NetworkError networkError);
     }
 
-    public interface ActivityInfoCallback{
+    public interface ActivityInfoCallback {
         void onSuccess(ActivityModel activityModel);
 
         void onError(NetworkError networkError);
     }
 
-    public interface ActivityListCallback{
+    public interface ActivityListCallback {
         void onSuccess(List<ActivityListItemModel> activityModel);
 
         void onError(NetworkError networkError);

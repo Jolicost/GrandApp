@@ -7,7 +7,9 @@ import com.jauxim.grandapp.models.CityListResponse;
 
 import java.util.List;
 
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -20,7 +22,10 @@ public interface NetworkService {
     Observable<CityListResponse> getCityList();
 
     @GET("/activities/{id}")
-    Observable<ActivityModel> getActivityInfo( @Path("id") String activityId);
+    Observable<ActivityModel> getActivityInfo(@Path("id") String activityId);
+
+    @POST("/activities")
+    Observable<ActivityModel> createActivityInfo(@Body ActivityModel activityInfo);
 
     @GET("/activities")
     Observable<List<ActivityListItemModel>> getActivityList();
