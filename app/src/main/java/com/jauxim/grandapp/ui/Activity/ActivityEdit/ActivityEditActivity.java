@@ -1,30 +1,35 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_DESCRIPTION;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_IMAGES;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_PEOPLE_LOCATION;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_PREVIEW;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_TIME;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_TITLE;
 
 public class ActivityEditActivity extends BaseActivity implements ActivityEditView {
 
@@ -43,6 +48,13 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @BindView(R.id.bPrevious)
     Button bPrevious;
 
+    private ActivityStepsAdapter activityAdapter;
+
+    private String title;
+    private String description;
+
+    private ActivityEditPresenter presenter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +63,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         getDeps().inject(this);
         ButterKnife.bind(this);
 
-        ActivityEditPresenter presenter = new ActivityEditPresenter(service, this);
+        presenter = new ActivityEditPresenter(service, this);
 
         /*
         //TEST POST
@@ -69,18 +81,50 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         presenter.createActivityInfo(activityInfo);
         */
 
-        viewPager.setAdapter(new ActivityStepsAdapter(this));
+        activityAdapter = new ActivityStepsAdapter(this);
+        viewPager.setAdapter(activityAdapter);
+        viewPager.setOffscreenPageLimit(activityAdapter.getCount() - 1);
         indicator.setupWithViewPager(viewPager, true);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d("pagerThing", "onPageSelected " + position);
+                if (!saveActualState()) {
+                    //cant go next screen
+                    viewPager.setCurrentItem(position - 1);
+                } else {
+                    //can go next screen
+                    if (isInlastStep(position)) {
+                        bNext.setText("Create");
+                    } else {
+                        bNext.setText("Next");
+                    }
+                }
+                Log.d("pagerThing", "onPageScrolled " + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Log.d("pagerThing", "onPageScrollStateChanged ");
+
+            }
+        });
     }
 
     @Override
     public void showWait() {
-
+        showProgress();
     }
 
     @Override
     public void removeWait() {
-
+        hideProgress();
     }
 
     @Override
@@ -89,8 +133,13 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     }
 
     @Override
-    public void getActivityInfoSuccess(ActivityModel activityModel) {
-
+    public void createActivityInfoSuccess(ActivityModel activityModel) {
+        Dialog.createDialog(this).title("activity created").description("activity created succefully").onDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                ActivityEditActivity.this.onBackPressed();
+            }
+        }).build();
     }
 
     @OnClick(R.id.ivClose)
@@ -105,27 +154,25 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     }
     */
 
-    private void updateModel(){
-        /*
-        String title = etTitle.getText().toString();
-        String desdription = etDescription.getText().toString();
-        Long price = Long.parseLong(etPrice.getText().toString());
-
+    private void updateModel() {
         ActivityModel model = new ActivityModel();
         model.setTitle(title);
-        model.setDescription(desdription);
-        model.setPrice(price);
-        */
+        model.setDescription(description);
+        presenter.createActivityInfo(model);
     }
 
     @OnClick(R.id.bNext)
     void nextButtonClick(View view) {
-        viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+        if (!isInlastStep(viewPager.getCurrentItem())) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+        } else {
+            updateModel();
+        }
     }
 
     @OnClick(R.id.bPrevious)
     void previousButtonClick(View view) {
-        viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
+        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
     }
 
     @Override
@@ -145,5 +192,40 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 Log.e("croppingError", "error: " + result.getError());
             }
         }
+    }
+
+    private boolean saveActualState() {
+        //switch ()
+        switch (viewPager.getCurrentItem() - 1) {
+            case STEP_TITLE:
+                title = activityAdapter.getTitle();
+                if (TextUtils.isEmpty(title) || title.length() < 5) {
+                    Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
+                    return false;
+                }
+                return true;
+            case STEP_DESCRIPTION:
+                description = activityAdapter.getDescription();
+                if (TextUtils.isEmpty(description) || description.length() < 5) {
+                    Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
+                    return false;
+                }
+                return true;
+            case STEP_IMAGES:
+                break;
+            case STEP_PEOPLE_LOCATION:
+                break;
+            case STEP_TIME:
+                break;
+            case STEP_PREVIEW:
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    private boolean isInlastStep(int position) {
+        return (position == activityAdapter.getCount() - 1);
     }
 }

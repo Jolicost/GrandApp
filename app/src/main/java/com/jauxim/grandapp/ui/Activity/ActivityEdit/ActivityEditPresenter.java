@@ -21,27 +21,6 @@ public class ActivityEditPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void getActivityInfo() {
-        view.showWait();
-
-        Subscription subscription = service.getActivityInfo("", new Service.ActivityInfoCallback() {
-            @Override
-            public void onSuccess(ActivityModel activityModel) {
-                view.removeWait();
-                view.getActivityInfoSuccess(activityModel);
-            }
-
-            @Override
-            public void onError(NetworkError networkError) {
-                view.removeWait();
-                view.onFailure(networkError.getMessage());
-            }
-
-        });
-
-        subscriptions.add(subscription);
-    }
-
     public void createActivityInfo(ActivityModel activityInfo) {
         view.showWait();
 
@@ -49,7 +28,7 @@ public class ActivityEditPresenter {
             @Override
             public void onSuccess(ActivityModel activityModel) {
                 view.removeWait();
-                view.getActivityInfoSuccess(activityModel);
+                view.createActivityInfoSuccess(activityModel);
             }
 
             @Override
