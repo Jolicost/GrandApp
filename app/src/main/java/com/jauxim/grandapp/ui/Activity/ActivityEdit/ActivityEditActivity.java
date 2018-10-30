@@ -184,6 +184,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             if (resultCode == RESULT_OK) {
                 try {
                     Bitmap bitmap = Utils.getBitmapFromUri(this, result.getUri());
+                    if (activityAdapter!=null)
+                        activityAdapter.updateBitmap(bitmap);
                     //TODO: do something with the image, send to the adapter f.e
                 } catch (Exception e) {
                     Log.e("croppingError", "Error preparing camera: ", e);

@@ -2,23 +2,29 @@ package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Utils;
 
-public class ActivityStepsAdapter extends PagerAdapter {
+public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickListener {
 
     private Activity context;
 
     private TextView etTitle;
     private TextView etDescription;
+    private ImageView [] images = new ImageView[4];
+
+    private int imageChanging = -1;
 
     public @interface stepsEditActivity {
         int STEP_TITLE = 0;
@@ -58,8 +64,6 @@ public class ActivityStepsAdapter extends PagerAdapter {
         View vMiscelania = view.findViewById(R.id.vMiscelania);
         View vPreview = view.findViewById(R.id.vPreview);
 
-        Button bImage = view.findViewById(R.id.bImage);
-
         switch (position) {
             case stepsEditActivity.STEP_TITLE:
                 etTitle = view.findViewById(R.id.etTitle);
@@ -86,6 +90,14 @@ public class ActivityStepsAdapter extends PagerAdapter {
 
                 break;
             case stepsEditActivity.STEP_IMAGES:
+
+                images[0] = view.findViewById(R.id.ivImage1);
+                images[1] = view.findViewById(R.id.ivImage2);
+                images[2] = view.findViewById(R.id.ivImage3);
+                images[3] = view.findViewById(R.id.ivImage4);
+
+                for (ImageView image:images)
+                    image.setOnClickListener(this);
 
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
@@ -141,13 +153,6 @@ public class ActivityStepsAdapter extends PagerAdapter {
                 break;
         }
 
-        bImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.createCropCamera(false).start(context);
-            }
-        });
-
         ViewPager viewPager = (ViewPager) container;
         viewPager.addView(view, 0);
 
@@ -167,5 +172,32 @@ public class ActivityStepsAdapter extends PagerAdapter {
 
     public String getDescription() {
         return etDescription.getText().toString();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ivImage1:
+                imageChanging = 0;
+                break;
+            case R.id.ivImage2:
+                imageChanging = 1;
+                break;
+            case R.id.ivImage3:
+                imageChanging = 2;
+                break;
+            case R.id.ivImage4:
+                imageChanging = 3;
+                break;
+        }
+        Utils.createCropCamera(false).start(context);
+    }
+
+    public void updateBitmap(Bitmap bitmap){
+        if (imageChanging>-1){
+            if (images[imageChanging]!=null)
+                images[imageChanging].setImageBitmap(bitmap);
+            imageChanging = -1;
+        }
     }
 }
