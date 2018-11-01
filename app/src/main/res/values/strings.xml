@@ -37,4 +37,5 @@
 
     <string name="invalid_description_title">Invalid Description</string>
     <string name="invalid_description_description">Description is too short or is empy. Please try it again</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

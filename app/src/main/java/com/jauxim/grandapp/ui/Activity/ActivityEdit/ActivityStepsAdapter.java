@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Utils;
 
@@ -23,6 +25,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
     private TextView etTitle;
     private TextView etDescription;
     private ImageView [] images = new ImageView[4];
+    private SupportMapFragment mapFragment;
 
     private int imageChanging = -1;
 
@@ -109,6 +112,9 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
 
                 break;
             case stepsEditActivity.STEP_PEOPLE_LOCATION:
+                mapFragment = new SupportMapFragment();
+
+                Utils.changeMapFragment((AppCompatActivity) context, R.id.geoFencingMapFragment, mapFragment, "GeoFetchingMapFragment");
 
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);

@@ -6,6 +6,10 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
@@ -151,4 +155,12 @@ public class Utils {
         parcelFileDescriptor.close();
         return image;
     }
+
+    public static void changeMapFragment(AppCompatActivity activity, int layoutId, Fragment fragment, String tag) {
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(layoutId, fragment, tag);
+        fragmentTransaction.commit();
+    }
+
 }
