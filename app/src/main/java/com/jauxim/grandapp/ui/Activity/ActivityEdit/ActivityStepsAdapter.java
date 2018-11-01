@@ -190,7 +190,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
                 imageChanging = 3;
                 break;
         }
-        Utils.createCropCamera(false).start(context);
+        Utils.startCropImage(context, false);
     }
 
     public void updateBitmap(Bitmap bitmap){

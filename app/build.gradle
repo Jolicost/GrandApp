@@ -46,6 +46,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.5'
     provided 'javax.annotation:jsr250-api:1.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
-    implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
 }
