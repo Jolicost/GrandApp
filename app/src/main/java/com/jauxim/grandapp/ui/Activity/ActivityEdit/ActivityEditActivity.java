@@ -90,7 +90,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         //viewPager.setAdapter(activityAdapter);
         activityPageAdapter = new ActivityEditPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(activityPageAdapter);
-        //viewPager.setOffscreenPageLimit(activityAdapter.getCount() - 1);
+        viewPager.setOffscreenPageLimit(5);
         indicator.setupWithViewPager(viewPager, true);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

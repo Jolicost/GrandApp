@@ -14,6 +14,7 @@ import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.deps.Deps;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -95,6 +96,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             @Override
             public void onRefresh() {
                 presenter.getActivityList();
+                updateLocation();
             }
         });
         return view;
@@ -121,5 +123,11 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activitiesList.addAll(activities);
         mAdapter.notifyDataSetChanged();
         srlRefresh.setRefreshing(false);
+    }
+
+    private void updateLocation() {
+        if (getActivity() != null && getActivity() instanceof Main){
+            ((Main)getActivity()).updateLocation();
+        }
     }
 }

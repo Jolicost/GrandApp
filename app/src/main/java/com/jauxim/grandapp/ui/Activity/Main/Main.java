@@ -17,13 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
-import com.jauxim.grandapp.Utils.RxBus;
-import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
 
@@ -218,5 +216,10 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 return;
             }
         }
+    }
+
+    public void updateLocation(){
+        if (presenter!=null)
+            presenter.updateLocation();
     }
 }
