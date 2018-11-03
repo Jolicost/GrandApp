@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_edit_size">40sp</dimen>
     <dimen name="description_edit_size">20sp</dimen>
+    <dimen name="photo_size">120dp</dimen>
 </resources>
