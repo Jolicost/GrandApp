@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,12 +27,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_DESCRIPTION;
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_IMAGES;
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_PEOPLE_LOCATION;
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_PREVIEW;
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_TIME;
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityStepsAdapter.stepsEditActivity.STEP_TITLE;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_DESCRIPTION;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_IMAGES;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PEOPLE_LOCATION;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PREVIEW;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TIME;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TITLE;
 
 public class ActivityEditActivity extends BaseActivity implements ActivityEditView {
 
@@ -48,12 +51,14 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @BindView(R.id.bPrevious)
     Button bPrevious;
 
-    private ActivityStepsAdapter activityAdapter;
+    //private ActivityStepsAdapter activityAdapter;
 
     private String title;
     private String description;
 
     private ActivityEditPresenter presenter;
+
+    private ActivityEditPageAdapter activityPageAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +86,11 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         presenter.createActivityInfo(activityInfo);
         */
 
-        activityAdapter = new ActivityStepsAdapter(this);
-        viewPager.setAdapter(activityAdapter);
-        viewPager.setOffscreenPageLimit(activityAdapter.getCount() - 1);
+        //activityAdapter = new ActivityStepsAdapter(this);
+        //viewPager.setAdapter(activityAdapter);
+        activityPageAdapter = new ActivityEditPageAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(activityPageAdapter);
+        //viewPager.setOffscreenPageLimit(activityAdapter.getCount() - 1);
         indicator.setupWithViewPager(viewPager, true);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -165,6 +172,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     void nextButtonClick(View view) {
         if (!isInlastStep(viewPager.getCurrentItem())) {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+
         } else {
             updateModel();
         }
@@ -184,8 +192,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             if (resultCode == RESULT_OK) {
                 try {
                     Bitmap bitmap = Utils.getBitmapFromUri(this, result.getUri());
-                    if (activityAdapter!=null)
-                        activityAdapter.updateBitmap(bitmap);
+                    //if (activityAdapter!=null)
+                    //    activityAdapter.updateBitmap(bitmap);
                     //TODO: do something with the image, send to the adapter f.e
                 } catch (Exception e) {
                     Log.e("croppingError", "Error preparing camera: ", e);
@@ -198,16 +206,17 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private boolean saveActualState() {
         //switch ()
+        if (true) return true;
         switch (viewPager.getCurrentItem() - 1) {
             case STEP_TITLE:
-                title = activityAdapter.getTitle();
+                //title = activityAdapter.getTitle();
                 if (TextUtils.isEmpty(title) || title.length() < 5) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
                     return false;
                 }
                 return true;
             case STEP_DESCRIPTION:
-                description = activityAdapter.getDescription();
+                //description = activityAdapter.getDescription();
                 if (TextUtils.isEmpty(description) || description.length() < 5) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
                     return false;
@@ -228,6 +237,31 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     }
 
     private boolean isInlastStep(int position) {
-        return (position == activityAdapter.getCount() - 1);
+        return (position == activityPageAdapter.getCount() - 1);
+    }
+
+    private class ActivityEditPageAdapter extends FragmentPagerAdapter {
+
+        public ActivityEditPageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int pos) {
+            switch(pos) {
+
+                case 0: return ContainerEditFragment.newInstance(0);
+                case 1: return ContainerEditFragment.newInstance(1);
+                case 2: return ContainerEditFragment.newInstance(2);
+                case 3: return ContainerEditFragment.newInstance(3);
+                case 4: return ContainerEditFragment.newInstance(4);
+                default: return ContainerEditFragment.newInstance(5);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 5;
+        }
     }
 }

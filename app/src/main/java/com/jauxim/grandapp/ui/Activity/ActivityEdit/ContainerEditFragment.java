@@ -1,16 +1,11 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.media.Image;
-import android.support.v4.view.PagerAdapter;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,9 +13,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Utils;
 
-public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickListener {
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_DESCRIPTION;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_IMAGES;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_MISCELANIA;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PEOPLE_LOCATION;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PREVIEW;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TIME;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TITLE;
 
-    private Activity context;
+public class ContainerEditFragment extends Fragment implements View.OnClickListener {
+
+    int position = 0;
 
     private TextView etTitle;
     private TextView etDescription;
@@ -39,25 +42,11 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
         int STEP_PREVIEW = 6;
     }
 
-    public ActivityStepsAdapter(Activity context) {
-        this.context = context;
-    }
-
     @Override
-    public int getCount() {
-        return 7;
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.edit_activity_step_item, container, false);
 
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.edit_activity_step_item, null);
-
+        position = getArguments().getInt("pos");
         View main = view.findViewById(R.id.main);
         View vTitle = view.findViewById(R.id.vTitle);
         View vDescription = view.findViewById(R.id.vDescription);
@@ -68,7 +57,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
         View vPreview = view.findViewById(R.id.vPreview);
 
         switch (position) {
-            case stepsEditActivity.STEP_TITLE:
+            case STEP_TITLE:
                 etTitle = view.findViewById(R.id.etTitle);
 
                 vTitle.setVisibility(View.VISIBLE);
@@ -80,7 +69,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
                 vPreview.setVisibility(View.GONE);
 
                 break;
-            case stepsEditActivity.STEP_DESCRIPTION:
+            case STEP_DESCRIPTION:
                 etDescription = view.findViewById(R.id.etDescription);
 
                 vTitle.setVisibility(View.GONE);
@@ -92,7 +81,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
                 vPreview.setVisibility(View.GONE);
 
                 break;
-            case stepsEditActivity.STEP_IMAGES:
+            case STEP_IMAGES:
 
                 images[0] = view.findViewById(R.id.ivImage1);
                 images[1] = view.findViewById(R.id.ivImage2);
@@ -111,10 +100,10 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
                 vPreview.setVisibility(View.GONE);
 
                 break;
-            case stepsEditActivity.STEP_PEOPLE_LOCATION:
+            case STEP_PEOPLE_LOCATION:
                 mapFragment = new SupportMapFragment();
 
-                Utils.changeMapFragment((AppCompatActivity) context, R.id.geoFencingMapFragment, mapFragment, "GeoFetchingMapFragment");
+                //Utils.changeMapFragment((AppCompatActivity) context, R.id.geoFencingMapFragment, mapFragment, "GeoFetchingMapFragment");
 
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
@@ -125,7 +114,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
                 vPreview.setVisibility(View.GONE);
 
                 break;
-            case stepsEditActivity.STEP_TIME:
+            case STEP_TIME:
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
@@ -135,7 +124,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
                 vPreview.setVisibility(View.GONE);
 
                 break;
-            case stepsEditActivity.STEP_MISCELANIA:
+            case STEP_MISCELANIA:
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
@@ -146,7 +135,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
 
                 break;
 
-            case stepsEditActivity.STEP_PREVIEW:
+            case STEP_PREVIEW:
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
@@ -160,24 +149,20 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
         }
 
         ViewPager viewPager = (ViewPager) container;
-        viewPager.addView(view, 0);
+        viewPager.addView(view, position);
 
         return view;
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        ViewPager viewPager = (ViewPager) container;
-        View view = (View) object;
-        viewPager.removeView(view);
-    }
+    public static ContainerEditFragment newInstance(int position) {
 
-    public String getTitle() {
-        return etTitle.getText().toString();
-    }
+        ContainerEditFragment f = new ContainerEditFragment();
+        Bundle b = new Bundle();
+        b.putInt("pos", position);
 
-    public String getDescription() {
-        return etDescription.getText().toString();
+        f.setArguments(b);
+
+        return f;
     }
 
     @Override
@@ -196,14 +181,7 @@ public class ActivityStepsAdapter extends PagerAdapter implements View.OnClickLi
                 imageChanging = 3;
                 break;
         }
-        Utils.createCropCamera(false).start(context);
+        Utils.createCropCamera(false).start(getActivity());
     }
 
-    public void updateBitmap(Bitmap bitmap){
-        if (imageChanging>-1){
-            if (images[imageChanging]!=null)
-                images[imageChanging].setImageBitmap(bitmap);
-            imageChanging = -1;
-        }
-    }
 }
