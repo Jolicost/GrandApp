@@ -57,8 +57,8 @@ public class SingleShotLocationProvider {
 
     // consider returning Location instead of this dummy wrapper class
     public static class GPSCoordinates {
-        public float longitude = -1;
-        public float latitude = -1;
+        public double longitude = -1;
+        public double latitude = -1;
 
         public GPSCoordinates(float theLatitude, float theLongitude) {
             longitude = theLongitude;

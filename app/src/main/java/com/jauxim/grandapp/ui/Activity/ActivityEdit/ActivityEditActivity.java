@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
@@ -29,7 +30,7 @@ import butterknife.OnClick;
 
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_DESCRIPTION;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_IMAGES;
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PEOPLE_LOCATION;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_LOCATION;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PREVIEW;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TIME;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TITLE;
@@ -55,6 +56,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private String title;
     private String description;
+    private SingleShotLocationProvider.GPSCoordinates coordinates;
 
     private ActivityEditPresenter presenter;
 
@@ -165,6 +167,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         ActivityModel model = new ActivityModel();
         model.setTitle(title);
         model.setDescription(description);
+        model.setLatitude(coordinates.latitude);
+        model.setLongitude(coordinates.longitude);
         presenter.createActivityInfo(model);
     }
 
@@ -206,17 +210,16 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private boolean saveActualState() {
         //switch ()
-        if (true) return true;
         switch (viewPager.getCurrentItem() - 1) {
             case STEP_TITLE:
-                //title = activityAdapter.getTitle();
+                title = getInputTitle();
                 if (TextUtils.isEmpty(title) || title.length() < 5) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
                     return false;
                 }
                 return true;
             case STEP_DESCRIPTION:
-                //description = activityAdapter.getDescription();
+                description = getInputDescription();
                 if (TextUtils.isEmpty(description) || description.length() < 5) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
                     return false;
@@ -224,7 +227,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 return true;
             case STEP_IMAGES:
                 break;
-            case STEP_PEOPLE_LOCATION:
+            case STEP_LOCATION:
+                coordinates = getInputCoordinates();
+                if (coordinates == null) {
+                    Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
+                    return false;
+                }
                 break;
             case STEP_TIME:
                 break;
@@ -246,16 +254,29 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             super(fm);
         }
 
+        ContainerEditFragment titleFragment;
+        ContainerEditFragment descriptionFragment;
+        ContainerEditFragment locationFragment;
+
         @Override
         public Fragment getItem(int pos) {
-            switch(pos) {
+            switch (pos) {
 
-                case 0: return ContainerEditFragment.newInstance(0);
-                case 1: return ContainerEditFragment.newInstance(1);
-                case 2: return ContainerEditFragment.newInstance(2);
-                case 3: return ContainerEditFragment.newInstance(3);
-                case 4: return ContainerEditFragment.newInstance(4);
-                default: return ContainerEditFragment.newInstance(5);
+                case STEP_TITLE:
+                    titleFragment = ContainerEditFragment.newInstance(STEP_TITLE);
+                    return titleFragment;
+                case STEP_DESCRIPTION:
+                    descriptionFragment = ContainerEditFragment.newInstance(STEP_DESCRIPTION);
+                    return descriptionFragment;
+                case STEP_IMAGES:
+                    return ContainerEditFragment.newInstance(STEP_IMAGES);
+                case STEP_LOCATION:
+                    locationFragment = ContainerEditFragment.newInstance(STEP_LOCATION);
+                    return locationFragment;
+                case STEP_TIME:
+                    return ContainerEditFragment.newInstance(STEP_TIME);
+                default:
+                    return ContainerEditFragment.newInstance(5);
             }
         }
 
@@ -263,5 +284,41 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         public int getCount() {
             return 5;
         }
+
+        public String getTitle() {
+            if (titleFragment != null)
+                return titleFragment.getTitle();
+            return null;
+        }
+
+        public String getDescription() {
+            if (descriptionFragment != null)
+                return descriptionFragment.getDescription();
+            return null;
+        }
+
+        public SingleShotLocationProvider.GPSCoordinates getLocation() {
+            if (locationFragment != null)
+                return locationFragment.getLocation();
+            return null;
+        }
+    }
+
+    private String getInputTitle() {
+        if (activityPageAdapter != null)
+            return activityPageAdapter.getTitle();
+        return "";
+    }
+
+    private String getInputDescription() {
+        if (activityPageAdapter != null)
+            return activityPageAdapter.getDescription();
+        return "";
+    }
+
+    private SingleShotLocationProvider.GPSCoordinates getInputCoordinates() {
+        if (activityPageAdapter != null)
+            return activityPageAdapter.getLocation();
+        return null;
     }
 }

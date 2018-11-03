@@ -42,7 +42,7 @@ public class Utils {
         return "";
     }
 
-    public static float getAbsoluteDistance(Double lat1, Double lon1, float lat2, float lon2) {
+    public static float getAbsoluteDistance(Double lat1, Double lon1, double lat2, double lon2) {
         Location loc1 = new Location("");
         loc1.setLatitude(lat1);
         loc1.setLongitude(lon1);

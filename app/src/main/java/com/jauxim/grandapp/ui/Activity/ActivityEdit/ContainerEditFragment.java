@@ -3,7 +3,6 @@ package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +24,8 @@ import com.jauxim.grandapp.Utils.Utils;
 
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_DESCRIPTION;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_IMAGES;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_LOCATION;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_MISCELANIA;
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PEOPLE_LOCATION;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PREVIEW;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TIME;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TITLE;
@@ -37,9 +36,12 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
 
     private TextView etTitle;
     private TextView etDescription;
-    private ImageView [] images = new ImageView[4];
+    private ImageView[] images = new ImageView[4];
     private SupportMapFragment mapFragment;
     private MapView gMapView;
+
+    private double actualLatitude;
+    private double actualLongitude;
 
     private int imageChanging = -1;
 
@@ -47,7 +49,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         int STEP_TITLE = 0;
         int STEP_DESCRIPTION = 1;
         int STEP_IMAGES = 2;
-        int STEP_PEOPLE_LOCATION = 3;
+        int STEP_LOCATION = 3;
         int STEP_TIME = 4;
         int STEP_MISCELANIA = 5;
         int STEP_PREVIEW = 6;
@@ -99,7 +101,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 images[2] = view.findViewById(R.id.ivImage3);
                 images[3] = view.findViewById(R.id.ivImage4);
 
-                for (ImageView image:images)
+                for (ImageView image : images)
                     image.setOnClickListener(this);
 
                 vTitle.setVisibility(View.GONE);
@@ -111,7 +113,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vPreview.setVisibility(View.GONE);
 
                 break;
-            case STEP_PEOPLE_LOCATION:
+            case STEP_LOCATION:
                 mapFragment = new SupportMapFragment();
 
                 //Utils.changeMapFragment((AppCompatActivity) getActivity(), R.id.geoFencingMapFragment, mapFragment, "GeoFetchingMapFragment");
@@ -120,17 +122,25 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 gMapView.onCreate(savedInstanceState);
                 gMapView.getMapAsync(new OnMapReadyCallback() {
                     @Override
-                    public void onMapReady(GoogleMap googleMap) {
+                    public void onMapReady(final GoogleMap googleMap) {
                         SingleShotLocationProvider.GPSCoordinates coord = DataUtils.getLocation(getActivity());
-                        if (coord!=null) {
-                            Log.d("coordEdit", "coord are not null: "+coord.latitude+", "+coord.longitude);
+                        if (coord != null) {
+                            Log.d("coordEdit", "coord are not null: " + coord.latitude + ", " + coord.longitude);
                             googleMap.setMinZoomPreference(10);
                             LatLng ny = new LatLng(coord.latitude, coord.longitude);
                             googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(coord.latitude, coord.longitude), 15.0f));
-                        }else{
+                        } else {
                             Log.d("coordEdit", "coord are null: ");
                         }
+
+                        googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+                            @Override
+                            public void onCameraMove() {
+                                actualLatitude = googleMap.getCameraPosition().target.latitude;
+                                actualLongitude = googleMap.getCameraPosition().target.longitude;
+                            }
+                        });
                     }
                 });
 
@@ -198,7 +208,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ivImage1:
                 imageChanging = 0;
                 break;
@@ -225,7 +235,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             outState.putBundle("map", mapViewBundle);
         }
 
-        if (gMapView!=null)
+        if (gMapView != null)
             gMapView.onSaveInstanceState(mapViewBundle);
     }
 
@@ -233,40 +243,63 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
-        if (gMapView!=null)
+        if (gMapView != null)
             gMapView.onResume();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (gMapView!=null)
+        if (gMapView != null)
             gMapView.onStart();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (gMapView!=null)
+        if (gMapView != null)
             gMapView.onStop();
     }
+
     @Override
     public void onPause() {
-        if (gMapView!=null)
+        if (gMapView != null)
             gMapView.onPause();
         super.onPause();
     }
+
     @Override
     public void onDestroy() {
-        if (gMapView!=null)
+        if (gMapView != null)
             gMapView.onDestroy();
         super.onDestroy();
     }
+
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        if (gMapView!=null)
+        if (gMapView != null)
             gMapView.onLowMemory();
+    }
+
+    public String getTitle() {
+        if (etTitle != null)
+            return etTitle.getText().toString();
+        return null;
+    }
+
+    public String getDescription() {
+        if (etDescription != null)
+            return etDescription.getText().toString();
+        return null;
+    }
+
+    public SingleShotLocationProvider.GPSCoordinates getLocation() {
+        //activity won't never be on the sea
+        if (actualLatitude != 0 && actualLongitude != 0) {
+            return new SingleShotLocationProvider.GPSCoordinates(actualLatitude, actualLongitude);
+        }
+        return null;
     }
 
 }
