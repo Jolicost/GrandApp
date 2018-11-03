@@ -34,11 +34,11 @@ public class ActivityModel {
     @Expose
     private Long rating;
 
-    @SerializedName("latitude")
+    @SerializedName("lat")
     @Expose
     private Double latitude;
 
-    @SerializedName("longitude")
+    @SerializedName("long")
     @Expose
     private Double longitude;
 

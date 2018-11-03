@@ -127,8 +127,6 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                         if (coord != null) {
                             Log.d("coordEdit", "coord are not null: " + coord.latitude + ", " + coord.longitude);
                             googleMap.setMinZoomPreference(10);
-                            LatLng ny = new LatLng(coord.latitude, coord.longitude);
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(coord.latitude, coord.longitude), 15.0f));
                         } else {
                             Log.d("coordEdit", "coord are null: ");

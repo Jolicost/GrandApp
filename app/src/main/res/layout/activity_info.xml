@@ -177,11 +177,7 @@
 
             </RelativeLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/map3" />
+            <include layout="@layout/layout_map"/>
 
             <TextView
                 android:id="@+id/tvDirection"

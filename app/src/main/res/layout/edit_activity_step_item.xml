@@ -202,37 +202,7 @@
                 android:text="@string/title_description"
                 android:textSize="@dimen/description_edit_size" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="20dp">
-
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/soleViewMap"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#AACCAA" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageMarker2"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/circle"
-                    android:gravity="center" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:src="@drawable/circle1"
-                    app:civ_border_color="@color/white"
-                    app:civ_border_width="2dp" />
-
-            </RelativeLayout>
+            <include layout="@layout/layout_map"/>
 
         </LinearLayout>
 
