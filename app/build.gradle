@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'grandapp'
+            storeFile file('grandapp.keystore')
+            storePassword 'grandapp'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.jauxim.grandapp"
@@ -11,14 +19,21 @@ android {
         buildConfigField "String", "BASEURL", "\"https://grandapp.herokuapp.com/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "int", "CACHETIME", "432000" // 5days
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
     buildToolsVersion '27.0.3'
+    productFlavors {
+    }
 }
 
 dependencies {
