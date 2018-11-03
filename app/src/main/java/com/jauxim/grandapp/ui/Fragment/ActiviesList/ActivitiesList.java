@@ -88,7 +88,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activityesRecyclerView.setAdapter(mAdapter);
 
         final ActivityListPresenter presenter = new ActivityListPresenter(service, this);
-        //presenter.getActivityList();
+        presenter.getActivityList();
 
 
         srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
