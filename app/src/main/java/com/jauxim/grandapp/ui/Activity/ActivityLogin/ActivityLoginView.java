@@ -7,11 +7,13 @@ public interface ActivityLoginView {
 
     void onFailure(String appErrorMessage);
 
-    void showUserError();
+    void showUserError(int user_error);
 
-    void showPassError();
+    void showPassError(int pass_error);
 
-    void showLoginError();
+    void showLoginError(int login_error);
 
     void startMainActivity();
+
+    void showLoginSuccess(int login_success);
 }

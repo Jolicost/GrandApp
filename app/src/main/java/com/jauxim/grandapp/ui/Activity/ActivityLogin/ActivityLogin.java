@@ -72,27 +72,31 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void showUserError() {
+    public void showUserError(int user_error) {
         removeWait();
-        username.setError("Enter username");
+        username.setError(getString(user_error));
     }
 
     @Override
-    public void showPassError() {
+    public void showPassError(int pass_error) {
         removeWait();
-        password.setError("Enter password");
+        password.setError(getString(pass_error));
     }
 
     @Override
-    public void showLoginError() {
+    public void showLoginError(int login_error) {
         removeWait();
-        Toast.makeText(this, "Login failed", LENGTH_SHORT).show();
+        Dialog.createDialog(this).title(getString(login_error)).description(getString(login_error)).build();
+    }
+
+    @Override
+    public void showLoginSuccess(int login_success) {
+        removeWait();
+        Dialog.createDialog(this).title(getString(login_success)).description(getString(login_success)).build();
     }
 
     @Override
     public void startMainActivity() {
-        removeWait();
-        Toast.makeText(this, "Login Success!",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, Main.class);
         startActivity(intent);
     }

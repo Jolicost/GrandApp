@@ -19,19 +19,20 @@ public class ActivityLoginPresenter {
 
     public void login(String user, String pass) {
         if (user.isEmpty()){
-            view.showUserError();
+            view.showUserError(R.string.user_error);
             return;
         }
         if (pass.isEmpty()){
-            view.showPassError();
+            view.showPassError(R.string.pass_error);
             return;
         }
         //boolean correct = x.login(user,pass);
         boolean correct = (user.equals("raul")&& pass.equals("1234"));
         if (correct) {
+            view.showLoginSuccess(R.string.login_success);
             view.startMainActivity();
             return;
         }
-        view.showLoginError();
+        view.showLoginError(R.string.login_error);
     }
 }
