@@ -1,5 +1,7 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,6 +24,7 @@ import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.Utils.Utils;
 
+import static android.app.Activity.RESULT_OK;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_DESCRIPTION;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_IMAGES;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_LOCATION;
@@ -220,7 +223,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 imageChanging = 3;
                 break;
         }
-        Utils.createCropCamera(false).start(getActivity());
+        Utils.createCropCamera(false).start(getActivity(), this);
     }
 
     @Override
@@ -299,5 +302,27 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         }
         return null;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    Bitmap bitmap = Utils.getBitmapFromUri(getActivity(), result.getUri());
+                    if (imageChanging>-1){
+                        if (images[imageChanging]!=null)
+                            images[imageChanging].setImageBitmap(bitmap);
+                        imageChanging = -1;
+                    }
+
+                } catch (Exception e) {
+                }
+            } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            }
+        }
+    }
+
 
 }
