@@ -24,6 +24,9 @@ import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.Utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.app.Activity.RESULT_OK;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_DESCRIPTION;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_IMAGES;
@@ -40,6 +43,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     private TextView etTitle;
     private TextView etDescription;
     private ImageView[] images = new ImageView[4];
+    private Bitmap[] bitmaps = new Bitmap[4];
     private SupportMapFragment mapFragment;
     private MapView gMapView;
 
@@ -303,6 +307,17 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         return null;
     }
 
+    public List<Bitmap> getImages(){
+        List<Bitmap> bitmapList = new ArrayList<>();
+        if (bitmaps!=null){
+            for (Bitmap bitmap:bitmaps){
+                if (bitmap!=null)
+                    bitmapList.add(bitmap);
+            }
+        }
+        return bitmapList;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -310,19 +325,16 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 try {
-                    Bitmap bitmap = Utils.getBitmapFromUri(getActivity(), result.getUri());
-                    if (imageChanging>-1){
-                        if (images[imageChanging]!=null)
-                            images[imageChanging].setImageBitmap(bitmap);
+                    if (imageChanging > -1) {
+                        bitmaps[imageChanging] = Utils.getBitmapFromUri(getActivity(), result.getUri());
+                        if (images[imageChanging] != null)
+                            images[imageChanging].setImageBitmap(bitmaps[imageChanging]);
                         imageChanging = -1;
                     }
-
                 } catch (Exception e) {
                 }
             } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
             }
         }
     }
-
-
 }

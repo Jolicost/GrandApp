@@ -38,6 +38,9 @@
     <string name="invalid_description_title">Invalid Description</string>
     <string name="invalid_description_description">Description is too short or is empy. Please try it again</string>
 
+    <string name="invalid_images_title">Invalid Images</string>
+    <string name="invalid_images_description">There isn\'t any taken photo. Please take one and try it again</string>
+
     <string name="invalid_location_title">Invalid Location</string>
     <string name="invalid_location_description">Location is invalid. please, move the map and try it again</string>
 

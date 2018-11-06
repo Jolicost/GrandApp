@@ -22,6 +22,8 @@ import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -57,6 +59,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     private String title;
     private String description;
     private SingleShotLocationProvider.GPSCoordinates coordinates;
+    private List<Bitmap> bitmaps;
 
     private ActivityEditPresenter presenter;
 
@@ -226,6 +229,11 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 }
                 return true;
             case STEP_IMAGES:
+                bitmaps = getInputBitmaps();
+                if (bitmaps==null || bitmaps.size()==0) {
+                    Dialog.createDialog(this).title(getString(R.string.invalid_images_title)).description(getString(R.string.invalid_images_description)).build();
+                    return false;
+                }
                 break;
             case STEP_LOCATION:
                 coordinates = getInputCoordinates();
@@ -256,6 +264,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
         ContainerEditFragment titleFragment;
         ContainerEditFragment descriptionFragment;
+        ContainerEditFragment imagesFragment;
         ContainerEditFragment locationFragment;
 
         @Override
@@ -269,7 +278,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                     descriptionFragment = ContainerEditFragment.newInstance(STEP_DESCRIPTION);
                     return descriptionFragment;
                 case STEP_IMAGES:
-                    return ContainerEditFragment.newInstance(STEP_IMAGES);
+                    imagesFragment = ContainerEditFragment.newInstance(STEP_IMAGES);
+                    return imagesFragment;
                 case STEP_LOCATION:
                     locationFragment = ContainerEditFragment.newInstance(STEP_LOCATION);
                     return locationFragment;
@@ -302,6 +312,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 return locationFragment.getLocation();
             return null;
         }
+
+        public List<Bitmap> getBitmaps(){
+            if (imagesFragment != null)
+                return imagesFragment.getImages();
+            return null;
+        }
     }
 
     private String getInputTitle() {
@@ -319,6 +335,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     private SingleShotLocationProvider.GPSCoordinates getInputCoordinates() {
         if (activityPageAdapter != null)
             return activityPageAdapter.getLocation();
+        return null;
+    }
+
+    private List<Bitmap> getInputBitmaps(){
+        if (activityPageAdapter != null)
+            return activityPageAdapter.getBitmaps();
         return null;
     }
 }
