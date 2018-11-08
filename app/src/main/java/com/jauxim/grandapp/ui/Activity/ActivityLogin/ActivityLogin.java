@@ -14,6 +14,9 @@ import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
+import com.jauxim.grandapp.ui.Activity.Register.Register;
+import com.jauxim.grandapp.ui.Activity.Register.RegisterPresenter;
+import com.jauxim.grandapp.ui.Activity.Register.RegisterView;
 
 import javax.inject.Inject;
 
@@ -37,6 +40,9 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @BindView(R.id.loginbutton)
     Button loginbutton;
 
+    @BindView(R.id.registerbutton)
+    Button registerbutton;
+
     ActivityLoginPresenter presenter;
 
     @Override
@@ -56,6 +62,12 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
             showWait();
             presenter.login(user, pass);
         }
+    }
+
+    @OnClick(R.id.registerbutton)
+    public void registerClick(){
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
     }
 
     @Override

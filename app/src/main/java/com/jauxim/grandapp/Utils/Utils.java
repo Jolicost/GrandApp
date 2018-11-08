@@ -50,6 +50,7 @@ public class Utils {
         return loc1.distanceTo(loc2);
     }
 
+    /*
     public static String getWalkingDistance(final double lat1, final double lon1, final double lat2, final double lon2) {
         final String[] parsedDistance = {null};
         final String[] response = {null};
@@ -102,6 +103,7 @@ public class Utils {
 
         return parsedDistance[0];
     }
+    */
 
     public static String getCountDownTime(Long millis) {
         Long diff = System.currentTimeMillis() - millis;

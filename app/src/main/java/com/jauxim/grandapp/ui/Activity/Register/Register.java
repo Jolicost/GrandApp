@@ -24,23 +24,20 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
     @BindView(R.id.re_username)
     EditText username;
 
+    @BindView(R.id.re_email)
+    EditText email;
+
     @BindView(R.id.re_password)
     EditText password;
 
     @BindView(R.id.re_password2)
     EditText password2;
 
-    @BindView(R.id.re_button)
-    Button re_button;
-
     @BindView(R.id.re_completeName)
     EditText re_completeName;
 
-    @BindView(R.id.re_age)
-    EditText re_age;
-
-    @BindView(R.id.re_birth)
-    EditText re_birth;
+    @BindView(R.id.re_button)
+    Button re_button;
 
     RegisterPresenter presenter;
 
@@ -50,11 +47,10 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
         setContentView(R.layout.register_app);
 
         username = findViewById(R.id.re_username);
+        email = findViewById(R.id.re_email);
         password = findViewById(R.id.re_password);
         password2 = findViewById(R.id.re_password2);
         re_completeName = findViewById(R.id.re_completeName);
-        re_age = findViewById(R.id.re_age);
-        re_birth = findViewById(R.id.re_birth);
 
         re_button = findViewById(R.id.re_button);
         re_button.setOnClickListener(this);
@@ -66,12 +62,11 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
     public void onClick(View v) {
         showWait();
         String user = username.getText().toString();
+        String user_email = email.getText().toString();
         String pass = password.getText().toString();
         String pass2 = password2.getText().toString();
         String compName = re_completeName.getText().toString();
-        String age = re_age.getText().toString();
-        String birthdate = re_birth.getText().toString();
-        presenter.register(user,pass,pass2, compName, age, birthdate);
+        presenter.register(user,user_email,pass,pass2,compName);
     }
 
     @Override
@@ -96,21 +91,33 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
     }
 
     @Override
+    public void showEmailError(int email_error) {
+        removeWait();
+        email.setError(getString(email_error));
+    }
+
+    @Override
     public void showPassError(int pass_error) {
         removeWait();
         password.setError(getString(pass_error));
     }
 
     @Override
-    public void showLoginError(int login_error) {
+    public void showPass2Error(int pass2_error) {
         removeWait();
-        Dialog.createDialog(this).title(getString(login_error)).description(getString(login_error)).build();
+        password2.setError(getString(pass2_error));
     }
 
     @Override
-    public void showLoginSuccess(int login_success) {
+    public void showRegisterError(int register_error) {
         removeWait();
-        Dialog.createDialog(this).title(getString(login_success)).description(getString(login_success)).build();
+        Dialog.createDialog(this).title(getString(register_error)).description(getString(register_error)).build();
+    }
+
+    @Override
+    public void showRegisterSuccess(int register_success) {
+        removeWait();
+        Dialog.createDialog(this).title(getString(register_success)).description(getString(register_success)).build();
     }
 
     @Override
