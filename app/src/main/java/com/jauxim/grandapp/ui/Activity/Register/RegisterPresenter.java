@@ -1,7 +1,5 @@
 package com.jauxim.grandapp.ui.Activity.Register;
 
-import android.util.Log;
-
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
@@ -41,14 +39,10 @@ public class RegisterPresenter {
         }
 
         view.showWait();
-        Log.i("1", user);
-        Log.i("2", pass);
-        Log.i("3", email);
         Service.RegisterCallback registerCallback = new Service.RegisterCallback(){
             @Override
             public void onSuccess(UserModel userModel) {
                 view.removeWait();
-                view.startMainActivity();
             }
 
             @Override
@@ -58,7 +52,7 @@ public class RegisterPresenter {
             }
 
         };
-        Subscription subscription = service.postNewUser(user, pass, email, registerCallback );
+        Subscription subscription = service.postNewUser(user, pass, email, registerCallback);
 
         subscriptions.add(subscription);
     }
@@ -67,8 +61,4 @@ public class RegisterPresenter {
     public void onStop() {
         subscriptions.unsubscribe();
     }
-        //do a GET of the username (if it already exists, trow an error)
-        //do a POST of the user information
-        //if it returns without an error, call the login function
-        //else if it return with an error trow an error
 }
