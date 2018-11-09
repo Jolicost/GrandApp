@@ -4,6 +4,7 @@ package com.jauxim.grandapp.networking;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.CityListResponse;
+import com.jauxim.grandapp.models.UserModel;
 
 import java.util.List;
 
@@ -13,9 +14,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
-/**
- * Created by ennur on 6/25/16.
- */
+
 public interface NetworkService {
 
     @GET("v1/city")
@@ -29,4 +28,7 @@ public interface NetworkService {
 
     @GET("/activities")
     Observable<List<ActivityListItemModel>> getActivityList();
+
+    @POST("/users?username={user_name}&password={password}&email={email}")
+    Observable<UserModel> postNewUser(@Path("user_name") String user_name, @Path("password") String password, @Path("email") String email);
 }

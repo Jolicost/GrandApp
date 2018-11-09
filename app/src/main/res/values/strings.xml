@@ -45,4 +45,12 @@
     <string name="invalid_location_description">Location is invalid. please, move the map and try it again</string>
 
     <string name="title_activity_maps">Map</string>
+    <string name="user_error">Enter username</string>
+    <string name="pass_error">Enter a valid password</string>
+    <string name="pass2_error">The passwords does not match</string>
+    <string name="login_error">Login Failed</string>
+    <string name="login_success">Login Success</string>
+    <string name="welcomeRegister">WELCOME !</string>
+    <string name="email_error">Enter a valid email</string>
+
 </resources>

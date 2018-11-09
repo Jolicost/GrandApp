@@ -11,9 +11,17 @@ public class DataUtils {
     private static String KEY_USER_SHARED_PREFERENCES = "key_user_preferences";
     private static String KEY_LATITUDE = "user_latitude";
     private static String KEY_LONGITUDE = "user_longitude";
+    private static String AUTHTOKEN = "auth_token";
 
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(KEY_USER_SHARED_PREFERENCES, MODE_PRIVATE);
+    }
+
+    private static void deleteSharedPreferencesKey(Context context, String key){
+        SharedPreferences mySPrefs = getSharedPreferences(context);
+        SharedPreferences.Editor editor = mySPrefs.edit();
+        editor.remove(key);
+        editor.apply();
     }
 
     private static void setString(Context context, String key, String value) {
@@ -62,6 +70,18 @@ public class DataUtils {
         if (getFloat(context, KEY_LATITUDE)==null || getFloat(context, KEY_LONGITUDE)==null)
             return null;
         return new SingleShotLocationProvider.GPSCoordinates(getFloat(context, KEY_LATITUDE), getFloat(context, KEY_LONGITUDE));
+    }
+
+    public static String getAuthToken(Context context){
+        return getString(context, AUTHTOKEN);
+    }
+
+    public static void setAuthToken(Context context, String value){
+        setString(context, AUTHTOKEN, value);
+    }
+
+    public static void deleteAuthToken(Context context){
+        deleteSharedPreferencesKey(context,AUTHTOKEN);
     }
 
 }

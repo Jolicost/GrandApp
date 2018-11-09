@@ -3,6 +3,7 @@ package com.jauxim.grandapp.deps;
 
 import com.jauxim.grandapp.networking.NetworkModule;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
+import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
@@ -21,4 +22,5 @@ public interface Deps {
     void inject(ActivityInfo activityInfo);
     void inject(ActivitiesList activityInfo);
     void inject(ActivityEditActivity activityEditActivity);
+    void inject(ActivityLogin activityLogin);
 }

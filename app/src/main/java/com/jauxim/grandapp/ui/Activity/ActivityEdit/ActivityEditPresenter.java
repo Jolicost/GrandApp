@@ -7,9 +7,6 @@ import com.jauxim.grandapp.networking.Service;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-/**
- * Created by ennur on 6/25/16.
- */
 public class ActivityEditPresenter {
     private final Service service;
     private final ActivityEditView view;

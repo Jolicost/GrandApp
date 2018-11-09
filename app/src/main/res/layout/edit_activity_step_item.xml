@@ -138,9 +138,9 @@
                         android:id="@+id/ivImage1"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/photo_size"
+                        android:minWidth="@dimen/photo_size"
                         android:layout_margin="4dp"
-                        android:background="@drawable/background_camera"
-                        android:minWidth="@dimen/photo_size" />
+                        android:background="@drawable/background_camera" />
 
                     <ImageView
                         android:id="@+id/ivImage2"
