@@ -58,6 +58,8 @@ public class ActivityModel {
     @Expose
     private List<String> images;
 
+    private List<String> imagesBase64;
+
     public String getId() {
         return id;
     }
@@ -146,11 +148,19 @@ public class ActivityModel {
         this.capacity = capacity;
     }
 
-    public List<String> getImages() {
+    public List<String> getImagesUrl() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImagesUrl(List<String> images) {
         this.images = images;
+    }
+
+    public List<String> getImagesBase64() {
+        return imagesBase64;
+    }
+
+    public void setImagesBase64(List<String> imagesBase64) {
+        this.imagesBase64 = imagesBase64;
     }
 }

@@ -1,8 +1,6 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,11 +15,11 @@ import android.widget.Button;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
-import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -59,8 +57,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     private String title;
     private String description;
     private SingleShotLocationProvider.GPSCoordinates coordinates;
-    private List<Bitmap> images;
-    private List<String> imagesUrl;
+    private List<String> imagesBase64;
 
     private ActivityEditPresenter presenter;
 
@@ -159,11 +156,9 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         model.setDescription(description);
         model.setLatitude(coordinates.latitude);
         model.setLongitude(coordinates.longitude);
+        model.setImagesUrl(new ArrayList<String>());
+        model.setImagesBase64(imagesBase64);
         presenter.createActivityInfo(model);
-        for (Bitmap imageBitmap : images){
-            String base64Image =  Utils.getBase64(imageBitmap);
-            presenter.updateImage(base64Image);
-        }
     }
 
     @OnClick(R.id.bNext)
@@ -199,8 +194,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 }
                 return true;
             case STEP_IMAGES:
-                images = getInputBitmaps();
-                if (images==null || images.size()==0) {
+                imagesBase64 = getInputBase64Images();
+                if (imagesBase64==null || imagesBase64.size()==0) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_images_title)).description(getString(R.string.invalid_images_description)).build();
                     return false;
                 }
@@ -283,7 +278,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             return null;
         }
 
-        public List<Bitmap> getBitmaps(){
+        public List<String> getBitmaps(){
             if (imagesFragment != null)
                 return imagesFragment.getImages();
             return null;
@@ -308,7 +303,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         return null;
     }
 
-    private List<Bitmap> getInputBitmaps(){
+    private List<String> getInputBase64Images(){
         if (activityPageAdapter != null)
             return activityPageAdapter.getBitmaps();
         return null;

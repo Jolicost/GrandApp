@@ -16,10 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
-import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
-import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
-import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
@@ -65,6 +62,12 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @BindView(R.id.image2)
     ImageView image2;
+
+    @BindView(R.id.image3)
+    ImageView image3;
+
+    @BindView(R.id.image4)
+    ImageView image4;
 
     private String activityId;
     private MapView gMapView;
@@ -127,12 +130,21 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         tvDirection.setText(activityModel.getAddress());
         rbValue.setRating(activityModel.getRating());
 
-        List<String> urls = activityModel.getImages();
+        List<String> urls = activityModel.getImagesUrl();
         if (urls!=null){
-            if (urls.size()>=1)
+            if (urls.size()>=1) {
+                image1.setVisibility(View.VISIBLE);
                 Glide.with(this).load(urls.get(0)).into(image1);
-            if (urls.size()>=2)
+            }if (urls.size()>=2) {
+                image2.setVisibility(View.VISIBLE);
                 Glide.with(this).load(urls.get(1)).into(image2);
+            }if (urls.size()>=3) {
+                image3.setVisibility(View.VISIBLE);
+                Glide.with(this).load(urls.get(2)).into(image3);
+            }if (urls.size()>=4) {
+                image4.setVisibility(View.VISIBLE);
+                Glide.with(this).load(urls.get(3)).into(image4);
+            }
         }
 
         if (gMapView!=null) {

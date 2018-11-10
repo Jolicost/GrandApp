@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     private TextView etTitle;
     private TextView etDescription;
     private ImageView[] images = new ImageView[4];
-    private Bitmap[] bitmaps = new Bitmap[4];
+    private String[] imagesBase64 = new String[4];
     private MapView gMapView;
 
     private double actualLatitude;
@@ -302,15 +303,15 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         return null;
     }
 
-    public List<Bitmap> getImages(){
-        List<Bitmap> bitmapList = new ArrayList<>();
-        if (bitmaps!=null){
-            for (Bitmap bitmap:bitmaps){
-                if (bitmap!=null)
-                    bitmapList.add(bitmap);
+    public List<String> getImages(){
+        List<String> imagesBase64List = new ArrayList<>();
+        if (imagesBase64!=null){
+            for (String base64:imagesBase64){
+                if (!TextUtils.isEmpty(base64))
+                    imagesBase64List.add(base64);
             }
         }
-        return bitmapList;
+        return imagesBase64List;
     }
 
     @Override
@@ -321,9 +322,10 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 try {
                     if (imageChanging > -1) {
-                        bitmaps[imageChanging] = Utils.getBitmapFromUri(getActivity(), result.getUri());
+                        Bitmap bitmap = Utils.getBitmapFromUri(getActivity(), result.getUri());
+                        imagesBase64[imageChanging] = Utils.getBase64(bitmap);
                         if (images[imageChanging] != null)
-                            images[imageChanging].setImageBitmap(bitmaps[imageChanging]);
+                            images[imageChanging].setImageBitmap(bitmap);
                         imageChanging = -1;
                     }
                 } catch (Exception e) {
