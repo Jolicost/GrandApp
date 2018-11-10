@@ -44,7 +44,6 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     private TextView etDescription;
     private ImageView[] images = new ImageView[4];
     private Bitmap[] bitmaps = new Bitmap[4];
-    private SupportMapFragment mapFragment;
     private MapView gMapView;
 
     private double actualLatitude;
@@ -121,10 +120,6 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
 
                 break;
             case STEP_LOCATION:
-                mapFragment = new SupportMapFragment();
-
-                //Utils.changeMapFragment((AppCompatActivity) getActivity(), R.id.geoFencingMapFragment, mapFragment, "GeoFetchingMapFragment");
-
                 gMapView = view.findViewById(R.id.soleViewMap);
                 gMapView.onCreate(savedInstanceState);
                 gMapView.getMapAsync(new OnMapReadyCallback() {

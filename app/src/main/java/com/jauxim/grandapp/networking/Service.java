@@ -3,6 +3,8 @@ package com.jauxim.grandapp.networking;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.CityListResponse;
+import com.jauxim.grandapp.models.ImageBase64Model;
+import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.models.UserModel;
 
 import java.util.List;
@@ -175,6 +177,36 @@ public class Service {
                 });
     }
 
+    public Subscription postImage(ImageBase64Model base64, final ImageCallback callback) {
+        return networkService.postImage(base64)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends ImageUrlModel>>() {
+                    @Override
+                    public Observable<? extends ImageUrlModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<ImageUrlModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(ImageUrlModel base64) {
+                        callback.onSuccess(base64);
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -195,6 +227,12 @@ public class Service {
 
     public interface RegisterCallback {
         void onSuccess(UserModel userModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface ImageCallback {
+        void onSuccess(ImageUrlModel urlImage);
 
         void onError(NetworkError networkError);
     }

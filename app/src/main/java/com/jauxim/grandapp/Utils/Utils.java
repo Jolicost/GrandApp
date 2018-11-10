@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
@@ -21,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
@@ -163,6 +165,26 @@ public class Utils {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(layoutId, fragment, tag);
         fragmentTransaction.commit();
+    }
+
+    public static String getBase64(Bitmap bitmap)
+    {
+        try{
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+            return Base64.encodeToString(byteArray, Base64.NO_WRAP);
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+    }
+
+    public static Bitmap getBitmap(String base64){
+        byte[] decodedString = Base64.decode(base64, Base64.NO_WRAP);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
 }

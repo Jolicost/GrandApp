@@ -4,6 +4,8 @@ package com.jauxim.grandapp.networking;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.CityListResponse;
+import com.jauxim.grandapp.models.ImageBase64Model;
+import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.models.UserModel;
 
 import java.util.List;
@@ -13,7 +15,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
-
 
 public interface NetworkService {
 
@@ -31,4 +32,7 @@ public interface NetworkService {
 
     @POST("/users?username={user_name}&password={password}&email={email}")
     Observable<UserModel> postNewUser(@Path("user_name") String user_name, @Path("password") String password, @Path("email") String email);
+
+    @POST("/imagesJson")
+    Observable<ImageUrlModel> postImage(@Body ImageBase64Model base64Image);
 }

@@ -59,7 +59,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     private String title;
     private String description;
     private SingleShotLocationProvider.GPSCoordinates coordinates;
-    private List<Bitmap> bitmaps;
+    private List<Bitmap> images;
+    private List<String> imagesUrl;
 
     private ActivityEditPresenter presenter;
 
@@ -74,22 +75,6 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         ButterKnife.bind(this);
 
         presenter = new ActivityEditPresenter(service, this);
-
-        /*
-        //TEST POST
-        ActivityModel activityInfo = new ActivityModel();
-        activityInfo.setTitle("prova amb android");
-        activityInfo.setDescription("hola!! això és una prova amb android usant el POST. Avui es diumenge, fa fred i tinc gana. Bona nit");
-        activityInfo.setAddress("carrer del madamás al-halad Haidím, 25 bis 3º-4º");
-        activityInfo.setCapacity(9283l);
-        activityInfo.setImages(new ArrayList<String>());
-        activityInfo.setPrice(4712l);
-        activityInfo.setLatitude(41.3);
-        activityInfo.setLongitude(2.1);
-        activityInfo.setRating(2l);
-        activityInfo.setUserId("userId");
-        presenter.createActivityInfo(activityInfo);
-        */
 
         //activityAdapter = new ActivityStepsAdapter(this);
         //viewPager.setAdapter(activityAdapter);
@@ -167,12 +152,18 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     */
 
     private void updateModel() {
+        //TODO: make async calls and fill urls list
+
         ActivityModel model = new ActivityModel();
         model.setTitle(title);
         model.setDescription(description);
         model.setLatitude(coordinates.latitude);
         model.setLongitude(coordinates.longitude);
         presenter.createActivityInfo(model);
+        for (Bitmap imageBitmap : images){
+            String base64Image =  Utils.getBase64(imageBitmap);
+            presenter.updateImage(base64Image);
+        }
     }
 
     @OnClick(R.id.bNext)
@@ -188,27 +179,6 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @OnClick(R.id.bPrevious)
     void previousButtonClick(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                try {
-                    Bitmap bitmap = Utils.getBitmapFromUri(this, result.getUri());
-                    //if (activityAdapter!=null)
-                    //    activityAdapter.updateBitmap(bitmap);
-                    //TODO: do something with the image, send to the adapter f.e
-                } catch (Exception e) {
-                    Log.e("croppingError", "Error preparing camera: ", e);
-                }
-            } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Log.e("croppingError", "error: " + result.getError());
-            }
-        }
     }
 
     private boolean saveActualState() {
@@ -229,8 +199,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 }
                 return true;
             case STEP_IMAGES:
-                bitmaps = getInputBitmaps();
-                if (bitmaps==null || bitmaps.size()==0) {
+                images = getInputBitmaps();
+                if (images==null || images.size()==0) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_images_title)).description(getString(R.string.invalid_images_description)).build();
                     return false;
                 }
@@ -343,4 +313,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             return activityPageAdapter.getBitmaps();
         return null;
     }
+
+
+
 }
