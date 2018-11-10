@@ -37,6 +37,9 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @BindView(R.id.loginbutton)
     Button loginbutton;
 
+    @BindView(R.id.registerbutton)
+    Button registerbutton;
+
     ActivityLoginPresenter presenter;
 
     @Override
@@ -56,6 +59,11 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
             showWait();
             presenter.login(user, pass);
         }
+    }
+
+    @OnClick(R.id.registerbutton)
+    public void registerClick(){
+        //go to register layout
     }
 
     @Override

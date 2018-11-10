@@ -1,5 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
+import android.content.Context;
+
+import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -23,7 +26,7 @@ public class ActivityInfoPresenter {
 
     public void getActivityInfo(String id) {
         view.showWait();
-
+        String auth = DataUtils.getAuthToken((Context) view);
         Subscription subscription = service.getActivityInfo(id, new Service.ActivityInfoCallback() {
             @Override
             public void onSuccess(ActivityModel activityModel) {
@@ -37,7 +40,7 @@ public class ActivityInfoPresenter {
                 view.onFailure(networkError.getMessage());
             }
 
-        });
+        }, auth);
 
         subscriptions.add(subscription);
     }

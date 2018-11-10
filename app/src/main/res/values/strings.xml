@@ -42,5 +42,9 @@
     <string name="pass_error">Enter password</string>
     <string name="login_error">Login Failed</string>
     <string name="login_success">Login Success</string>
+    <string name="login_button">Login</string>
+    <string name="password_hint">Password</string>
+    <string name="username_hint">Username</string>
+    <string name="register_message">Not a member? Sign up now.</string>
 
 </resources>

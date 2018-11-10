@@ -130,4 +130,9 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         mAdapter.notifyDataSetChanged();
         srlRefresh.setRefreshing(false);
     }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
+    }
 }
