@@ -14,6 +14,9 @@ import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
+import com.jauxim.grandapp.ui.Activity.Register.Register;
+import com.jauxim.grandapp.ui.Activity.Register.RegisterPresenter;
+import com.jauxim.grandapp.ui.Activity.Register.RegisterView;
 
 import javax.inject.Inject;
 
@@ -63,7 +66,8 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
     @OnClick(R.id.bRegister)
     public void registerClick(){
-        //go to register layout
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
     }
 
     @Override

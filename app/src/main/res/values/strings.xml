@@ -39,12 +39,16 @@
     <string name="invalid_description_description">Description is too short or is empy. Please try it again</string>
 
     <string name="user_error">Enter username</string>
-    <string name="pass_error">Enter password</string>
+    <string name="pass_error">Enter a valid password</string>
+    <string name="pass2_error">The passwords does not match</string>
     <string name="login_error">Login Failed</string>
     <string name="login_success">Login Success</string>
     <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
     <string name="password_hint">Password</string>
     <string name="username_hint">Username</string>
     <string name="register_message">Not a member? Sign up now.</string>
+    <string name="welcomeRegister">WELCOME !</string>
+    <string name="email_error">Enter a valid email</string>
 
 </resources>

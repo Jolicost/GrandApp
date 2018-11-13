@@ -23,6 +23,7 @@ import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+import com.jauxim.grandapp.ui.Activity.Register.Register;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
 
 import java.util.List;
@@ -58,7 +59,6 @@ public class Init extends BaseActivity implements InitView {
 
     @OnClick(R.id.bLoginInit)
     public void loginClick(){
-        showWait();
         presenter.redirect_to_login();
     }
 
@@ -90,7 +90,7 @@ public class Init extends BaseActivity implements InitView {
 
     @Override
     public void startRegisterActivity() {
-        Intent intent = new Intent(this, ActivityRegister.class);
+        Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
 

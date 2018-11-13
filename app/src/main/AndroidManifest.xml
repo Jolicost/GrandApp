@@ -26,6 +26,18 @@
         <activity
             android:name=".ui.Activity.ActivityLogin.ActivityLogin"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".ui.Activity.Register.Register"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".ui.Activity.Init.Init"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +45,7 @@
             </intent-filter>
 
         </activity>
+
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
 
         <activity

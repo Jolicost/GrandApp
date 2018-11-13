@@ -177,6 +177,36 @@ public class Service {
     }
 
 
+    public Subscription postNewUser(String username, String password, String email, final RegisterCallback callback) {
+        return networkService.postNewUser(username, password, email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {
+                    @Override
+                    public Observable<? extends UserModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<UserModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(UserModel userModel) {
+                        callback.onSuccess(userModel);
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -197,6 +227,12 @@ public class Service {
 
     public interface ActivityListCallback {
         void onSuccess(List<ActivityListItemModel> activityModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface RegisterCallback {
+        void onSuccess(UserModel userModel);
 
         void onError(NetworkError networkError);
     }

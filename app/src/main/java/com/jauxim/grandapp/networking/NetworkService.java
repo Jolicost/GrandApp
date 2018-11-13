@@ -16,9 +16,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
-/**
- * Created by ennur on 6/25/16.
- */
+
 public interface NetworkService {
 
     @GET("v1/city")
@@ -35,4 +33,7 @@ public interface NetworkService {
 
     @POST("/login")
     Observable<AuthModel> getLoginToken(@Body UserModel userModel,@Header("authorization") String auth);
+
+    @POST("/users?username={user_name}&password={password}&email={email}")
+    Observable<UserModel> postNewUser(@Path("user_name") String user_name, @Path("password") String password, @Path("email") String email);
 }
