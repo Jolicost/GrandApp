@@ -28,17 +28,17 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Inject
     public Service service;
 
-    @BindView(R.id.username)
-    EditText username;
+    @BindView(R.id.etUsername)
+    EditText etUsername;
 
-    @BindView(R.id.password)
-    EditText password;
+    @BindView(R.id.etPassword)
+    EditText etPassword;
 
-    @BindView(R.id.loginbutton)
-    Button loginbutton;
+    @BindView(R.id.bLogin)
+    Button bLogin;
 
-    @BindView(R.id.registerbutton)
-    Button registerbutton;
+    @BindView(R.id.bRegister)
+    Button bRegister;
 
     ActivityLoginPresenter presenter;
 
@@ -51,17 +51,17 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
         presenter = new ActivityLoginPresenter(service, this);
     }
 
-    @OnClick(R.id.loginbutton)
+    @OnClick(R.id.bLogin)
     public void loginClick(){
-        if (username != null && password != null) {
-            String user = username.getText().toString();
-            String pass = password.getText().toString();
+        if (etUsername != null && etPassword != null) {
+            String user = etUsername.getText().toString();
+            String pass = etPassword.getText().toString();
             showWait();
             presenter.login(user, pass);
         }
     }
 
-    @OnClick(R.id.registerbutton)
+    @OnClick(R.id.bRegister)
     public void registerClick(){
         //go to register layout
     }
@@ -84,13 +84,13 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void showUserError(int user_error) {
         removeWait();
-        username.setError(getString(user_error));
+        etUsername.setError(getString(user_error));
     }
 
     @Override
     public void showPassError(int pass_error) {
         removeWait();
-        password.setError(getString(pass_error));
+        etPassword.setError(getString(pass_error));
     }
 
     @Override
