@@ -1,5 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -10,15 +13,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
@@ -26,6 +30,7 @@ import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.Utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -52,6 +57,12 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
 
     private int imageChanging = -1;
 
+    private Long initTiemstamp;
+    private Long endTimestamp;
+
+    private TextView tvDateStart;
+    private TextView tvDateEnd;
+
     public @interface stepsEditActivity {
         int STEP_TITLE = 0;
         int STEP_DESCRIPTION = 1;
@@ -75,6 +86,10 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         View vDate = view.findViewById(R.id.vDate);
         View vMiscelania = view.findViewById(R.id.vMiscelania);
         View vPreview = view.findViewById(R.id.vPreview);
+        View vDateStart = view.findViewById(R.id.vInitDate);
+        View vDateEnd = view.findViewById(R.id.vEndDate);
+        tvDateStart = view.findViewById(R.id.tvInitDate);
+        tvDateEnd = view.findViewById(R.id.tvEndlDate);
 
         switch (position) {
             case STEP_TITLE:
@@ -157,6 +172,26 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
 
                 break;
             case STEP_TIME:
+
+                initDatePicker(System.currentTimeMillis(), true);
+
+                vDateStart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        initDatePicker(System.currentTimeMillis(), true);
+                    }
+                });
+
+                vDateEnd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        initDatePicker(System.currentTimeMillis(), false);
+                    }
+                });
+
+                tvDateStart.setText(getString(R.string.date_not_choosed));
+                tvDateEnd.setText(getString(R.string.date_not_choosed));
+
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
@@ -303,10 +338,10 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         return null;
     }
 
-    public List<String> getImages(){
+    public List<String> getImages() {
         List<String> imagesBase64List = new ArrayList<>();
-        if (imagesBase64!=null){
-            for (String base64:imagesBase64){
+        if (imagesBase64 != null) {
+            for (String base64 : imagesBase64) {
                 if (!TextUtils.isEmpty(base64))
                     imagesBase64List.add(base64);
             }
@@ -333,5 +368,46 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
             }
         }
+    }
+
+    private void initDatePicker(final Long timeStamp, final boolean startTime) {
+        Calendar calendar = Calendar.getInstance();
+        if (timeStamp != null && timeStamp > 0)
+            calendar.setTimeInMillis(timeStamp);
+
+        DatePickerDialog dialogDate = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth, 0, 0);
+                if (startTime) {
+                    initTiemstamp = newDate.getTimeInMillis();
+                } else {
+                    endTimestamp = newDate.getTimeInMillis();
+                }
+            }
+
+        }, calendar.get(Calendar.YEAR), calendar.get(calendar.MONTH), calendar.get(calendar.DAY_OF_MONTH));
+        dialogDate.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                TimePickerDialog dialogTime = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        int millis = (minute*60+hourOfDay*60*60)*1000;
+                        if (startTime) {
+                            initTiemstamp += millis;
+                            if (tvDateStart != null)
+                                tvDateStart.setText(Utils.getFullDataFormat(initTiemstamp));
+                        } else {
+                            endTimestamp += millis;
+                            if (tvDateEnd != null)
+                                tvDateEnd.setText(Utils.getFullDataFormat(endTimestamp));
+                        }
+                    }
+                }, 0, 0, true);
+                dialogTime.show();
+            }
+        });
+        dialogDate.show();
     }
 }

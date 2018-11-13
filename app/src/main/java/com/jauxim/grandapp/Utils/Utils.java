@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.util.Base64;
 
 import com.jauxim.grandapp.R;
@@ -29,6 +30,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Calendar;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -187,4 +189,10 @@ public class Utils {
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
+    public static String getFullDataFormat(Long timestamp) {
+        Calendar timeCalendar = Calendar.getInstance();
+        timeCalendar.setTimeInMillis(timestamp);
+        Calendar now = Calendar.getInstance();
+        return DateFormat.format("MMMM dd yyyy, h:mm aa", timeCalendar).toString();
+    }
 }
