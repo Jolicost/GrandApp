@@ -58,6 +58,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     private String description;
     private SingleShotLocationProvider.GPSCoordinates coordinates;
     private List<String> imagesBase64;
+    private Long timeStart;
+    private Long timeEnd;
 
     private ActivityEditPresenter presenter;
 
@@ -158,6 +160,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         model.setLongitude(coordinates.longitude);
         model.setImagesUrl(new ArrayList<String>());
         model.setImagesBase64(imagesBase64);
+        model.setTimestampStart(timeStart);
+        model.setTimestampEnd(timeEnd);
         presenter.createActivityInfo(model);
     }
 
@@ -177,7 +181,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     }
 
     private boolean saveActualState() {
-        //switch ()
+        if (true) return true;
         switch (viewPager.getCurrentItem() - 1) {
             case STEP_TITLE:
                 title = getInputTitle();
@@ -208,6 +212,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 }
                 break;
             case STEP_TIME:
+                timeStart = getTimeStart();
+                timeEnd = getTimeEnd();
+                if (timeStart==null || timeStart<=System.currentTimeMillis()){
+                    Dialog.createDialog(this).title(getString(R.string.invalid_time_title)).description(getString(R.string.invalid_time_description)).build();
+                    return false;
+                }
                 break;
             case STEP_PREVIEW:
                 break;
@@ -231,6 +241,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         ContainerEditFragment descriptionFragment;
         ContainerEditFragment imagesFragment;
         ContainerEditFragment locationFragment;
+        ContainerEditFragment timeFragment;
 
         @Override
         public Fragment getItem(int pos) {
@@ -249,7 +260,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                     locationFragment = ContainerEditFragment.newInstance(STEP_LOCATION);
                     return locationFragment;
                 case STEP_TIME:
-                    return ContainerEditFragment.newInstance(STEP_TIME);
+                    timeFragment = ContainerEditFragment.newInstance(STEP_TIME);
+                    return timeFragment;
                 default:
                     return ContainerEditFragment.newInstance(5);
             }
@@ -283,6 +295,18 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 return imagesFragment.getImages();
             return null;
         }
+
+        public Long getTimeStart() {
+            if (timeFragment!=null)
+                return timeFragment.getTimeStart();
+            return null;
+        }
+
+        public Long getTimeEnd() {
+            if (timeFragment!=null)
+                return timeFragment.getTimeEnd();
+            return null;
+        }
     }
 
     private String getInputTitle() {
@@ -306,6 +330,18 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     private List<String> getInputBase64Images(){
         if (activityPageAdapter != null)
             return activityPageAdapter.getBitmaps();
+        return null;
+    }
+
+    private Long getTimeStart(){
+        if (activityPageAdapter!=null)
+            return activityPageAdapter.getTimeStart();
+        return null;
+    }
+
+    private Long getTimeEnd(){
+        if (activityPageAdapter !=null)
+            return activityPageAdapter.getTimeEnd();
         return null;
     }
 

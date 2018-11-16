@@ -173,8 +173,6 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 break;
             case STEP_TIME:
 
-                initDatePicker(System.currentTimeMillis(), true);
-
                 vDateStart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -347,6 +345,14 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             }
         }
         return imagesBase64List;
+    }
+
+    public Long getTimeStart() {
+        return initTiemstamp;
+    }
+
+    public Long getTimeEnd(){
+        return endTimestamp;
     }
 
     @Override

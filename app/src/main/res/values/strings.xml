@@ -45,7 +45,10 @@
     <string name="invalid_images_description">There isn\'t any taken photo. Please take one and try it again</string>
 
     <string name="invalid_location_title">Invalid Location</string>
-    <string name="invalid_location_description">Location is invalid. please, move the map and try it again</string>
+    <string name="invalid_location_description">Location is invalid. Please move the map and try it again</string>
+
+    <string name="invalid_time_title">Invalid start time</string>
+    <string name="invalid_time_description">The start time is not choosed or its already past. Please, try it again</string>
 
     <string name="title_activity_maps">Map</string>
     <string name="user_error">Enter username</string>

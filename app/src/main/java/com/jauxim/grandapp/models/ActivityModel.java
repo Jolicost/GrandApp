@@ -58,6 +58,14 @@ public class ActivityModel {
     @Expose
     private List<String> images;
 
+    @SerializedName("timestampStart")
+    @Expose
+    private Long timestampStart;
+
+    @SerializedName("timestampEnd")
+    @Expose
+    private Long timestampEnd;
+
     private List<String> imagesBase64;
 
     public String getId() {
@@ -162,5 +170,21 @@ public class ActivityModel {
 
     public void setImagesBase64(List<String> imagesBase64) {
         this.imagesBase64 = imagesBase64;
+    }
+
+    public Long getTimestampStart() {
+        return timestampStart;
+    }
+
+    public void setTimestampStart(Long timestampStart) {
+        this.timestampStart = timestampStart;
+    }
+
+    public Long getTimestampEnd() {
+        return timestampEnd;
+    }
+
+    public void setTimestampEnd(Long timestampEnd) {
+        this.timestampEnd = timestampEnd;
     }
 }
