@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
@@ -68,6 +69,12 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @BindView(R.id.image4)
     ImageView image4;
+
+    @BindView(R.id.tvInitDate)
+    TextView tvInitDate;
+
+    @BindView(R.id.tvEndlDate)
+    TextView tvEndlDate;
 
     private String activityId;
     private MapView gMapView;
@@ -129,6 +136,18 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         tvRatingValue.setText(activityModel.getRating()+"");
         tvDirection.setText(activityModel.getAddress());
         rbValue.setRating(activityModel.getRating());
+
+        if (activityModel.getTimestampStart()!=null){
+            tvInitDate.setText(Utils.getFullDataFormat(activityModel.getTimestampStart()));
+        }else{
+            tvInitDate.setVisibility(View.GONE);
+        }
+
+        if (activityModel.getTimestampEnd()!=null){
+            tvEndlDate.setText(Utils.getFullDataFormat(activityModel.getTimestampEnd()));
+        }else{
+            tvEndlDate.setVisibility(View.GONE);
+        }
 
         List<String> urls = activityModel.getImagesUrl();
         if (urls!=null){

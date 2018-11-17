@@ -52,6 +52,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @BindView(R.id.bPrevious)
     Button bPrevious;
 
+    static private boolean demo_edit_mode = false;
     //private ActivityStepsAdapter activityAdapter;
 
     private String title;
@@ -156,8 +157,10 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         ActivityModel model = new ActivityModel();
         model.setTitle(title);
         model.setDescription(description);
-        model.setLatitude(coordinates.latitude);
-        model.setLongitude(coordinates.longitude);
+        if (coordinates!=null) {
+            model.setLatitude(coordinates.latitude);
+            model.setLongitude(coordinates.longitude);
+        }
         model.setImagesUrl(new ArrayList<String>());
         model.setImagesBase64(imagesBase64);
         model.setTimestampStart(timeStart);
@@ -181,32 +184,32 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     }
 
     private boolean saveActualState() {
-        if (true) return true;
+        //if (true) return true;
         switch (viewPager.getCurrentItem() - 1) {
             case STEP_TITLE:
                 title = getInputTitle();
-                if (TextUtils.isEmpty(title) || title.length() < 5) {
+                if ((TextUtils.isEmpty(title) || title.length() < 5) && !demo_edit_mode) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
                     return false;
                 }
                 return true;
             case STEP_DESCRIPTION:
                 description = getInputDescription();
-                if (TextUtils.isEmpty(description) || description.length() < 5) {
+                if ((TextUtils.isEmpty(description) || description.length() < 5) && !demo_edit_mode) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
                     return false;
                 }
                 return true;
             case STEP_IMAGES:
                 imagesBase64 = getInputBase64Images();
-                if (imagesBase64==null || imagesBase64.size()==0) {
+                if ((imagesBase64==null || imagesBase64.size()==0) && !demo_edit_mode) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_images_title)).description(getString(R.string.invalid_images_description)).build();
                     return false;
                 }
                 break;
             case STEP_LOCATION:
                 coordinates = getInputCoordinates();
-                if (coordinates == null) {
+                if (coordinates == null && !demo_edit_mode) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_title_title)).description(getString(R.string.invalid_title_description)).build();
                     return false;
                 }
@@ -214,7 +217,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             case STEP_TIME:
                 timeStart = getTimeStart();
                 timeEnd = getTimeEnd();
-                if (timeStart==null || timeStart<=System.currentTimeMillis()){
+                if ((timeStart==null || timeStart<=System.currentTimeMillis()) && !demo_edit_mode){
                     Dialog.createDialog(this).title(getString(R.string.invalid_time_title)).description(getString(R.string.invalid_time_description)).build();
                     return false;
                 }

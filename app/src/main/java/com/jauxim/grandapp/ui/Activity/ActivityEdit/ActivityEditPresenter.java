@@ -59,7 +59,7 @@ public class ActivityEditPresenter {
     }
 
     private void updateImagesRecursive(final ImagesUpdatedCallback callback, final List<String> base64List, final List<String> urlList) {
-        if (base64List.size()==0 ||  (base64List.size()==1 && TextUtils.isEmpty(base64List.get(0)))){
+        if (base64List==null || base64List.size()==0 ||  (base64List.size()==1 && TextUtils.isEmpty(base64List.get(0)))){
             callback.onSuccess(urlList);
             return;
         }
