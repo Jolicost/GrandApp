@@ -1,5 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
+import android.content.Context;
+
+import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -34,7 +37,7 @@ public class ActivityEditPresenter {
                 view.onFailure(networkError.getMessage());
             }
 
-        });
+        }, DataUtils.getAuthToken((Context) view));
 
         subscriptions.add(subscription);
     }

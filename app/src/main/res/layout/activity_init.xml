@@ -5,6 +5,8 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar_header"/>
+
     <Button
         android:id="@+id/bLoginInit"
         android:layout_width="match_parent"

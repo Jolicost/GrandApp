@@ -25,19 +25,19 @@
         </activity>
         <activity
             android:name=".ui.Activity.ActivityLogin.ActivityLogin"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.Design.Light.NoActionBar">
 
         </activity>
 
         <activity
             android:name=".ui.Activity.Register.Register"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.Design.Light.NoActionBar">
 
         </activity>
 
         <activity
             android:name=".ui.Activity.Init.Init"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

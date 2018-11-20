@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,18 +38,18 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @BindView(R.id.etPassword)
     EditText etPassword;
 
-    @BindView(R.id.bLogin)
-    Button bLogin;
+    @BindView(R.id.tilUser)
+    TextInputLayout tilUser;
 
-    @BindView(R.id.bRegister)
-    Button bRegister;
+    @BindView(R.id.tilPassword)
+    TextInputLayout tilPassword;
 
     ActivityLoginPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         getDeps().inject(this);
         presenter = new ActivityLoginPresenter(service, this);
@@ -64,7 +65,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
         }
     }
 
-    @OnClick(R.id.bRegister)
+    @OnClick(R.id.tvRegister)
     public void registerClick(){
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
@@ -88,13 +89,13 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void showUserError(int user_error) {
         removeWait();
-        etUsername.setError(getString(user_error));
+        tilUser.setError(getString(user_error));
     }
 
     @Override
     public void showPassError(int pass_error) {
         removeWait();
-        etPassword.setError(getString(pass_error));
+        tilPassword.setError(getString(pass_error));
     }
 
     @Override
