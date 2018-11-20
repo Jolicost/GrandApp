@@ -35,4 +35,13 @@
         </menu>
     </item>
 
+    <item android:title="Session">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_power_off"
+                android:title="Logout" />
+        </menu>
+    </item>
+
 </menu>

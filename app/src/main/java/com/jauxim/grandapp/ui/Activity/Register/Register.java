@@ -43,8 +43,8 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.register_app);
+        super.onCreate(savedInstanceState);
 
         username = findViewById(R.id.re_username);
         email = findViewById(R.id.re_email);

@@ -16,14 +16,9 @@ public class UserModel {
     @Expose
     private String password;
 
-    @SerializedName("email")
-    @Expose
-    private String email;
-
-    public UserModel(String username, String password, String email){
+    public UserModel(String username, String password){
         this.username = username;
         this.password = password;
-        this.email = email;
     }
 
     public String getPassword() {
@@ -40,13 +35,5 @@ public class UserModel {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,40 +32,40 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Inject
     public Service service;
 
-    @BindView(R.id.username)
-    EditText username;
+    @BindView(R.id.etUsername)
+    EditText etUsername;
 
-    @BindView(R.id.password)
-    EditText password;
+    @BindView(R.id.etPassword)
+    EditText etPassword;
 
-    @BindView(R.id.loginbutton)
-    Button loginbutton;
+    @BindView(R.id.tilUser)
+    TextInputLayout tilUser;
 
-    @BindView(R.id.registerbutton)
-    Button registerbutton;
+    @BindView(R.id.tilPassword)
+    TextInputLayout tilPassword;
 
     ActivityLoginPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         getDeps().inject(this);
         presenter = new ActivityLoginPresenter(service, this);
     }
 
-    @OnClick(R.id.loginbutton)
+    @OnClick(R.id.bLogin)
     public void loginClick(){
-        if (username != null && password != null) {
-            String user = username.getText().toString();
-            String pass = password.getText().toString();
+        if (etUsername != null && etPassword != null) {
+            String user = etUsername.getText().toString();
+            String pass = etPassword.getText().toString();
             showWait();
             presenter.login(user, pass);
         }
     }
 
-    @OnClick(R.id.registerbutton)
+    @OnClick(R.id.tvRegister)
     public void registerClick(){
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
@@ -88,13 +89,13 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void showUserError(int user_error) {
         removeWait();
-        username.setError(getString(user_error));
+        tilUser.setError(getString(user_error));
     }
 
     @Override
     public void showPassError(int pass_error) {
         removeWait();
-        password.setError(getString(pass_error));
+        tilPassword.setError(getString(pass_error));
     }
 
     @Override
@@ -106,12 +107,12 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void showLoginSuccess(int login_success) {
         removeWait();
-        Dialog.createDialog(this).title(getString(login_success)).description(getString(login_success)).build();
     }
 
     @Override
     public void startMainActivity() {
         Intent intent = new Intent(this, Main.class);
         startActivity(intent);
+        finishAffinity();
     }
 }

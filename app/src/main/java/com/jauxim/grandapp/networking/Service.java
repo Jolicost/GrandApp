@@ -2,6 +2,7 @@ package com.jauxim.grandapp.networking;
 
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.AuthModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
@@ -26,8 +27,8 @@ public class Service {
         this.networkService = networkService;
     }
 
-    public Subscription getActivityInfo(String activityId, final ActivityInfoCallback callback) {
-        return networkService.getActivityInfo(activityId)
+    public Subscription getActivityInfo(String activityId, final ActivityInfoCallback callback,String auth) {
+        return networkService.getActivityInfo(activityId, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends ActivityModel>>() {
@@ -56,8 +57,8 @@ public class Service {
                 });
     }
 
-    public Subscription createActivityInfo(ActivityModel activityInfo, final ActivityInfoCallback callback) {
-        return networkService.createActivityInfo(activityInfo)
+    public Subscription createActivityInfo(ActivityModel activityInfo, final ActivityInfoCallback callback,String auth) {
+        return networkService.createActivityInfo(activityInfo,auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends ActivityModel>>() {
@@ -86,8 +87,8 @@ public class Service {
                 });
     }
 
-    public Subscription getActivityList(final ActivityListCallback callback) {
-        return networkService.getActivityList()
+    public Subscription getActivityList(final ActivityListCallback callback,String auth) {
+        return networkService.getActivityList(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {
@@ -116,9 +117,10 @@ public class Service {
                 });
     }
 
-    public Subscription getCityList(final GetCityListCallback callback) {
 
-        return networkService.getCityList()
+    public Subscription getCityList(final GetCityListCallback callback,String auth) {
+
+        return networkService.getCityList(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends CityListResponse>>() {
@@ -146,6 +148,36 @@ public class Service {
                     }
                 });
     }
+
+    public Subscription getLoginToken(UserModel userModel, final LoginCallback callback,String auth) {
+        return networkService.getLoginToken(userModel,auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends AuthModel>>() {
+                    @Override
+                    public Observable<? extends AuthModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<AuthModel>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+                    }
+
+                    @Override
+                    public void onNext(AuthModel authModel) {
+                        callback.onSuccess(authModel);
+                    }
+                });
+    }
+
 
     public Subscription postNewUser(String username, String password, String email, final RegisterCallback callback) {
         return networkService.postNewUser(username, password, email)
@@ -215,6 +247,12 @@ public class Service {
 
     public interface ActivityInfoCallback {
         void onSuccess(ActivityModel activityModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface LoginCallback {
+        void onSuccess(AuthModel authModel);
 
         void onError(NetworkError networkError);
     }

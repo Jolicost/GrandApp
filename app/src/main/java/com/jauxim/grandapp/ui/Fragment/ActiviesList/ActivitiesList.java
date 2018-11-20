@@ -1,5 +1,6 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -126,8 +127,13 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     }
 
     private void updateLocation() {
-        if (getActivity() != null && getActivity() instanceof Main){
-            ((Main)getActivity()).updateLocation();
+        if (getActivity() != null && getActivity() instanceof Main) {
+            ((Main) getActivity()).updateLocation();
         }
+    }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
     }
 }

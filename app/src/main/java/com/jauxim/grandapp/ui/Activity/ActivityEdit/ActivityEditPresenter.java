@@ -1,15 +1,11 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEdit;
 
-import android.text.TextUtils;
-import android.util.Log;
+import android.content.Context;
 
+import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityModel;
-import com.jauxim.grandapp.models.ImageBase64Model;
-import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
-
-import java.util.List;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -25,29 +21,14 @@ public class ActivityEditPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void createActivityInfo(final ActivityModel activityInfo) {
+    public void createActivityInfo(ActivityModel activityInfo) {
         view.showWait();
 
-        updateImagesRecursive(new ImagesUpdatedCallback() {
+        Subscription subscription = service.createActivityInfo(activityInfo, new Service.ActivityInfoCallback() {
             @Override
-            public void onSuccess(List<String> imagesUrl) {
-                activityInfo.setImagesUrl(imagesUrl);
-                Log.d("imagesResponse", "how many? "+activityInfo.getImagesUrl().size());
-                Subscription subscription = service.createActivityInfo(activityInfo, new Service.ActivityInfoCallback() {
-                    @Override
-                    public void onSuccess(ActivityModel activityModel) {
-                        view.removeWait();
-                        view.createActivityInfoSuccess(activityModel);
-                    }
-
-                    @Override
-                    public void onError(NetworkError networkError) {
-                        view.removeWait();
-                        view.onFailure(networkError.getMessage());
-                    }
-
-                });
-                subscriptions.add(subscription);
+            public void onSuccess(ActivityModel activityModel) {
+                view.removeWait();
+                view.createActivityInfoSuccess(activityModel);
             }
 
             @Override
@@ -55,47 +36,13 @@ public class ActivityEditPresenter {
                 view.removeWait();
                 view.onFailure(networkError.getMessage());
             }
-        }, activityInfo.getImagesBase64(), activityInfo.getImagesUrl());
-    }
 
-    private void updateImagesRecursive(final ImagesUpdatedCallback callback, final List<String> base64List, final List<String> urlList) {
-        if (base64List==null || base64List.size()==0 ||  (base64List.size()==1 && TextUtils.isEmpty(base64List.get(0)))){
-            callback.onSuccess(urlList);
-            return;
-        }
+        }, DataUtils.getAuthToken((Context) view));
 
-        final String base64 = base64List.get(0);
-        view.showWait();
-        ImageBase64Model imageBase64Model = new ImageBase64Model();
-        imageBase64Model.setBase64(base64);
-
-        Subscription subscription = service.postImage(imageBase64Model, new Service.ImageCallback() {
-            @Override
-            public void onSuccess(ImageUrlModel imageUrl) {
-                view.removeWait();
-                base64List.remove(0);
-                urlList.add(imageUrl.getImageUrl());
-                updateImagesRecursive(callback, base64List, urlList);
-                Log.d("imagesResponse", "response: "+imageUrl.getImageUrl());
-            }
-
-            @Override
-            public void onError(NetworkError networkError) {
-                view.removeWait();
-                callback.onError(networkError);
-                Log.d("imagesResponse", "error with image: "+networkError.getMessage());
-            }
-        });
         subscriptions.add(subscription);
     }
 
     public void onStop() {
         subscriptions.unsubscribe();
-    }
-
-    public interface ImagesUpdatedCallback {
-        void onSuccess(List<String> imagesUrl);
-
-        void onError(NetworkError networkError);
     }
 }
