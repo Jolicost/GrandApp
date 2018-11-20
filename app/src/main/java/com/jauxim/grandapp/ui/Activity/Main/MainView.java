@@ -24,4 +24,8 @@ public interface MainView {
     void unlockDrawer();
 
     Activity getContext();
+
+    void redirectTologin();
+
+    void showLogoutSuccess(int logout_success);
 }

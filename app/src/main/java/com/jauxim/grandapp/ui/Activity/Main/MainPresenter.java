@@ -1,10 +1,12 @@
 package com.jauxim.grandapp.ui.Activity.Main;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.networking.Service;
@@ -47,5 +49,13 @@ public class MainPresenter {
                     1234);
         }
 
+    }
+
+    public void logout() {
+        view.showWait();
+        DataUtils.deleteAuthToken((Context) view);
+        view.removeWait();
+        view.showLogoutSuccess(R.string.logout_success);
+        view.redirectTologin();
     }
 }

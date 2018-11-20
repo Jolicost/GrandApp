@@ -47,7 +47,7 @@ public class LoginTest {
 
     @Test
     public void shouldShowLoginSuccess() throws Exception {
-        presenter.login("raul", "1234");
+        presenter.login("trump", "america");
         verify(view).startMainActivity();
     }
 

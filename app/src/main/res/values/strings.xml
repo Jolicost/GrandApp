@@ -43,6 +43,7 @@
     <string name="pass2_error">The passwords does not match</string>
     <string name="login_error">Login Failed</string>
     <string name="login_success">Login Success</string>
+    <string name="logout_success">Logout Success</string>
     <string name="login_button">Login</string>
     <string name="register_button">Register</string>
     <string name="password_hint">Password</string>

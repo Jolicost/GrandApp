@@ -24,6 +24,7 @@ import com.jauxim.grandapp.Utils.RxBus;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
 
@@ -138,6 +139,9 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         } else if (id == R.id.nav_send) {
 
         }
+        else if (id == R.id.logout) {
+            presenter.logout();
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -185,6 +189,18 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     @Override
     public Activity getContext() {
         return this;
+    }
+
+    @Override
+    public void redirectTologin() {
+        Intent intent = new Intent(this, ActivityLogin.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showLogoutSuccess(int logout_success) {
+        removeWait();
+        Dialog.createDialog(this).title(getString(logout_success)).description(getString(logout_success)).build();
     }
 
     public void showActivitiesListFragment() {
