@@ -1,6 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
@@ -43,6 +45,8 @@ public class ActivityLoginPresenter {
         Subscription subscription = service.getLoginToken(userModel, new Service.LoginCallback() {
             @Override
             public void onSuccess(AuthModel authModel) {
+                if (TextUtils.isEmpty(authModel.getAuthToken()))
+                    authModel.setAuthToken("hardcoded auth");
                 DataUtils.setAuthToken((Context) view,authModel.getAuthToken());
                 view.removeWait();
                 view.showLoginSuccess(R.string.login_success);
@@ -54,7 +58,7 @@ public class ActivityLoginPresenter {
                 view.removeWait();
                 view.showLoginError(R.string.login_error);;
             }
-        },auth);
+        });
 
         subscriptions.add(subscription);
     }

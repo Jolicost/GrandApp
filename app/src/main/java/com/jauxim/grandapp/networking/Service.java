@@ -149,8 +149,8 @@ public class Service {
                 });
     }
 
-    public Subscription getLoginToken(UserModel userModel, final LoginCallback callback,String auth) {
-        return networkService.getLoginToken(userModel,auth)
+    public Subscription getLoginToken(UserModel userModel, final LoginCallback callback) {
+        return networkService.getLoginToken(userModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends AuthModel>>() {
