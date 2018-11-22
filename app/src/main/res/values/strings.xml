@@ -36,7 +36,7 @@
     <string name="miscelania_description">We are about to finish! Just let us know...  How many people does de activity allow?</string>
 
     <string name="invalid_title_title">Invalid Title</string>
-    <string name="invalid_title_description">Title is too short or is empy. Please try it again</string>
+    <string name="invalid_title_description">Title is too short or is empty. Please try it again</string>
 
     <string name="invalid_description_title">Invalid Description</string>
     <string name="invalid_description_description">Description is too short or is empy. Please try it again</string>
@@ -49,6 +49,12 @@
 
     <string name="invalid_time_title">Invalid start time</string>
     <string name="invalid_time_description">The start time is not choosed or its already past. Please, try it again</string>
+
+    <string name="invalid_capacity_title">Invalid Capacity</string>
+    <string name="invalid_capacity_description">Title is too short or is empty. Please try it again</string>
+
+    <string name="invalid_price_title">Invalid Prize</string>
+    <string name="invalid_price_description">Title is too short or is empty. Please try it again</string>
 
     <string name="title_activity_maps">Map</string>
     <string name="user_error">Enter username</string>
@@ -65,5 +71,8 @@
     <string name="register_message">Sign up now</string>
     <string name="welcomeRegister">WELCOME!</string>
     <string name="email_error">Enter a valid email</string>
+
+    <string name="price">Price</string>
+    <string name="capacity">Capacity</string>
 
 </resources>

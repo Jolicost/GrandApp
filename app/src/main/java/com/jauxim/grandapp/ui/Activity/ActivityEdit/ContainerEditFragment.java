@@ -41,6 +41,7 @@ import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PREVIEW;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TIME;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TITLE;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_CAPACITYPRICE;
 
 public class ContainerEditFragment extends Fragment implements View.OnClickListener {
 
@@ -63,14 +64,18 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     private TextView tvDateStart;
     private TextView tvDateEnd;
 
+    private TextView etCapacity;
+    private TextView etPrice;
+
     public @interface stepsEditActivity {
         int STEP_TITLE = 0;
         int STEP_DESCRIPTION = 1;
         int STEP_IMAGES = 2;
         int STEP_LOCATION = 3;
         int STEP_TIME = 4;
-        int STEP_MISCELANIA = 5;
-        int STEP_PREVIEW = 6;
+        int STEP_CAPACITYPRICE = 5;
+        int STEP_MISCELANIA = 6;
+        int STEP_PREVIEW = 7;
     }
 
     @Override
@@ -84,6 +89,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         View vImages = view.findViewById(R.id.vImages);
         View vLocation = view.findViewById(R.id.vLocation);
         View vDate = view.findViewById(R.id.vDate);
+        View vCapacityPrice = view.findViewById(R.id.vCapacityPrice);
         View vMiscelania = view.findViewById(R.id.vMiscelania);
         View vPreview = view.findViewById(R.id.vPreview);
         View vDateStart = view.findViewById(R.id.vInitDate);
@@ -100,6 +106,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vMiscelania.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
@@ -112,6 +119,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vMiscelania.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
@@ -132,6 +140,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
                 vMiscelania.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
@@ -168,6 +177,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vLocation.setVisibility(View.VISIBLE);
                 vDate.setVisibility(View.GONE);
                 vMiscelania.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
@@ -194,17 +204,35 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vDate.setVisibility(View.VISIBLE);
                 vMiscelania.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
-            case STEP_MISCELANIA:
+
+            case STEP_CAPACITYPRICE:
+                etCapacity = view.findViewById(R.id.etCapacity);
+                etPrice = view.findViewById(R.id.etPrice);
+
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.VISIBLE);
+                vMiscelania.setVisibility(View.GONE);
+                vPreview.setVisibility(View.GONE);
+
+                break;
+
+                case STEP_MISCELANIA:
+                vTitle.setVisibility(View.GONE);
+                vDescription.setVisibility(View.GONE);
+                vImages.setVisibility(View.GONE);
+                vLocation.setVisibility(View.GONE);
+                vDate.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vMiscelania.setVisibility(View.VISIBLE);
                 vPreview.setVisibility(View.GONE);
 
@@ -216,6 +244,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vMiscelania.setVisibility(View.GONE);
                 vPreview.setVisibility(View.VISIBLE);
                 break;
@@ -319,6 +348,18 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     public String getTitle() {
         if (etTitle != null)
             return etTitle.getText().toString();
+        return null;
+    }
+
+    public String getCapacity() {
+        if (etCapacity != null)
+            return etCapacity.getText().toString();
+        return null;
+    }
+
+    public String getPrice() {
+        if (etPrice != null)
+            return etPrice.getText().toString();
         return null;
     }
 
