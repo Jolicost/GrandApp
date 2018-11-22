@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
-import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.networking.ServiceActivity;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -17,11 +17,11 @@ import rx.subscriptions.CompositeSubscription;
  * Created by ennur on 6/25/16.
  */
 public class MainPresenter {
-    private final Service service;
+    private final ServiceActivity service;
     private final MainView view;
     private CompositeSubscription subscriptions;
 
-    public MainPresenter(Service service, MainView view) {
+    public MainPresenter(ServiceActivity service, MainView view) {
         this.service = service;
         this.view = view;
         this.subscriptions = new CompositeSubscription();

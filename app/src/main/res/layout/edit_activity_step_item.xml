@@ -92,7 +92,7 @@
         android:id="@+id/vImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
 
         <LinearLayout
@@ -136,10 +136,10 @@
                     <ImageView
                         android:id="@+id/ivImage1"
                         android:layout_width="wrap_content"
-                        android:minWidth="@dimen/photo_size"
                         android:layout_height="@dimen/photo_size"
                         android:layout_margin="4dp"
-                        android:background="@drawable/background_camera" />
+                        android:background="@drawable/background_camera"
+                        android:minWidth="@dimen/photo_size" />
 
                     <ImageView
                         android:id="@+id/ivImage2"
@@ -188,6 +188,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/location_title"
                 android:textSize="@dimen/title_edit_size"
                 android:textStyle="bold" />
@@ -200,14 +201,7 @@
                 android:text="@string/title_description"
                 android:textSize="@dimen/description_edit_size" />
 
-            <EditText
-                android:id="@+id/etLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="We need to change this to a location picker"
-                android:maxLines="1"
-                android:textSize="@dimen/description_edit_size" />
+            <include layout="@layout/layout_map" />
 
         </LinearLayout>
 
@@ -217,7 +211,7 @@
         android:id="@+id/vDate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -231,7 +225,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/date_picker_title"
+                android:gravity="center"
+                android:text="@string/date_title"
                 android:textSize="@dimen/title_edit_size"
                 android:textStyle="bold" />
 
@@ -240,17 +235,58 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="@string/title_description"
+                android:text="@string/date_description"
                 android:textSize="@dimen/description_edit_size" />
 
-            <EditText
-                android:id="@+id/etDate"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/vInitDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="We need to change this to a date picker"
-                android:maxLines="1"
-                android:textSize="@dimen/description_edit_size" />
+                android:background="@drawable/btn_simple"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Initial date:"
+                    android:textSize="@dimen/description_edit_size" />
+
+                <TextView
+                    android:id="@+id/tvInitDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hello"
+                    android:gravity="center"
+                    android:textSize="@dimen/description_edit_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/vEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_simple"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="End date:"
+                    android:textSize="@dimen/description_edit_size" />
+
+                <TextView
+                    android:id="@+id/tvEndlDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hello"
+                    android:gravity="center"
+                    android:textSize="@dimen/description_edit_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -20,6 +20,10 @@
     <string name="photos">PHOTOS</string>
     <string name="photos_description">Upload or take some photos of the activity. You will need to upload as minimum 1 photo or 4 as maximum. To do it click one of the four camera images bellow:</string>
 
+    <string name="date_title">Pick the date</string>
+    <string name="date_description">Pick the start and end date of the activity clicking them. If you don\'t know the end date let it empty. The end date must be older then initial one.</string>
+    <string name="date_not_choosed">Not choosed</string>
+
 
     <string name="title_location_permission">Location permission</string>
     <string name="text_location_permission">Allow GRANDAPP to access yout location?</string>
@@ -28,7 +32,6 @@
     <string name="upperTag">Information</string>
     <string name="images_title">Add some images</string>
     <string name="location_title">Pick the Location of your activity</string>
-    <string name="date_picker_title">Pick the Date for your activity</string>
     <string name="miscelania_title">More Information</string>
     <string name="miscelania_description">We are about to finish! Just let us know...  How many people does de activity allow?</string>
 
@@ -38,6 +41,16 @@
     <string name="invalid_description_title">Invalid Description</string>
     <string name="invalid_description_description">Description is too short or is empy. Please try it again</string>
 
+    <string name="invalid_images_title">Invalid Images</string>
+    <string name="invalid_images_description">There isn\'t any taken photo. Please take one and try it again</string>
+
+    <string name="invalid_location_title">Invalid Location</string>
+    <string name="invalid_location_description">Location is invalid. Please move the map and try it again</string>
+
+    <string name="invalid_time_title">Invalid start time</string>
+    <string name="invalid_time_description">The start time is not choosed or its already past. Please, try it again</string>
+
+    <string name="title_activity_maps">Map</string>
     <string name="user_error">Enter username</string>
     <string name="pass_error">Enter a valid password</string>
     <string name="pass2_error">The passwords does not match</string>

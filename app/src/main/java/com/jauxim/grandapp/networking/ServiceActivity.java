@@ -2,9 +2,9 @@ package com.jauxim.grandapp.networking;
 
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
-import com.jauxim.grandapp.models.AuthModel;
 import com.jauxim.grandapp.models.CityListResponse;
-import com.jauxim.grandapp.models.UserModel;
+import com.jauxim.grandapp.models.ImageBase64Model;
+import com.jauxim.grandapp.models.ImageUrlModel;
 
 import java.util.List;
 
@@ -18,15 +18,15 @@ import rx.schedulers.Schedulers;
 /**
  * Created by ennur on 6/25/16.
  */
-public class Service {
-    private final NetworkService networkService;
+public class ServiceActivity {
+    private final NetworkServiceActivity networkServiceActivity;
 
-    public Service(NetworkService networkService) {
-        this.networkService = networkService;
+    public ServiceActivity(NetworkServiceActivity networkServiceActivity) {
+        this.networkServiceActivity = networkServiceActivity;
     }
 
     public Subscription getActivityInfo(String activityId, final ActivityInfoCallback callback,String auth) {
-        return networkService.getActivityInfo(activityId, auth)
+        return networkServiceActivity.getActivityInfo(activityId, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends ActivityModel>>() {
@@ -56,7 +56,7 @@ public class Service {
     }
 
     public Subscription createActivityInfo(ActivityModel activityInfo, final ActivityInfoCallback callback,String auth) {
-        return networkService.createActivityInfo(activityInfo,auth)
+        return networkServiceActivity.createActivityInfo(activityInfo,auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends ActivityModel>>() {
@@ -86,7 +86,7 @@ public class Service {
     }
 
     public Subscription getActivityList(final ActivityListCallback callback,String auth) {
-        return networkService.getActivityList(auth)
+        return networkServiceActivity.getActivityList(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {
@@ -118,7 +118,7 @@ public class Service {
 
     public Subscription getCityList(final GetCityListCallback callback,String auth) {
 
-        return networkService.getCityList(auth)
+        return networkServiceActivity.getCityList(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends CityListResponse>>() {
@@ -147,47 +147,17 @@ public class Service {
                 });
     }
 
-    public Subscription getLoginToken(UserModel userModel, final LoginCallback callback,String auth) {
-        return networkService.getLoginToken(userModel,auth)
+    public Subscription postImage(ImageBase64Model base64, final ImageCallback callback) {
+        return networkServiceActivity.postImage(base64)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends AuthModel>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends ImageUrlModel>>() {
                     @Override
-                    public Observable<? extends AuthModel> call(Throwable throwable) {
+                    public Observable<? extends ImageUrlModel> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<AuthModel>() {
-
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        callback.onError(new NetworkError(e));
-                    }
-
-                    @Override
-                    public void onNext(AuthModel authModel) {
-                        callback.onSuccess(authModel);
-                    }
-                });
-    }
-
-
-    public Subscription postNewUser(String username, String password, String email, final RegisterCallback callback) {
-        return networkService.postNewUser(username, password, email)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {
-                    @Override
-                    public Observable<? extends UserModel> call(Throwable throwable) {
-                        return Observable.error(throwable);
-                    }
-                })
-                .subscribe(new Subscriber<UserModel>() {
+                .subscribe(new Subscriber<ImageUrlModel>() {
                     @Override
                     public void onCompleted() {
 
@@ -200,8 +170,8 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(UserModel userModel) {
-                        callback.onSuccess(userModel);
+                    public void onNext(ImageUrlModel base64) {
+                        callback.onSuccess(base64);
 
                     }
                 });
@@ -219,20 +189,14 @@ public class Service {
         void onError(NetworkError networkError);
     }
 
-    public interface LoginCallback {
-        void onSuccess(AuthModel authModel);
-
-        void onError(NetworkError networkError);
-    }
-
     public interface ActivityListCallback {
         void onSuccess(List<ActivityListItemModel> activityModel);
 
         void onError(NetworkError networkError);
     }
 
-    public interface RegisterCallback {
-        void onSuccess(UserModel userModel);
+    public interface ImageCallback {
+        void onSuccess(ImageUrlModel urlImage);
 
         void onError(NetworkError networkError);
     }

@@ -3,7 +3,7 @@ package com.jauxim.grandapp.ui.Activity.Register;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
-import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.networking.ServiceUser;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -11,11 +11,11 @@ import rx.subscriptions.CompositeSubscription;
 
 public class RegisterPresenter {
 
-    private final Service service;
+    private final ServiceUser service;
     private final RegisterView view;
     private CompositeSubscription subscriptions;
 
-    public RegisterPresenter(Service service, RegisterView view) {
+    public RegisterPresenter(ServiceUser service, RegisterView view) {
         this.service = service;
         this.view = view;
         this.subscriptions = new CompositeSubscription();
@@ -39,7 +39,7 @@ public class RegisterPresenter {
         }
 
         view.showWait();
-        Service.RegisterCallback registerCallback = new Service.RegisterCallback(){
+        ServiceUser.RegisterCallback registerCallback = new ServiceUser.RegisterCallback(){
             @Override
             public void onSuccess(UserModel userModel) {
                 view.removeWait();

@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
-import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.networking.ServiceUser;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 
@@ -19,7 +19,7 @@ import butterknife.BindView;
 public class Register extends BaseActivity implements View.OnClickListener, RegisterView {
 
     @Inject
-    public Service service;
+    public ServiceUser service;
 
     @BindView(R.id.re_username)
     EditText username;

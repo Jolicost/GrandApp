@@ -34,11 +34,11 @@ public class ActivityModel {
     @Expose
     private Long rating;
 
-    @SerializedName("latitude")
+    @SerializedName("lat")
     @Expose
     private Double latitude;
 
-    @SerializedName("longitude")
+    @SerializedName("long")
     @Expose
     private Double longitude;
 
@@ -57,6 +57,16 @@ public class ActivityModel {
     @SerializedName("images")
     @Expose
     private List<String> images;
+
+    @SerializedName("timestampStart")
+    @Expose
+    private Long timestampStart;
+
+    @SerializedName("timestampEnd")
+    @Expose
+    private Long timestampEnd;
+
+    private List<String> imagesBase64;
 
     public String getId() {
         return id;
@@ -146,11 +156,35 @@ public class ActivityModel {
         this.capacity = capacity;
     }
 
-    public List<String> getImages() {
+    public List<String> getImagesUrl() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImagesUrl(List<String> images) {
         this.images = images;
+    }
+
+    public List<String> getImagesBase64() {
+        return imagesBase64;
+    }
+
+    public void setImagesBase64(List<String> imagesBase64) {
+        this.imagesBase64 = imagesBase64;
+    }
+
+    public Long getTimestampStart() {
+        return timestampStart;
+    }
+
+    public void setTimestampStart(Long timestampStart) {
+        this.timestampStart = timestampStart;
+    }
+
+    public Long getTimestampEnd() {
+        return timestampEnd;
+    }
+
+    public void setTimestampEnd(Long timestampEnd) {
+        this.timestampEnd = timestampEnd;
     }
 }

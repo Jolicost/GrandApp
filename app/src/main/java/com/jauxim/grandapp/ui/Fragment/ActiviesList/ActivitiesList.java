@@ -1,18 +1,11 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +14,8 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.deps.Deps;
 import com.jauxim.grandapp.models.ActivityListItemModel;
-import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.networking.ServiceActivity;
+import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -40,7 +34,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     }
 
     @Inject
-    public Service service;
+    public ServiceActivity service;
 
     @BindView(R.id.list_activities)
     RecyclerView activityesRecyclerView;
@@ -103,6 +97,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             @Override
             public void onRefresh() {
                 presenter.getActivityList();
+                updateLocation();
             }
         });
         return view;
@@ -129,6 +124,12 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activitiesList.addAll(activities);
         mAdapter.notifyDataSetChanged();
         srlRefresh.setRefreshing(false);
+    }
+
+    private void updateLocation() {
+        if (getActivity() != null && getActivity() instanceof Main){
+            ((Main)getActivity()).updateLocation();
+        }
     }
 
     @Override

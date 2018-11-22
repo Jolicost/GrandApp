@@ -2,21 +2,15 @@ package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jauxim.grandapp.R;
-import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
-import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.networking.ServiceUser;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Activity.Register.Register;
-import com.jauxim.grandapp.ui.Activity.Register.RegisterPresenter;
-import com.jauxim.grandapp.ui.Activity.Register.RegisterView;
 
 import javax.inject.Inject;
 
@@ -24,12 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.widget.Toast.LENGTH_SHORT;
-
 public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
     @Inject
-    public Service service;
+    public ServiceUser service;
 
     @BindView(R.id.etUsername)
     EditText etUsername;

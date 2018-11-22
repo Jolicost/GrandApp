@@ -61,8 +61,8 @@ public class DataUtils {
 
     public static void saveLocation(Context context, SingleShotLocationProvider.GPSCoordinates coordinates) {
         if (coordinates == null) return;
-        setFloat(context, KEY_LATITUDE, coordinates.latitude);
-        setFloat(context, KEY_LONGITUDE, coordinates.longitude);
+        setFloat(context, KEY_LATITUDE, (float) coordinates.latitude);
+        setFloat(context, KEY_LONGITUDE, (float) coordinates.longitude);
         RxBus.instanceOf().setLocation(new SingleShotLocationProvider.GPSCoordinates(getFloat(context, KEY_LATITUDE), getFloat(context, KEY_LONGITUDE)));
     }
 

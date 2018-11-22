@@ -76,16 +76,31 @@ public class NetworkModule {
     @Provides
     @Singleton
     @SuppressWarnings("unused")
-    public NetworkService providesNetworkService(
+    public NetworkServiceActivity providesNetworkServiceActivity(
              Retrofit retrofit) {
-        return retrofit.create(NetworkService.class);
+        return retrofit.create(NetworkServiceActivity.class);
     }
     @Provides
     @Singleton
     @SuppressWarnings("unused")
-    public Service providesService(
-            NetworkService networkService) {
-        return new Service(networkService);
+    public ServiceActivity providesServiceActivity(
+            NetworkServiceActivity networkServiceActivity) {
+        return new ServiceActivity(networkServiceActivity);
+    }
+
+    @Provides
+    @Singleton
+    @SuppressWarnings("unused")
+    public NetworkServiceUser providesNetworkServiceUser(
+            Retrofit retrofit) {
+        return retrofit.create(NetworkServiceUser.class);
+    }
+    @Provides
+    @Singleton
+    @SuppressWarnings("unused")
+    public ServiceUser providesServiceUser(
+            NetworkServiceUser networkServiceUser) {
+        return new ServiceUser(networkServiceUser);
     }
 
 }

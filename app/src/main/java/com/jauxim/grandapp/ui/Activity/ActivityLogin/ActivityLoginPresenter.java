@@ -7,18 +7,18 @@ import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.AuthModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
-import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.networking.ServiceUser;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 public class ActivityLoginPresenter {
 
-    private final Service service;
+    private final ServiceUser service;
     private final ActivityLoginView view;
     private CompositeSubscription subscriptions;
 
-    public ActivityLoginPresenter(Service service, ActivityLoginView view) {
+    public ActivityLoginPresenter(ServiceUser service, ActivityLoginView view) {
         this.service = service;
         this.view = view;
         this.subscriptions = new CompositeSubscription();
@@ -40,7 +40,7 @@ public class ActivityLoginPresenter {
         view.showWait();
         UserModel userModel = new UserModel(username, password);
         String auth = DataUtils.getAuthToken((Context) view);
-        Subscription subscription = service.getLoginToken(userModel, new Service.LoginCallback() {
+        Subscription subscription = service.getLoginToken(userModel, new ServiceUser.LoginCallback() {
             @Override
             public void onSuccess(AuthModel authModel) {
                 DataUtils.setAuthToken((Context) view,authModel.getAuthToken());

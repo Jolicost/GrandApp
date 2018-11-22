@@ -6,6 +6,12 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
+import android.util.Base64;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
@@ -17,12 +23,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Calendar;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -38,7 +46,7 @@ public class Utils {
         return "";
     }
 
-    public static float getAbsoluteDistance(Double lat1, Double lon1, float lat2, float lon2) {
+    public static float getAbsoluteDistance(Double lat1, Double lon1, double lat2, double lon2) {
         Location loc1 = new Location("");
         loc1.setLatitude(lat1);
         loc1.setLongitude(lon1);
@@ -152,5 +160,39 @@ public class Utils {
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
         parcelFileDescriptor.close();
         return image;
+    }
+
+    public static void changeMapFragment(AppCompatActivity activity, int layoutId, Fragment fragment, String tag) {
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(layoutId, fragment, tag);
+        fragmentTransaction.commit();
+    }
+
+    public static String getBase64(Bitmap bitmap)
+    {
+        try{
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+            return Base64.encodeToString(byteArray, Base64.NO_WRAP);
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+    }
+
+    public static Bitmap getBitmap(String base64){
+        byte[] decodedString = Base64.decode(base64, Base64.NO_WRAP);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    }
+
+    public static String getFullDataFormat(Long timestamp) {
+        Calendar timeCalendar = Calendar.getInstance();
+        timeCalendar.setTimeInMillis(timestamp);
+        Calendar now = Calendar.getInstance();
+        return DateFormat.format("MMMM dd yyyy, h:mm aa", timeCalendar).toString();
     }
 }

@@ -112,9 +112,8 @@
                                     android:layout_height="130dp"
                                     android:layout_margin="5dp"
                                     android:gravity="center"
-                                    android:scaleType="fitCenter">
-
-                                </ImageView>
+                                    android:scaleType="fitCenter"
+                                    android:visibility="gone" />
 
                                 <ImageView
                                     android:id="@+id/image2"
@@ -122,7 +121,26 @@
                                     android:layout_height="130dp"
                                     android:layout_margin="5dp"
                                     android:gravity="center"
-                                    android:scaleType="fitCenter" />
+                                    android:scaleType="fitCenter"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@+id/image3"
+                                    android:layout_width="197dp"
+                                    android:layout_height="130dp"
+                                    android:layout_margin="5dp"
+                                    android:gravity="center"
+                                    android:scaleType="fitCenter"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@+id/image4"
+                                    android:layout_width="197dp"
+                                    android:layout_height="130dp"
+                                    android:layout_margin="5dp"
+                                    android:gravity="center"
+                                    android:scaleType="fitCenter"
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 
@@ -134,13 +152,16 @@
 
             </ScrollView>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:layout_centerHorizontal="true"
                     android:orientation="vertical">
 
@@ -175,13 +196,70 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/map3" />
+                    <LinearLayout
+                        android:id="@+id/vInitDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_simple"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Initial date:"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvInitDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="hello"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/vEndDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_simple"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="End date:"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvEndlDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="hello"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_map" />
 
             <TextView
                 android:id="@+id/tvDirection"
