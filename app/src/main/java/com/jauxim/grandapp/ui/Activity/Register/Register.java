@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Activity.Register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.jauxim.grandapp.ui.Activity.Main.Main;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class Register extends BaseActivity implements View.OnClickListener, RegisterView {
 
@@ -36,6 +38,21 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
     @BindView(R.id.re_completeName)
     EditText re_completeName;
 
+    @BindView(R.id.tilEmail)
+    TextInputLayout tilEmail;
+
+    @BindView(R.id.tilUser)
+    TextInputLayout tilUser;
+
+    @BindView(R.id.tilPassword)
+    TextInputLayout tilPassword;
+
+    @BindView(R.id.tilPassword2)
+    TextInputLayout tilPassword2;
+
+    @BindView(R.id.tilName)
+    TextInputLayout tilName;
+
     @BindView(R.id.re_button)
     Button re_button;
 
@@ -45,12 +62,7 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.register_app);
         super.onCreate(savedInstanceState);
-
-        username = findViewById(R.id.re_username);
-        email = findViewById(R.id.re_email);
-        password = findViewById(R.id.re_password);
-        password2 = findViewById(R.id.re_password2);
-        re_completeName = findViewById(R.id.re_completeName);
+        ButterKnife.bind(this);
 
         re_button = findViewById(R.id.re_button);
         re_button.setOnClickListener(this);
@@ -87,25 +99,34 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
     @Override
     public void showUserError(int user_error) {
         removeWait();
-        username.setError(getString(user_error));
+        tilUser.setError(getString(user_error));
     }
 
     @Override
     public void showEmailError(int email_error) {
         removeWait();
-        email.setError(getString(email_error));
+        tilEmail.setError(getString(email_error));
     }
 
     @Override
     public void showPassError(int pass_error) {
         removeWait();
-        password.setError(getString(pass_error));
+        tilPassword.setError(getString(pass_error));
     }
 
     @Override
     public void showPass2Error(int pass2_error) {
         removeWait();
-        password2.setError(getString(pass2_error));
+        tilPassword2.setError(getString(pass2_error));
+    }
+
+    @Override
+    public void resetErrors() {
+        tilUser.setError(null);
+        tilEmail.setError(null);
+        tilName.setError(null);
+        tilPassword.setError(null);
+        tilPassword2.setError(null);
     }
 
     @Override

@@ -22,21 +22,28 @@ public class RegisterPresenter {
     }
 
     public void register(String user, String email, String pass, String pass2, String completeName) {
+
+        view.resetErrors();
+
+        boolean error = false;
+        
         if (user.isEmpty()) {
             view.showUserError(R.string.user_error);
-            return;
+            error = true;
         }
         if (email.isEmpty()) {
             view.showEmailError(R.string.email_error);
-            return;
+            error = true;
         }
         if (pass.isEmpty() || pass2.isEmpty()) {
             view.showPassError(R.string.pass_error);
-            return;
+            error = true;
         } else if (!pass2.equals(pass)) {
             view.showPass2Error(R.string.pass2_error);
-            return;
+            error = true;
         }
+
+        if (error) return;
 
         view.showWait();
         Service.RegisterCallback registerCallback = new Service.RegisterCallback(){

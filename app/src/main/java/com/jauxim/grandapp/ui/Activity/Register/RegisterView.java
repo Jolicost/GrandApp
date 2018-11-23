@@ -20,4 +20,6 @@ public interface RegisterView {
     void showEmailError(int email_error);
 
     void showPass2Error(int pass2_error);
+
+    void resetErrors();
 }
