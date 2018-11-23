@@ -28,7 +28,7 @@ public class Register extends BaseActivity implements RegisterView {
     public Service service;
 
     @BindView(R.id.etPhoneNUmber)
-    EditText PhoneNUmber;
+    EditText etPhoneNUmber;
 
     @BindView(R.id.re_email)
     EditText email;
@@ -79,7 +79,7 @@ public class Register extends BaseActivity implements RegisterView {
     @OnClick(R.id.re_button)
     public void doRegister(){
         showWait();
-        String user = ccp.getSelectedCountryCodeWithPlus() + PhoneNUmber.getText().toString();
+        String user = ccp.getSelectedCountryCodeWithPlus() + etPhoneNUmber.getText().toString();
         String user_email = email.getText().toString();
         String pass = password.getText().toString();
         String pass2 = password2.getText().toString();
