@@ -64,7 +64,6 @@ public class RegisterPresenter {
         subscriptions.add(subscription);
     }
 
-
     public void onStop() {
         subscriptions.unsubscribe();
     }

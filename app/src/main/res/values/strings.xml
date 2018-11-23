@@ -75,5 +75,6 @@
     <string name="register_message">Sign up now</string>
     <string name="welcomeRegister">WELCOME!</string>
     <string name="email_error">Enter a valid email</string>
+    <string name="phone_number_hint">Phone number</string>
 
 </resources>

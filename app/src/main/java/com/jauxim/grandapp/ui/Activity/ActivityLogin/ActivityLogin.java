@@ -5,19 +5,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
-
+import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Activity.Register.Register;
-
 
 import javax.inject.Inject;
 
@@ -30,19 +26,22 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Inject
     public Service service;
 
-    @BindView(R.id.etUsername)
-    EditText etUsername;
+    @BindView(R.id.etPhoneNUmber)
+    EditText etPhoneNUmber;
 
     @BindView(R.id.etPassword)
     EditText etPassword;
 
-    @BindView(R.id.tilUser)
-    TextInputLayout tilUser;
+    @BindView(R.id.tilPhoneNUmber)
+    TextInputLayout tilPhoneNUmber;
 
     @BindView(R.id.tilPassword)
     TextInputLayout tilPassword;
 
     ActivityLoginPresenter presenter;
+
+    @BindView(R.id.ccp)
+    CountryCodePicker ccp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,11 +56,12 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
     @OnClick(R.id.bLogin)
     public void loginClick(){
-        if (etUsername != null && etPassword != null) {
-            String user = etUsername.getText().toString();
+        if (etPhoneNUmber != null && etPassword != null) {
+            String code = ccp.getSelectedCountryCodeWithPlus();
+            String user = etPhoneNUmber.getText().toString();
             String pass = etPassword.getText().toString();
             showWait();
-            presenter.login(user, pass);
+            presenter.login(code, user, pass);
         }
     }
 
@@ -89,7 +89,13 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void showUserError(int user_error) {
         removeWait();
-        tilUser.setError(getString(user_error));
+        tilPhoneNUmber.setError(getString(user_error));
+    }
+
+    @Override
+    public void resetErrors(){
+        tilPassword.setError(null);
+        tilPhoneNUmber.setError(null);
     }
 
     @Override

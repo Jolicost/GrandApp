@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.networking.Service;
@@ -26,8 +27,8 @@ public class Register extends BaseActivity implements RegisterView {
     @Inject
     public Service service;
 
-    @BindView(R.id.re_username)
-    EditText username;
+    @BindView(R.id.etPhoneNUmber)
+    EditText PhoneNUmber;
 
     @BindView(R.id.re_email)
     EditText email;
@@ -44,8 +45,8 @@ public class Register extends BaseActivity implements RegisterView {
     @BindView(R.id.tilEmail)
     TextInputLayout tilEmail;
 
-    @BindView(R.id.tilUser)
-    TextInputLayout tilUser;
+    @BindView(R.id.tilPhoneNUmber)
+    TextInputLayout tilPhoneNUmber;
 
     @BindView(R.id.tilPassword)
     TextInputLayout tilPassword;
@@ -55,6 +56,9 @@ public class Register extends BaseActivity implements RegisterView {
 
     @BindView(R.id.tilName)
     TextInputLayout tilName;
+
+    @BindView(R.id.ccpReg)
+    CountryCodePicker ccp;
 
     RegisterPresenter presenter;
 
@@ -75,7 +79,7 @@ public class Register extends BaseActivity implements RegisterView {
     @OnClick(R.id.re_button)
     public void doRegister(){
         showWait();
-        String user = username.getText().toString();
+        String user = ccp.getSelectedCountryCodeWithPlus() + PhoneNUmber.getText().toString();
         String user_email = email.getText().toString();
         String pass = password.getText().toString();
         String pass2 = password2.getText().toString();
@@ -101,7 +105,7 @@ public class Register extends BaseActivity implements RegisterView {
     @Override
     public void showUserError(int user_error) {
         removeWait();
-        tilUser.setError(getString(user_error));
+        tilPhoneNUmber.setError(getString(user_error));
     }
 
     @Override
@@ -124,7 +128,7 @@ public class Register extends BaseActivity implements RegisterView {
 
     @Override
     public void resetErrors() {
-        tilUser.setError(null);
+        tilPhoneNUmber.setError(null);
         tilEmail.setError(null);
         tilName.setError(null);
         tilPassword.setError(null);

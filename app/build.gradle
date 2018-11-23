@@ -64,4 +64,5 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    implementation 'com.hbb20:ccp:2.2.0'
 }

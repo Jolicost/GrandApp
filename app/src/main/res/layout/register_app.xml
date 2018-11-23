@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -56,19 +57,48 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/tilUser"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/re_username"
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccpReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:paddingRight="5dp"
+                        app:ccp_countryPreference="GB"
+                        app:ccp_defaultNameCode="GB"
+                        app:ccp_showArrow="false"
+                        app:ccp_showFlag="false"
+                        app:ccp_showFullName="false"
+                        app:ccp_showNameCode="false"
+                        app:ccp_textSize="20dp" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/tilPhoneNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Username"
-                        android:inputType="textPersonName" />
-                </android.support.design.widget.TextInputLayout>
+                        app:hintEnabled="true"
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/etPhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_phone_grey"
+                            android:focusable="true"
+                            android:hint="@string/phone_number_hint"
+                            android:importantForAutofill="noExcludeDescendants"
+                            android:inputType="phone"
+                            android:maxLength="15"
+                            android:paddingRight="12dp"
+                            android:textSize="20dp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/tilName"
