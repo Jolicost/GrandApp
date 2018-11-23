@@ -19,8 +19,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class Register extends BaseActivity implements View.OnClickListener, RegisterView {
+public class Register extends BaseActivity implements RegisterView {
 
     @Inject
     public Service service;
@@ -55,9 +56,6 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
     @BindView(R.id.tilName)
     TextInputLayout tilName;
 
-    @BindView(R.id.re_button)
-    Button re_button;
-
     RegisterPresenter presenter;
 
     @Override
@@ -65,18 +63,17 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
         setContentView(R.layout.register_app);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        getDeps().inject(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
-        re_button = findViewById(R.id.re_button);
-        re_button.setOnClickListener(this);
-
         presenter = new RegisterPresenter(service, this);
     }
 
-    @Override
-    public void onClick(View v) {
+
+    @OnClick(R.id.re_button)
+    public void doRegister(){
         showWait();
         String user = username.getText().toString();
         String user_email = email.getText().toString();
