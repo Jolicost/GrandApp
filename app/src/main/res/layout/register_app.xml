@@ -29,17 +29,17 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="10dp"
                     android:layout_gravity="center"
-                    app:srcCompat="@mipmap/ic_launcher" />
+                    android:src="@drawable/ic_grandapp_icon"/>
 
                 <TextView
                     android:id="@+id/textLabelRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:text="@string/welcomeRegister"
                     android:textColor="@color/cardview_light_background"
@@ -105,7 +105,7 @@
                 android:layout_marginLeft="100dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="100dp"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/button_gradient"
                 android:text="Register"
                 android:textColor="#FFF"
                 android:textSize="30dp"

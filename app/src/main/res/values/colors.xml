@@ -12,6 +12,10 @@
     <color name="color_dark_text">#1f1f1f</color>
     <color name="color_grey_2">#8f8f8f</color>
 
+    <color name="color_gradient_button_start">#3949ab</color>
+    <color name="color_gradient_button_end">#303f9f</color>
 
+    <color name="color_gradient_button_start_dark">#283593</color>
+    <color name="color_gradient_button_end_dark">#1a237e</color>
 
 </resources>

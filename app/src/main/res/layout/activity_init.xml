@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:background="@color/colorPrimary"
@@ -32,12 +33,20 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+    
+    <View
+        android:layout_below="@id/top"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/shadow"/>
 
 
     <LinearLayout
+        android:id="@+id/llButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:padding="25dp"
+        android:background="@color/grey_light_1"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
@@ -45,20 +54,30 @@
             android:id="@+id/bLoginInit"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="@color/colorPrimaryDark"
             android:text="@string/login_button"
             android:textColor="#FFF"
-            android:textSize="30dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_gradient"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/bRegisterInit"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:background="@drawable/button_border"
             android:text="@string/register_button"
-            android:textColor="#FFF"
-            android:textSize="30dp"
+            android:textColor="@color/color_gradient_button_start"
+            android:textSize="25dp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:rotation="180"
+        android:layout_above="@id/llButtons"
+        android:background="@drawable/gradient_grey"/>
+
+
 </RelativeLayout>
