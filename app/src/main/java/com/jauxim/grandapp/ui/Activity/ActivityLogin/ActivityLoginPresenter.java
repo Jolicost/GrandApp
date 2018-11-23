@@ -41,13 +41,11 @@ public class ActivityLoginPresenter {
     public void getAuthToken(String username, String password) {
         view.showWait();
         UserModel userModel = new UserModel(username, password);
-        String auth = DataUtils.getAuthToken((Context) view);
         Subscription subscription = service.getLoginToken(userModel, new Service.LoginCallback() {
             @Override
             public void onSuccess(AuthModel authModel) {
-                if (TextUtils.isEmpty(authModel.getAuthToken()))
-                    authModel.setAuthToken("hardcoded auth");
-                DataUtils.setAuthToken((Context) view,authModel.getAuthToken());
+                DataUtils.setAuthToken((Context) view,authModel.getToken());
+                Log.d("authSaving", "is token?" + authModel.isAuth()+" getted token: "+authModel.getToken());
                 view.removeWait();
                 view.showLoginSuccess(R.string.login_success);
                 view.startMainActivity();
