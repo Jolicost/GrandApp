@@ -1,8 +1,10 @@
 package com.jauxim.grandapp.ui.Activity.Register;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,6 +65,9 @@ public class Register extends BaseActivity implements View.OnClickListener, Regi
         setContentView(R.layout.register_app);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
 
         re_button = findViewById(R.id.re_button);
         re_button.setOnClickListener(this);

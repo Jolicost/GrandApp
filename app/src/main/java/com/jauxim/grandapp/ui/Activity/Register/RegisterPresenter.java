@@ -26,7 +26,7 @@ public class RegisterPresenter {
         view.resetErrors();
 
         boolean error = false;
-        
+
         if (user.isEmpty()) {
             view.showUserError(R.string.user_error);
             error = true;

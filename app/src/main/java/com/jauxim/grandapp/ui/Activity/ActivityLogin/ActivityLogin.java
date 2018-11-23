@@ -1,8 +1,10 @@
 package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,7 +51,9 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_login);
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
         ButterKnife.bind(this);
         getDeps().inject(this);
         presenter = new ActivityLoginPresenter(service, this);
