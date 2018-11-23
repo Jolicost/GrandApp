@@ -33,7 +33,7 @@ public interface NetworkService {
     Observable<List<ActivityListItemModel>> getActivityList(@Header("authorization") String auth);
 
     @POST("/login")
-    Observable<AuthModel> getLoginToken(@Body UserModel userModel,@Header("authorization") String auth);
+    Observable<AuthModel> getLoginToken(@Body UserModel userModel);
 
     @POST("/users?username={user_name}&password={password}&email={email}")
     Observable<UserModel> postNewUser(@Path("user_name") String user_name, @Path("password") String password, @Path("email") String email);

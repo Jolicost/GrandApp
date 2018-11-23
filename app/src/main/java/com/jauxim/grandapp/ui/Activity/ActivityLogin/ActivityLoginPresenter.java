@@ -39,7 +39,6 @@ public class ActivityLoginPresenter {
     public void getAuthToken(String username, String password) {
         view.showWait();
         UserModel userModel = new UserModel(username, password);
-        String auth = DataUtils.getAuthToken((Context) view);
         Subscription subscription = service.getLoginToken(userModel, new Service.LoginCallback() {
             @Override
             public void onSuccess(AuthModel authModel) {
@@ -54,7 +53,7 @@ public class ActivityLoginPresenter {
                 view.removeWait();
                 view.showLoginError(R.string.login_error);;
             }
-        },auth);
+        });
 
         subscriptions.add(subscription);
     }

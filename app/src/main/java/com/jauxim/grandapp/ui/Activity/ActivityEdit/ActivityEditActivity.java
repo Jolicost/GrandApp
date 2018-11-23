@@ -53,7 +53,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @BindView(R.id.bPrevious)
     Button bPrevious;
 
-    static private boolean demo_edit_mode = false;
+    static private boolean demo_edit_mode = true;
     //private ActivityStepsAdapter activityAdapter;
 
     private String title;
@@ -85,7 +85,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         //viewPager.setAdapter(activityAdapter);
         activityPageAdapter = new ActivityEditPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(activityPageAdapter);
-        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(7);
         indicator.setupWithViewPager(viewPager, true);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -266,6 +266,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         ContainerEditFragment locationFragment;
         ContainerEditFragment timeFragment;
         ContainerEditFragment capacityPriceFragment;
+        ContainerEditFragment previewFragment;
 
         @Override
         public Fragment getItem(int pos) {
@@ -289,6 +290,9 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 case STEP_CAPACITYPRICE:
                     capacityPriceFragment = ContainerEditFragment.newInstance(STEP_CAPACITYPRICE);
                     return capacityPriceFragment;
+                case STEP_PREVIEW:
+                    previewFragment = ContainerEditFragment.newInstance(STEP_PREVIEW);
+                    return previewFragment;
                 default:
                     return ContainerEditFragment.newInstance(5);
             }
@@ -296,7 +300,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
         @Override
         public int getCount() {
-            return 5;
+            return 7;
         }
 
         public String getTitle() {
