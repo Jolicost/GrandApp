@@ -304,6 +304,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                     return capacityPriceFragment;
                 case STEP_PREVIEW:
                     previewFragment = ContainerEditFragment.newInstance(STEP_PREVIEW);
+
                     return previewFragment;
                 default:
                     return ContainerEditFragment.newInstance(5);

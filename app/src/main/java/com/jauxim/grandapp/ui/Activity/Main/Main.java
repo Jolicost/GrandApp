@@ -24,6 +24,7 @@ import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+import com.jauxim.grandapp.ui.Activity.Init.Init;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
 
 import java.util.List;
@@ -191,14 +192,14 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
 
     @Override
     public void redirectTologin() {
-        Intent intent = new Intent(this, ActivityLogin.class);
+        Intent intent = new Intent(this, Init.class);
         startActivity(intent);
+        finishAffinity();
     }
 
     @Override
     public void showLogoutSuccess(int logout_success) {
         removeWait();
-        Dialog.createDialog(this).title(getString(logout_success)).description(getString(logout_success)).build();
     }
 
     public void showActivitiesListFragment() {

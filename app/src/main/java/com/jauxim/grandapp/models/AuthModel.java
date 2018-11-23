@@ -5,19 +5,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class AuthModel {
 
-    @SerializedName("authToken")
+    @SerializedName("auth")
     @Expose
-    private String authToken;
+    private boolean auth;
 
-    public AuthModel(String authToken){
-        this.authToken = authToken;
+    @SerializedName("token")
+    @Expose
+    private String token;
+
+    public boolean isAuth() {
+        return auth;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public void setAuth(boolean auth) {
+        this.auth = auth;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

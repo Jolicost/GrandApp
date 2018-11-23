@@ -1,6 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
@@ -24,25 +26,33 @@ public class ActivityLoginPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void login(String user, String pass) {
-        if (user.isEmpty() && pass.isEmpty()) {
+    public void login(String code, String phone, String pass) {
+        view.resetErrors();
+
+        boolean error = false;
+        if (phone.isEmpty()) {
             view.showUserError(R.string.user_error);
-            view.showPassError(R.string.pass_error);
+            error = true;
         }
-        else if (user.isEmpty()) view.showUserError(R.string.user_error);
-        else if (pass.isEmpty()) view.showPassError(R.string.pass_error);
-        else {
-            getAuthToken(user,pass);
+        if (pass.isEmpty()){
+            view.showPassError(R.string.pass_error);
+            error = true;
+        }
+
+        if (!error) {
+            getAuthToken(code+phone,pass);
         }
     }
 
     public void getAuthToken(String username, String password) {
         view.showWait();
         UserModel userModel = new UserModel(username, password);
+        Log.i("Username = ", username);
         Subscription subscription = service.getLoginToken(userModel, new Service.LoginCallback() {
             @Override
             public void onSuccess(AuthModel authModel) {
-                DataUtils.setAuthToken((Context) view,authModel.getAuthToken());
+                DataUtils.setAuthToken((Context) view,authModel.getToken());
+                Log.d("authSaving", "is token?" + authModel.isAuth()+" getted token: "+authModel.getToken());
                 view.removeWait();
                 view.showLoginSuccess(R.string.login_success);
                 view.startMainActivity();
