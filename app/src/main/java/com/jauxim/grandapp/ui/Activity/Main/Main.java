@@ -1,6 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.Main;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,13 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.jauxim.grandapp.ActivityEditActivity;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
+import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
+import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+import com.jauxim.grandapp.ui.Activity.Init.Init;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
 
 import java.util.List;
@@ -48,6 +51,8 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    private MainPresenter presenter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +63,8 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         setSupportActionBar(toolbar);
         setUp();
 
-        MainPresenter presenter = new MainPresenter(service, this);
+        presenter = new MainPresenter(service, this);
+        presenter.updateLocation();
     }
 
     private void setUp() {
@@ -79,6 +85,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
 
         MenuItem item = navigationView.getMenu().getItem(0);
         onNavigationItemSelected(item);
+
     }
 
     @Override
@@ -131,6 +138,9 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         } else if (id == R.id.nav_send) {
 
         }
+        else if (id == R.id.logout) {
+            presenter.logout();
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -175,6 +185,23 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
+    @Override
+    public Activity getContext() {
+        return this;
+    }
+
+    @Override
+    public void redirectTologin() {
+        Intent intent = new Intent(this, Init.class);
+        startActivity(intent);
+        finishAffinity();
+    }
+
+    @Override
+    public void showLogoutSuccess(int logout_success) {
+        removeWait();
+    }
+
     public void showActivitiesListFragment() {
         Log.d("listActivities", "setting fragment");
 
@@ -185,5 +212,31 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .add(R.id.contain_main, ActivitiesList.newInstance("", ""), ActivitiesList.TAG)
                 .commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        Log.d("checkLocation", "onRequestPermissionsResult");
+        switch (requestCode) {
+            case 1234: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (presenter != null)
+                        presenter.updateLocation();
+
+                } else {
+                    Log.d("checkLocation", "permission not granted:");
+                }
+                return;
+            }
+        }
+    }
+
+    public void updateLocation(){
+        if (presenter!=null)
+            presenter.updateLocation();
     }
 }

@@ -1,5 +1,14 @@
 package com.jauxim.grandapp.ui.Activity.Main;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+
+import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.networking.Service;
 
 import rx.subscriptions.CompositeSubscription;
@@ -20,5 +29,33 @@ public class MainPresenter {
 
     public void onStop() {
         subscriptions.unsubscribe();
+    }
+
+    public void updateLocation() {
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            SingleShotLocationProvider.requestSingleUpdate(view.getContext(),
+                    new SingleShotLocationProvider.LocationCallback() {
+                        @Override
+                        public void onNewLocationAvailable(SingleShotLocationProvider.GPSCoordinates location) {
+                            DataUtils.saveLocation(view.getContext(), location);
+                        }
+                    });
+
+        } else if (Build.VERSION.SDK_INT >= 23) {
+            ActivityCompat.requestPermissions(view.getContext(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    1234);
+        }
+
+    }
+
+    public void logout() {
+        view.showWait();
+        DataUtils.deleteAuthToken((Context) view);
+        view.removeWait();
+        view.showLogoutSuccess(R.string.logout_success);
+        view.redirectTologin();
     }
 }

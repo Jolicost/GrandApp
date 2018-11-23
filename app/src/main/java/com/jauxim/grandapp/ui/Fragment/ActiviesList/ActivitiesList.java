@@ -1,11 +1,11 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,7 @@ import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.deps.Deps;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.Main.MainView;
+import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -38,6 +38,9 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
     @BindView(R.id.list_activities)
     RecyclerView activityesRecyclerView;
+
+    @BindView(R.id.srlRefresh)
+    SwipeRefreshLayout srlRefresh;
 
     private List<ActivityListItemModel> activitiesList = new ArrayList<>();
     private ActivityAdapter mAdapter;
@@ -86,9 +89,17 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
-        ActivityListPresenter presenter = new ActivityListPresenter(service, this);
+        final ActivityListPresenter presenter = new ActivityListPresenter(service, this);
         presenter.getActivityList();
 
+
+        srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getActivityList();
+                updateLocation();
+            }
+        });
         return view;
     }
 
@@ -112,5 +123,17 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activitiesList.clear();
         activitiesList.addAll(activities);
         mAdapter.notifyDataSetChanged();
+        srlRefresh.setRefreshing(false);
+    }
+
+    private void updateLocation() {
+        if (getActivity() != null && getActivity() instanceof Main) {
+            ((Main) getActivity()).updateLocation();
+        }
+    }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
     }
 }

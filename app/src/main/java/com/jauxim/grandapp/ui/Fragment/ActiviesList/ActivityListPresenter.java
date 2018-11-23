@@ -1,20 +1,17 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
-import android.util.Log;
+import android.content.Context;
 
+import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.Main.MainView;
 
 import java.util.List;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-/**
- * Created by ennur on 6/25/16.
- */
 public class ActivityListPresenter {
     private final Service service;
     private final ActivitiesListView view;
@@ -28,7 +25,7 @@ public class ActivityListPresenter {
 
     public void getActivityList() {
         view.showWait();
-
+        String auth = DataUtils.getAuthToken(view.getContext());
         Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
             @Override
             public void onSuccess(List<ActivityListItemModel> activities) {
@@ -42,7 +39,7 @@ public class ActivityListPresenter {
                 view.onFailure(networkError.getMessage());
             }
 
-        });
+        },auth);
 
         subscriptions.add(subscription);
     }

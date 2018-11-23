@@ -7,4 +7,74 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="update">UPDATE</string>
+    <string name="next">NEXT</string>
+    <string name="previous">PREVIOUS</string>
+    <string name="title">TITLE</string>
+    <string name="title_write">write the title here</string>
+    <string name="description_write">write the description here</string>
+    <string name="title_description">Write the title of the activity. This has to be short (between 5 and 8 words) to resume the main action of the activity that you want to create</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="description_description">Write the description of the activity. This has to be enough long to describe between 5 and 8 lines the details of the activity.\nDon\'t write information about the where or when, you will do it in the next steps!</string>
+
+    <string name="photos">PHOTOS</string>
+    <string name="photos_description">Upload or take some photos of the activity. You will need to upload as minimum 1 photo or 4 as maximum. To do it click one of the four camera images bellow:</string>
+
+    <string name="date_title">Pick the date</string>
+    <string name="date_description">Pick the start and end date of the activity clicking them. If you don\'t know the end date let it empty. The end date must be older then initial one.</string>
+    <string name="date_not_choosed">Not choosed</string>
+    <string name="initial_date">Initial date:</string>
+    <string name="end_date">End date:</string>
+
+    <string name="title_location_permission">Location permission</string>
+    <string name="text_location_permission">Allow GRANDAPP to access yout location?</string>
+    <string name="ok">Ok</string>
+    <string name="free_price">Free</string>
+    <string name="upperTag">Information</string>
+    <string name="images_title">Add some images</string>
+    <string name="location_title">Pick the Location of your activity</string>
+    <string name="capacity_title">Capacity</string>
+    <string name="capacity_description">Write the capacity of people for the activity</string>
+    <string name="price_title">Price</string>
+    <string name="price_description">Write the price of the activity</string>
+    <string name="preview_title">Preview</string>
+
+    <string name="invalid_title_title">Invalid Title</string>
+    <string name="invalid_title_description">Title is too short or is empty. Please try it again</string>
+
+    <string name="invalid_description_title">Invalid Description</string>
+    <string name="invalid_description_description">Description is too short or is empy. Please try it again</string>
+
+    <string name="invalid_images_title">Invalid Images</string>
+    <string name="invalid_images_description">There isn\'t any taken photo. Please take one and try it again</string>
+
+    <string name="invalid_location_title">Invalid Location</string>
+    <string name="invalid_location_description">Location is invalid. Please move the map and try it again</string>
+
+    <string name="invalid_time_title">Invalid start time</string>
+    <string name="invalid_time_description">The start time is not choosed or its already past. Please, try it again</string>
+
+    <string name="invalid_capacity_title">Invalid Capacity</string>
+    <string name="invalid_capacity_description">Capacity not valid or is empty. Please try it again</string>
+
+    <string name="invalid_price_title">Invalid Price</string>
+    <string name="invalid_price_description">Price not valid or is empty. Please try it again</string>
+
+    <string name="title_activity_maps">Map</string>
+    <string name="user_error">Enter username</string>
+    <string name="pass_error">Enter a valid password</string>
+    <string name="pass2_error">The passwords does not match</string>
+    <string name="login_error">Login Failed</string>
+    <string name="login_success">Login Success</string>
+    <string name="logout_success">Logout Success</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
+    <string name="password_hint">Password</string>
+    <string name="username_hint">Username</string>
+    <string name="not_a_member">Not a member?</string>
+    <string name="register_message">Sign up now</string>
+    <string name="welcomeRegister">WELCOME!</string>
+    <string name="email_error">Enter a valid email</string>
+    <string name="phone_number_hint">Phone number</string>
+
 </resources>

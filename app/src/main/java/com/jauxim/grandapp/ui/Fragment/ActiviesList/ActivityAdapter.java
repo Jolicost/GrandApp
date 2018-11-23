@@ -1,47 +1,71 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.Utils.RxBus;
+import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
+import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
 
 import java.util.List;
 
+import rx.Observer;
+
+import static android.graphics.Color.rgb;
+
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyViewHolder> {
 
     private List<ActivityListItemModel> activityList;
-    public Context context;
+    public Activity context;
+    private SingleShotLocationProvider.GPSCoordinates userLocation;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, author, distance;
-        public ImageView image, star;
-        public RatingBar ratingBar;
+        public TextView title, gauge, distance, time;
+        public ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
-            image = view.findViewById(R.id.image_activity);
-            author = view.findViewById(R.id.organizer_activity);
-            title = view.findViewById(R.id.title_activity);
-            distance = view.findViewById(R.id.distance_activity);
-            ratingBar = view.findViewById(R.id.rating_activity);
-            star = view.findViewById(R.id.star);
+            time = view.findViewById(R.id.tvTime);
+            image = view.findViewById(R.id.ivImage);
+            gauge = view.findViewById(R.id.tvGauge);
+            title = view.findViewById(R.id.tvTitle);
+            distance = view.findViewById(R.id.tvDistance);
+
         }
     }
 
-    public ActivityAdapter(Context context, List<ActivityListItemModel> moviesList) {
+    public ActivityAdapter(Activity context, List<ActivityListItemModel> moviesList) {
         this.activityList = moviesList;
         this.context = context;
+        userLocation = DataUtils.getLocation(context);
+        RxBus.instanceOf().getLocationObservable().subscribe(new Observer<SingleShotLocationProvider.GPSCoordinates>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(SingleShotLocationProvider.GPSCoordinates newLoc) {
+                userLocation = newLoc;
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -56,23 +80,35 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final ActivityListItemModel activity = activityList.get(position);
         holder.title.setText(activity.getTitle());
-        //holder.author.setText(activity.get());
-        //holder.distance.setText(activity.get().first+"m");
-        holder.ratingBar.setRating((float) (activity.getRating()));
 
-        if (activity.getImage() != null && activity.getImage().size() > 0) {
-            Glide.with(holder.image.getContext())
-                    .load(activity.getImage().get(0))
-                    .into(holder.image);
+        if (userLocation != null) {
+            float distance = Utils.getAbsoluteDistance(activity.getLatitude(), activity.getLongitude(), userLocation.latitude, userLocation.longitude);
+            //float distance = Float.parseFloat(Utils.getWalkingDistance(userLocation.latitude, userLocation.longitude, 41.501598, 2.387201));
+
+            String distanceWalked;
+            if (distance >= 1000) {
+                distanceWalked = String.format("%.2f", distance / 1000) + " km";
+            } else {
+                distanceWalked = String.format("%.2f", distance) + " m";
+            }
+
+            holder.distance.setText(distanceWalked);
         }
 
-        /*
-        if (activity.getOrganizer().toLowerCase().contains("Ayuntamiento".toLowerCase())){
-            holder.star.setVisibility(View.VISIBLE);
-        }else{
-            holder.star.setVisibility(View.GONE);
+
+        String countDownTime = Utils.getCountDownTime(activity.getTimestampStart());
+
+        holder.time.setText(countDownTime);
+
+        if (countDownTime.equalsIgnoreCase("gone!")) {
+            holder.time.setTextColor(rgb(216, 19, 19));
+        } else {
+            holder.time.setTextColor(rgb(11, 188, 37));
         }
-        */
+
+        holder.gauge.setText(activity.getnUsers() + "/" + activity.getMaxCapacity());
+
+        Glide.with(holder.image.getContext()).load(activity.getImage()).into(holder.image);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

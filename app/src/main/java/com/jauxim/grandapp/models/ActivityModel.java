@@ -28,23 +28,23 @@ public class ActivityModel {
 
     @SerializedName("userId")
     @Expose
-    private Long userId;
+    private String userId;
 
     @SerializedName("rating")
     @Expose
     private Long rating;
 
-    @SerializedName("latitude")
+    @SerializedName("lat")
     @Expose
-    private Long latitude;
+    private Double latitude;
 
-    @SerializedName("longitude")
+    @SerializedName("long")
     @Expose
-    private Long longitude;
+    private Double longitude;
 
-    @SerializedName("adress")
+    @SerializedName("address")
     @Expose
-    private Long adress;
+    private String address;
 
     @SerializedName("type")
     @Expose
@@ -57,6 +57,16 @@ public class ActivityModel {
     @SerializedName("images")
     @Expose
     private List<String> images;
+
+    @SerializedName("timestampStart")
+    @Expose
+    private Long timestampStart;
+
+    @SerializedName("timestampEnd")
+    @Expose
+    private Long timestampEnd;
+
+    private List<String> imagesBase64;
 
     public String getId() {
         return id;
@@ -90,11 +100,11 @@ public class ActivityModel {
         this.price = price;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -106,28 +116,28 @@ public class ActivityModel {
         this.rating = rating;
     }
 
-    public Long getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public Long getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public Long getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(Long adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
 
     public Long getType() {
@@ -146,11 +156,35 @@ public class ActivityModel {
         this.capacity = capacity;
     }
 
-    public List<String> getImages() {
+    public List<String> getImagesUrl() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImagesUrl(List<String> images) {
         this.images = images;
+    }
+
+    public List<String> getImagesBase64() {
+        return imagesBase64;
+    }
+
+    public void setImagesBase64(List<String> imagesBase64) {
+        this.imagesBase64 = imagesBase64;
+    }
+
+    public Long getTimestampStart() {
+        return timestampStart;
+    }
+
+    public void setTimestampStart(Long timestampStart) {
+        this.timestampStart = timestampStart;
+    }
+
+    public Long getTimestampEnd() {
+        return timestampEnd;
+    }
+
+    public void setTimestampEnd(Long timestampEnd) {
+        this.timestampEnd = timestampEnd;
     }
 }

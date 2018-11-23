@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'grandapp'
+            storeFile file('grandapp.keystore')
+            storePassword 'grandapp'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.jauxim.grandapp"
@@ -11,14 +19,21 @@ android {
         buildConfigField "String", "BASEURL", "\"https://grandapp.herokuapp.com/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "int", "CACHETIME", "432000" // 5days
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
-    buildToolsVersion '22.0.1'
+    buildToolsVersion '28.0.3'
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -30,12 +45,12 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
-
     testImplementation 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.7.22'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation 'com.github.bumptech.glide:glide:4.3.1'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -48,4 +63,6 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.5'
     provided 'javax.annotation:jsr250-api:1.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    implementation 'com.hbb20:ccp:2.2.0'
 }
