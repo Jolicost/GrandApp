@@ -53,7 +53,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @BindView(R.id.bPrevious)
     Button bPrevious;
 
-    static private boolean demo_edit_mode = true;
+    static private boolean demo_edit_mode = false;
     //private ActivityStepsAdapter activityAdapter;
 
     private String title;
@@ -91,6 +91,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.d("pagerThing", "onPageScrolled " + position);
 
             }
 
@@ -107,8 +108,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                     } else {
                         bNext.setText("Next");
                     }
+
+                    if (isInPreview(viewPager.getCurrentItem())){
+                        activityPageAdapter.updateAndSetModel();
+                    }
                 }
-                Log.d("pagerThing", "onPageScrolled " + position);
+
             }
 
             @Override
@@ -155,11 +160,11 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         updateModel();
     }
     */
-
-    private void updateModel() {
+    private ActivityModel model;
+    public void updateModel() {
         //TODO: make async calls and fill urls list
 
-        ActivityModel model = new ActivityModel();
+        model = new ActivityModel();
         model.setTitle(title);
         model.setDescription(description);
         if (coordinates!=null) {
@@ -172,16 +177,19 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         model.setCapacity(capacity);
         model.setPrice(price);
         model.setTimestampEnd(timeEnd);
-        presenter.createActivityInfo(model);
+
+    }
+
+    private void updateModelServer(){
+        if (model != null) presenter.createActivityInfo(model);
     }
 
     @OnClick(R.id.bNext)
     void nextButtonClick(View view) {
-        if (!isInlastStep(viewPager.getCurrentItem())) {
-            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-
+        if (isInlastStep(viewPager.getCurrentItem())) {
+            updateModelServer();
         } else {
-            updateModel();
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
         }
     }
 
@@ -232,11 +240,11 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             case STEP_CAPACITYPRICE:
                 capacity = Long.parseLong(getInputCapacity());
                 price = Long.parseLong(getInputPrice());
-                if (( !demo_edit_mode)) {
+                if ((capacity == null || capacity <= 0 ) && !demo_edit_mode) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_capacity_title)).description(getString(R.string.invalid_capacity_description)).build();
                     return false;
                 }
-                else if (!demo_edit_mode) {
+                else if ((price == null) && !demo_edit_mode) {
                 Dialog.createDialog(this).title(getString(R.string.invalid_price_title)).description(getString(R.string.invalid_price_description)).build();
                 return false;
             }
@@ -252,6 +260,10 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private boolean isInlastStep(int position) {
         return (position == activityPageAdapter.getCount() - 1);
+    }
+
+    private boolean isInPreview(int position) {
+        return (position == activityPageAdapter.getCount() - 2);
     }
 
     private class ActivityEditPageAdapter extends FragmentPagerAdapter {
@@ -349,6 +361,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 return capacityPriceFragment.getPrice();
             return null;
         }
+
+        public void updateAndSetModel(){
+            updateModel();
+            if (previewFragment!=null)
+                previewFragment.updateAndSetModel(model);
+        }
     }
 
     private String getInputTitle() {
@@ -396,6 +414,10 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         if (activityPageAdapter !=null)
             return activityPageAdapter.getTimeEnd();
         return null;
+    }
+
+    public ActivityModel getModel(){
+        return model;
     }
 
 

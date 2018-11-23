@@ -28,6 +28,7 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.Utils.Utils;
+import com.jauxim.grandapp.models.ActivityModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,6 +48,8 @@ import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment
 public class ContainerEditFragment extends Fragment implements View.OnClickListener {
 
     int position = 0;
+
+    ActivityEditActivity parent;
 
     private TextView etTitle;
     private TextView etDescription;
@@ -68,26 +71,14 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     private TextView etCapacity;
     private TextView etPrice;
 
-    @BindView(R.id.tvTitlePreview)
-    TextView tvTitlePreview;
+    private TextView tvTitlePreview;
+    private TextView tvDescriptionPreview;
+    private TextView tvLocationPreview;
+    private TextView tvInitialDatePreview;
+    private TextView tvEndDatePreview;
+    private TextView tvCapacityPreview;
+    private TextView tvPricePreview;
 
-    @BindView(R.id.tvDescriptionPreview)
-    TextView tvDescriptionPreview;
-
-    @BindView(R.id.tvLocationPreview)
-    TextView tvLocationPreview;
-
-    @BindView(R.id.tvInitialDatePreview)
-    TextView tvInitialDatePreview;
-
-    @BindView(R.id.tvEndDatePreview)
-    TextView tvEndDatePreview;
-
-    @BindView(R.id.tvCapacityPreview)
-    TextView tvCapacityPreview;
-
-    @BindView(R.id.tvPricePreview)
-    TextView tvPricePreview;
 
     public @interface stepsEditActivity {
         int STEP_TITLE = 0;
@@ -115,7 +106,14 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         View vDateStart = view.findViewById(R.id.vInitDate);
         View vDateEnd = view.findViewById(R.id.vEndDate);
         tvDateStart = view.findViewById(R.id.tvInitDate);
-        tvDateEnd = view.findViewById(R.id.tvEndlDate);
+        tvDateEnd = view.findViewById(R.id.tvEndDate);
+        tvTitlePreview = view.findViewById(R.id.tvTitlePreview);
+        tvDescriptionPreview = view.findViewById(R.id.tvDescriptionPreview);
+        tvLocationPreview = view.findViewById(R.id.tvLocationPreview);
+        tvInitialDatePreview = view.findViewById(R.id.tvInitialDatePreview);
+        tvEndDatePreview = view.findViewById(R.id.tvEndDatePreview);
+        tvCapacityPreview = view.findViewById(R.id.tvCapacityPreview);
+        tvPricePreview = view.findViewById(R.id.tvPricePreview);
 
         switch (position) {
             case STEP_TITLE:
@@ -214,7 +212,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 });
 
                 tvDateStart.setText(getString(R.string.date_not_choosed));
-//                tvDateEnd.setText(getString(R.string.date_not_choosed));
+                tvDateEnd.setText(getString(R.string.date_not_choosed));
 
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
@@ -241,13 +239,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 break;
 
             case STEP_PREVIEW:
-                tvTitlePreview = etTitle;
-                tvDescriptionPreview = etDescription;
-                //tvLocationPreview = etLocation;
-                tvInitialDatePreview = tvDateStart;
-                tvEndDatePreview = tvDateEnd;
-                tvCapacityPreview = etCapacity;
-                tvPricePreview = etPrice;
+
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
@@ -255,6 +247,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vDate.setVisibility(View.GONE);
                 vCapacityPrice.setVisibility(View.GONE);
                 vPreview.setVisibility(View.VISIBLE);
+
                 break;
             default:
                 break;
@@ -464,5 +457,19 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             }
         });
         dialogDate.show();
+    }
+    public void setParent(ActivityEditActivity activityEditActivity) {
+        parent = activityEditActivity;
+    }
+
+    public void updateAndSetModel(ActivityModel model){
+        tvTitlePreview.setText(model.getTitle());
+        tvDescriptionPreview.setText(model.getDescription());
+        tvLocationPreview.setText(model.getLatitude()+","+model.getLongitude());
+        tvInitialDatePreview.setText(Utils.getFullDataFormat(model.getTimestampStart()));
+        tvEndDatePreview.setText(Utils.getFullDataFormat(model.getTimestampEnd()));
+        tvCapacityPreview.setText(model.getCapacity()+"");
+        tvPricePreview.setText(model.getPrice()+"");
+        Log.d("pagerThing", "updateAndSetModel ");
     }
 }
