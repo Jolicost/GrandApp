@@ -6,6 +6,7 @@ import com.jauxim.grandapp.models.AuthModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
+import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
 import java.util.List;
@@ -179,8 +180,12 @@ public class Service {
     }
 
 
-    public Subscription postNewUser(String username, String password, String email, final RegisterCallback callback) {
-        return networkService.postNewUser(username, password, email)
+    public Subscription postNewUser(String phone, String password, String email, final RegisterCallback callback) {
+        RegisterModel registerModel = new RegisterModel();
+        registerModel.setPhone(phone);
+        registerModel.setPassword(password);
+        registerModel.setEmail(email);
+        return networkService.postNewUser(registerModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {

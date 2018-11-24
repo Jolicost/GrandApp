@@ -31,7 +31,7 @@ public class ActivityLoginPresenter {
 
         boolean error = false;
         if (phone.isEmpty()) {
-            view.showUserError(R.string.user_error);
+            view.showUserError(R.string.phone_error);
             error = true;
         }
         if (pass.isEmpty()){

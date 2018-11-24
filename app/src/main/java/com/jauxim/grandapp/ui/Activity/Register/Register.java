@@ -45,7 +45,7 @@ public class Register extends BaseActivity implements RegisterView {
     @BindView(R.id.tilEmail)
     TextInputLayout tilEmail;
 
-    @BindView(R.id.tilPhoneNUmber)
+    @BindView(R.id.tilPhoneNumber)
     TextInputLayout tilPhoneNUmber;
 
     @BindView(R.id.tilPassword)
@@ -79,12 +79,13 @@ public class Register extends BaseActivity implements RegisterView {
     @OnClick(R.id.re_button)
     public void doRegister(){
         showWait();
-        String user = ccp.getSelectedCountryCodeWithPlus() + etPhoneNUmber.getText().toString();
+        String code = ccp.getSelectedCountryCodeWithPlus();
+        String phone = etPhoneNUmber.getText().toString();
         String user_email = email.getText().toString();
         String pass = password.getText().toString();
         String pass2 = password2.getText().toString();
         String compName = re_completeName.getText().toString();
-        presenter.register(user,user_email,pass,pass2,compName);
+        presenter.register(code, phone,user_email,pass,pass2,compName);
     }
 
     @Override

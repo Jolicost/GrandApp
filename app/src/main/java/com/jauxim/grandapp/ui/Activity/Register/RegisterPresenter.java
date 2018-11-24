@@ -21,14 +21,14 @@ public class RegisterPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void register(String user, String email, String pass, String pass2, String completeName) {
+    public void register(String code, String phone, String email, String pass, String pass2, String completeName) {
 
         view.resetErrors();
 
         boolean error = false;
 
-        if (user.isEmpty()) {
-            view.showUserError(R.string.user_error);
+        if (phone.isEmpty()) {
+            view.showUserError(R.string.phone_error);
             error = true;
         }
         if (email.isEmpty()) {
@@ -50,6 +50,7 @@ public class RegisterPresenter {
             @Override
             public void onSuccess(UserModel userModel) {
                 view.removeWait();
+                view.showRegisterSuccess(R.string.login_success);
             }
 
             @Override
@@ -59,7 +60,7 @@ public class RegisterPresenter {
             }
 
         };
-        Subscription subscription = service.postNewUser(user, pass, email, registerCallback);
+        Subscription subscription = service.postNewUser(code+phone, pass, email, registerCallback);
 
         subscriptions.add(subscription);
     }

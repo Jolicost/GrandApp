@@ -7,6 +7,7 @@ import com.jauxim.grandapp.models.AuthModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
+import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public interface NetworkService {
     @POST("/login")
     Observable<AuthModel> getLoginToken(@Body UserModel userModel);
 
-    @POST("/users?username={user_name}&password={password}&email={email}")
-    Observable<UserModel> postNewUser(@Path("user_name") String user_name, @Path("password") String password, @Path("email") String email);
+    @POST("/register")
+    Observable<UserModel> postNewUser(@Body RegisterModel model);
 
     @POST("/imagesJson")
     Observable<ImageUrlModel> postImage(@Body ImageBase64Model base64Image);

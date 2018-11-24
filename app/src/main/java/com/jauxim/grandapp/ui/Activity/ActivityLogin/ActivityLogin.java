@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
@@ -43,6 +44,9 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @BindView(R.id.ccp)
     CountryCodePicker ccp;
 
+    @BindView(R.id.llInputContainer)
+    LinearLayout llInputContainer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_login);
@@ -50,6 +54,9 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
         ButterKnife.bind(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            llInputContainer.setTransitionGroup(true);
+        }
         getDeps().inject(this);
         presenter = new ActivityLoginPresenter(service, this);
     }
