@@ -77,5 +77,6 @@
     <string name="welcomeLoginr">Hi, there!</string>
     <string name="email_error">Enter a valid email</string>
     <string name="phone_number_hint">Phone number</string>
+    <string name="accept">ACCEPT</string>
 
 </resources>
