@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
@@ -60,6 +62,15 @@ public class Register extends BaseActivity implements RegisterView {
     @BindView(R.id.ccpReg)
     CountryCodePicker ccp;
 
+    @BindView(R.id.llInputContainer)
+    LinearLayout llInputContainer;
+
+    @BindView(R.id.textTitle)
+    TextView textTitle;
+
+    @BindView(R.id.tv2)
+    TextView textWelcome;
+
     RegisterPresenter presenter;
 
     @Override
@@ -67,10 +78,17 @@ public class Register extends BaseActivity implements RegisterView {
         setContentView(R.layout.register_app);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            llInputContainer.setTransitionGroup(true);
+        }
         getDeps().inject(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
+
+        textTitle.setText(getString(R.string.register_button));
+        textWelcome.setText(getString(R.string.welcomeRegister));
+
 
         presenter = new RegisterPresenter(service, this);
     }

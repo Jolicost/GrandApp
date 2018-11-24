@@ -67,13 +67,14 @@
     <string name="login_error">Login Failed</string>
     <string name="login_success">Login Success</string>
     <string name="logout_success">Logout Success</string>
-    <string name="login_button">Login</string>
-    <string name="register_button">Register</string>
+    <string name="login_button">LOG IN</string>
+    <string name="register_button">SIGN UP</string>
     <string name="password_hint">Password</string>
     <string name="username_hint">Username</string>
     <string name="not_a_member">Not a member?</string>
     <string name="register_message">Sign up now</string>
-    <string name="welcomeRegister">WELCOME!</string>
+    <string name="welcomeRegister">Welcome!</string>
+    <string name="welcomeLoginr">Hi, there!</string>
     <string name="email_error">Enter a valid email</string>
     <string name="phone_number_hint">Phone number</string>
 

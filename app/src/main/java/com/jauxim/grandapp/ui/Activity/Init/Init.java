@@ -111,7 +111,6 @@ public class Init extends BaseActivity implements InitView {
 
     @Override
     public void startRegisterActivity() {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             Intent intent = new Intent(Init.this, Register.class);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(

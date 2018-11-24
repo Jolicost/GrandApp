@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+import com.jauxim.grandapp.ui.Activity.Init.Init;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Activity.Register.Register;
 
@@ -47,6 +52,15 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @BindView(R.id.llInputContainer)
     LinearLayout llInputContainer;
 
+    @BindView(R.id.iv2)
+    ImageView ivLogo;
+
+    @BindView(R.id.textTitle)
+    TextView textTitle;
+
+    @BindView(R.id.tv2)
+    TextView textWelcome;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_login);
@@ -58,6 +72,10 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
             llInputContainer.setTransitionGroup(true);
         }
         getDeps().inject(this);
+
+        textTitle.setText(getString(R.string.login_button));
+        textWelcome.setText(getString(R.string.welcomeLoginr));
+
         presenter = new ActivityLoginPresenter(service, this);
     }
 
@@ -74,8 +92,17 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
     @OnClick(R.id.tvRegister)
     public void registerClick(){
-        Intent intent = new Intent(this, Register.class);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            Intent intent = new Intent(this, Register.class);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this,
+                    ivLogo,
+                    ViewCompat.getTransitionName(ivLogo));
+            startActivity(intent, options.toBundle());
+        }else {
+            Intent intent = new Intent(this, Register.class);
+            startActivity(intent);
+        }
     }
 
     @Override
