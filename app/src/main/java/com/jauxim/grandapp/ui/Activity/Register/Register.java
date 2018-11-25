@@ -161,12 +161,6 @@ public class Register extends BaseActivity implements RegisterView {
     }
 
     @Override
-    public void showRegisterSuccess(int register_success) {
-        removeWait();
-        Dialog.createDialog(this).title(getString(register_success)).description(getString(register_success)).build();
-    }
-
-    @Override
     public void startMainActivity() {
         Intent intent = new Intent(this, Main.class);
         startActivity(intent);

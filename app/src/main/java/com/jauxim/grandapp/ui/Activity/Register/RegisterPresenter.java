@@ -1,6 +1,11 @@
 package com.jauxim.grandapp.ui.Activity.Register;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -41,16 +46,22 @@ public class RegisterPresenter {
         } else if (!pass2.equals(pass)) {
             view.showPass2Error(R.string.pass2_error);
             error = true;
+        } else if (completeName.isEmpty()){
+            view.showPass2Error(R.string.name_error);
+            error = true;
         }
 
         if (error) return;
 
         view.showWait();
-        Service.RegisterCallback registerCallback = new Service.RegisterCallback(){
+        Service.LoginCallback registerCallback = new Service.LoginCallback(){
             @Override
-            public void onSuccess(UserModel userModel) {
+            public void onSuccess(LoginResponseModel userModel) {
+                DataUtils.setAuthToken((Context) view,userModel.getToken());
+                Log.d("authSaving", "is token?" + userModel.isAuth()+" getted token: "+userModel.getToken());
+                DataUtils.saveUserModel((Context)view, userModel.getUser());
                 view.removeWait();
-                view.showRegisterSuccess(R.string.login_success);
+                view.startMainActivity();
             }
 
             @Override
@@ -60,7 +71,7 @@ public class RegisterPresenter {
             }
 
         };
-        Subscription subscription = service.postNewUser(code+phone, pass, email, registerCallback);
+        Subscription subscription = service.postNewUser(code+phone, pass, email, completeName, registerCallback);
 
         subscriptions.add(subscription);
     }

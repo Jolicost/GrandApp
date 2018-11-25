@@ -15,8 +15,6 @@ public interface RegisterView {
 
     void startMainActivity();
 
-    void showRegisterSuccess(int login_success);
-
     void showEmailError(int email_error);
 
     void showPass2Error(int pass2_error);

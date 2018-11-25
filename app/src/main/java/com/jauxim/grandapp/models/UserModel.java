@@ -16,6 +16,22 @@ public class UserModel {
     @Expose
     private String password;
 
+    @SerializedName("username")
+    @Expose
+    private String username;
+
+    @SerializedName("email")
+    @Expose
+    private String email;
+
+    @SerializedName("completeName")
+    @Expose
+    private String completeName;
+
+    @SerializedName("profilePic")
+    @Expose
+    private String profilePic;
+
     public UserModel(String username, String password){
         this.phone = username;
         this.password = password;
@@ -35,5 +51,37 @@ public class UserModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCompleteName() {
+        return completeName;
+    }
+
+    public void setCompleteName(String completeName) {
+        this.completeName = completeName;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

@@ -3,7 +3,7 @@ package com.jauxim.grandapp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AuthModel {
+public class LoginResponseModel {
 
     @SerializedName("auth")
     @Expose
@@ -12,6 +12,10 @@ public class AuthModel {
     @SerializedName("token")
     @Expose
     private String token;
+
+    @SerializedName("user")
+    @Expose
+    private UserModel user;
 
     public boolean isAuth() {
         return auth;
@@ -27,5 +31,13 @@ public class AuthModel {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 }

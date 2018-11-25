@@ -4,17 +4,25 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.jauxim.grandapp.models.UserModel;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class DataUtils {
 
-    private static String KEY_USER_SHARED_PREFERENCES = "key_user_preferences";
+    private static String GENERAL_KEY = "key_user_preferences";
     private static String KEY_LATITUDE = "user_latitude";
     private static String KEY_LONGITUDE = "user_longitude";
     private static String AUTHTOKEN = "auth_token";
+    private static String USER_MODEL = "user_model";
 
     private static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(KEY_USER_SHARED_PREFERENCES, MODE_PRIVATE);
+        return context.getSharedPreferences(GENERAL_KEY, MODE_PRIVATE);
+    }
+
+    private static SharedPreferences getSharedPreferences(String key, Context context) {
+        return context.getSharedPreferences(key, MODE_PRIVATE);
     }
 
     private static void deleteSharedPreferencesKey(Context context, String key){
@@ -84,4 +92,20 @@ public class DataUtils {
         deleteSharedPreferencesKey(context,AUTHTOKEN);
     }
 
+    /**
+        USER INFO
+     */
+
+    public static UserModel getUserInfo(Context context){
+        Gson gson = new Gson();
+        String json = getString(context, USER_MODEL);
+        UserModel obj = gson.fromJson(json, UserModel.class);
+        return obj;
+    }
+
+    public static void saveUserModel(Context context, UserModel userModel){
+        Gson gson = new Gson();
+        String json = gson.toJson(userModel);
+        setString(context, USER_MODEL, json);
+    }
 }

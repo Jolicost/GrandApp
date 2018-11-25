@@ -145,11 +145,6 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     }
 
     @Override
-    public void showLoginSuccess(int login_success) {
-        removeWait();
-    }
-
-    @Override
     public void startMainActivity() {
         Intent intent = new Intent(this, Main.class);
         startActivity(intent);

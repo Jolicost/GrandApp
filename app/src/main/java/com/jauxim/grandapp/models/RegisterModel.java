@@ -20,6 +20,10 @@ public class RegisterModel {
     @Expose
     private String email;
 
+    @SerializedName("completeName")
+    @Expose
+    private String completeName;
+
     public String getPassword() {
         return password;
     }
@@ -42,5 +46,13 @@ public class RegisterModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCompleteName() {
+        return completeName;
+    }
+
+    public void setCompleteName(String completeName) {
+        this.completeName = completeName;
     }
 }
