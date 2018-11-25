@@ -28,10 +28,32 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
+                <RelativeLayout
+                    android:id="@+id/rlProfileImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/btn_simple">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_user_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/ic_profile_pic" />
+                </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <com.hbb20.CountryCodePicker

@@ -1,12 +1,13 @@
 package com.jauxim.grandapp.ui.Activity.Register;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
@@ -23,6 +25,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Register extends BaseActivity implements RegisterView {
 
@@ -71,6 +74,12 @@ public class Register extends BaseActivity implements RegisterView {
     @BindView(R.id.tv2)
     TextView textWelcome;
 
+    @BindView(R.id.rlProfileImage)
+    View rlProfileImage;
+
+    @BindView(R.id.civUser)
+    CircleImageView civUser;
+
     RegisterPresenter presenter;
 
     @Override
@@ -89,13 +98,19 @@ public class Register extends BaseActivity implements RegisterView {
         textTitle.setText(getString(R.string.register_button));
         textWelcome.setText(getString(R.string.welcomeRegister));
 
+        rlProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.createCropCamera(true).start(Register.this);
+            }
+        });
 
         presenter = new RegisterPresenter(service, this);
     }
 
 
     @OnClick(R.id.re_button)
-    public void doRegister(){
+    public void doRegister() {
         showWait();
         String code = ccp.getSelectedCountryCodeWithPlus();
         String phone = etPhoneNUmber.getText().toString();
@@ -103,7 +118,7 @@ public class Register extends BaseActivity implements RegisterView {
         String pass = password.getText().toString();
         String pass2 = password2.getText().toString();
         String compName = re_completeName.getText().toString();
-        presenter.register(code, phone,user_email,pass,pass2,compName);
+        presenter.register(code, phone, user_email, pass, pass2, compName);
     }
 
     @Override
@@ -164,5 +179,21 @@ public class Register extends BaseActivity implements RegisterView {
     public void startMainActivity() {
         Intent intent = new Intent(this, Main.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    Bitmap bitmap = Utils.getBitmapFromUri(this, result.getUri());
+                    civUser.setImageBitmap(bitmap);
+                } catch (Exception e) {
+                }
+            } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            }
+        }
     }
 }
