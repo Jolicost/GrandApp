@@ -1,10 +1,13 @@
 package com.jauxim.grandapp.ui.Activity.Register;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.models.ImageBase64Model;
+import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
@@ -26,7 +29,7 @@ public class RegisterPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void register(String code, String phone, String email, String pass, String pass2, String completeName) {
+    public void register(final String code, final String phone, final String email, final String pass, final String pass2, final String completeName, final String base64Image) {
 
         view.resetErrors();
 
@@ -54,6 +57,35 @@ public class RegisterPresenter {
         if (error) return;
 
         view.showWait();
+
+        if (!TextUtils.isEmpty(base64Image)){
+            view.showWait();
+            ImageBase64Model imageBase64Model = new ImageBase64Model();
+            imageBase64Model.setBase64(base64Image);
+
+            Subscription subscription = service.postImage(imageBase64Model, new Service.ImageCallback() {
+                @Override
+                public void onSuccess(ImageUrlModel imageUrl) {
+                    doSignUp(code+phone, pass, email, completeName, imageUrl.getImageUrl());
+                    Log.d("imagesResponse", "response: "+imageUrl.getImageUrl());
+                }
+
+                @Override
+                public void onError(NetworkError networkError) {
+                    doSignUp(code+phone, pass, email, completeName, "");
+                    Log.d("imagesResponse", "error with image: "+networkError.getMessage());
+                }
+            });
+            subscriptions.add(subscription);
+        }else{
+            doSignUp(code+phone, pass, email, completeName, "");
+        }
+
+
+
+    }
+
+    private void doSignUp(String phone, String pass, String email, String completeName, String image){
         Service.LoginCallback registerCallback = new Service.LoginCallback(){
             @Override
             public void onSuccess(LoginResponseModel userModel) {
@@ -71,7 +103,7 @@ public class RegisterPresenter {
             }
 
         };
-        Subscription subscription = service.postNewUser(code+phone, pass, email, completeName, registerCallback);
+        Subscription subscription = service.postNewUser(phone, pass, email, completeName, image, registerCallback);
 
         subscriptions.add(subscription);
     }

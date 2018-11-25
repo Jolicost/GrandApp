@@ -467,7 +467,10 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         tvDescriptionPreview.setText(model.getDescription());
         tvLocationPreview.setText(model.getLatitude()+","+model.getLongitude());
         tvInitialDatePreview.setText(Utils.getFullDataFormat(model.getTimestampStart()));
-        tvEndDatePreview.setText(Utils.getFullDataFormat(model.getTimestampEnd()));
+        if (model.getTimestampEnd()!=null)
+            tvEndDatePreview.setText(Utils.getFullDataFormat(model.getTimestampEnd()));
+        else
+            tvEndDatePreview.setText("not defined");
         tvCapacityPreview.setText(model.getCapacity()+"");
         tvPricePreview.setText(model.getPrice()+"");
         Log.d("pagerThing", "updateAndSetModel ");

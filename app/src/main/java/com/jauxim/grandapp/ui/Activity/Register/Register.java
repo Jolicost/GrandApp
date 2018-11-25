@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.internal.Util;
 
 public class Register extends BaseActivity implements RegisterView {
 
@@ -81,6 +82,7 @@ public class Register extends BaseActivity implements RegisterView {
     CircleImageView civUser;
 
     RegisterPresenter presenter;
+    private String base64Image;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +120,7 @@ public class Register extends BaseActivity implements RegisterView {
         String pass = password.getText().toString();
         String pass2 = password2.getText().toString();
         String compName = re_completeName.getText().toString();
-        presenter.register(code, phone, user_email, pass, pass2, compName);
+        presenter.register(code, phone, user_email, pass, pass2, compName, base64Image);
     }
 
     @Override
@@ -189,6 +191,7 @@ public class Register extends BaseActivity implements RegisterView {
             if (resultCode == RESULT_OK) {
                 try {
                     Bitmap bitmap = Utils.getBitmapFromUri(this, result.getUri());
+                    base64Image = Utils.getBase64(bitmap);
                     civUser.setImageBitmap(bitmap);
                 } catch (Exception e) {
                 }

@@ -180,12 +180,13 @@ public class Service {
     }
 
 
-    public Subscription postNewUser(String phone, String password, String email, String completeName, final LoginCallback callback) {
+    public Subscription postNewUser(String phone, String password, String email, String completeName, String image, final LoginCallback callback) {
         RegisterModel registerModel = new RegisterModel();
         registerModel.setPhone(phone);
         registerModel.setPassword(password);
         registerModel.setEmail(email);
         registerModel.setCompleteName(completeName);
+        registerModel.setProfilePic(image);
 
         return networkService.postNewUser(registerModel)
                 .subscribeOn(Schedulers.io())

@@ -24,6 +24,10 @@ public class RegisterModel {
     @Expose
     private String completeName;
 
+    @SerializedName("profilePic")
+    @Expose
+    private String profilePic;
+
     public String getPassword() {
         return password;
     }
@@ -54,5 +58,13 @@ public class RegisterModel {
 
     public void setCompleteName(String completeName) {
         this.completeName = completeName;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }
