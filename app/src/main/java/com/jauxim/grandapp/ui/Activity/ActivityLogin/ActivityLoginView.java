@@ -15,7 +15,5 @@ public interface ActivityLoginView {
 
     void startMainActivity();
 
-    void showLoginSuccess(int login_success);
-
     void resetErrors();
 }

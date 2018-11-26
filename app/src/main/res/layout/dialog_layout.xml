@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -11,69 +10,83 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/i_dialog_icon"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/i_dialog_icon"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-10dp"
+                android:layout_marginBottom="-10dp"
+                android:src="@drawable/ic_grandapp_icon" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="_title"
-            android:gravity="center"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:textSize="16sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:text="_title"
             android:textColor="@color/color_dark_text"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_dialog_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
             android:isScrollContainer="true"
             android:maxLines="10"
-            android:gravity="center"
             android:scrollbars="vertical"
             android:textColor="@color/color_dark_text"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingTop="5dp"
         android:layout_margin="20dp"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/b_dialog_negative"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_weight=".5"
-            android:clickable="true"
             android:layout_marginRight="7dp"
-            android:gravity="center"/>
+            android:layout_weight=".5"
+            android:background="@drawable/button_border"
+            android:clickable="true"
+            android:gravity="center"
+            android:textColor="@color/color_gradient_button_start" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/b_dialog_positive"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_weight=".5"
             android:layout_marginLeft="7dp"
+            android:layout_weight=".5"
+            android:background="@drawable/button_gradient"
             android:clickable="true"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </LinearLayout>

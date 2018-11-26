@@ -7,7 +7,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_header"/>
+    <include layout="@layout/toolbar_prelogin_header"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,32 +17,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="25dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv2"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="-20dp"
-                android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_grandapp_icon" />
-
-            <TextView
-                android:id="@+id/tv2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-25dp"
-                android:text="@string/app_name"
-                android:textColor="@color/colorPrimary"
-                android:textSize="26dp"
-                android:textStyle="bold" />
-
             <LinearLayout
+                android:id="@+id/llInputContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -114,7 +97,7 @@
                 android:textColor="#FFF"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_gradient"
                 android:textSize="25dp"
