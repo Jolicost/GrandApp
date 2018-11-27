@@ -22,20 +22,21 @@ import rx.Observable;
 
 public interface NetworkService {
 
+    String authKey = "x-access-token";
     @GET("v1/city")
-    Observable<CityListResponse> getCityList(@Header("authorization") String auth);
+    Observable<CityListResponse> getCityList(@Header(authKey) String auth);
 
     @GET("/activities/{id}")
-    Observable<ActivityModel> getActivityInfo(@Path("id") String activityId,@Header("authorization") String auth);
+    Observable<ActivityModel> getActivityInfo(@Path("id") String activityId,@Header(authKey) String auth);
 
     @DELETE("/activities/{id}")
-    Observable<String> deleteActivity(@Path("id") String activityId,@Header("authorization") String auth);
+    Observable<String> deleteActivity(@Path("id") String activityId,@Header(authKey) String auth);
 
     @POST("/activities")
-    Observable<ActivityModel> createActivityInfo(@Body ActivityModel activityInfo,@Header("authorization") String auth);
+    Observable<ActivityModel> createActivityInfo(@Body ActivityModel activityInfo,@Header(authKey) String auth);
 
     @GET("/activities")
-    Observable<List<ActivityListItemModel>> getActivityList(@Header("authorization") String auth);
+    Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth);
 
     @POST("/login")
     Observable<LoginResponseModel> getLoginToken(@Body UserModel userModel);

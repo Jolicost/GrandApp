@@ -105,13 +105,10 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 } else {
                     //can go next screen
                     if (isInlastStep(position)) {
+                        activityPageAdapter.updateAndSetModel();
                         bNext.setText("Create");
                     } else {
                         bNext.setText("Next");
-                    }
-
-                    if (isInPreview(viewPager.getCurrentItem())){
-                        activityPageAdapter.updateAndSetModel();
                     }
                 }
 
@@ -119,7 +116,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                Log.d("pagerThing", "onPageScrollStateChanged ");
+                Log.d("pagerThing", "onPageScrollStateChanged "+state);
 
             }
         });
@@ -261,10 +258,6 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private boolean isInlastStep(int position) {
         return (position == activityPageAdapter.getCount() - 1);
-    }
-
-    private boolean isInPreview(int position) {
-        return (position == activityPageAdapter.getCount() - 2);
     }
 
     private class ActivityEditPageAdapter extends FragmentPagerAdapter {
