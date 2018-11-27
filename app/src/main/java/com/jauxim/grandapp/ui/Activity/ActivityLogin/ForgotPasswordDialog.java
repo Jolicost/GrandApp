@@ -15,7 +15,7 @@ public class ForgotPasswordDialog extends Dialog {
     public Button yes, no;
 
     public ForgotPasswordDialog(Activity a) {
-        super(a);
+        super(a, R.style.DialogWithoutMargins);
         // TODO Auto-generated constructor stub
         this.c = a;
     }
@@ -25,8 +25,6 @@ public class ForgotPasswordDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.forgot_password_layout);
-
-
 
         /*
         yes = (Button) findViewById(R.id.btn_yes);

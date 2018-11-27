@@ -31,4 +31,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:typeface">serif</item>
     </style>
+
+    <style name="DialogWithoutMargins" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
 </resources>
