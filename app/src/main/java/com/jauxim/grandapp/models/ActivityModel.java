@@ -26,9 +26,9 @@ public class ActivityModel {
     @Expose
     private Long price;
 
-    @SerializedName("userId")
+    @SerializedName("user")
     @Expose
-    private static String userId;
+    private static String user;
 
     @SerializedName("rating")
     @Expose
@@ -101,11 +101,11 @@ public class ActivityModel {
     }
 
     public static String getUserId() {
-        return userId;
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(String user) {
+        this.user = user;
     }
 
     public Long getRating() {

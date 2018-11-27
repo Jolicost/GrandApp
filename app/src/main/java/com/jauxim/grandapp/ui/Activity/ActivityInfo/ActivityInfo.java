@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -163,7 +164,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         }
         Log.d("Username 1","Username1 ="+UserModel.getId());
         Log.d("Username 2","Username2 ="+ActivityModel.getUserId());
-        if (activityModel.getUserId().equals(UserModel.getId())){
+        if (!TextUtils.isEmpty(activityModel.getUserId()) && activityModel.getUserId().equals(UserModel.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
         }
