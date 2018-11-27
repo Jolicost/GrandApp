@@ -136,6 +136,10 @@ public class Dialog {
         descriptionView.setText(message);
         descriptionView.setMovementMethod(new ScrollingMovementMethod());
 
+        if (TextUtils.isEmpty(negativeButtonText) && TextUtils.isEmpty(positiveButtonText)){
+            negativeButtonText = context.getString(R.string.accept);
+        }
+
         if (!TextUtils.isEmpty(positiveButtonText)) {
             positiveTextView.setText(positiveButtonText);
             positiveTextView.setOnClickListener(new View.OnClickListener() {

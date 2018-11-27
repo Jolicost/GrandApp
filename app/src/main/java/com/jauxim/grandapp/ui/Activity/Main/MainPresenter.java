@@ -5,10 +5,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
+import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 
 import rx.subscriptions.CompositeSubscription;
@@ -48,7 +50,6 @@ public class MainPresenter {
             ActivityCompat.requestPermissions(view.getContext(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     1234);
         }
-
     }
 
     public void logout() {

@@ -211,7 +211,7 @@
         android:id="@+id/vDate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -250,7 +250,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Initial date:"
+                    android:text="@string/initial_date"
                     android:textSize="@dimen/description_edit_size" />
 
                 <TextView
@@ -275,11 +275,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="End date:"
+                    android:text="@string/end_date"
                     android:textSize="@dimen/description_edit_size" />
 
                 <TextView
-                    android:id="@+id/tvEndlDate"
+                    android:id="@+id/tvEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="hello"
@@ -293,7 +293,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/vMiscelania"
+        android:id="@+id/vCapacityPrice"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
@@ -310,7 +310,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/miscelania_title"
+                android:text="@string/capacity_title"
                 android:textSize="@dimen/title_edit_size"
                 android:textStyle="bold" />
 
@@ -319,15 +319,42 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="@string/miscelania_description"
+                android:text="@string/capacity_description"
                 android:textSize="@dimen/description_edit_size" />
 
             <EditText
-                android:id="@+id/etMiscelania"
+                android:id="@+id/etCapacity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="We need to change this to a number picker"
+                android:hint="@string/capacity_title"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textSize="@dimen/description_edit_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price_title"
+                android:layout_marginTop="40dp"
+                android:textSize="@dimen/title_edit_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/price_description"
+                android:textSize="@dimen/description_edit_size" />
+
+            <EditText
+                android:id="@+id/etPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/price_title"
+                android:inputType="number"
                 android:maxLines="1"
                 android:textSize="@dimen/description_edit_size" />
 
@@ -339,7 +366,7 @@
         android:id="@+id/vPreview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -353,31 +380,64 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/miscelania_title"
+                android:text="@string/preview_title"
                 android:textSize="@dimen/title_edit_size"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tvTitlePreview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="@string/miscelania_description"
                 android:textSize="@dimen/description_edit_size" />
 
             <TextView
+                android:id="@+id/tvDescriptionPreview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/miscelania_title"
-                android:textSize="@dimen/title_edit_size"
-                android:textStyle="bold" />
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textSize="@dimen/description_edit_size" />
 
             <TextView
+                android:id="@+id/tvLocationPreview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="@string/miscelania_description"
+                android:textSize="@dimen/description_edit_size" />
+
+            <TextView
+                android:id="@+id/tvInitialDatePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textSize="@dimen/description_edit_size" />
+
+            <TextView
+                android:id="@+id/tvEndDatePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textSize="@dimen/description_edit_size" />
+
+            <TextView
+                android:id="@+id/tvCapacityPreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textSize="@dimen/description_edit_size" />
+
+            <TextView
+                android:id="@+id/tvPricePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
                 android:textSize="@dimen/description_edit_size" />
 
         </LinearLayout>

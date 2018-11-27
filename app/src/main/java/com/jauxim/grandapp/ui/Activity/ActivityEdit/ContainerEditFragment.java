@@ -28,23 +28,28 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.Utils.Utils;
+import com.jauxim.grandapp.models.ActivityModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+
 import static android.app.Activity.RESULT_OK;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_DESCRIPTION;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_IMAGES;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_LOCATION;
-import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_MISCELANIA;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PREVIEW;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TIME;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TITLE;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_CAPACITYPRICE;
 
 public class ContainerEditFragment extends Fragment implements View.OnClickListener {
 
     int position = 0;
+
+    ActivityEditActivity parent;
 
     private TextView etTitle;
     private TextView etDescription;
@@ -57,11 +62,23 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
 
     private int imageChanging = -1;
 
-    private Long initTiemstamp;
+    private Long initTimestamp;
     private Long endTimestamp;
 
     private TextView tvDateStart;
     private TextView tvDateEnd;
+
+    private TextView etCapacity;
+    private TextView etPrice;
+
+    private TextView tvTitlePreview;
+    private TextView tvDescriptionPreview;
+    private TextView tvLocationPreview;
+    private TextView tvInitialDatePreview;
+    private TextView tvEndDatePreview;
+    private TextView tvCapacityPreview;
+    private TextView tvPricePreview;
+
 
     public @interface stepsEditActivity {
         int STEP_TITLE = 0;
@@ -69,7 +86,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         int STEP_IMAGES = 2;
         int STEP_LOCATION = 3;
         int STEP_TIME = 4;
-        int STEP_MISCELANIA = 5;
+        int STEP_CAPACITYPRICE = 5;
         int STEP_PREVIEW = 6;
     }
 
@@ -84,12 +101,19 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         View vImages = view.findViewById(R.id.vImages);
         View vLocation = view.findViewById(R.id.vLocation);
         View vDate = view.findViewById(R.id.vDate);
-        View vMiscelania = view.findViewById(R.id.vMiscelania);
+        View vCapacityPrice = view.findViewById(R.id.vCapacityPrice);
         View vPreview = view.findViewById(R.id.vPreview);
         View vDateStart = view.findViewById(R.id.vInitDate);
         View vDateEnd = view.findViewById(R.id.vEndDate);
         tvDateStart = view.findViewById(R.id.tvInitDate);
-        tvDateEnd = view.findViewById(R.id.tvEndlDate);
+        tvDateEnd = view.findViewById(R.id.tvEndDate);
+        tvTitlePreview = view.findViewById(R.id.tvTitlePreview);
+        tvDescriptionPreview = view.findViewById(R.id.tvDescriptionPreview);
+        tvLocationPreview = view.findViewById(R.id.tvLocationPreview);
+        tvInitialDatePreview = view.findViewById(R.id.tvInitialDatePreview);
+        tvEndDatePreview = view.findViewById(R.id.tvEndDatePreview);
+        tvCapacityPreview = view.findViewById(R.id.tvCapacityPreview);
+        tvPricePreview = view.findViewById(R.id.tvPricePreview);
 
         switch (position) {
             case STEP_TITLE:
@@ -100,7 +124,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
-                vMiscelania.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
@@ -112,7 +136,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
-                vMiscelania.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
@@ -131,7 +155,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vImages.setVisibility(View.VISIBLE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
-                vMiscelania.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
@@ -167,7 +191,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.VISIBLE);
                 vDate.setVisibility(View.GONE);
-                vMiscelania.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
@@ -194,30 +218,36 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vDate.setVisibility(View.VISIBLE);
-                vMiscelania.setVisibility(View.GONE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
-            case STEP_MISCELANIA:
+
+            case STEP_CAPACITYPRICE:
+                etCapacity = view.findViewById(R.id.etCapacity);
+                etPrice = view.findViewById(R.id.etPrice);
+
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
-                vMiscelania.setVisibility(View.VISIBLE);
+                vCapacityPrice.setVisibility(View.VISIBLE);
                 vPreview.setVisibility(View.GONE);
 
                 break;
 
             case STEP_PREVIEW:
+
                 vTitle.setVisibility(View.GONE);
                 vDescription.setVisibility(View.GONE);
                 vImages.setVisibility(View.GONE);
                 vLocation.setVisibility(View.GONE);
                 vDate.setVisibility(View.GONE);
-                vMiscelania.setVisibility(View.GONE);
+                vCapacityPrice.setVisibility(View.GONE);
                 vPreview.setVisibility(View.VISIBLE);
+
                 break;
             default:
                 break;
@@ -322,6 +352,18 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         return null;
     }
 
+    public String getCapacity() {
+        if (etCapacity != null)
+            return etCapacity.getText().toString();
+        return null;
+    }
+
+    public String getPrice() {
+        if (etPrice != null)
+            return etPrice.getText().toString();
+        return null;
+    }
+
     public String getDescription() {
         if (etDescription != null)
             return etDescription.getText().toString();
@@ -348,7 +390,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     }
 
     public Long getTimeStart() {
-        return initTiemstamp;
+        return initTimestamp;
     }
 
     public Long getTimeEnd(){
@@ -386,7 +428,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth, 0, 0);
                 if (startTime) {
-                    initTiemstamp = newDate.getTimeInMillis();
+                    initTimestamp = newDate.getTimeInMillis();
                 } else {
                     endTimestamp = newDate.getTimeInMillis();
                 }
@@ -401,9 +443,9 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         int millis = (minute*60+hourOfDay*60*60)*1000;
                         if (startTime) {
-                            initTiemstamp += millis;
+                            initTimestamp += millis;
                             if (tvDateStart != null)
-                                tvDateStart.setText(Utils.getFullDataFormat(initTiemstamp));
+                                tvDateStart.setText(Utils.getFullDataFormat(initTimestamp));
                         } else {
                             endTimestamp += millis;
                             if (tvDateEnd != null)
@@ -415,5 +457,22 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             }
         });
         dialogDate.show();
+    }
+    public void setParent(ActivityEditActivity activityEditActivity) {
+        parent = activityEditActivity;
+    }
+
+    public void updateAndSetModel(ActivityModel model){
+        tvTitlePreview.setText(model.getTitle());
+        tvDescriptionPreview.setText(model.getDescription());
+        tvLocationPreview.setText(model.getLatitude()+","+model.getLongitude());
+        tvInitialDatePreview.setText(Utils.getFullDataFormat(model.getTimestampStart()));
+        if (model.getTimestampEnd()!=null)
+            tvEndDatePreview.setText(Utils.getFullDataFormat(model.getTimestampEnd()));
+        else
+            tvEndDatePreview.setText("not defined");
+        tvCapacityPreview.setText(model.getCapacity()+"");
+        tvPricePreview.setText(model.getPrice()+"");
+        Log.d("pagerThing", "updateAndSetModel ");
     }
 }

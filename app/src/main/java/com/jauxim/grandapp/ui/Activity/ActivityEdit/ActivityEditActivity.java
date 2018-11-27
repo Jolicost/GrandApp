@@ -34,6 +34,7 @@ import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_PREVIEW;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TIME;
 import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_TITLE;
+import static com.jauxim.grandapp.ui.Activity.ActivityEdit.ContainerEditFragment.stepsEditActivity.STEP_CAPACITYPRICE;
 
 public class ActivityEditActivity extends BaseActivity implements ActivityEditView {
 
@@ -57,10 +58,14 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private String title;
     private String description;
+
     private SingleShotLocationProvider.GPSCoordinates coordinates;
     private List<String> imagesBase64;
     private Long timeStart;
     private Long timeEnd;
+
+    private Long capacity;
+    private Long price;
 
     private ActivityEditPresenter presenter;
 
@@ -80,12 +85,13 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         //viewPager.setAdapter(activityAdapter);
         activityPageAdapter = new ActivityEditPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(activityPageAdapter);
-        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(7);
         indicator.setupWithViewPager(viewPager, true);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.d("pagerThing", "onPageScrolled " + position);
 
             }
 
@@ -102,8 +108,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                     } else {
                         bNext.setText("Next");
                     }
+
+                    if (isInPreview(viewPager.getCurrentItem())){
+                        activityPageAdapter.updateAndSetModel();
+                    }
                 }
-                Log.d("pagerThing", "onPageScrolled " + position);
+
             }
 
             @Override
@@ -150,11 +160,11 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         updateModel();
     }
     */
-
-    private void updateModel() {
+    private ActivityModel model;
+    public void updateModel() {
         //TODO: make async calls and fill urls list
 
-        ActivityModel model = new ActivityModel();
+        model = new ActivityModel();
         model.setTitle(title);
         model.setDescription(description);
         if (coordinates!=null) {
@@ -164,17 +174,22 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         model.setImagesUrl(new ArrayList<String>());
         model.setImagesBase64(imagesBase64);
         model.setTimestampStart(timeStart);
+        model.setCapacity(capacity);
+        model.setPrice(price);
         model.setTimestampEnd(timeEnd);
-        presenter.createActivityInfo(model);
+
+    }
+
+    private void updateModelServer(){
+        if (model != null) presenter.createActivityInfo(model);
     }
 
     @OnClick(R.id.bNext)
     void nextButtonClick(View view) {
-        if (!isInlastStep(viewPager.getCurrentItem())) {
-            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-
+        if (isInlastStep(viewPager.getCurrentItem())) {
+            updateModelServer();
         } else {
-            updateModel();
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
         }
     }
 
@@ -222,6 +237,18 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                     return false;
                 }
                 break;
+            case STEP_CAPACITYPRICE:
+                capacity = Long.parseLong(getInputCapacity());
+                price = Long.parseLong(getInputPrice());
+                if ((capacity == null || capacity <= 0 ) && !demo_edit_mode) {
+                    Dialog.createDialog(this).title(getString(R.string.invalid_capacity_title)).description(getString(R.string.invalid_capacity_description)).build();
+                    return false;
+                }
+                else if ((price == null) && !demo_edit_mode) {
+                Dialog.createDialog(this).title(getString(R.string.invalid_price_title)).description(getString(R.string.invalid_price_description)).build();
+                return false;
+            }
+                return true;
             case STEP_PREVIEW:
                 break;
             default:
@@ -230,8 +257,13 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         return true;
     }
 
+
     private boolean isInlastStep(int position) {
         return (position == activityPageAdapter.getCount() - 1);
+    }
+
+    private boolean isInPreview(int position) {
+        return (position == activityPageAdapter.getCount() - 2);
     }
 
     private class ActivityEditPageAdapter extends FragmentPagerAdapter {
@@ -245,6 +277,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         ContainerEditFragment imagesFragment;
         ContainerEditFragment locationFragment;
         ContainerEditFragment timeFragment;
+        ContainerEditFragment capacityPriceFragment;
+        ContainerEditFragment previewFragment;
 
         @Override
         public Fragment getItem(int pos) {
@@ -265,6 +299,13 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 case STEP_TIME:
                     timeFragment = ContainerEditFragment.newInstance(STEP_TIME);
                     return timeFragment;
+                case STEP_CAPACITYPRICE:
+                    capacityPriceFragment = ContainerEditFragment.newInstance(STEP_CAPACITYPRICE);
+                    return capacityPriceFragment;
+                case STEP_PREVIEW:
+                    previewFragment = ContainerEditFragment.newInstance(STEP_PREVIEW);
+
+                    return previewFragment;
                 default:
                     return ContainerEditFragment.newInstance(5);
             }
@@ -272,7 +313,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
         @Override
         public int getCount() {
-            return 5;
+            return 7;
         }
 
         public String getTitle() {
@@ -310,6 +351,23 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 return timeFragment.getTimeEnd();
             return null;
         }
+
+        private String getCapacity() {
+            if (capacityPriceFragment != null)
+                return capacityPriceFragment.getCapacity();
+            return null;
+        }
+        public String getPrice() {
+            if (capacityPriceFragment != null)
+                return capacityPriceFragment.getPrice();
+            return null;
+        }
+
+        public void updateAndSetModel(){
+            updateModel();
+            if (previewFragment!=null)
+                previewFragment.updateAndSetModel(model);
+        }
     }
 
     private String getInputTitle() {
@@ -322,6 +380,17 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         if (activityPageAdapter != null)
             return activityPageAdapter.getDescription();
         return "";
+    }
+
+    private String getInputCapacity() {
+        if (activityPageAdapter != null)
+            return activityPageAdapter.getCapacity();
+        return null;
+    }
+    public String getInputPrice() {
+        if (activityPageAdapter != null)
+            return activityPageAdapter.getPrice();
+        return null;
     }
 
     private SingleShotLocationProvider.GPSCoordinates getInputCoordinates() {
@@ -346,6 +415,10 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         if (activityPageAdapter !=null)
             return activityPageAdapter.getTimeEnd();
         return null;
+    }
+
+    public ActivityModel getModel(){
+        return model;
     }
 
 
