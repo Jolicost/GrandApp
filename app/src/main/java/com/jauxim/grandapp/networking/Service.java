@@ -246,6 +246,36 @@ public class Service {
                 });
     }
 
+    public Subscription deleteActivity(String activityId, final DeleteActivityCallback callback, String auth) {
+        return networkService.deleteActivity(activityId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends String>>() {
+                    @Override
+                    public Observable<? extends String> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        callback.onSuccess(s);
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -254,6 +284,12 @@ public class Service {
 
     public interface ActivityInfoCallback {
         void onSuccess(ActivityModel activityModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface DeleteActivityCallback {
+        void onSuccess(String s);
 
         void onError(NetworkError networkError);
     }

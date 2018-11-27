@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import android.content.Context;
 
+import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.NetworkError;
@@ -46,5 +47,27 @@ public class ActivityInfoPresenter {
     }
     public void onStop() {
         subscriptions.unsubscribe();
+    }
+
+    public void deleteActivity(String activityId) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.deleteActivity(activityId, new Service.DeleteActivityCallback() {
+            @Override
+            public void onSuccess(String s) {
+                view.removeWait();
+                view.showDeleteSuccess(R.string.delete_success);
+                view.backToMainView();
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
     }
 }

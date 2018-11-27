@@ -13,6 +13,7 @@ import com.jauxim.grandapp.models.UserModel;
 import java.util.List;
 
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -26,6 +27,9 @@ public interface NetworkService {
 
     @GET("/activities/{id}")
     Observable<ActivityModel> getActivityInfo(@Path("id") String activityId,@Header("authorization") String auth);
+
+    @DELETE("/activities/{id}")
+    Observable<String> deleteActivity(@Path("id") String activityId,@Header("authorization") String auth);
 
     @POST("/activities")
     Observable<ActivityModel> createActivityInfo(@Body ActivityModel activityInfo,@Header("authorization") String auth);

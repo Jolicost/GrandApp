@@ -14,4 +14,7 @@ public interface ActivityInfoView {
 
     void getActivityInfoSuccess(ActivityModel activityModel);
 
+    void backToMainView();
+
+    void showDeleteSuccess(int login_error);
 }

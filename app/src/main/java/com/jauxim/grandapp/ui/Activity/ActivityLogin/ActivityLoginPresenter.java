@@ -60,7 +60,7 @@ public class ActivityLoginPresenter {
             @Override
             public void onError(NetworkError networkError) {
                 view.removeWait();
-                view.showLoginError(R.string.login_error);;
+                view.showLoginError(R.string.login_error);
             }
         });
 

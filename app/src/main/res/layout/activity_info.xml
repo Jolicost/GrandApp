@@ -27,6 +27,30 @@
                 android:src="@drawable/ic_close"
                 android:tint="#333333" />
 
+            <ImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/ivDelete"
+                android:background="@drawable/btn_simple"
+                android:clickable="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_edit_black_24dp"
+                android:tint="#333333" />
+
+            <ImageView
+                android:id="@+id/ivDelete"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/btn_simple"
+                android:clickable="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_delete_black_24dp"
+                android:tint="#333333" />
+
             <TextView
                 android:id="@+id/tvUpperTag"
                 android:layout_width="match_parent"
