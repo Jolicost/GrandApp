@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -159,7 +160,8 @@ public class Utils {
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
         parcelFileDescriptor.close();
-        return image;
+
+        return compressBitmap(image);
     }
 
     public static void changeMapFragment(AppCompatActivity activity, int layoutId, Fragment fragment, String tag) {
@@ -194,5 +196,11 @@ public class Utils {
         timeCalendar.setTimeInMillis(timestamp);
         Calendar now = Calendar.getInstance();
         return DateFormat.format("MMMM dd yyyy, h:mm aa", timeCalendar).toString();
+    }
+
+    private static Bitmap compressBitmap(Bitmap bitmap){
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, out);
+        return BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
     }
 }
