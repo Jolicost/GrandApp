@@ -78,6 +78,24 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/etForgotPwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_simple"
+                    android:gravity="right"
+                    android:onClick="forgetPassOnClick"
+                    android:padding="5dp"
+                    android:text="@string/forgot_pwd"
+                    android:textColor="@color/color_dark_light_text"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/bLogin"
                 android:layout_width="match_parent"

@@ -66,4 +66,11 @@
     <string name="welcomeRegister">WELCOME!</string>
     <string name="email_error">Enter a valid email</string>
 
+    <string name="forgot_pwd">Forgot password?</string>
+    <string name="send">send</string>
+    <string name="cancel">cancel</string>
+
+    <string name="fgt_pswd_title">Forget password</string>
+    <string name="fgt_pswd_description">Write the email </string>
+
 </resources>

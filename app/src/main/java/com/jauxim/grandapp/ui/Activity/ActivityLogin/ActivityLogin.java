@@ -71,6 +71,13 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
         startActivity(intent);
     }
 
+
+    @OnClick(R.id.etForgotPwd)
+    public void forgotPasswordClick(){
+        ForgotPasswordDialog cdd=new ForgotPasswordDialog(this);
+        cdd.show();
+    }
+
     @Override
     public void showWait() {
         showProgress();
