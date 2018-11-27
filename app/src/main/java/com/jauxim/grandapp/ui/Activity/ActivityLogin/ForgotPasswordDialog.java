@@ -3,7 +3,6 @@ package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
@@ -26,6 +25,9 @@ public class ForgotPasswordDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.forgot_password_layout);
+
+
+
         /*
         yes = (Button) findViewById(R.id.btn_yes);
         no = (Button) findViewById(R.id.btn_no);
