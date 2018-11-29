@@ -18,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
@@ -90,6 +91,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     private MapView gMapView;
     ActivityInfoPresenter presenter;
 
+    private UserModel user;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +135,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Override
     public void getActivityInfoSuccess(final ActivityModel activityModel) {
+        user = DataUtils.getUserInfo(this);
         tvUpperTag.setText(R.string.upperTag);
 
         tvTitle.setText(activityModel.getTitle());
@@ -162,9 +166,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         }else{
             tvEndlDate.setVisibility(View.GONE);
         }
-        Log.d("Username 1","Username1 ="+UserModel.getId());
-        Log.d("Username 2","Username2 ="+ActivityModel.getUserId());
-        if (!TextUtils.isEmpty(activityModel.getUserId()) && activityModel.getUserId().equals(UserModel.getId())){
+        
+        if (!TextUtils.isEmpty(activityModel.getUserId()) && activityModel.getUserId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
         }

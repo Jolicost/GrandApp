@@ -28,7 +28,7 @@ public class ActivityModel {
 
     @SerializedName("user")
     @Expose
-    private static String user;
+    private String user;
 
     @SerializedName("rating")
     @Expose
@@ -100,7 +100,7 @@ public class ActivityModel {
         this.price = price;
     }
 
-    public static String getUserId() {
+    public String getUserId() {
         return user;
     }
 
