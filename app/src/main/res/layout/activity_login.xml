@@ -7,7 +7,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_prelogin_header"/>
+    <include layout="@layout/toolbar_prelogin_header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -84,8 +84,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/password_hint"
-                        android:textSize="20dp"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:textSize="20dp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -93,15 +93,45 @@
                 android:id="@+id/bLogin"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_gradient"
                 android:text="@string/login_button"
                 android:textColor="#FFF"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_gradient"
                 android:textSize="25dp"
                 android:textStyle="bold" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/grey_light_1" />
+
+            <Button
+                android:id="@+id/bLoginGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_border"
+                android:drawableLeft="@drawable/ic_google_logo"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="@string/login_button_google"
+                android:textColor="@color/color_grey_2"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/bLoginFacebook"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/button_border"
+                android:drawableLeft="@drawable/ic_facebook_logo"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="@string/login_button_facebook"
+                android:textColor="@color/color_grey_2"
+                android:textSize="18dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -122,13 +152,13 @@
                     android:id="@+id/tvRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/btn_simple"
+                    android:padding="10dp"
                     android:text="@string/register_message"
                     android:textAllCaps="false"
-                    android:padding="10dp"
-                    android:background="@drawable/btn_simple"
                     android:textColor="@color/colorPrimary"
-                    android:textStyle="bold"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

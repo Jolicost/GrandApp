@@ -70,6 +70,8 @@
     <string name="logout_success">Logout Success</string>
     <string name="delete_success">Delete Success</string>
     <string name="login_button">LOG IN</string>
+    <string name="login_button_google">GOOGLE LOG IN</string>
+    <string name="login_button_facebook">FACEBOOK LOG IN</string>
     <string name="register_button">SIGN UP</string>
     <string name="password_hint">Password</string>
     <string name="username_hint">Username</string>

@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -88,6 +89,16 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
             showWait();
             presenter.login(code, user, pass);
         }
+    }
+
+    @OnClick(R.id.bLoginGoogle)
+    public void googleLoginClick(){
+
+    }
+
+    @OnClick(R.id.bLoginFacebook)
+    public void facebookLoginClick(){
+
     }
 
     @OnClick(R.id.tvRegister)
