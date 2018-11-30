@@ -69,6 +69,7 @@
     <string name="login_success">Login Success</string>
     <string name="logout_success">Logout Success</string>
     <string name="forgotpsw_success">Password Sent</string>
+    <string name="delete_success">Delete Success</string>
     <string name="login_button">LOG IN</string>
     <string name="register_button">SIGN UP</string>
     <string name="password_hint">Password</string>

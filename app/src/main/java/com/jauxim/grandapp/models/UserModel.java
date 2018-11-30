@@ -32,6 +32,10 @@ public class UserModel {
     @Expose
     private String profilePic;
 
+    @SerializedName("_id")
+    @Expose
+    private String id;
+
     public UserModel(String username, String password){
         this.phone = username;
         this.password = password;
@@ -83,5 +87,13 @@ public class UserModel {
 
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

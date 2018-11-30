@@ -92,6 +92,27 @@ public class ActivityEditPresenter {
         subscriptions.add(subscription);
     }
 
+    public void getActivityInfo(String id) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.getActivityInfo(id, new Service.ActivityInfoCallback() {
+            @Override
+            public void onSuccess(ActivityModel activityModel) {
+                view.removeWait();
+                view.getActivityInfoSuccess(activityModel);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
+    }
+
     public void onStop() {
         subscriptions.unsubscribe();
     }

@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
@@ -71,6 +73,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private ActivityEditPageAdapter activityPageAdapter;
 
+    private String activityId;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +84,10 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         ButterKnife.bind(this);
 
         presenter = new ActivityEditPresenter(service, this);
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            activityId = getIntent().getExtras().getString(Constants.ACTIVITY_ID);
+        }
 
         //activityAdapter = new ActivityStepsAdapter(this);
         //viewPager.setAdapter(activityAdapter);
@@ -104,13 +112,10 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                 } else {
                     //can go next screen
                     if (isInlastStep(position)) {
+                        activityPageAdapter.updateAndSetModel();
                         bNext.setText("Create");
                     } else {
                         bNext.setText("Next");
-                    }
-
-                    if (isInPreview(viewPager.getCurrentItem())){
-                        activityPageAdapter.updateAndSetModel();
                     }
                 }
 
@@ -118,10 +123,17 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                Log.d("pagerThing", "onPageScrollStateChanged ");
+                Log.d("pagerThing", "onPageScrollStateChanged "+state);
 
             }
         });
+
+        if (activityId!=null){
+            Log.d("activityGetModel", "calling activity: "+activityId);
+            presenter.getActivityInfo(activityId);
+        }else{
+            Log.d("activityGetModel", "not calling actity: ");
+        }
     }
 
     @Override
@@ -260,10 +272,6 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private boolean isInlastStep(int position) {
         return (position == activityPageAdapter.getCount() - 1);
-    }
-
-    private boolean isInPreview(int position) {
-        return (position == activityPageAdapter.getCount() - 2);
     }
 
     private class ActivityEditPageAdapter extends FragmentPagerAdapter {
@@ -421,6 +429,11 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         return model;
     }
 
+    @Override
+    public void getActivityInfoSuccess(final ActivityModel activityModel) {
+        Log.d("activityGetModel", "activity: "+activityModel.getTitle());
 
+
+    }
 
 }

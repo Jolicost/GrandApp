@@ -1,6 +1,8 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,11 +18,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+import com.jauxim.grandapp.ui.Activity.Main.Main;
 
 import java.util.List;
 
@@ -76,8 +81,17 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.tvEndlDate)
     TextView tvEndlDate;
 
+    @BindView(R.id.ivEdit)
+    ImageView ivEdit;
+
+    @BindView(R.id.ivDelete)
+    ImageView ivDelete;
+
     private String activityId;
     private MapView gMapView;
+    ActivityInfoPresenter presenter;
+
+    private UserModel user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +100,9 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         setContentView(R.layout.activity_info);
         getDeps().inject(this);
         ButterKnife.bind(this);
+
+        ivEdit.setVisibility(View.GONE);
+        ivDelete.setVisibility(View.GONE);
 
         gMapView = findViewById(R.id.soleViewMap);
         gMapView.onCreate(savedInstanceState);
@@ -97,7 +114,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
         Log.d("activityInfo", "id: "+activityId);
 
-        ActivityInfoPresenter presenter = new ActivityInfoPresenter(service, this);
+        presenter = new ActivityInfoPresenter(service, this);
         presenter.getActivityInfo(activityId);
     }
 
@@ -118,6 +135,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Override
     public void getActivityInfoSuccess(final ActivityModel activityModel) {
+        user = DataUtils.getUserInfo(this);
         tvUpperTag.setText(R.string.upperTag);
 
         tvTitle.setText(activityModel.getTitle());
@@ -147,6 +165,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
             tvEndlDate.setText(Utils.getFullDataFormat(activityModel.getTimestampEnd()));
         }else{
             tvEndlDate.setVisibility(View.GONE);
+        }
+        
+        if (!TextUtils.isEmpty(activityModel.getUserId()) && activityModel.getUserId().equals(user.getId())){
+            ivEdit.setVisibility(View.VISIBLE);
+            ivDelete.setVisibility(View.VISIBLE);
         }
 
         List<String> urls = activityModel.getImagesUrl();
@@ -179,9 +202,32 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         }
     }
 
+    @Override
+    public void backToMainView() {
+        Intent intent = new Intent(this, Main.class);
+        startActivity(intent);
+        finishAffinity();
+    }
+
+    @Override
+    public void showDeleteSuccess(int delete_success) {
+        Dialog.createDialog(this).title(getString(delete_success)).description(getString(delete_success)).build();
+    }
+
     @OnClick(R.id.ivClose)
-    void closeButtonClick(View view) {
+    void closeButtonClick() {
         onBackPressed();
+    }
+
+    @OnClick(R.id.ivEdit)
+    void editButtonClick() {
+        presenter.editActivity(activityId);
+    }
+
+    @OnClick(R.id.ivDelete)
+    void deleteButtonClick() {
+        showWait();
+        presenter.deleteActivity(activityId);
     }
 
     @Override

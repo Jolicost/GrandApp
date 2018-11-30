@@ -78,6 +78,15 @@
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/indicator"
+                android:layout_alignTop="@id/indicator"
+                android:layout_alignBottom="@id/indicator"
+                android:layout_alignLeft="@id/indicator"
+                android:clickable="true"/>
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
