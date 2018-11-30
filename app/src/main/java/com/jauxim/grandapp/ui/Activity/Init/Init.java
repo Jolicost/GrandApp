@@ -6,10 +6,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
@@ -24,6 +27,7 @@ import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
+import com.jauxim.grandapp.ui.Activity.ActivitySplash.SplashActivity;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Register.Register;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
@@ -46,6 +50,9 @@ public class Init extends BaseActivity implements InitView {
 
     @BindView(R.id.bRegisterInit)
     Button bRegisterInit;
+
+    @BindView(R.id.iv2)
+    ImageView ivLogo;
 
     private InitPresenter presenter;
 
@@ -89,14 +96,32 @@ public class Init extends BaseActivity implements InitView {
 
     @Override
     public void startLoginActivity() {
-        Intent intent = new Intent(this, ActivityLogin.class);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            Intent intent = new Intent(Init.this, ActivityLogin.class);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    Init.this,
+                    ivLogo,
+                    ViewCompat.getTransitionName(ivLogo));
+            startActivity(intent, options.toBundle());
+        }else {
+            Intent intent = new Intent(this, ActivityLogin.class);
+            startActivity(intent);
+        }
     }
 
     @Override
     public void startRegisterActivity() {
-        Intent intent = new Intent(this, Register.class);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            Intent intent = new Intent(Init.this, Register.class);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    Init.this,
+                    ivLogo,
+                    ViewCompat.getTransitionName(ivLogo));
+            startActivity(intent, options.toBundle());
+        }else {
+            Intent intent = new Intent(this, Register.class);
+            startActivity(intent);
+        }
     }
 
 }

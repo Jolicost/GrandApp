@@ -15,7 +15,7 @@ public interface ActivityLoginView {
 
     void startMainActivity();
 
-    void showLoginSuccess(int login_success);
-
     void resetErrors();
+
+    void showForgotPassSuccess(int forgotpsw_success);
 }

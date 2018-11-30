@@ -16,10 +16,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.ActivityListItemModel;
+import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
@@ -33,6 +37,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Main extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,6 +58,8 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
 
     private MainPresenter presenter;
 
+    private UserModel user;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +68,16 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        setUp();
 
         presenter = new MainPresenter(service, this);
         presenter.updateLocation();
+        chargeUserWithLogout();
+        setUp();
+    }
+
+    public void chargeUserWithLogout(){
+        user = DataUtils.getUserInfo(getContext());
+        if (user==null)presenter.logout();
     }
 
     private void setUp() {
@@ -86,6 +99,26 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         MenuItem item = navigationView.getMenu().getItem(0);
         onNavigationItemSelected(item);
 
+        View headerLayout = navigationView.getHeaderView(0); // 0-index header
+        setUserInfo(headerLayout);
+    }
+
+
+    public void setUserInfo(View header){
+        if (user!=null) {
+            TextView tvName = header.findViewById(R.id.tvUserName);
+            TextView tvInfo = header.findViewById(R.id.tvUserInfo);
+            CircleImageView civ = header.findViewById(R.id.ivUserImage);
+
+            if (tvName != null)
+                tvName.setText(user.getCompleteName());
+
+            if (tvInfo!=null)
+                tvInfo.setText(user.getPassword());
+
+            if (civ!=null)
+                Glide.with(this).load(user.getProfilePic()).into(civ);
+        }
     }
 
     @Override

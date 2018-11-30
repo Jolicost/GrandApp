@@ -1,11 +1,15 @@
 package com.jauxim.grandapp.networking;
 
+import android.util.Log;
+
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
-import com.jauxim.grandapp.models.AuthModel;
+import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
+import com.jauxim.grandapp.models.PhoneModel;
+import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
 import java.util.List;
@@ -153,13 +157,13 @@ public class Service {
         return networkService.getLoginToken(userModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends AuthModel>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends LoginResponseModel>>() {
                     @Override
-                    public Observable<? extends AuthModel> call(Throwable throwable) {
+                    public Observable<? extends LoginResponseModel> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<AuthModel>() {
+                .subscribe(new Subscriber<LoginResponseModel>() {
 
                     @Override
                     public void onCompleted() {
@@ -172,24 +176,31 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(AuthModel authModel) {
+                    public void onNext(LoginResponseModel authModel) {
                         callback.onSuccess(authModel);
                     }
                 });
     }
 
 
-    public Subscription postNewUser(String username, String password, String email, final RegisterCallback callback) {
-        return networkService.postNewUser(username, password, email)
+    public Subscription postNewUser(String phone, String password, String email, String completeName, String image, final LoginCallback callback) {
+        RegisterModel registerModel = new RegisterModel();
+        registerModel.setPhone(phone);
+        registerModel.setPassword(password);
+        registerModel.setEmail(email);
+        registerModel.setCompleteName(completeName);
+        registerModel.setProfilePic(image);
+
+        return networkService.postNewUser(registerModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends LoginResponseModel>>() {
                     @Override
-                    public Observable<? extends UserModel> call(Throwable throwable) {
+                    public Observable<? extends LoginResponseModel> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<UserModel>() {
+                .subscribe(new Subscriber<LoginResponseModel>() {
                     @Override
                     public void onCompleted() {
 
@@ -202,9 +213,8 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(UserModel userModel) {
-                        callback.onSuccess(userModel);
-
+                    public void onNext(LoginResponseModel loginResponseModel) {
+                        callback.onSuccess(loginResponseModel);
                     }
                 });
     }
@@ -239,8 +249,44 @@ public class Service {
                 });
     }
 
+    public Subscription forgotPassword(PhoneModel phone, final forgotPasswordCallback callback) {
+        Log.d("phoneNumber"," phone: "+phone.getPhone());
+        return networkService.forgotPassword(phone)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface forgotPasswordCallback {
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }
@@ -252,19 +298,13 @@ public class Service {
     }
 
     public interface LoginCallback {
-        void onSuccess(AuthModel authModel);
+        void onSuccess(LoginResponseModel authModel);
 
         void onError(NetworkError networkError);
     }
 
     public interface ActivityListCallback {
         void onSuccess(List<ActivityListItemModel> activityModel);
-
-        void onError(NetworkError networkError);
-    }
-
-    public interface RegisterCallback {
-        void onSuccess(UserModel userModel);
 
         void onError(NetworkError networkError);
     }

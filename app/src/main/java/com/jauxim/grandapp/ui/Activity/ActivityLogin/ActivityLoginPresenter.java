@@ -1,12 +1,12 @@
 package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
-import com.jauxim.grandapp.models.AuthModel;
+import com.jauxim.grandapp.models.LoginResponseModel;
+import com.jauxim.grandapp.models.PhoneModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -31,7 +31,7 @@ public class ActivityLoginPresenter {
 
         boolean error = false;
         if (phone.isEmpty()) {
-            view.showUserError(R.string.user_error);
+            view.showUserError(R.string.phone_error);
             error = true;
         }
         if (pass.isEmpty()){
@@ -40,21 +40,21 @@ public class ActivityLoginPresenter {
         }
 
         if (!error) {
-            getAuthToken(code+phone,pass);
+            doLogin(code+phone,pass);
         }
     }
 
-    public void getAuthToken(String username, String password) {
+    public void doLogin(String username, String password) {
         view.showWait();
         UserModel userModel = new UserModel(username, password);
         Log.i("Username = ", username);
         Subscription subscription = service.getLoginToken(userModel, new Service.LoginCallback() {
             @Override
-            public void onSuccess(AuthModel authModel) {
-                DataUtils.setAuthToken((Context) view,authModel.getToken());
-                Log.d("authSaving", "is token?" + authModel.isAuth()+" getted token: "+authModel.getToken());
+            public void onSuccess(LoginResponseModel loginResponseModel) {
+                DataUtils.setAuthToken((Context) view,loginResponseModel.getToken());
+                Log.d("authSaving", "is token?" + loginResponseModel.isAuth()+" getted token: "+loginResponseModel.getToken());
+                DataUtils.saveUserModel((Context)view, loginResponseModel.getUser());
                 view.removeWait();
-                view.showLoginSuccess(R.string.login_success);
                 view.startMainActivity();
             }
 
@@ -62,6 +62,25 @@ public class ActivityLoginPresenter {
             public void onError(NetworkError networkError) {
                 view.removeWait();
                 view.showLoginError(R.string.login_error);;
+            }
+        });
+
+        subscriptions.add(subscription);
+    }
+
+    public void forgotPassword(String phone, String code) {
+        PhoneModel phoneModel = new PhoneModel(code+phone);
+        Subscription subscription = service.forgotPassword(phoneModel, new Service.forgotPasswordCallback() {
+            @Override
+            public void onSuccess() {
+                view.removeWait();
+                view.showForgotPassSuccess(R.string.forgotpsw_success);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
             }
         });
 

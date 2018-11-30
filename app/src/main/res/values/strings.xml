@@ -61,20 +61,32 @@
     <string name="invalid_price_description">Price not valid or is empty. Please try it again</string>
 
     <string name="title_activity_maps">Map</string>
-    <string name="user_error">Enter username</string>
+    <string name="phone_error">Enter phone number</string>
     <string name="pass_error">Enter a valid password</string>
+    <string name="name_error">Enter a valid name</string>
     <string name="pass2_error">The passwords does not match</string>
     <string name="login_error">Login Failed</string>
     <string name="login_success">Login Success</string>
     <string name="logout_success">Logout Success</string>
-    <string name="login_button">Login</string>
-    <string name="register_button">Register</string>
+    <string name="forgotpsw_success">Password Sent</string>
+    <string name="login_button">LOG IN</string>
+    <string name="register_button">SIGN UP</string>
     <string name="password_hint">Password</string>
     <string name="username_hint">Username</string>
     <string name="not_a_member">Not a member?</string>
     <string name="register_message">Sign up now</string>
-    <string name="welcomeRegister">WELCOME!</string>
+    <string name="welcomeRegister">Welcome!</string>
+    <string name="welcomeLoginr">Hi, there!</string>
     <string name="email_error">Enter a valid email</string>
     <string name="phone_number_hint">Phone number</string>
+    <string name="accept">ACCEPT</string>
+
+    <string name="forgot_pwd">Forgot password?</string>
+    <string name="send">send</string>
+    <string name="cancel">cancel</string>
+    <string name="phone">Phone</string>
+
+    <string name="fgt_pswd_title">Forget password</string>
+    <string name="fgt_pswd_description">Write the email in witch you created you account and clic SEND. Then you will receive a e-mail with the new password writed. It\'s recomendable to change your password after this process.</string>
 
 </resources>
