@@ -7,6 +7,7 @@ import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
+import com.jauxim.grandapp.models.PhoneModel;
 import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
@@ -43,5 +44,5 @@ public interface NetworkService {
     Observable<ImageUrlModel> postImage(@Body ImageBase64Model base64Image);
 
     @POST("/forgotPassword")
-    Observable<String> forgotPassword(@Body String phone);
+    Observable<Void> forgotPassword(@Body PhoneModel phone);
 }

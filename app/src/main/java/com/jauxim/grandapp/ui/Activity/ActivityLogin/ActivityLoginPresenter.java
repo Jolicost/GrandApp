@@ -6,6 +6,7 @@ import android.util.Log;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.LoginResponseModel;
+import com.jauxim.grandapp.models.PhoneModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -67,10 +68,11 @@ public class ActivityLoginPresenter {
         subscriptions.add(subscription);
     }
 
-    public void forgotPassword(String phone) {
-        Subscription subscription = service.forgotPassword(phone, new Service.forgotPasswordCallback() {
+    public void forgotPassword(String phone, String code) {
+        PhoneModel phoneModel = new PhoneModel(code+phone);
+        Subscription subscription = service.forgotPassword(phoneModel, new Service.forgotPasswordCallback() {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess() {
                 view.removeWait();
                 view.showForgotPassSuccess(R.string.forgotpsw_success);
             }

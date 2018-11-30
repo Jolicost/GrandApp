@@ -8,6 +8,7 @@ import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
+import com.jauxim.grandapp.models.PhoneModel;
 import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
@@ -248,17 +249,18 @@ public class Service {
                 });
     }
 
-    public Subscription forgotPassword(String phone, final forgotPasswordCallback callback) {
+    public Subscription forgotPassword(PhoneModel phone, final forgotPasswordCallback callback) {
+        Log.d("phoneNumber"," phone: "+phone.getPhone());
         return networkService.forgotPassword(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends String>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
                     @Override
-                    public Observable<? extends String> call(Throwable throwable) {
+                    public Observable<? extends Void> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<String>() {
+                .subscribe(new Subscriber<Void>() {
                     @Override
                     public void onCompleted() {
 
@@ -271,8 +273,8 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(String s) {
-                        callback.onSuccess(s);
+                    public void onNext(Void s) {
+                        callback.onSuccess();
                     }
                 });
     }
@@ -284,7 +286,7 @@ public class Service {
     }
 
     public interface forgotPasswordCallback {
-        void onSuccess(String s);
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }

@@ -108,7 +108,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
     @OnClick(R.id.etForgotPwd)
     public void forgotPasswordClick(){
-        ForgotPasswordDialog cdd=new ForgotPasswordDialog(this, getDeps());
+        ForgotPasswordDialog cdd=new ForgotPasswordDialog(this);
         cdd.show();
     }
 
@@ -164,8 +164,8 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
         finishAffinity();
     }
 
-    public void forgotPassword(String phone) {
+    public void forgotPassword(String phone, String code) {
         showWait();
-        presenter.forgotPassword(phone);
+        presenter.forgotPassword(phone, code);
     }
 }
