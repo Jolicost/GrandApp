@@ -1,12 +1,17 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
+import com.jauxim.grandapp.ui.Activity.Main.Main;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -47,6 +52,12 @@ public class ActivityInfoPresenter {
     }
     public void onStop() {
         subscriptions.unsubscribe();
+    }
+
+    public void editActivity(String activityId){
+        Intent intent = new Intent((Context) view, ActivityEditActivity.class);
+        intent.putExtra(Constants.ACTIVITY_ID, activityId);
+        ((Context) view).startActivity(intent);
     }
 
     public void deleteActivity(String activityId) {

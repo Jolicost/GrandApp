@@ -40,9 +40,9 @@
                     android:layout_toStartOf="@+id/ivDelete"
                     android:background="@drawable/btn_simple"
                     android:clickable="true"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:src="@drawable/ic_edit_black_24dp"
-                    android:tint="#333333" />
+                    android:tint="@color/color_grey_2" />
 
                 <ImageView
                     android:id="@+id/ivDelete"
@@ -52,9 +52,9 @@
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/btn_simple"
                     android:clickable="true"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:src="@drawable/ic_delete_black_24dp"
-                    android:tint="#333333" />
+                    android:tint="@color/color_grey_2" />
 
                 <TextView
                     android:id="@+id/tvUpperTag"

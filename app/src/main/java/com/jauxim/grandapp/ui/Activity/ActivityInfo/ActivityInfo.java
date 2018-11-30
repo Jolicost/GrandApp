@@ -215,18 +215,17 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     }
 
     @OnClick(R.id.ivClose)
-    void closeButtonClick(View view) {
+    void closeButtonClick() {
         onBackPressed();
     }
 
     @OnClick(R.id.ivEdit)
-    void editButtonClick(View view) {
-        showWait();
-        //presenter.editActivity(activityId);
+    void editButtonClick() {
+        presenter.editActivity(activityId);
     }
 
     @OnClick(R.id.ivDelete)
-    void deleteButtonClick(View view) {
+    void deleteButtonClick() {
         showWait();
         presenter.deleteActivity(activityId);
     }
