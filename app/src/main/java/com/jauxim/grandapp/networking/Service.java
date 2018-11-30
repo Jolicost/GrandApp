@@ -1,5 +1,7 @@
 package com.jauxim.grandapp.networking;
 
+import android.util.Log;
+
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
@@ -246,8 +248,43 @@ public class Service {
                 });
     }
 
+    public Subscription forgotPassword(String phone, final forgotPasswordCallback callback) {
+        return networkService.forgotPassword(phone)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends String>>() {
+                    @Override
+                    public Observable<? extends String> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        callback.onSuccess(s);
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface forgotPasswordCallback {
+        void onSuccess(String s);
 
         void onError(NetworkError networkError);
     }

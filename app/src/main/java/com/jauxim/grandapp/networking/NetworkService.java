@@ -41,4 +41,7 @@ public interface NetworkService {
 
     @POST("/imagesJson")
     Observable<ImageUrlModel> postImage(@Body ImageBase64Model base64Image);
+
+    @POST("/forgotPassword")
+    Observable<String> forgotPassword(@Body String phone);
 }

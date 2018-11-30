@@ -66,4 +66,22 @@ public class ActivityLoginPresenter {
 
         subscriptions.add(subscription);
     }
+
+    public void forgotPassword(String phone) {
+        Subscription subscription = service.forgotPassword(phone, new Service.forgotPasswordCallback() {
+            @Override
+            public void onSuccess(String s) {
+                view.removeWait();
+                view.showForgotPassSuccess(R.string.forgotpsw_success);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+        });
+
+        subscriptions.add(subscription);
+    }
 }

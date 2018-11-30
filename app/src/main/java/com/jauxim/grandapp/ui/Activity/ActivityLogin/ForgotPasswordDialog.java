@@ -1,23 +1,32 @@
 package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
-import android.widget.Button;
+import android.widget.EditText;
 
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.deps.Deps;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ForgotPasswordDialog extends Dialog {
 
-    public Activity c;
-    public Dialog d;
-    public Button yes, no;
+    public ActivityLogin c;
 
-    public ForgotPasswordDialog(Activity a) {
+    Deps deps;
+
+    @BindView(R.id.edPhone)
+    EditText edPhone;
+
+    public ForgotPasswordDialog(ActivityLogin a, Deps deps) {
         super(a, R.style.DialogWithoutMargins);
         // TODO Auto-generated constructor stub
         this.c = a;
+        this.deps = deps;
     }
 
     @Override
@@ -26,29 +35,20 @@ public class ForgotPasswordDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.forgot_password_layout);
 
-        /*
-        yes = (Button) findViewById(R.id.btn_yes);
-        no = (Button) findViewById(R.id.btn_no);
-        yes.setOnClickListener(this);
-        no.setOnClickListener(this);
-        */
+        ButterKnife.bind(this);
+        deps.inject(this);
 
     }
 
-    /*
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_yes:
-                c.finish();
-                break;
-            case R.id.btn_no:
-                dismiss();
-                break;
-            default:
-                break;
-        }
+    @OnClick(R.id.bCancel)
+    public void cancelClick(){
         dismiss();
     }
-    */
+
+    @OnClick(R.id.bSend)
+    public void sendClick(){
+        String phone = edPhone.getText().toString();
+        c.forgotPassword(phone);
+        dismiss();
+    }
 }

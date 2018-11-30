@@ -68,6 +68,7 @@
     <string name="login_error">Login Failed</string>
     <string name="login_success">Login Success</string>
     <string name="logout_success">Logout Success</string>
+    <string name="forgotpsw_success">Password Sent</string>
     <string name="login_button">LOG IN</string>
     <string name="register_button">SIGN UP</string>
     <string name="password_hint">Password</string>
@@ -83,6 +84,7 @@
     <string name="forgot_pwd">Forgot password?</string>
     <string name="send">send</string>
     <string name="cancel">cancel</string>
+    <string name="phone">Phone</string>
 
     <string name="fgt_pswd_title">Forget password</string>
     <string name="fgt_pswd_description">Write the email in witch you created you account and clic SEND. Then you will receive a e-mail with the new password writed. It\'s recomendable to change your password after this process.</string>
