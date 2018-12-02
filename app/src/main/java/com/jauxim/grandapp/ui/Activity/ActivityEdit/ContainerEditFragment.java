@@ -352,16 +352,9 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         return null;
     }
 
-    public String getCapacity() {
-        if (etCapacity != null)
-            return etCapacity.getText().toString();
-        return null;
-    }
-
-    public String getPrice() {
-        if (etPrice != null)
-            return etPrice.getText().toString();
-        return null;
+    public void setTitle(String title){
+        if (etTitle != null)
+            etTitle.setText(title);
     }
 
     public String getDescription() {
@@ -370,12 +363,25 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         return null;
     }
 
+    public void setDescription(String description){
+        if (etDescription != null)
+            etDescription.setText(description);
+    }
+
     public SingleShotLocationProvider.GPSCoordinates getLocation() {
         //activity won't never be on the sea
         if (actualLatitude != 0 && actualLongitude != 0) {
             return new SingleShotLocationProvider.GPSCoordinates(actualLatitude, actualLongitude);
         }
         return null;
+    }
+
+    public void setCoordinates(Double latitude, Double longitude) {
+        //activity won't never be on the sea
+        if (gMapView != null){
+            actualLatitude = latitude;
+            actualLongitude = longitude;
+        }
     }
 
     public List<String> getImages() {
@@ -393,8 +399,44 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         return initTimestamp;
     }
 
+    public void setTimeStart(Long timestampStart){
+        if (tvDateStart!=null) {
+            tvDateStart.setText(Utils.getFullDataFormat(timestampStart));
+            initTimestamp = timestampStart;
+        }
+    }
+
     public Long getTimeEnd(){
         return endTimestamp;
+    }
+
+    public void setTimeEnd(Long timestampEnd){
+        if (tvDateEnd!=null) {
+            tvDateEnd.setText(Utils.getFullDataFormat(timestampEnd));
+            endTimestamp = timestampEnd;
+        }
+    }
+
+    public String getCapacity() {
+        if (etCapacity != null)
+            return etCapacity.getText().toString();
+        return null;
+    }
+
+    public void setCapacity(Long capacity){
+        if (etCapacity!=null)
+            etCapacity.setText(String.valueOf(capacity));
+    }
+
+    public String getPrice() {
+        if (etPrice != null)
+            return etPrice.getText().toString();
+        return null;
+    }
+
+    public void setPrice(Long price){
+        if (etPrice!=null)
+            etPrice.setText(String.valueOf(price));
     }
 
     @Override

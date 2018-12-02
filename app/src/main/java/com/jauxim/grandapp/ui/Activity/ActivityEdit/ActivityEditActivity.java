@@ -376,6 +376,23 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             if (previewFragment!=null)
                 previewFragment.updateAndSetModel(model);
         }
+
+        public void setData(ActivityModel activityModel){
+            if (titleFragment!=null)
+                titleFragment.setTitle(activityModel.getTitle());
+            if (descriptionFragment!=null)
+                descriptionFragment.setDescription(activityModel.getDescription());
+            if (locationFragment!=null)
+                locationFragment.setCoordinates(activityModel.getLatitude(), activityModel.getLongitude());
+            if (timeFragment!=null){
+                timeFragment.setTimeStart(activityModel.getTimestampStart());
+                timeFragment.setTimeEnd(activityModel.getTimestampEnd());
+            }
+            if (capacityPriceFragment!=null) {
+                capacityPriceFragment.setCapacity(activityModel.getCapacity());
+                capacityPriceFragment.setPrice(activityModel.getPrice());
+            }
+        }
     }
 
     private String getInputTitle() {
@@ -433,7 +450,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     public void getActivityInfoSuccess(final ActivityModel activityModel) {
         Log.d("activityGetModel", "activity: "+activityModel.getTitle());
 
-
+        activityPageAdapter.setData(activityModel);
     }
 
 }
