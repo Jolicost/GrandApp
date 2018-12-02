@@ -309,6 +309,36 @@ public class Service {
                 });
     }
 
+    public Subscription getProfileInfo(String userId, final ProfileInfoCallback callback,String auth) {
+        return networkService.getProfileInfo(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {
+                    @Override
+                    public Observable<? extends UserModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<UserModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(UserModel userModel) {
+                        callback.onSuccess(userModel);
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -347,6 +377,12 @@ public class Service {
 
     public interface ImageCallback {
         void onSuccess(ImageUrlModel urlImage);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface ProfileInfoCallback {
+        void onSuccess(UserModel userModel);
 
         void onError(NetworkError networkError);
     }

@@ -81,4 +81,8 @@ public class ActivityInfoPresenter {
 
         subscriptions.add(subscription);
     }
+
+    public void viewProfile(String id) {
+        view.viewProfile(id);
+    }
 }

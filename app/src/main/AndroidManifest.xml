@@ -37,6 +37,11 @@
             android:theme="@style/Theme.Design.Light.NoActionBar">
         </activity>
 
+        <activity
+            android:name=".ui.Activity.ActivityProfile.ActivityProfile"
+            android:theme="@style/Theme.Design.Light.NoActionBar">
+        </activity>
+
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity
             android:name=".ui.Activity.ActivityEdit.ActivityEditActivity"

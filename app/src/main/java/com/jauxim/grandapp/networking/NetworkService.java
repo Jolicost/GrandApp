@@ -50,4 +50,7 @@ public interface NetworkService {
 
     @POST("/forgotPassword")
     Observable<Void> forgotPassword(@Body PhoneModel phone);
+
+    @GET("/users/{id}")
+    Observable<UserModel> getProfileInfo(@Path("id") String userId,@Header(authKey) String auth);
 }

@@ -86,6 +86,7 @@
     <string name="send">send</string>
     <string name="cancel">cancel</string>
     <string name="phone">Phone</string>
+    <string name="email">Email</string>
 
     <string name="fgt_pswd_title">Forget password</string>
     <string name="fgt_pswd_description">Write the email in witch you created you account and clic SEND. Then you will receive a e-mail with the new password writed. It\'s recomendable to change your password after this process.</string>
