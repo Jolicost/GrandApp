@@ -178,6 +178,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
         model = new ActivityModel();
         model.setTitle(title);
+        model.setId(activityId);
         model.setDescription(description);
         if (coordinates!=null) {
             model.setLatitude(coordinates.latitude);
@@ -378,6 +379,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         }
 
         public void setData(ActivityModel activityModel){
+            activityId = activityModel.getId();
             if (titleFragment!=null)
                 titleFragment.setTitle(activityModel.getTitle());
             if (descriptionFragment!=null)
@@ -387,6 +389,9 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             if (timeFragment!=null){
                 timeFragment.setTimeStart(activityModel.getTimestampStart());
                 timeFragment.setTimeEnd(activityModel.getTimestampEnd());
+            }
+            if (imagesFragment!=null) {
+                imagesFragment.setImages(activityModel.getImagesUrl());
             }
             if (capacityPriceFragment!=null) {
                 capacityPriceFragment.setCapacity(activityModel.getCapacity());

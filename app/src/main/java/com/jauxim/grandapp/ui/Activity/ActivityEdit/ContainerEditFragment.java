@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -165,7 +168,13 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 gMapView.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(final GoogleMap googleMap) {
-                        SingleShotLocationProvider.GPSCoordinates coord = DataUtils.getLocation(getActivity());
+                        SingleShotLocationProvider.GPSCoordinates coord;
+                        if (actualLatitude==0 && actualLongitude==0) {
+                            //no activities on the sea
+                            coord = DataUtils.getLocation(getActivity());
+                        }else{
+                            coord = new SingleShotLocationProvider.GPSCoordinates(actualLatitude, actualLongitude);
+                        }
                         if (coord != null) {
                             Log.d("coordEdit", "coord are not null: " + coord.latitude + ", " + coord.longitude);
                             googleMap.setMinZoomPreference(10);
@@ -393,6 +402,19 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             }
         }
         return imagesBase64List;
+    }
+
+    public void setImages(List<String> urls){
+        for (int i = 0; i<urls.size(); i++){
+            final int ii = i;
+            Glide.with(getActivity()).asBitmap().load(urls.get(i)).into(new BitmapImageViewTarget(images[i]) {
+                @Override
+                public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> anim) {
+                    super.onResourceReady(bitmap, anim);
+                    imagesBase64[ii] = Utils.getBase64(bitmap);
+                }
+            });
+        }
     }
 
     public Long getTimeStart() {
