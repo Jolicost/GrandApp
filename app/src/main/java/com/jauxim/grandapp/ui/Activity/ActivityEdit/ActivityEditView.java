@@ -13,4 +13,6 @@ public interface ActivityEditView {
     void onFailure(String appErrorMessage);
 
     void createActivityInfoSuccess(ActivityModel activityModel);
+
+    void getActivityInfoSuccess(ActivityModel activityModel);
 }

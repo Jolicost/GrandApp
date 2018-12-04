@@ -116,6 +116,13 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
         }
     }
 
+
+    @OnClick(R.id.etForgotPwd)
+    public void forgotPasswordClick(){
+        ForgotPasswordDialog cdd=new ForgotPasswordDialog(this);
+        cdd.show();
+    }
+
     @Override
     public void showWait() {
         showProgress();
@@ -144,6 +151,12 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     }
 
     @Override
+    public void showForgotPassSuccess(int forgotpsw_success) {
+        removeWait();
+        Dialog.createDialog(this).title(getString(forgotpsw_success)).description(getString(forgotpsw_success)).build();
+    }
+
+    @Override
     public void showPassError(int pass_error) {
         removeWait();
         tilPassword.setError(getString(pass_error));
@@ -160,5 +173,10 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
         Intent intent = new Intent(this, Main.class);
         startActivity(intent);
         finishAffinity();
+    }
+
+    public void forgotPassword(String phone, String code) {
+        showWait();
+        presenter.forgotPassword(phone, code);
     }
 }

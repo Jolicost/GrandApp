@@ -34,7 +34,7 @@ public class UserModel {
 
     @SerializedName("_id")
     @Expose
-    private static String id;
+    private String id;
 
     public UserModel(String username, String password){
         this.phone = username;
@@ -89,7 +89,7 @@ public class UserModel {
         this.profilePic = profilePic;
     }
 
-    public static String getId() {
+    public String getId() {
         return id;
     }
 

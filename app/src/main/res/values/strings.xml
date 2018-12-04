@@ -68,6 +68,7 @@
     <string name="login_error">Login Failed</string>
     <string name="login_success">Login Success</string>
     <string name="logout_success">Logout Success</string>
+    <string name="forgotpsw_success">Password Sent</string>
     <string name="delete_success">Delete Success</string>
     <string name="login_button">LOG IN</string>
     <string name="login_button_google">GOOGLE LOG IN</string>
@@ -80,7 +81,19 @@
     <string name="welcomeRegister">Welcome!</string>
     <string name="welcomeLoginr">Hi, there!</string>
     <string name="email_error">Enter a valid email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_out">Sign Out</string>
     <string name="phone_number_hint">Phone number</string>
     <string name="accept">ACCEPT</string>
+
+    <string name="forgot_pwd">Forgot password?</string>
+    <string name="send">send</string>
+    <string name="cancel">cancel</string>
+    <string name="phone">Phone</string>
+    <string name="log_out">Log out</string>
+
+    <string name="fgt_pswd_title">Forget password</string>
+    <string name="fgt_pswd_description">Write the email in witch you created you account and clic SEND. Then you will receive a e-mail with the new password writed. It\'s recomendable to change your password after this process.</string>
+    <string name="settings_profile">Profile</string>
 
 </resources>

@@ -2,9 +2,11 @@ package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
@@ -86,9 +89,14 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.ivDelete)
     ImageView ivDelete;
 
+    @BindView(R.id.bSingUp)
+    Button bSingUp;
+
     private String activityId;
     private MapView gMapView;
     ActivityInfoPresenter presenter;
+
+    private UserModel user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -132,6 +140,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Override
     public void getActivityInfoSuccess(final ActivityModel activityModel) {
+        user = DataUtils.getUserInfo(this);
         tvUpperTag.setText(R.string.upperTag);
 
         tvTitle.setText(activityModel.getTitle());
@@ -162,11 +171,19 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         }else{
             tvEndlDate.setVisibility(View.GONE);
         }
-        Log.d("Username 1","Username1 ="+UserModel.getId());
-        Log.d("Username 2","Username2 ="+ActivityModel.getUserId());
-        if (!TextUtils.isEmpty(activityModel.getUserId()) && activityModel.getUserId().equals(UserModel.getId())){
+        
+        if (!TextUtils.isEmpty(activityModel.getUserId()) && activityModel.getUserId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
+            bSingUp.setVisibility(View.GONE);
+        }else{
+            if (false)
+                bSingUp.setVisibility(View.VISIBLE);
+            else{
+                bSingUp.setBackground(ContextCompat.getDrawable(this, R.drawable.button_gradient));
+                bSingUp.setTextColor(ContextCompat.getColor(this, R.color.white));
+                bSingUp.setText(getString(R.string.sign_out));
+            }
         }
 
         List<String> urls = activityModel.getImagesUrl();
@@ -212,18 +229,17 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     }
 
     @OnClick(R.id.ivClose)
-    void closeButtonClick(View view) {
+    void closeButtonClick() {
         onBackPressed();
     }
 
     @OnClick(R.id.ivEdit)
-    void editButtonClick(View view) {
-        showWait();
-        //presenter.editActivity(activityId);
+    void editButtonClick() {
+        presenter.editActivity(activityId);
     }
 
     @OnClick(R.id.ivDelete)
-    void deleteButtonClick(View view) {
+    void deleteButtonClick() {
         showWait();
         presenter.deleteActivity(activityId);
     }

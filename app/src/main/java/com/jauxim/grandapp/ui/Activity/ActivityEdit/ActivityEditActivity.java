@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
@@ -72,6 +73,8 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private ActivityEditPageAdapter activityPageAdapter;
 
+    private String activityId;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,10 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         ButterKnife.bind(this);
 
         presenter = new ActivityEditPresenter(service, this);
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            activityId = getIntent().getExtras().getString(Constants.ACTIVITY_ID);
+        }
 
         //activityAdapter = new ActivityStepsAdapter(this);
         //viewPager.setAdapter(activityAdapter);
@@ -120,6 +127,13 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
             }
         });
+
+        if (activityId!=null){
+            Log.d("activityGetModel", "calling activity: "+activityId);
+            presenter.getActivityInfo(activityId);
+        }else{
+            Log.d("activityGetModel", "not calling actity: ");
+        }
     }
 
     @Override
@@ -164,6 +178,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
         model = new ActivityModel();
         model.setTitle(title);
+        model.setId(activityId);
         model.setDescription(description);
         if (coordinates!=null) {
             model.setLatitude(coordinates.latitude);
@@ -362,6 +377,27 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             if (previewFragment!=null)
                 previewFragment.updateAndSetModel(model);
         }
+
+        public void setData(ActivityModel activityModel){
+            activityId = activityModel.getId();
+            if (titleFragment!=null)
+                titleFragment.setTitle(activityModel.getTitle());
+            if (descriptionFragment!=null)
+                descriptionFragment.setDescription(activityModel.getDescription());
+            if (locationFragment!=null)
+                locationFragment.setCoordinates(activityModel.getLatitude(), activityModel.getLongitude());
+            if (timeFragment!=null){
+                timeFragment.setTimeStart(activityModel.getTimestampStart());
+                timeFragment.setTimeEnd(activityModel.getTimestampEnd());
+            }
+            if (imagesFragment!=null) {
+                imagesFragment.setImages(activityModel.getImagesUrl());
+            }
+            if (capacityPriceFragment!=null) {
+                capacityPriceFragment.setCapacity(activityModel.getCapacity());
+                capacityPriceFragment.setPrice(activityModel.getPrice());
+            }
+        }
     }
 
     private String getInputTitle() {
@@ -415,6 +451,11 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         return model;
     }
 
+    @Override
+    public void getActivityInfoSuccess(final ActivityModel activityModel) {
+        Log.d("activityGetModel", "activity: "+activityModel.getTitle());
 
+        activityPageAdapter.setData(activityModel);
+    }
 
 }
