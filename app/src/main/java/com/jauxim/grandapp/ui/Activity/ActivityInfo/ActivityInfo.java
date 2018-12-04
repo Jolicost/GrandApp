@@ -2,9 +2,11 @@ package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -86,6 +88,9 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @BindView(R.id.ivDelete)
     ImageView ivDelete;
+
+    @BindView(R.id.bSingUp)
+    Button bSingUp;
 
     private String activityId;
     private MapView gMapView;
@@ -170,6 +175,15 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         if (!TextUtils.isEmpty(activityModel.getUserId()) && activityModel.getUserId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
+            bSingUp.setVisibility(View.GONE);
+        }else{
+            if (false)
+                bSingUp.setVisibility(View.VISIBLE);
+            else{
+                bSingUp.setBackground(ContextCompat.getDrawable(this, R.drawable.button_gradient));
+                bSingUp.setTextColor(ContextCompat.getColor(this, R.color.white));
+                bSingUp.setText(getString(R.string.sign_out));
+            }
         }
 
         List<String> urls = activityModel.getImagesUrl();
