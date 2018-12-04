@@ -174,7 +174,7 @@
         android:id="@+id/vLocation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -201,7 +201,21 @@
                 android:text="@string/title_description"
                 android:textSize="@dimen/description_edit_size" />
 
-            <include layout="@layout/layout_map" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <include layout="@layout/layout_map" />
+
+                <TextView
+                    android:id="@+id/tvAdress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -257,8 +271,8 @@
                     android:id="@+id/tvInitDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello"
                     android:gravity="center"
+                    android:text="hello"
                     android:textSize="@dimen/description_edit_size"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -282,8 +296,8 @@
                     android:id="@+id/tvEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hello"
                     android:gravity="center"
+                    android:text="hello"
                     android:textSize="@dimen/description_edit_size"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -335,8 +349,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/price_title"
                 android:layout_marginTop="40dp"
+                android:text="@string/price_title"
                 android:textSize="@dimen/title_edit_size"
                 android:textStyle="bold" />
 
@@ -366,7 +380,7 @@
         android:id="@+id/vPreview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"

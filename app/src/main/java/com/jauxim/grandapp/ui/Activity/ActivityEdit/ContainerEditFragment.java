@@ -5,6 +5,8 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -33,6 +35,7 @@ import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -82,6 +85,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     private TextView tvCapacityPreview;
     private TextView tvPricePreview;
 
+    private TextView tvAdress;
 
     public @interface stepsEditActivity {
         int STEP_TITLE = 0;
@@ -164,6 +168,8 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                 break;
             case STEP_LOCATION:
                 gMapView = view.findViewById(R.id.soleViewMap);
+                tvAdress = view.findViewById(R.id.tvAdress);
+
                 gMapView.onCreate(savedInstanceState);
                 gMapView.getMapAsync(new OnMapReadyCallback() {
                     @Override
@@ -182,6 +188,21 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
                         } else {
                             Log.d("coordEdit", "coord are null: ");
                         }
+
+                        googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+                            @Override
+                            public void onCameraIdle() {
+                                Geocoder geoCoder = new Geocoder(getActivity());
+                                List<Address> matches = null;
+                                try {
+                                    matches = geoCoder.getFromLocation(actualLatitude, actualLongitude, 1);
+                                    Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
+                                    tvAdress.setText(bestMatch.getAddressLine(0));
+                                } catch (Exception e) {
+                                    tvAdress.setText("");
+                                }
+                            }
+                        });
 
                         googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
                             @Override
