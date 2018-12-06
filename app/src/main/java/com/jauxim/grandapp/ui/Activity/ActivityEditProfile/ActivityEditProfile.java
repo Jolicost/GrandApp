@@ -1,8 +1,10 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEditProfile;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +15,7 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
@@ -44,6 +47,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
     ImageView ivEdit;
 
     ActivityEditProfilePresenter presenter;
+    private String base64Image;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,18 +67,16 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
 
     @OnClick(R.id.ivEdit)
     void editButtonClick() {
-        UserModel userModel = new UserModel();
-        userModel.setCompleteName(etCompleteName.getText().toString());
-        userModel.setEmail(etEmail.getText().toString());
-        userModel.setPhone(etPhone.getText().toString());
-        //userModel.setProfilePic();
-        presenter.editProfile(userModel);
+        showWait();
+        if (!TextUtils.isEmpty(base64Image)){
+            presenter.postImage(base64Image);
+        }
+        else callEditProfile(base64Image);
     }
 
     @OnClick(R.id.ivProfilePic)
     void profilePictureClick() {
-
-
+        Utils.createCropCamera(true).start(ActivityEditProfile.this);
     }
 
     @Override
@@ -101,7 +103,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
     }
 
     @Override
-    public void showLoginError(int edit_profile_success) {
+    public void showEditSuccess(int edit_profile_success) {
         Dialog.createDialog(this).title(getString(edit_profile_success)).description(getString(edit_profile_success)).build();
     }
 
@@ -113,4 +115,29 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
         finishAffinity();
     }
 
+    @Override
+    public void callEditProfile(String imageUrl) {
+        UserModel userModel = new UserModel();
+        userModel.setCompleteName(etCompleteName.getText().toString());
+        userModel.setEmail(etEmail.getText().toString());
+        userModel.setPhone(etPhone.getText().toString());
+        userModel.setProfilePic(imageUrl);
+        presenter.editProfile(userModel);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    Bitmap bitmap = Utils.getBitmapFromUri(this, result.getUri());
+                    base64Image = Utils.getBase64(bitmap);
+                    ivProfilePic.setImageBitmap(bitmap);
+                } catch (Exception e) {
+                }
+            } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            }
+        }
+    }
 }
