@@ -70,7 +70,7 @@ public class ActivityLoginPresenter {
 
     public void forgotPassword(String phone, String code) {
         PhoneModel phoneModel = new PhoneModel(code+phone);
-        Subscription subscription = service.forgotPassword(phoneModel, new Service.forgotPasswordCallback() {
+        Subscription subscription = service.forgotPassword(phoneModel, new Service.ForgotPasswordCallback() {
             @Override
             public void onSuccess() {
                 view.removeWait();

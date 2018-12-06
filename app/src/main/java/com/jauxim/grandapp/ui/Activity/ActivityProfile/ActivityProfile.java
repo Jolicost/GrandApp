@@ -3,6 +3,7 @@ package com.jauxim.grandapp.ui.Activity.ActivityProfile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.ActivityEditProfile.ActivityEditProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
 import javax.inject.Inject;
@@ -29,8 +31,8 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @BindView(R.id.tvPhone)
     TextView tvPhone;
 
-    @BindView(R.id.tvUsername)
-    TextView tvUsername;
+    @BindView(R.id.tvAddress)
+    TextView tvAddress;
 
     @BindView(R.id.tvCompleteName)
     TextView tvCompleteName;
@@ -52,7 +54,6 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
         setContentView(R.layout.profile);
         getDeps().inject(this);
         ButterKnife.bind(this);
@@ -89,7 +90,7 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
 
     @OnClick(R.id.ivEdit)
     void editButtonClick() {
-        presenter.editProfile(profileId);
+        presenter.editProfile();
     }
 
     @Override
@@ -97,21 +98,18 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         user = DataUtils.getUserInfo(this); //user logged
 
         tvCompleteName.setText(userModel.getCompleteName());
-        tvUsername.setText(userModel.getUsername());
+        //tvAddress.setText(userModel.getAddress());
         tvPhone.setText(userModel.getPhone());
         tvEmail.setText(userModel.getEmail());
         Glide.with(this).load(userModel.getProfilePic()).into(ivProfilePic);
-
         if (!TextUtils.isEmpty(userModel.getId()) && userModel.getId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void editProfile(String profileId) {
-        /*Intent intent = new Intent(this, ActivityEditProfile.class);
-        intent.putExtra(Constants.PROFILE_ID, profileId);
-        startActivity(intent);*/
-
+    public void editProfile() {
+        Intent intent = new Intent(this, ActivityEditProfile.class);
+        startActivity(intent);
     }
 }

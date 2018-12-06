@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
@@ -27,6 +28,7 @@ import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
+import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Init.Init;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
@@ -131,24 +133,6 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -158,26 +142,21 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         FragmentManager fragmentManager;
         FragmentTransaction fragmentTransaction;
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_activities) {
             showActivitiesListFragment();
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-        else if (id == R.id.logout) {
+        } else if (id == R.id.account_settings) {
+            showProfile();
+        } else if (id == R.id.logout) {
             presenter.logout();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showProfile() {
+        presenter.showProfile();
     }
 
     @Override
@@ -233,6 +212,13 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     @Override
     public void showLogoutSuccess(int logout_success) {
         removeWait();
+    }
+
+    @Override
+    public void viewProfile(String userId) {
+        Intent intent = new Intent(this, ActivityProfile.class);
+        intent.putExtra(Constants.PROFILE_ID, userId);
+        startActivity(intent);
     }
 
     public void showActivitiesListFragment() {

@@ -249,7 +249,7 @@ public class Service {
                 });
     }
 
-    public Subscription forgotPassword(PhoneModel phone, final forgotPasswordCallback callback) {
+    public Subscription forgotPassword(PhoneModel phone, final ForgotPasswordCallback callback) {
         Log.d("phoneNumber"," phone: "+phone.getPhone());
         return networkService.forgotPassword(phone)
                 .subscribeOn(Schedulers.io())
@@ -339,13 +339,43 @@ public class Service {
                 });
     }
 
+    public Subscription editProfileInfo(UserModel user, final EditProfileCallback callback,String auth) {
+        return networkService.editProfileInfo(user.getId(),user,auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {
+                    @Override
+                    public Observable<? extends UserModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<UserModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(UserModel user) {
+                        callback.onSuccess(user);
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
         void onError(NetworkError networkError);
     }
 
-    public interface forgotPasswordCallback {
+    public interface ForgotPasswordCallback {
         void onSuccess();
 
         void onError(NetworkError networkError);
@@ -382,6 +412,12 @@ public class Service {
     }
 
     public interface ProfileInfoCallback {
+        void onSuccess(UserModel userModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface EditProfileCallback {
         void onSuccess(UserModel userModel);
 
         void onError(NetworkError networkError);

@@ -16,10 +16,6 @@ public class UserModel {
     @Expose
     private String password;
 
-    @SerializedName("username")
-    @Expose
-    private String username;
-
     @SerializedName("email")
     @Expose
     private String email;
@@ -41,6 +37,8 @@ public class UserModel {
         this.password = password;
     }
 
+    public UserModel() {
+    }
     public String getPassword() {
         return password;
     }
@@ -55,14 +53,6 @@ public class UserModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {

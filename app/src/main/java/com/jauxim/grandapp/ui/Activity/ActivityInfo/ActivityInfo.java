@@ -92,6 +92,14 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.vProfile)
     RelativeLayout vProfile;
 
+    @BindView(R.id.userImage)
+    ImageView userImage;
+
+    @BindView(R.id.tvUserCompleteName)
+    TextView tvUserCompleteName;
+
+    @BindView(R.id.tvPointsUser)
+    TextView tvPointsUser;
 
     private String activityId;
     private String userActivityId;
@@ -144,6 +152,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     public void getActivityInfoSuccess(final ActivityModel activityModel) {
         user = DataUtils.getUserInfo(this);
         userActivityId = activityModel.getUserId();
+        presenter.getProfileInfo(userActivityId);
+
         tvUpperTag.setText(R.string.upperTag);
 
         tvTitle.setText(activityModel.getTitle());
@@ -227,6 +237,12 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         Intent intent = new Intent(this, ActivityProfile.class);
         intent.putExtra(Constants.PROFILE_ID, userId);
         startActivity(intent);
+    }
+
+    @Override
+    public void getProfileInfo(UserModel userModel) {
+        tvUserCompleteName.setText(userModel.getCompleteName());
+        Glide.with(this).load(userModel.getProfilePic()).into(userImage);
     }
 
     @OnClick(R.id.ivClose)

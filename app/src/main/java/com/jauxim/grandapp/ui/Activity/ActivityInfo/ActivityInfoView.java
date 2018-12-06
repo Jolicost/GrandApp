@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.UserModel;
 
 /**
  * Created by ennur on 6/25/16.
@@ -19,4 +20,6 @@ public interface ActivityInfoView {
     void showDeleteSuccess(int login_error);
 
     void viewProfile(String userId);
+
+    void getProfileInfo(UserModel userModel);
 }

@@ -3,6 +3,7 @@ package com.jauxim.grandapp.deps;
 
 import com.jauxim.grandapp.networking.NetworkModule;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
+import com.jauxim.grandapp.ui.Activity.ActivityEditProfile.ActivityEditProfile;
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ForgotPasswordDialog;
 import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
@@ -30,4 +31,5 @@ public interface Deps {
     void inject(Register register);
     void inject(Init init);
     void inject(ActivityProfile activityProfile);
+    void inject(ActivityEditProfile activityEditProfile);
 }

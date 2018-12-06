@@ -12,23 +12,6 @@
         android:paddingBottom="20dp">
 
         <RelativeLayout
-            android:id="@+id/rlImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivProfilePic"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="9dp"
-                android:background="@drawable/circle_white"
-                android:src="@drawable/ic_user_default" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -42,7 +25,15 @@
                 android:layout_height="40dp"
                 android:clickable="true"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_edit_white_24dp" />
+                android:src="@drawable/ic_done_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text= "Edit profile"
+                android:textColor="#FFF"
+                android:layout_centerHorizontal="true"
+                android:textSize="31dp" />
 
             <ImageView
                 android:id="@+id/ivClose"
@@ -52,17 +43,6 @@
                 android:src="@drawable/ic_close" />
 
         </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/tvCompleteName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlImage"
-            android:textColor="#FFF"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
-            android:textSize="48sp" />
 
     </RelativeLayout>
 
@@ -86,11 +66,68 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/profile_picture"
+                    android:textSize="21dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfilePic"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="9dp"
+                        android:clickable="true"
+                        android:background="@drawable/circle_white"
+                        android:src="@drawable/ic_user_default" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_gravity="center"
+                        android:text="@string/profile_picture_desc"
+                        android:textSize="21dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/complete_name"
+                    android:textSize="21dp" />
+
+                <EditText
+                    android:id="@+id/etCompleteName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="21dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/email"
                     android:textSize="21dp" />
 
-                <TextView
-                    android:id="@+id/tvEmail"
+                <EditText
+                    android:id="@+id/etEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="21dp" />
@@ -109,30 +146,12 @@
                     android:text="@string/phone"
                     android:textSize="21dp" />
 
-                <TextView
-                    android:id="@+id/tvPhone"
+                <EditText
+                    android:id="@+id/etPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="21dp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/address"
-                    android:textSize="21dp" />
-
-                <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="21dp" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

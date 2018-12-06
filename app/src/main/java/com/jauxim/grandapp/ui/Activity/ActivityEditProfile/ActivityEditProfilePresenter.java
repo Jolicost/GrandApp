@@ -1,7 +1,8 @@
-package com.jauxim.grandapp.ui.Activity.ActivityProfile;
+package com.jauxim.grandapp.ui.Activity.ActivityEditProfile;
 
 import android.content.Context;
 
+import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
@@ -11,25 +12,29 @@ import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 
-public class ActivityProfilePresenter {
+public class ActivityEditProfilePresenter {
     private final Service service;
-    private final ActivityProfileView view;
+    private final ActivityEditProfileView view;
     private CompositeSubscription subscriptions;
 
-    public ActivityProfilePresenter(Service service, ActivityProfileView view) {
+    public ActivityEditProfilePresenter(Service service, ActivityEditProfileView view) {
         this.service = service;
         this.view = view;
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void getProfileInfo(String id) {
+    public void editProfile(UserModel userModel) {
         view.showWait();
+        String userId = DataUtils.getUserInfo((Context)view).getId();
+        userModel.setId(userId);
         String auth = DataUtils.getAuthToken((Context) view);
-        Subscription subscription = service.getProfileInfo(id, new Service.ProfileInfoCallback() {
+        Subscription subscription = service.editProfileInfo(userModel, new Service.EditProfileCallback() {
             @Override
             public void onSuccess(UserModel userModel) {
+                DataUtils.saveUserModel((Context)view, userModel);
                 view.removeWait();
-                view.getProfileInfo(userModel);
+                view.showLoginError(R.string.edit_profile_success);
+                view.getProfileInfo(userModel.getId());
             }
 
             @Override
@@ -43,7 +48,9 @@ public class ActivityProfilePresenter {
         subscriptions.add(subscription);
     }
 
-    public void editProfile() {
-        view.editProfile();
+    public void getProfileInfo() {
+        UserModel user = DataUtils.getUserInfo((Context)view);
+        view.showInfoUser(user);
     }
+
 }

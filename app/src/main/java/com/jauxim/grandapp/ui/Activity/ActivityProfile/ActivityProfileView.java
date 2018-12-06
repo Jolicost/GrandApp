@@ -15,5 +15,5 @@ public interface ActivityProfileView {
 
     void getProfileInfo(UserModel userModel);
 
-    void editProfile(String profileId);
+    void editProfile();
 }
