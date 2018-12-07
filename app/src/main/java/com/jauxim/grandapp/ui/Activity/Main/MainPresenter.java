@@ -64,4 +64,8 @@ public class MainPresenter {
         String userId = DataUtils.getUserInfo((Context)view).getId();
         view.viewProfile(userId);
     }
+
+    public void showEmergencyContacts() {
+        view.viewEmergencyContacts();
+    }
 }

@@ -3,6 +3,7 @@ package com.jauxim.grandapp.networking;
 
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
@@ -57,4 +58,7 @@ public interface NetworkService {
 
     @PUT("/users/{id}")
     Observable<UserModel> editProfileInfo(@Path("id") String userId, @Body UserModel user,@Header(authKey) String auth);
+
+    @GET("/users/{id}/emergency")
+    Observable<EmergencyContactsModel> getEmergencyContacts(@Path("id") String userId, @Header(authKey) String auth);
 }

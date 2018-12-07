@@ -27,7 +27,7 @@ import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
-import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
+import com.jauxim.grandapp.ui.Activity.ActivityEmergency.ActivityEmergency;
 import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Init.Init;
@@ -146,6 +146,8 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
             showActivitiesListFragment();
         } else if (id == R.id.account_settings) {
             showProfile();
+        } else if (id == R.id.emergency_contacts) {
+            showEmergencyContacts();
         } else if (id == R.id.logout) {
             presenter.logout();
         }
@@ -153,6 +155,10 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showEmergencyContacts() {
+        presenter.showEmergencyContacts();
     }
 
     private void showProfile() {
@@ -218,6 +224,12 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     public void viewProfile(String userId) {
         Intent intent = new Intent(this, ActivityProfile.class);
         intent.putExtra(Constants.PROFILE_ID, userId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void viewEmergencyContacts() {
+        Intent intent = new Intent(this, ActivityEmergency.class);
         startActivity(intent);
     }
 

@@ -18,6 +18,11 @@
                 android:title="@string/settings_profile" />
 
             <item
+                android:id="@+id/emergency_contacts"
+                android:icon="@drawable/ic_contact_phone_black_24dp"
+                android:title="@string/emergency_contacts" />
+
+            <item
                 android:id="@+id/logout"
                 android:icon="@drawable/ic_power_off"
                 android:title="@string/log_out" />

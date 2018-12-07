@@ -30,4 +30,6 @@ public interface MainView {
     void showLogoutSuccess(int logout_success);
 
     void viewProfile(String userId);
+
+    void viewEmergencyContacts();
 }

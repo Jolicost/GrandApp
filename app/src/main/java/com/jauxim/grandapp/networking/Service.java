@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
@@ -369,6 +370,36 @@ public class Service {
                 });
     }
 
+    public Subscription getEmergencyContacts(String userId, final EmergencyContactsCallback callback,String auth) {
+        return networkService.getEmergencyContacts(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends EmergencyContactsModel>>() {
+                    @Override
+                    public Observable<? extends EmergencyContactsModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<EmergencyContactsModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(EmergencyContactsModel emergencyContactsModel) {
+                        callback.onSuccess(emergencyContactsModel);
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -419,6 +450,12 @@ public class Service {
 
     public interface EditProfileCallback {
         void onSuccess(UserModel userModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface EmergencyContactsCallback {
+        void onSuccess(EmergencyContactsModel emergencyContactsModel);
 
         void onError(NetworkError networkError);
     }
