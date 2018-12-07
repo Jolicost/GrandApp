@@ -233,6 +233,18 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 .commit();
     }
 
+    public boolean onCreateOptionsMenu( Menu menu){
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected( MenuItem item){
+        int id = item.getItemId();
+
+        if (id == R.id.menu_sort) return true;
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {

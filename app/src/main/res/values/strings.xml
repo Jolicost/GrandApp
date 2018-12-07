@@ -100,4 +100,6 @@
 
     <string name="settings_profile">Profile</string>
     <string name="log_out">Log out</string>
+
+    <string name="sort">Sort</string>
 </resources>
