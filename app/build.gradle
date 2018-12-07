@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
     testImplementation 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.7.22'
@@ -65,4 +65,8 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     implementation 'com.hbb20:ccp:2.2.0'
+
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
 }
+apply plugin: 'com.google.gms.google-services'

@@ -50,4 +50,7 @@ public interface NetworkService {
 
     @POST("/forgotPassword")
     Observable<Void> forgotPassword(@Body PhoneModel phone);
+
+    @POST("/login/google")
+    Observable<LoginResponseModel> getLoginGoogleToken(@Body UserModel userModel);
 }

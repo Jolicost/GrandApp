@@ -55,7 +55,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @BindView(R.id.bPrevious)
     Button bPrevious;
 
-    static private boolean demo_edit_mode = false;
+    static private boolean demo_edit_mode = true;
     //private ActivityStepsAdapter activityAdapter;
 
     private String title;

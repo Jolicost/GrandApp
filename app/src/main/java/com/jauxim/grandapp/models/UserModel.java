@@ -36,7 +36,7 @@ public class UserModel {
     @Expose
     private String id;
 
-    public UserModel(String username, String password){
+    public UserModel(String username, String password) {
         this.phone = username;
         this.password = password;
     }
