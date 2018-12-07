@@ -40,15 +40,36 @@ public class ActivityLoginPresenter {
         }
 
         if (!error) {
-            doLogin(code+phone,pass);
+            UserModel userModel = new UserModel(code+phone,pass);
+            doLogin(userModel);
         }
     }
 
-    public void doLogin(String username, String password) {
+    public void doLogin(UserModel userModel) {
         view.showWait();
-        UserModel userModel = new UserModel(username, password);
-        Log.i("Username = ", username);
         Subscription subscription = service.getLoginToken(userModel, new Service.LoginCallback() {
+            @Override
+            public void onSuccess(LoginResponseModel loginResponseModel) {
+                DataUtils.setAuthToken((Context) view,loginResponseModel.getToken());
+                Log.d("authSaving", "is token?" + loginResponseModel.isAuth()+" getted token: "+loginResponseModel.getToken());
+                DataUtils.saveUserModel((Context)view, loginResponseModel.getUser());
+                view.removeWait();
+                view.startMainActivity();
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.showLoginError(R.string.login_error);
+            }
+        });
+
+        subscriptions.add(subscription);
+    }
+
+    public void doGoogleLogin(UserModel userModel) {
+        view.showWait();
+        Subscription subscription = service.getLoginGoogleToken(userModel, new Service.LoginCallback() {
             @Override
             public void onSuccess(LoginResponseModel loginResponseModel) {
                 DataUtils.setAuthToken((Context) view,loginResponseModel.getToken());

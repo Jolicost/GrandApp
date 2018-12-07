@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,9 +24,9 @@ import com.google.android.gms.tasks.Task;
 import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
-import com.jauxim.grandapp.ui.Activity.Init.Init;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Activity.Register.Register;
 
@@ -78,7 +77,8 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_login);
-        super.onCreate(savedInstanceState);if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
         ButterKnife.bind(this);
@@ -96,7 +96,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     }
 
     @OnClick(R.id.bLogin)
-    public void loginClick(){
+    public void loginClick() {
         if (etPhoneNUmber != null && etPassword != null) {
             String code = ccp.getSelectedCountryCodeWithPlus();
             String user = etPhoneNUmber.getText().toString();
@@ -107,26 +107,26 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     }
 
     @OnClick(R.id.bLoginGoogle)
-    public void googleLoginClick(){
+    public void googleLoginClick() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @OnClick(R.id.bLoginFacebook)
-    public void facebookLoginClick(){
+    public void facebookLoginClick() {
 
     }
 
     @OnClick(R.id.tvRegister)
-    public void registerClick(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+    public void registerClick() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Intent intent = new Intent(this, Register.class);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     this,
                     ivLogo,
                     ViewCompat.getTransitionName(ivLogo));
             startActivity(intent, options.toBundle());
-        }else {
+        } else {
             Intent intent = new Intent(this, Register.class);
             startActivity(intent);
         }
@@ -134,8 +134,8 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
 
     @OnClick(R.id.etForgotPwd)
-    public void forgotPasswordClick(){
-        ForgotPasswordDialog cdd=new ForgotPasswordDialog(this);
+    public void forgotPasswordClick() {
+        ForgotPasswordDialog cdd = new ForgotPasswordDialog(this);
         cdd.show();
     }
 
@@ -161,7 +161,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     }
 
     @Override
-    public void resetErrors(){
+    public void resetErrors() {
         tilPassword.setError(null);
         tilPhoneNUmber.setError(null);
     }
@@ -219,24 +219,16 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             final GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            
 
-            showSnackBar("ok");
+            String photoUrl = null;
+            if (account.getPhotoUrl() != null)
+                photoUrl = account.getPhotoUrl().toString();
+            UserModel model = new UserModel(account.getId(), account.getEmail(), account.getDisplayName(), photoUrl);
+            presenter.doGoogleLogin(model);
 
         } catch (ApiException e) {
-            Log.w("signInResult", "signInResult:failed code=" + e.getStatusCode());
             Log.w("signInResult", "signInResult:failed msg=" + e.getMessage());
-            showSnackBar("error: "+e.getStatusCode()+" "+e.getMessage());
+            Dialog.createDialog(this).title(R.string.login_error).description(R.string.login_error);
         }
-    }
-
-    private void showSnackBar(String message) {
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_SHORT);
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView
-                .findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-        snackbar.show();
     }
 }

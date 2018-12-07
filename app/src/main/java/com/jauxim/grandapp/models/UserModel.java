@@ -8,6 +8,10 @@ import javax.annotation.Generated;
 @Generated("org.jsonschema2pojo")
 public class UserModel {
 
+    @SerializedName("token")
+    @Expose
+    private String token;
+
     @SerializedName("phone")
     @Expose
     private String phone;
@@ -36,9 +40,24 @@ public class UserModel {
     @Expose
     private String id;
 
+    public UserModel(String token, String email, String completeName, String profilePic) {
+        this.token = token;
+        this.email = email;
+        this.completeName = completeName;
+        this.profilePic = profilePic;
+    }
+
     public UserModel(String username, String password) {
         this.phone = username;
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getPassword() {
