@@ -10,14 +10,30 @@ public class EmergencyContactsModel {
 
     @SerializedName("alias")
     @Expose
-    public String alias;
+    private String alias;
 
     @SerializedName("phone")
     @Expose
-    public String phone;
+    private String phone;
 
     public EmergencyContactsModel(String alias, String phone){
         this.alias = alias;
+        this.phone = phone;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 }

@@ -15,5 +15,5 @@ public interface ActivityEmergencyView {
 
     void onFailure(String appErrorMessage);
 
-    void getEmergencyContacts(List<EmergencyContactsModel> emergencyContactsModel);
+    void getEmergencyContacts(List<EmergencyContactsModel> emergencyContactsModelList);
 }
