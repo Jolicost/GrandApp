@@ -374,13 +374,13 @@ public class Service {
         return networkService.getEmergencyContacts(userId, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends EmergencyContactsModel>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<EmergencyContactsModel>>>() {
                     @Override
-                    public Observable<? extends EmergencyContactsModel> call(Throwable throwable) {
+                    public Observable<? extends List<EmergencyContactsModel>> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<EmergencyContactsModel>() {
+                .subscribe(new Subscriber<List<EmergencyContactsModel>>() {
                     @Override
                     public void onCompleted() {
 
@@ -393,7 +393,7 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(EmergencyContactsModel emergencyContactsModel) {
+                    public void onNext(List<EmergencyContactsModel> emergencyContactsModel) {
                         callback.onSuccess(emergencyContactsModel);
 
                     }
@@ -455,7 +455,7 @@ public class Service {
     }
 
     public interface EmergencyContactsCallback {
-        void onSuccess(EmergencyContactsModel emergencyContactsModel);
+        void onSuccess(List<EmergencyContactsModel> emergencyContactsModel);
 
         void onError(NetworkError networkError);
     }

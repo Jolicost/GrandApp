@@ -4,9 +4,10 @@ import android.content.Context;
 
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
-import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
+
+import java.util.List;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -29,7 +30,7 @@ public class ActivityEmergencyPresenter {
         String userId = DataUtils.getUserInfo((Context)view).getId();
         Subscription subscription = service.getEmergencyContacts(userId, new Service.EmergencyContactsCallback() {
             @Override
-            public void onSuccess(EmergencyContactsModel emergencyContactsModel) {
+            public void onSuccess(List<EmergencyContactsModel> emergencyContactsModel) {
                 view.removeWait();
                 view.getEmergencyContacts(emergencyContactsModel);
             }

@@ -3,6 +3,8 @@ package com.jauxim.grandapp.ui.Activity.ActivityEmergency;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.UserModel;
 
+import java.util.List;
+
 /**
  * Created by ennur on 6/25/16.
  */
@@ -13,5 +15,5 @@ public interface ActivityEmergencyView {
 
     void onFailure(String appErrorMessage);
 
-    void getEmergencyContacts(EmergencyContactsModel emergencyContactsModel);
+    void getEmergencyContacts(List<EmergencyContactsModel> emergencyContactsModel);
 }
