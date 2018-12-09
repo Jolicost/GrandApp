@@ -211,6 +211,35 @@ public class Service {
                 });
     }
 
+    public Subscription getLoginFacebookToken(UserModel userModel, final LoginCallback callback) {
+        return networkService.getLoginFacebookToken(userModel)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends LoginResponseModel>>() {
+                    @Override
+                    public Observable<? extends LoginResponseModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<LoginResponseModel>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+                    }
+
+                    @Override
+                    public void onNext(LoginResponseModel authModel) {
+                        callback.onSuccess(authModel);
+                    }
+                });
+    }
+
     public Subscription postNewUser(String phone, String password, String email, String completeName, String image, final LoginCallback callback) {
         RegisterModel registerModel = new RegisterModel();
         registerModel.setPhone(phone);

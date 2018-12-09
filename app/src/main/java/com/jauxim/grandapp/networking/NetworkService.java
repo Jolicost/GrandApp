@@ -53,4 +53,7 @@ public interface NetworkService {
 
     @POST("/login/google")
     Observable<LoginResponseModel> getLoginGoogleToken(@Body UserModel userModel);
+
+    @POST("/login/facebook")
+    Observable<LoginResponseModel> getLoginFacebookToken(@Body UserModel userModel);
 }

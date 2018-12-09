@@ -1,6 +1,9 @@
 package com.jauxim.grandapp.ui.Activity.ActivityLogin;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -8,6 +11,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +19,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,6 +43,13 @@ import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Activity.Register.Register;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -40,6 +60,8 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
     @Inject
     public Service service;
+
+    CallbackManager callbackManager;
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -74,6 +96,9 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @BindView(R.id.tv2)
     TextView textWelcome;
 
+    @BindView(R.id.bInvisibleFb)
+    LoginButton bInvisibleFb;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_login);
@@ -93,6 +118,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
         presenter = new ActivityLoginPresenter(service, this);
 
         startGoogle();
+        startFacebook();
     }
 
     @OnClick(R.id.bLogin)
@@ -114,7 +140,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
     @OnClick(R.id.bLoginFacebook)
     public void facebookLoginClick() {
-
+        bInvisibleFb.performClick();
     }
 
     @OnClick(R.id.tvRegister)
@@ -206,6 +232,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("fbLogin", "onActivityResult");
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -214,6 +241,8 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
+
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -230,5 +259,59 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
             Log.w("signInResult", "signInResult:failed msg=" + e.getMessage());
             Dialog.createDialog(this).title(R.string.login_error).description(R.string.login_error);
         }
+    }
+
+    private void startFacebook(){
+        bInvisibleFb.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday", "user_friends"));
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        Log.d("fbLogin", "ok3: "+loginResult.getAccessToken());
+
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        Log.v("LoginActivity", response.toString());
+
+                                        try {
+                                            // Application code
+                                            String email = object.getString("email");
+                                            String birthday = object.getString("birthday"); // 01/31/1980 format
+                                            String name = object.getString("name"); // 01/31/1980 format
+                                            String imageUrl = "http://graph.facebook.com/"+loginResult.getAccessToken().getUserId()+"/picture";
+                                            Log.d("jsonFacebook", "ok: "+email+", "+birthday+", "+name);
+
+                                            UserModel model = new UserModel(loginResult.getAccessToken().getToken(), email, name, imageUrl);
+                                            presenter.doFacebookLogin(model);
+
+                                        }catch (JSONException ex){
+                                            Log.d("jsonFacebook", "exception: "+ex.getMessage());
+
+                                        }
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender,birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("fbLogin", "canceled3: ");
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Log.d("fbLogin", "error3: "+exception.getMessage());
+
+                    }
+                });
     }
 }

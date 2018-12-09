@@ -89,6 +89,28 @@ public class ActivityLoginPresenter {
         subscriptions.add(subscription);
     }
 
+    public void doFacebookLogin(UserModel userModel) {
+        view.showWait();
+        Subscription subscription = service.getLoginFacebookToken(userModel, new Service.LoginCallback() {
+            @Override
+            public void onSuccess(LoginResponseModel loginResponseModel) {
+                DataUtils.setAuthToken((Context) view,loginResponseModel.getToken());
+                Log.d("authSaving", "is token?" + loginResponseModel.isAuth()+" getted token: "+loginResponseModel.getToken());
+                DataUtils.saveUserModel((Context)view, loginResponseModel.getUser());
+                view.removeWait();
+                view.startMainActivity();
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.showLoginError(R.string.login_error);
+            }
+        });
+
+        subscriptions.add(subscription);
+    }
+
     public void forgotPassword(String phone, String code) {
         PhoneModel phoneModel = new PhoneModel(code+phone);
         Subscription subscription = service.forgotPassword(phoneModel, new Service.forgotPasswordCallback() {
