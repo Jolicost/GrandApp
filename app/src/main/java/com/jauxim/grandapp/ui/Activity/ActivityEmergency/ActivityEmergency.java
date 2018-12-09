@@ -1,12 +1,9 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEmergency;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
@@ -68,6 +65,8 @@ public class ActivityEmergency extends BaseActivity implements ActivityEmergency
     public void getEmergencyContacts(List<EmergencyContactsModel> emergencyContactsModelList) {
 
         emergencyContactsList.clear();
+        emergencyContactsList.addAll(emergencyContactsModelList);
+        emergencyContactsList.addAll(emergencyContactsModelList);
         emergencyContactsList.addAll(emergencyContactsModelList);
         emergencyAdapter.notifyDataSetChanged();
     }

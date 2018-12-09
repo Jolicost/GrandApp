@@ -43,10 +43,6 @@ public class ActivityEmergencyAdapter extends RecyclerView.Adapter<ActivityEmerg
         final EmergencyContactsModel emergencyContactsModel = emergencyContactsList.get(position);
         holder.alias.setText(emergencyContactsModel.getAlias());
         holder.phone.setText(emergencyContactsModel.getPhone());
-        holder.alias.setTextSize(21);
-        holder.phone.setTextSize(21);
-        holder.alias.setTextColor(Color.BLACK);
-        holder.phone.setTextColor(Color.BLACK);
     }
 
     @Override
