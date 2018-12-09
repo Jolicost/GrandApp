@@ -310,7 +310,7 @@ public class Service {
                 });
     }
 
-    public Subscription getProfileInfo(String userId, final ProfileInfoCallback callback,String auth) {
+    public Subscription getProfileInfo(String userId, final ProfileInfoCallback callback, String auth) {
         return networkService.getProfileInfo(userId, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -340,7 +340,7 @@ public class Service {
                 });
     }
 
-    public Subscription editProfileInfo(UserModel user, final EditProfileCallback callback,String auth) {
+    public Subscription editProfileInfo(UserModel user, final EditProfileCallback callback, String auth) {
         return networkService.editProfileInfo(user.getId(),user,auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -370,8 +370,38 @@ public class Service {
                 });
     }
 
-    public Subscription getEmergencyContacts(String userId, final EmergencyContactsCallback callback,String auth) {
+    public Subscription getEmergencyContacts(String userId, final EmergencyContactsCallback callback, String auth) {
         return networkService.getEmergencyContacts(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<EmergencyContactsModel>>>() {
+                    @Override
+                    public Observable<? extends List<EmergencyContactsModel>> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<List<EmergencyContactsModel>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(List<EmergencyContactsModel> emergencyContactsModel) {
+                        callback.onSuccess(emergencyContactsModel);
+
+                    }
+                });
+    }
+
+    public Subscription editEmergencyContacts(String userId, List<EmergencyContactsModel> emergencyContactsList, final EditEmergencyContactsCallback callback, String auth) {
+        return networkService.editEmergencyContacts(userId,emergencyContactsList, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<EmergencyContactsModel>>>() {
@@ -455,6 +485,12 @@ public class Service {
     }
 
     public interface EmergencyContactsCallback {
+        void onSuccess(List<EmergencyContactsModel> emergencyContactsModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface EditEmergencyContactsCallback {
         void onSuccess(List<EmergencyContactsModel> emergencyContactsModel);
 
         void onError(NetworkError networkError);

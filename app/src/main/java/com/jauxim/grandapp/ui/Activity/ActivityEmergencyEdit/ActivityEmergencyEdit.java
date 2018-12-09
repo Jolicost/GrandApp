@@ -1,4 +1,4 @@
-package com.jauxim.grandapp.ui.Activity.ActivityEmergency;
+package com.jauxim.grandapp.ui.Activity.ActivityEmergencyEdit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.ActivityEmergencyEdit.ActivityEmergencyEdit;
+import com.jauxim.grandapp.ui.Activity.ActivityEmergency.ActivityEmergency;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -22,29 +22,29 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActivityEmergency extends BaseActivity implements ActivityEmergencyView {
+public class ActivityEmergencyEdit extends BaseActivity implements ActivityEmergencyEditView {
     @Inject
     public Service service;
 
-    @BindView(R.id.list_emergency_contacts)
+    @BindView(R.id.list_emergency_edit)
     RecyclerView emergencyContactsRV;
 
     private List<EmergencyContactsModel> emergencyContactsList = new ArrayList<>();
-    private ActivityEmergencyAdapter emergencyAdapter;
-    private ActivityEmergencyPresenter presenter;
+    private ActivityEmergencyEditAdapter emergencyEditAdapter;
+    private ActivityEmergencyEditPresenter presenter;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.emergency);
+        setContentView(R.layout.emergency_edit);
         getDeps().inject(this);
         ButterKnife.bind(this);
 
-        emergencyAdapter = new ActivityEmergencyAdapter(emergencyContactsList);
+        emergencyEditAdapter = new ActivityEmergencyEditAdapter(emergencyContactsList);
         emergencyContactsRV.setLayoutManager(new LinearLayoutManager(this));
         emergencyContactsRV.setItemAnimator(new DefaultItemAnimator());
-        emergencyContactsRV.setAdapter(emergencyAdapter);
+        emergencyContactsRV.setAdapter(emergencyEditAdapter);
 
-        presenter = new ActivityEmergencyPresenter(service, this);
+        presenter = new ActivityEmergencyEditPresenter(service, this);
         presenter.getEmergencyContacts();
     }
 
@@ -60,7 +60,7 @@ public class ActivityEmergency extends BaseActivity implements ActivityEmergency
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error int act. emergency").description(appErrorMessage).build();
+        Dialog.createDialog(this).title("server error int act. edit emergency").description(appErrorMessage).build();
     }
 
     @Override
@@ -68,7 +68,19 @@ public class ActivityEmergency extends BaseActivity implements ActivityEmergency
 
         emergencyContactsList.clear();
         emergencyContactsList.addAll(emergencyContactsModelList);
-        emergencyAdapter.notifyDataSetChanged();
+        emergencyEditAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmergencyContacts() {
+        Intent intent = new Intent(this, ActivityEmergency.class);
+        startActivity(intent);
+        finishAffinity();
+    }
+
+    @Override
+    public void showEditSuccess(int edit_emergency_success) {
+        Dialog.createDialog(this).title(getString(edit_emergency_success)).description(getString(edit_emergency_success)).build();
     }
 
     @OnClick(R.id.ivClose)
@@ -78,12 +90,7 @@ public class ActivityEmergency extends BaseActivity implements ActivityEmergency
 
     @OnClick(R.id.ivEdit)
     void editButtonClick() {
-        presenter.editEmergencyContacts();
-    }
-
-    @Override
-    public void editEmergencyContacts() {
-        Intent intent = new Intent(this, ActivityEmergencyEdit.class);
-        startActivity(intent);
+        //get de llista
+        presenter.editEmergencyContacts(emergencyContactsList);
     }
 }

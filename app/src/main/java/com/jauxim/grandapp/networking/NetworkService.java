@@ -61,4 +61,7 @@ public interface NetworkService {
 
     @GET("/users/{id}/emergency")
     Observable<List<EmergencyContactsModel>> getEmergencyContacts(@Path("id") String userId, @Header(authKey) String auth);
+
+    @POST("/users/{id}/emergency")
+    Observable<List<EmergencyContactsModel>> editEmergencyContacts(@Path("id") String userId, @Body List<EmergencyContactsModel> emergencyContactsList, @Header(authKey) String auth);
 }
