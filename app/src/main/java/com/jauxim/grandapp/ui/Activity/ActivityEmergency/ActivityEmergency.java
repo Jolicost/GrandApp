@@ -66,8 +66,6 @@ public class ActivityEmergency extends BaseActivity implements ActivityEmergency
 
         emergencyContactsList.clear();
         emergencyContactsList.addAll(emergencyContactsModelList);
-        emergencyContactsList.addAll(emergencyContactsModelList);
-        emergencyContactsList.addAll(emergencyContactsModelList);
         emergencyAdapter.notifyDataSetChanged();
     }
 
