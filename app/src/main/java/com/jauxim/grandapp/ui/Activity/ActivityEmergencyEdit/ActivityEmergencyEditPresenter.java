@@ -55,7 +55,6 @@ public class ActivityEmergencyEditPresenter {
             @Override
             public void onSuccess() {
                 view.removeWait();
-                view.showEditSuccess(R.string.edit_emergency_success);
                 view.showEmergencyContacts();
             }
 
