@@ -45,7 +45,6 @@ public class ActivityEmergency extends BaseActivity implements ActivityEmergency
         emergencyContactsRV.setAdapter(emergencyAdapter);
 
         presenter = new ActivityEmergencyPresenter(service, this);
-        presenter.getEmergencyContacts();
     }
 
     @Override
@@ -85,5 +84,11 @@ public class ActivityEmergency extends BaseActivity implements ActivityEmergency
     public void editEmergencyContacts() {
         Intent intent = new Intent(this, ActivityEmergencyEdit.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        presenter.getEmergencyContacts();
     }
 }

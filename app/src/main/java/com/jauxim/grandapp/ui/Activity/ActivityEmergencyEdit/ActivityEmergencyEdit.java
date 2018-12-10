@@ -74,9 +74,7 @@ public class ActivityEmergencyEdit extends BaseActivity implements ActivityEmerg
 
     @Override
     public void showEmergencyContacts() {
-        Intent intent = new Intent(this, ActivityEmergency.class);
-        startActivity(intent);
-        finishAffinity();
+        onBackPressed();
     }
 
     @Override
