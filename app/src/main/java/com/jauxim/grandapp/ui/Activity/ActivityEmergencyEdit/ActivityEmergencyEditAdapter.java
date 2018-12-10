@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
@@ -51,12 +50,19 @@ public class ActivityEmergencyEditAdapter extends RecyclerView.Adapter<ActivityE
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final EmergencyContactsModel emergencyContactsModel = emergencyContactsList.get(position);
         holder.alias.setText(emergencyContactsModel.getAlias());
-        holder.phone.setText(emergencyContactsModel.getPhone());
-        //holder.cpp.setText(cpp HERE);
-        //ADD ccp change listener
+        holder.ccp.setFullNumber(emergencyContactsModel.getPhone());
+        holder.phone.setText(emergencyContactsModel.getPhone().replace("+", "").replaceFirst(holder.ccp.getFormattedFullNumber(), ""));
+        holder.ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                Log.d("phoneSelected", "Phone: "+holder.ccp.getFullNumberWithPlus() + holder.phone.getText().toString());
+                emergencyContactsList.get(holder.getAdapterPosition()).setPhone(holder.ccp.getFullNumberWithPlus() + holder.phone.getText().toString());
+            }
+        });
         holder.alias.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -70,7 +76,8 @@ public class ActivityEmergencyEditAdapter extends RecyclerView.Adapter<ActivityE
         });
         holder.phone.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -78,7 +85,7 @@ public class ActivityEmergencyEditAdapter extends RecyclerView.Adapter<ActivityE
 
             @Override
             public void afterTextChanged(Editable editable) {
-                emergencyContactsList.get(holder.getAdapterPosition()).setPhone(editable.toString());
+                emergencyContactsList.get(holder.getAdapterPosition()).setPhone(holder.ccp.getFullNumberWithPlus() + editable.toString());
             }
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {

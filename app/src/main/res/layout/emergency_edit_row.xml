@@ -14,27 +14,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginRight="80dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/etAlias"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="21dp"
                 android:hint="@string/alias"
-                android:textColor="@color/color_dark_text"/>
+                android:textColor="@color/color_dark_text"
+                android:textSize="21dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
+
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/ccpReg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
                     android:paddingRight="5dp"
                     app:ccp_countryPreference="ES"
                     app:ccp_defaultNameCode="ES"
@@ -42,15 +46,23 @@
                     app:ccp_showFlag="false"
                     app:ccp_showFullName="false"
                     app:ccp_showNameCode="false"
-                    app:ccp_textSize="21dp" />
+                    app:ccp_textSize="20dp" />
+
+
                 <EditText
                     android:id="@+id/etPhone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="21dp"
-                    android:hint="@string/phone"
-                    android:textColor="@color/color_dark_text"/>
+                    android:focusable="true"
+                    android:hint="@string/phone_number_hint"
+                    android:importantForAutofill="noExcludeDescendants"
+                    android:inputType="phone"
+                    android:maxLength="15"
+                    android:paddingRight="12dp"
+                    android:textSize="20dp" />
+
             </LinearLayout>
+
         </LinearLayout>
 
         <ImageView
@@ -58,10 +70,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:padding="25dp"
-            android:clickable="true"
+            android:layout_margin="15dp"
             android:background="@drawable/btn_simple"
-            android:tint="@color/colorAccent"
-            android:src="@drawable/ic_delete_black_24dp" />
+            android:clickable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_delete_black_24dp"
+            android:tint="@color/colorAccent" />
     </android.support.v7.widget.CardView>
 </LinearLayout>
