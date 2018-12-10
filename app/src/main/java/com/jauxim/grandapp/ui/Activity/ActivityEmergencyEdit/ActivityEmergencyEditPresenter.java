@@ -53,7 +53,7 @@ public class ActivityEmergencyEditPresenter {
         String userId = DataUtils.getUserInfo((Context)view).getId();
         Subscription subscription = service.editEmergencyContacts(userId,emergencyContactsModel, new Service.EditEmergencyContactsCallback() {
             @Override
-            public void onSuccess(List<EmergencyContactsModel> emergencyContactsModel) {
+            public void onSuccess() {
                 view.removeWait();
                 view.showEditSuccess(R.string.edit_emergency_success);
                 view.showEmergencyContacts();
@@ -68,5 +68,13 @@ public class ActivityEmergencyEditPresenter {
         }, auth);
 
         subscriptions.add(subscription);
+    }
+
+    public void addContact() {
+        view.addContact();
+    }
+
+    public void showEmptyError() {
+        view.showEmptyError(R.string.edit_empty_error);
     }
 }

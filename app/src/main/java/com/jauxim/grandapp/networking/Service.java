@@ -401,16 +401,16 @@ public class Service {
     }
 
     public Subscription editEmergencyContacts(String userId, List<EmergencyContactsModel> emergencyContactsList, final EditEmergencyContactsCallback callback, String auth) {
-        return networkService.editEmergencyContacts(userId,emergencyContactsList, auth)
+        return networkService.editEmergencyContacts(userId,emergencyContactsList ,auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<EmergencyContactsModel>>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
                     @Override
-                    public Observable<? extends List<EmergencyContactsModel>> call(Throwable throwable) {
+                    public Observable<? extends Void> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<List<EmergencyContactsModel>>() {
+                .subscribe(new Subscriber<Void>() {
                     @Override
                     public void onCompleted() {
 
@@ -423,8 +423,8 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(List<EmergencyContactsModel> emergencyContactsModel) {
-                        callback.onSuccess(emergencyContactsModel);
+                    public void onNext(Void s) {
+                        callback.onSuccess();
 
                     }
                 });
@@ -491,7 +491,7 @@ public class Service {
     }
 
     public interface EditEmergencyContactsCallback {
-        void onSuccess(List<EmergencyContactsModel> emergencyContactsModel);
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }

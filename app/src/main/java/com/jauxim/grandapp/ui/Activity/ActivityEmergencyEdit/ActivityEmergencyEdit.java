@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
@@ -90,7 +91,36 @@ public class ActivityEmergencyEdit extends BaseActivity implements ActivityEmerg
 
     @OnClick(R.id.ivEdit)
     void editButtonClick() {
-        //get de llista
-        presenter.editEmergencyContacts(emergencyContactsList);
+        if (empty_params()) {
+            presenter.showEmptyError();
+        }
+        else presenter.editEmergencyContacts(emergencyContactsList);
+    }
+
+    private boolean empty_params() {
+        int n = emergencyContactsList.size();
+        for (int i = 0; i < n; ++i){
+            if (emergencyContactsList.get(i).getAlias().isEmpty() || emergencyContactsList.get(i).getPhone().isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @OnClick(R.id.add_contact)
+    void addContactClick() {
+        presenter.addContact();
+    }
+
+    @Override
+    public void addContact() {
+        EmergencyContactsModel ecm = new EmergencyContactsModel("","");
+        emergencyContactsList.add(ecm);
+        emergencyEditAdapter.notifyItemInserted(emergencyContactsList.size()-1);
+    }
+
+    @Override
+    public void showEmptyError(int edit_empty_error) {
+        Dialog.createDialog(this).title(getString(edit_empty_error)).description(getString(edit_empty_error)).build();
     }
 }

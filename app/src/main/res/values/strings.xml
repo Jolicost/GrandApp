@@ -105,6 +105,7 @@
     <string name="settings_profile">Profile</string>
     <string name="emergency_contacts">Emergency contacts</string>
     <string name="edit_emergency_success">Emergency contacts updated successfully</string>
+    <string name="edit_empty_error">Alias or Phone fields cannot be empty</string>
     <string name="alias">Alias</string>
     <string name="log_out">Log out</string>
 </resources>
