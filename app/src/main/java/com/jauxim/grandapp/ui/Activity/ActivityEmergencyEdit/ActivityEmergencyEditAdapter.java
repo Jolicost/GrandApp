@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hbb20.CountryCodePicker;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
 
@@ -23,12 +24,14 @@ public class ActivityEmergencyEditAdapter extends RecyclerView.Adapter<ActivityE
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public EditText alias, phone;
         public ImageView delete;
+        public CountryCodePicker ccp;
 
         public MyViewHolder(View view) {
             super(view);
             alias = view.findViewById(R.id.etAlias);
             phone = view.findViewById(R.id.etPhone);
             delete = view.findViewById(R.id.ivDelete);
+            ccp = view.findViewById(R.id.ccpReg);
         }
     }
 
@@ -49,6 +52,8 @@ public class ActivityEmergencyEditAdapter extends RecyclerView.Adapter<ActivityE
         final EmergencyContactsModel emergencyContactsModel = emergencyContactsList.get(position);
         holder.alias.setText(emergencyContactsModel.getAlias());
         holder.phone.setText(emergencyContactsModel.getPhone());
+        //holder.cpp.setText(cpp HERE);
+        //ADD ccp change listener
         holder.alias.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}

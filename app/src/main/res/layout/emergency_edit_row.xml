@@ -27,14 +27,30 @@
                 android:hint="@string/alias"
                 android:textColor="@color/color_dark_text"/>
 
-            <EditText
-                android:id="@+id/etPhone"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="21dp"
-                android:hint="@string/phone_prefix"
-                android:textColor="@color/color_dark_text"/>
-
+                android:orientation="horizontal">
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccpReg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    app:ccp_countryPreference="ES"
+                    app:ccp_defaultNameCode="ES"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFlag="false"
+                    app:ccp_showFullName="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_textSize="21dp" />
+                <EditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="21dp"
+                    android:hint="@string/phone"
+                    android:textColor="@color/color_dark_text"/>
+            </LinearLayout>
         </LinearLayout>
 
         <ImageView
