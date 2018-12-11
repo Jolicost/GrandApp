@@ -242,11 +242,6 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     }
 
     @Override
-    public void showDeleteSuccess(int delete_success) {
-        Dialog.createDialog(this).title(getString(delete_success)).description(getString(delete_success)).build();
-    }
-
-    @Override
     public void viewProfile(String userId) {
         Intent intent = new Intent(this, ActivityProfile.class);
         intent.putExtra(Constants.PROFILE_ID, userId);
@@ -271,8 +266,17 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @OnClick(R.id.ivDelete)
     void deleteButtonClick() {
-        showWait();
-        presenter.deleteActivity(activityId);
+        Dialog.createDialog(this)
+                .title(R.string.dialog_title_delete_act)
+                .description(R.string.dialog_desc_delete_act)
+                .positiveButtonText(R.string.dialog_yes)
+                .negativeButtonText(R.string.dialog_no)
+                .positiveButtonClick(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.deleteActivity(activityId);
+                    }
+                }).build();
     }
 
     @OnClick(R.id.vProfile)

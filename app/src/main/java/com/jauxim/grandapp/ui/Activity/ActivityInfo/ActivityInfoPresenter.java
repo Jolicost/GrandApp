@@ -68,7 +68,6 @@ public class ActivityInfoPresenter {
             @Override
             public void onSuccess(String s) {
                 view.removeWait();
-                view.showDeleteSuccess(R.string.delete_success);
                 view.backToMainView();
             }
 

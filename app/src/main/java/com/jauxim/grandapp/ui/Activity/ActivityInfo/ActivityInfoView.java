@@ -17,8 +17,6 @@ public interface ActivityInfoView {
 
     void backToMainView();
 
-    void showDeleteSuccess(int login_error);
-
     void viewProfile(String userId);
 
     void getProfileInfo(UserModel userModel);
