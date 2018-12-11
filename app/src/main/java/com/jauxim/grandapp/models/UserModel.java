@@ -20,10 +20,6 @@ public class UserModel {
     @Expose
     private String password;
 
-    @SerializedName("username")
-    @Expose
-    private String username;
-
     @SerializedName("email")
     @Expose
     private String email;
@@ -39,6 +35,10 @@ public class UserModel {
     @SerializedName("_id")
     @Expose
     private String id;
+
+    public UserModel() {
+
+    }
 
     public UserModel(String token, String email, String completeName, String profilePic) {
         this.token = token;
@@ -74,14 +74,6 @@ public class UserModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {

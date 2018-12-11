@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
@@ -306,7 +307,7 @@ public class Service {
                 });
     }
 
-    public Subscription forgotPassword(PhoneModel phone, final forgotPasswordCallback callback) {
+    public Subscription forgotPassword(PhoneModel phone, final ForgotPasswordCallback callback) {
         Log.d("phoneNumber"," phone: "+phone.getPhone());
         return networkService.forgotPassword(phone)
                 .subscribeOn(Schedulers.io())
@@ -366,13 +367,133 @@ public class Service {
                 });
     }
 
+    public Subscription getProfileInfo(String userId, final ProfileInfoCallback callback, String auth) {
+        return networkService.getProfileInfo(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {
+                    @Override
+                    public Observable<? extends UserModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<UserModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(UserModel userModel) {
+                        callback.onSuccess(userModel);
+
+                    }
+                });
+    }
+
+    public Subscription editProfileInfo(UserModel user, final EditProfileCallback callback, String auth) {
+        return networkService.editProfileInfo(user.getId(),user,auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {
+                    @Override
+                    public Observable<? extends UserModel> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<UserModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(UserModel user) {
+                        callback.onSuccess(user);
+
+                    }
+                });
+    }
+
+    public Subscription getEmergencyContacts(String userId, final EmergencyContactsCallback callback, String auth) {
+        return networkService.getEmergencyContacts(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<EmergencyContactsModel>>>() {
+                    @Override
+                    public Observable<? extends List<EmergencyContactsModel>> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<List<EmergencyContactsModel>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(List<EmergencyContactsModel> emergencyContactsModel) {
+                        callback.onSuccess(emergencyContactsModel);
+
+                    }
+                });
+    }
+
+    public Subscription editEmergencyContacts(String userId, List<EmergencyContactsModel> emergencyContactsList, final EditEmergencyContactsCallback callback, String auth) {
+        return networkService.editEmergencyContacts(userId,emergencyContactsList ,auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
         void onError(NetworkError networkError);
     }
 
-    public interface forgotPasswordCallback {
+    public interface ForgotPasswordCallback {
         void onSuccess();
 
         void onError(NetworkError networkError);
@@ -404,6 +525,30 @@ public class Service {
 
     public interface ImageCallback {
         void onSuccess(ImageUrlModel urlImage);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface ProfileInfoCallback {
+        void onSuccess(UserModel userModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface EditProfileCallback {
+        void onSuccess(UserModel userModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface EmergencyContactsCallback {
+        void onSuccess(List<EmergencyContactsModel> emergencyContactsModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface EditEmergencyContactsCallback {
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }

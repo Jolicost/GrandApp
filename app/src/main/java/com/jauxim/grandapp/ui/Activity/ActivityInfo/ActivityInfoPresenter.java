@@ -8,6 +8,7 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
@@ -80,5 +81,30 @@ public class ActivityInfoPresenter {
         }, auth);
 
         subscriptions.add(subscription);
+    }
+
+    public void getProfileInfo(String id) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.getProfileInfo(id, new Service.ProfileInfoCallback() {
+            @Override
+            public void onSuccess(UserModel userModel) {
+                view.removeWait();
+                view.getProfileInfo(userModel);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
+    }
+
+    public void viewProfile(String id) {
+        view.viewProfile(id);
     }
 }

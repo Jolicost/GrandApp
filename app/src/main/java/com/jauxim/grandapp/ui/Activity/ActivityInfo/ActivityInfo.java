@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +27,7 @@ import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 
@@ -92,7 +94,20 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.bSingUp)
     Button bSingUp;
 
+    @BindView(R.id.vProfile)
+    RelativeLayout vProfile;
+
+    @BindView(R.id.userImage)
+    ImageView userImage;
+
+    @BindView(R.id.tvUserCompleteName)
+    TextView tvUserCompleteName;
+
+    @BindView(R.id.tvPointsUser)
+    TextView tvPointsUser;
+
     private String activityId;
+    private String userActivityId;
     private MapView gMapView;
     ActivityInfoPresenter presenter;
 
@@ -141,6 +156,9 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @Override
     public void getActivityInfoSuccess(final ActivityModel activityModel) {
         user = DataUtils.getUserInfo(this);
+        userActivityId = activityModel.getUserId();
+        presenter.getProfileInfo(userActivityId);
+
         tvUpperTag.setText(R.string.upperTag);
 
         tvTitle.setText(activityModel.getTitle());
@@ -172,7 +190,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
             tvEndlDate.setVisibility(View.GONE);
         }
         
-        if (!TextUtils.isEmpty(activityModel.getUserId()) && activityModel.getUserId().equals(user.getId())){
+        if (!TextUtils.isEmpty(activityModel.getUserId()) && userActivityId.equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
             bSingUp.setVisibility(View.GONE);
@@ -228,6 +246,19 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         Dialog.createDialog(this).title(getString(delete_success)).description(getString(delete_success)).build();
     }
 
+    @Override
+    public void viewProfile(String userId) {
+        Intent intent = new Intent(this, ActivityProfile.class);
+        intent.putExtra(Constants.PROFILE_ID, userId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void getProfileInfo(UserModel userModel) {
+        tvUserCompleteName.setText(userModel.getCompleteName());
+        Glide.with(this).load(userModel.getProfilePic()).into(userImage);
+    }
+
     @OnClick(R.id.ivClose)
     void closeButtonClick() {
         onBackPressed();
@@ -242,6 +273,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     void deleteButtonClick() {
         showWait();
         presenter.deleteActivity(activityId);
+    }
+
+    @OnClick(R.id.vProfile)
+    void viewProfileClick() {
+        presenter.viewProfile(userActivityId);
     }
 
     @Override

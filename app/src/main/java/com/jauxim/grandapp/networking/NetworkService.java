@@ -3,6 +3,7 @@ package com.jauxim.grandapp.networking;
 
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
@@ -18,6 +19,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -56,4 +58,16 @@ public interface NetworkService {
 
     @POST("/login/facebook")
     Observable<LoginResponseModel> getLoginFacebookToken(@Body UserModel userModel);
+
+    @GET("/users/{id}")
+    Observable<UserModel> getProfileInfo(@Path("id") String userId,@Header(authKey) String auth);
+
+    @PUT("/users/{id}")
+    Observable<UserModel> editProfileInfo(@Path("id") String userId, @Body UserModel user,@Header(authKey) String auth);
+
+    @GET("/users/{id}/emergency")
+    Observable<List<EmergencyContactsModel>> getEmergencyContacts(@Path("id") String userId, @Header(authKey) String auth);
+
+    @POST("/users/{id}/emergency")
+    Observable<Void> editEmergencyContacts(@Path("id") String userId, @Body List<EmergencyContactsModel> emergencyContactsList, @Header(authKey) String auth);
 }

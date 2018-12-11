@@ -59,4 +59,13 @@ public class MainPresenter {
         view.showLogoutSuccess(R.string.logout_success);
         view.redirectTologin();
     }
+
+    public void showProfile() {
+        String userId = DataUtils.getUserInfo((Context)view).getId();
+        view.viewProfile(userId);
+    }
+
+    public void showEmergencyContacts() {
+        view.viewEmergencyContacts();
+    }
 }

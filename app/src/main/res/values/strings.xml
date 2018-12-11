@@ -90,7 +90,18 @@
     <string name="send">send</string>
     <string name="cancel">cancel</string>
     <string name="phone">Phone</string>
-    <string name="log_out">Log out</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="complete_name">Complete name</string>
+    <string name="username">Username</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="profile_picture_desc">Click the profile image to change it</string>
+    <string name="edit_profile_success">Profile updated successfully</string>
+    <string name="activity_creator">Creator</string>
+
+    <string name="emergency">Emergency</string>
+    <string name="contacts">Contacts</string>
 
     <string name="fgt_pswd_title">Forget password</string>
     <string name="fgt_pswd_description">Write the email in witch you created you account and clic SEND. Then you will receive a e-mail with the new password writed. It\'s recomendable to change your password after this process.</string>
@@ -98,4 +109,9 @@
 
     <string name="facebook_app_id">282493839277733</string>
     <string name="fb_login_protocol_scheme">fb282493839277733</string>
+    <string name="emergency_contacts">Emergency contacts</string>
+    <string name="edit_emergency_success">Emergency contacts updated successfully</string>
+    <string name="edit_empty_error">Alias or Phone fields cannot be empty</string>
+    <string name="alias">Alias</string>
+    <string name="log_out">Log out</string>
 </resources>

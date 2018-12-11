@@ -28,4 +28,8 @@ public interface MainView {
     void redirectTologin();
 
     void showLogoutSuccess(int logout_success);
+
+    void viewProfile(String userId);
+
+    void viewEmergencyContacts();
 }
