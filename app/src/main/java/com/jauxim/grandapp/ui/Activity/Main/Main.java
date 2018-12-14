@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -77,9 +76,9 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         setUp();
     }
 
-    public void chargeUserWithLogout(){
+    public void chargeUserWithLogout() {
         user = DataUtils.getUserInfo(getContext());
-        if (user==null)presenter.logout();
+        if (user == null) presenter.logout();
     }
 
     private void setUp() {
@@ -106,8 +105,8 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     }
 
 
-    public void setUserInfo(View header){
-        if (user!=null) {
+    public void setUserInfo(View header) {
+        if (user != null) {
             TextView tvName = header.findViewById(R.id.tvUserName);
             TextView tvInfo = header.findViewById(R.id.tvUserInfo);
             CircleImageView civ = header.findViewById(R.id.ivUserImage);
@@ -115,10 +114,10 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
             if (tvName != null)
                 tvName.setText(user.getCompleteName());
 
-            if (tvInfo!=null)
+            if (tvInfo != null)
                 tvInfo.setText(user.getPassword());
 
-            if (civ!=null)
+            if (civ != null)
                 Glide.with(this).load(user.getProfilePic()).into(civ);
         }
     }
@@ -266,8 +265,8 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         }
     }
 
-    public void updateLocation(){
-        if (presenter!=null)
+    public void updateLocation() {
+        if (presenter != null)
             presenter.updateLocation();
     }
 }

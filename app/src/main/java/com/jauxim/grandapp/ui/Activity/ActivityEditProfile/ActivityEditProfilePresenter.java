@@ -2,9 +2,7 @@ package com.jauxim.grandapp.ui.Activity.ActivityEditProfile;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
@@ -29,19 +27,18 @@ public class ActivityEditProfilePresenter {
 
     public void editProfile(UserModel userModel) {
         view.showWait();
-        String userId = DataUtils.getUserInfo((Context)view).getId();
+        String userId = DataUtils.getUserInfo((Context) view).getId();
         userModel.setId(userId);
-        if (TextUtils.isEmpty(userModel.getProfilePic())){
-            userModel.setProfilePic(DataUtils.getUserInfo((Context)view).getProfilePic());
+        if (TextUtils.isEmpty(userModel.getProfilePic())) {
+            userModel.setProfilePic(DataUtils.getUserInfo((Context) view).getProfilePic());
         }
 
         String auth = DataUtils.getAuthToken((Context) view);
         Subscription subscription = service.editProfileInfo(userModel, new Service.EditProfileCallback() {
             @Override
             public void onSuccess(UserModel userModel) {
-                DataUtils.saveUserModel((Context)view, userModel);
+                DataUtils.saveUserModel((Context) view, userModel);
                 view.removeWait();
-                view.showEditSuccess(R.string.edit_profile_success);
                 view.getProfileInfo(userModel.getId());
             }
 
@@ -57,11 +54,11 @@ public class ActivityEditProfilePresenter {
     }
 
     public void getProfileInfo() {
-        UserModel user = DataUtils.getUserInfo((Context)view);
+        UserModel user = DataUtils.getUserInfo((Context) view);
         view.showInfoUser(user);
     }
 
-    public void postImage(String base64Image){
+    public void postImage(String base64Image) {
         ImageBase64Model imageBase64Model = new ImageBase64Model();
         imageBase64Model.setBase64(base64Image);
 

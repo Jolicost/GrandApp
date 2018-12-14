@@ -57,7 +57,6 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
         ButterKnife.bind(this);
 
         presenter = new ActivityEditProfilePresenter(service, this);
-        presenter.getProfileInfo();
     }
 
     @OnClick(R.id.ivClose)
@@ -109,10 +108,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
 
     @Override
     public void getProfileInfo(String userId) {
-        Intent intent = new Intent(this, ActivityProfile.class);
-        intent.putExtra(Constants.PROFILE_ID, userId);
-        startActivity(intent);
-        finishAffinity();
+        onBackPressed();
     }
 
     @Override
@@ -139,5 +135,11 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
             } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
             }
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        presenter.getProfileInfo();
     }
 }

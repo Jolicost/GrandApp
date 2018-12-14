@@ -11,8 +11,10 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.models.UserModel;
+import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
 
+import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -43,6 +45,7 @@ public class MainPresenter {
                         @Override
                         public void onNewLocationAvailable(SingleShotLocationProvider.GPSCoordinates location) {
                             DataUtils.saveLocation(view.getContext(), location);
+                            updateLocation(location.latitude, location.longitude);
                         }
                     });
 
@@ -50,6 +53,21 @@ public class MainPresenter {
             ActivityCompat.requestPermissions(view.getContext(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     1234);
         }
+    }
+
+    private void updateLocation(Double latitude, Double longitude){
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.sendUserPosition(new Service.BasicCallback() {
+            @Override
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+            }
+
+        }, auth, latitude, longitude);
+        subscriptions.add(subscription);
     }
 
     public void logout() {
