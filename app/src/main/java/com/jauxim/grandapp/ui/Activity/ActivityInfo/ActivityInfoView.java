@@ -20,4 +20,8 @@ public interface ActivityInfoView {
     void viewProfile(String userId);
 
     void getProfileInfo(UserModel userModel);
+
+    void showUnjoinText();
+
+    void showJoinText();
 }

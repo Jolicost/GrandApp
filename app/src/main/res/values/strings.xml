@@ -80,8 +80,8 @@
     <string name="welcomeRegister">Welcome!</string>
     <string name="welcomeLoginr">Hi, there!</string>
     <string name="email_error">Enter a valid email</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="join">Join</string>
+    <string name="unjoin">UnJoin</string>
     <string name="phone_number_hint">Phone number</string>
     <string name="accept">ACCEPT</string>
 

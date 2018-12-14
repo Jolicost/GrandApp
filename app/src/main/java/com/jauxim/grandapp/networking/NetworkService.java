@@ -70,4 +70,10 @@ public interface NetworkService {
 
     @POST("/users/{id}/emergency")
     Observable<Void> editEmergencyContacts(@Path("id") String userId, @Body List<EmergencyContactsModel> emergencyContactsList, @Header(authKey) String auth);
+
+    @POST("/normal/activities/{id}/join")
+    Observable<Void> joinActivity(@Path("id") String activityId, @Header(authKey) String auth);
+
+    @POST("/normal/activities/{id}/leave")
+    Observable<Void> leaveActivity(@Path("id") String activityId, @Header(authKey) String auth);
 }
