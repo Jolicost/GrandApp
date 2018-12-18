@@ -4,6 +4,7 @@ package com.jauxim.grandapp.networking;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
+import com.jauxim.grandapp.models.LocationModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
@@ -70,6 +71,9 @@ public interface NetworkService {
 
     @POST("/users/{id}/emergency")
     Observable<Void> editEmergencyContacts(@Path("id") String userId, @Body List<EmergencyContactsModel> emergencyContactsList, @Header(authKey) String auth);
+
+    @PUT("/geo")
+    Observable<Void> sendUserPosition(@Header(authKey) String auth, @Body LocationModel locationModel);
 
     @POST("/normal/activities/{id}/join")
     Observable<Void> joinActivity(@Path("id") String activityId, @Header(authKey) String auth);

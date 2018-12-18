@@ -5,6 +5,7 @@ import android.util.Log;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
+import com.jauxim.grandapp.models.LocationModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
@@ -15,6 +16,7 @@ import com.jauxim.grandapp.models.UserModel;
 
 import java.util.List;
 
+import retrofit2.Callback;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -547,6 +549,39 @@ public class Service {
                 });
     }
 
+    public Subscription sendUserPosition(final BasicCallback callback, String auth, Double latitude, Double longitude) {
+        LocationModel model = new LocationModel();
+        model.setLatitude(latitude);
+        model.setLongitude(longitude);
+        return networkService.sendUserPosition(auth, model)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("sendUserPosition", "onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+                        Log.d("sendUserPosition", "onError "+e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+                        Log.d("sendUserPosition", "onNext");
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -620,6 +655,12 @@ public class Service {
     }
 
     public interface UnJoinActivityCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface BasicCallback {
         void onSuccess();
 
         void onError(NetworkError networkError);

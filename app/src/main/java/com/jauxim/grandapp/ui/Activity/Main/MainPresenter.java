@@ -1,18 +1,23 @@
 package com.jauxim.grandapp.ui.Activity.Main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 
 import com.jauxim.grandapp.R;
+import com.jauxim.grandapp.Service.GeoService;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.models.UserModel;
+import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
 
+import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -43,6 +48,12 @@ public class MainPresenter {
                         @Override
                         public void onNewLocationAvailable(SingleShotLocationProvider.GPSCoordinates location) {
                             DataUtils.saveLocation(view.getContext(), location);
+                            updateLocation(location.latitude, location.longitude);
+
+                            Log.d("geoService", "startng geo service");
+
+                            Intent i= new Intent(view.getContext(), GeoService.class);
+                            view.getContext().startService(i);
                         }
                     });
 
@@ -52,12 +63,35 @@ public class MainPresenter {
         }
     }
 
+    private void updateLocation(Double latitude, Double longitude){
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.sendUserPosition(new Service.BasicCallback() {
+            @Override
+            public void onSuccess() {
+                Log.d("geoService", "OKKKK!!!!");
+
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                Log.d("geoService", "BAAADD!! "+networkError.getMessage());
+
+            }
+
+        }, auth, latitude, longitude);
+        subscriptions.add(subscription);
+    }
+
     public void logout() {
         view.showWait();
         DataUtils.deleteAuthToken((Context) view);
         view.removeWait();
         view.showLogoutSuccess(R.string.logout_success);
         view.redirectTologin();
+        view.getContext().stopService(new Intent(view.getContext(), GeoService.class));
+
+        Intent intent = new Intent(view.getContext(), GeoService.class);
+        view.getContext().stopService(intent);
     }
 
     public void showProfile() {

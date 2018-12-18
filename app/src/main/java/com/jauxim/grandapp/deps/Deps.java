@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.deps;
 
 
+import com.jauxim.grandapp.Service.GeoService;
 import com.jauxim.grandapp.networking.NetworkModule;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.ActivityEditProfile.ActivityEditProfile;
@@ -36,4 +37,5 @@ public interface Deps {
     void inject(ActivityEditProfile activityEditProfile);
     void inject(ActivityEmergency activityEmergency);
     void inject(ActivityEmergencyEdit activityEmergencyEdit);
+    void inject(GeoService geoService);
 }
