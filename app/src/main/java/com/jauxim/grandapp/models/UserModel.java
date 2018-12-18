@@ -32,12 +32,16 @@ public class UserModel {
     @Expose
     private String profilePic;
 
+    @SerializedName("notifications")
+    @Expose
+    private NotificationsModel notifications;
+
     @SerializedName("_id")
     @Expose
     private String id;
 
     public UserModel() {
-
+        notifications = new NotificationsModel();
     }
 
     public UserModel(String token, String email, String completeName, String profilePic) {
@@ -98,6 +102,14 @@ public class UserModel {
 
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
+    }
+
+    public NotificationsModel getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(NotificationsModel notifications) {
+        this.notifications = notifications;
     }
 
     public String getId() {

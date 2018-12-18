@@ -3,9 +3,11 @@ package com.jauxim.grandapp.ui.Activity.ActivityEditProfile;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +47,15 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
 
     @BindView(R.id.ivEdit)
     ImageView ivEdit;
+
+    @BindView(R.id.swNear_activity_created)
+    SwitchCompat swNear_activity_created;
+
+    @BindView(R.id.swUser_joined_activity)
+    SwitchCompat swUser_joined_activity;
+
+    @BindView(R.id.swJoined_activity_ended)
+    SwitchCompat swJoined_activity_ended;
 
     ActivityEditProfilePresenter presenter;
     private String base64Image;
@@ -100,11 +111,11 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
         etPhone.setText(user.getPhone());
         etEmail.setText(user.getEmail());
         Glide.with(this).load(user.getProfilePic()).into(ivProfilePic);
-    }
-
-    @Override
-    public void showEditSuccess(int edit_profile_success) {
-        Dialog.createDialog(this).title(getString(edit_profile_success)).description(getString(edit_profile_success)).build();
+        if (user.getNotifications() != null) {
+            swNear_activity_created.setChecked(user.getNotifications().getNearActivityCreated());
+            swUser_joined_activity.setChecked(user.getNotifications().getUserJoinedActivity());
+            swJoined_activity_ended.setChecked(user.getNotifications().getJoinedActivityEnded());
+        }
     }
 
     @Override
@@ -112,7 +123,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
         Intent intent = new Intent(this, ActivityProfile.class);
         intent.putExtra(Constants.PROFILE_ID, userId);
         startActivity(intent);
-        finishAffinity();
+        onBackPressed();
     }
 
     @Override
@@ -122,6 +133,9 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
         userModel.setEmail(etEmail.getText().toString());
         userModel.setPhone(etPhone.getText().toString());
         userModel.setProfilePic(imageUrl);
+        userModel.getNotifications().setNearActivityCreated(swNear_activity_created.isChecked());
+        userModel.getNotifications().setUserJoinedActivity(swUser_joined_activity.isChecked());
+        userModel.getNotifications().setJoinedActivityEnded(swJoined_activity_ended.isChecked());
         presenter.editProfile(userModel);
     }
 

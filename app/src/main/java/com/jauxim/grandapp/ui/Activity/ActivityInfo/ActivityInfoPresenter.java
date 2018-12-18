@@ -3,6 +3,7 @@ package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
@@ -105,5 +106,47 @@ public class ActivityInfoPresenter {
 
     public void viewProfile(String id) {
         view.viewProfile(id);
+    }
+
+    public void unjoin(String activityId) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.leaveActivity(activityId, new Service.UnJoinActivityCallback() {
+            @Override
+            public void onSuccess() {
+                view.removeWait();
+                view.showJoinText();
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
+    }
+
+    public void join(String activityId) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.joinActivity(activityId, new Service.JoinActivityCallback() {
+            @Override
+            public void onSuccess() {
+                view.removeWait();
+                view.showUnjoinText();
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
     }
 }

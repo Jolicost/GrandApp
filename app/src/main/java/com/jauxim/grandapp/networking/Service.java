@@ -487,6 +487,66 @@ public class Service {
                 });
     }
 
+    public Subscription joinActivity(String activityId, final JoinActivityCallback callback,String auth) {
+        return networkService.joinActivity(activityId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
+    public Subscription leaveActivity(String activityId, final UnJoinActivityCallback callback,String auth) {
+        return networkService.leaveActivity(activityId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -548,6 +608,18 @@ public class Service {
     }
 
     public interface EditEmergencyContactsCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface JoinActivityCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface UnJoinActivityCallback {
         void onSuccess();
 
         void onError(NetworkError networkError);

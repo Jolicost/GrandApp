@@ -91,8 +91,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.ivDelete)
     ImageView ivDelete;
 
-    @BindView(R.id.bSingUp)
-    Button bSingUp;
+    @BindView(R.id.bJoin)
+    Button bJoin;
 
     @BindView(R.id.vProfile)
     RelativeLayout vProfile;
@@ -193,14 +193,16 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         if (!TextUtils.isEmpty(activityModel.getUserId()) && userActivityId.equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
-            bSingUp.setVisibility(View.GONE);
+            bJoin.setVisibility(View.GONE);
         }else{
-            if (false)
-                bSingUp.setVisibility(View.VISIBLE);
+            bJoin.setVisibility(View.VISIBLE);
+            List<String> p = activityModel.getParticipants();
+
+            if (joining(p,user.getId())) {
+                showUnjoinText();
+            }
             else{
-                bSingUp.setBackground(ContextCompat.getDrawable(this, R.drawable.button_gradient));
-                bSingUp.setTextColor(ContextCompat.getColor(this, R.color.white));
-                bSingUp.setText(getString(R.string.sign_out));
+                showJoinText();
             }
         }
 
@@ -234,6 +236,13 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         }
     }
 
+    private boolean joining(List<String> p, String userId) {
+        for (int i = 0; i < p.size(); ++i){
+            if (p.get(i).equals(userId)) return true;
+        }
+        return false;
+    }
+
     @Override
     public void backToMainView() {
         Intent intent = new Intent(this, Main.class);
@@ -252,6 +261,20 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     public void getProfileInfo(UserModel userModel) {
         tvUserCompleteName.setText(userModel.getCompleteName());
         Glide.with(this).load(userModel.getProfilePic()).into(userImage);
+    }
+
+    @Override
+    public void showJoinText() {
+        bJoin.setBackground(ContextCompat.getDrawable(this, R.drawable.button_gradient));
+        bJoin.setTextColor(ContextCompat.getColor(this, R.color.white));
+        bJoin.setText(getString(R.string.join));
+    }
+
+    @Override
+    public void showUnjoinText() {
+        bJoin.setBackground(ContextCompat.getDrawable(this, R.drawable.button_border));
+        bJoin.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        bJoin.setText(getString(R.string.unjoin));
     }
 
     @OnClick(R.id.ivClose)
@@ -282,6 +305,12 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @OnClick(R.id.vProfile)
     void viewProfileClick() {
         presenter.viewProfile(userActivityId);
+    }
+
+    @OnClick(R.id.bJoin)
+    void viewJoinClick() {
+        if (bJoin.getText().toString().equals("Join")) presenter.join(activityId);
+        else presenter.unjoin(activityId);
     }
 
     @Override

@@ -66,6 +66,10 @@ public class ActivityModel {
     @Expose
     private Long timestampEnd;
 
+    @SerializedName("participants")
+    @Expose
+    private List<String> participants;
+
     private List<String> imagesBase64;
 
     public String getId() {
@@ -186,5 +190,13 @@ public class ActivityModel {
 
     public void setTimestampEnd(Long timestampEnd) {
         this.timestampEnd = timestampEnd;
+    }
+
+    public List<String> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
     }
 }
