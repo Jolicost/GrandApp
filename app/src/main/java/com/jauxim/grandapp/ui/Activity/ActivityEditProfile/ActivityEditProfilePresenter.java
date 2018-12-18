@@ -39,9 +39,7 @@ public class ActivityEditProfilePresenter {
         Subscription subscription = service.editProfileInfo(userModel, new Service.EditProfileCallback() {
             @Override
             public void onSuccess(UserModel userModel) {
-                DataUtils.saveUserModel((Context)view, userModel);
                 view.removeWait();
-                view.showEditSuccess(R.string.edit_profile_success);
                 view.getProfileInfo(userModel.getId());
             }
 

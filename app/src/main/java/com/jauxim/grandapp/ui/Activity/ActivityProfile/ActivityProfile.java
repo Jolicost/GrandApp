@@ -31,9 +31,6 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @BindView(R.id.tvPhone)
     TextView tvPhone;
 
-    @BindView(R.id.tvAddress)
-    TextView tvAddress;
-
     @BindView(R.id.tvCompleteName)
     TextView tvCompleteName;
 
@@ -45,6 +42,15 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
 
     @BindView(R.id.ivEdit)
     ImageView ivEdit;
+
+    @BindView(R.id.tvNearActivityCreated)
+    TextView tvNearActivityCreated;
+
+    @BindView(R.id.tvUserJoinedActivity)
+    TextView tvUserJoinedActivity;
+
+    @BindView(R.id.tvJoinedActivityEnded)
+    TextView tvJoinedActivityEnded;
 
     private String profileId;
     private UserModel user;
@@ -98,7 +104,15 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         user = DataUtils.getUserInfo(this); //user logged
 
         tvCompleteName.setText(userModel.getCompleteName());
-        //tvAddress.setText(userModel.getAddress());
+        if (userModel.getNotifications().getNearActivityCreated()) tvNearActivityCreated.setText(R.string.enabled);
+        else tvNearActivityCreated.setText(R.string.disabled);
+
+        if (userModel.getNotifications().getUserJoinedActivity()) tvUserJoinedActivity.setText(R.string.enabled);
+        else tvUserJoinedActivity.setText(R.string.disabled);
+
+        if (userModel.getNotifications().getJoinedActivityEnded()) tvJoinedActivityEnded.setText(R.string.enabled);
+        else tvJoinedActivityEnded.setText(R.string.disabled);
+
         tvPhone.setText(userModel.getPhone());
         tvEmail.setText(userModel.getEmail());
         Glide.with(this).load(userModel.getProfilePic()).into(ivProfilePic);

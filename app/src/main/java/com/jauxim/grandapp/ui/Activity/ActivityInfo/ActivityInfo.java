@@ -264,17 +264,17 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     }
 
     @Override
-    public void showUnjoinText() {
-        bJoin.setBackground(ContextCompat.getDrawable(this, R.drawable.button_gradient));
-        bJoin.setTextColor(ContextCompat.getColor(this, R.color.white));
-        bJoin.setText(getString(R.string.unjoin));
-    }
-
-    @Override
     public void showJoinText() {
         bJoin.setBackground(ContextCompat.getDrawable(this, R.drawable.button_gradient));
         bJoin.setTextColor(ContextCompat.getColor(this, R.color.white));
         bJoin.setText(getString(R.string.join));
+    }
+
+    @Override
+    public void showUnjoinText() {
+        bJoin.setBackground(ContextCompat.getDrawable(this, R.drawable.button_border));
+        bJoin.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        bJoin.setText(getString(R.string.unjoin));
     }
 
     @OnClick(R.id.ivClose)

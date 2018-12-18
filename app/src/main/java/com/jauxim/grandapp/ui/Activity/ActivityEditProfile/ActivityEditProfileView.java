@@ -14,8 +14,6 @@ public interface ActivityEditProfileView {
 
     void showInfoUser(UserModel user);
 
-    void showEditSuccess(int edit_profile_success);
-
     void getProfileInfo(String userId);
 
     void callEditProfile(String imageUrl);
