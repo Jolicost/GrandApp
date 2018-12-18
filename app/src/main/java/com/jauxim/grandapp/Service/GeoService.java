@@ -8,57 +8,33 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.jauxim.grandapp.BuildConfig;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.deps.DaggerDeps;
 import com.jauxim.grandapp.deps.Deps;
-import com.jauxim.grandapp.models.LocationModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.NetworkModule;
-import com.jauxim.grandapp.networking.NetworkService;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.inject.Inject;
 
-import okhttp3.Cache;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
-import static com.jauxim.grandapp.BuildConfig.BASEURL;
 
 public class GeoService extends Service {
 
-    Gson gson = new GsonBuilder()
-            .setLenient()
-            .create();
+    @Inject
+    public com.jauxim.grandapp.networking.Service service;
 
-    Retrofit retrofit;
+    private CompositeSubscription subscriptions;
 
-    NetworkService service;
-
-    private CompositeSubscription subscriptions = new CompositeSubscription();
-
+    NetworkModule networkModule;
     private Handler mHandler;
     // default interval for syncing data
-    public static final long DEFAULT_SYNC_INTERVAL = 1 * 60 * 1000;
+    public static final long DEFAULT_SYNC_INTERVAL = 1* 30 * 1000;
 
+    Deps deps;
 
     // task to be run here
     private Runnable runnableService = new Runnable() {
@@ -77,45 +53,10 @@ public class GeoService extends Service {
         // Create the Handler object
         Log.d("geoService", "onStartCommand");
 
-        Cache cache = null;
-        try {
-            File cacheFile = new File(getCacheDir(), "responses");
-            cache = new Cache(cacheFile, 10 * 1024 * 1024);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public okhttp3.Response intercept(Chain chain) throws IOException {
-                        Request original = chain.request();
-
-                        // Customize the request
-                        Request request = original.newBuilder()
-                                .header("Content-Type", "application/json")
-                                .removeHeader("Pragma")
-                                .header("Cache-Control", String.format("max-age=%d", BuildConfig.CACHETIME))
-                                .build();
-
-                        okhttp3.Response response = chain.proceed(request);
-                        response.cacheResponse();
-                        // Customize or return the response
-                        return response;
-                    }
-                })
-                .cache(cache)
-                .build();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASEURL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-
-        service = retrofit.create(NetworkService.class);
+        File cacheFile = new File(getCacheDir(), "responses");
+        deps = DaggerDeps.builder().networkModule(new NetworkModule(cacheFile)).build();
+        deps.inject(this);
+        subscriptions = new CompositeSubscription();
 
         mHandler = new Handler();
         // Execute a runnable task as soon as possible
@@ -140,57 +81,46 @@ public class GeoService extends Service {
                     @Override
                     public void onNewLocationAvailable(SingleShotLocationProvider.GPSCoordinates location) {
                         DataUtils.saveLocation(getApplication(), location);
-                        Log.d("geoService", "updated!! "+location.latitude+", "+location.longitude);
+                        Log.d("geoService", "updated!! " + location.latitude + ", " + location.longitude);
 
 
                         updateLocation(location.latitude, location.longitude, getApplication());
-
-                        /*
-                        Intent i= new Intent(view.getContext(), GeoService.class);
-                        view.getContext().startService(i);
-                        */
                     }
                 });
     }
 
-    private void updateLocation(Double latitude, Double longitude, Context context){
-        String auth = DataUtils.getAuthToken(context);
-        Log.d("geoService", "auth: "+auth);
+    private void updateLocation(Double latitude, Double longitude, Context context) {
 
         try {
-            LocationModel model = new LocationModel();
-            model.setLatitude(latitude);
-            model.setLongitude(longitude);
-            Log.d("geoService", "ok5 ");
-            service.sendUserPosition(auth, model)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
-                        @Override
-                        public Observable<? extends Void> call(Throwable throwable) {
-                            return Observable.error(throwable);
-                        }
-                    })
-                    .subscribe(new Subscriber<Void>() {
-                        @Override
-                        public void onCompleted() {
-                            Log.d("geoService", " service onCompleted");
-                        }
+            String auth = DataUtils.getAuthToken(getApplication());
+            Log.d("geoService", "auth: " + auth);
+            Subscription subscription = service.sendUserPosition(new com.jauxim.grandapp.networking.Service.BasicCallback() {
+                @Override
+                public void onSuccess() {
+                    Log.d("geoService", "OKKKK!!!!");
+                }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.d("geoService", "service onError " + e.getMessage());
-                        }
+                @Override
+                public void onError(NetworkError networkError) {
+                    Log.d("geoService", "BAAADD!! " + networkError.getMessage());
+                }
 
-                        @Override
-                        public void onNext(Void s) {
-                            Log.d("geoService", "service onNext");
-                        }
-                    });
+            }, auth, latitude, longitude);
+            subscriptions.add(subscription);
 
-        } catch (Exception e){
-            Log.d("geoService", "e: "+e.getMessage());
+        } catch (Exception e) {
+            Log.d("geoService", "e: " + e.getMessage());
 
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d("geoService", "onDestroy");
+
+        if(mHandler!=null)
+            mHandler.removeCallbacks(runnableService);
+
+        super.onDestroy();
     }
 }

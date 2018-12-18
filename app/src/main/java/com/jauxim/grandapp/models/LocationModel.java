@@ -4,11 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class LocationModel {
-    @SerializedName("latitude")
+    @SerializedName("lat")
     @Expose
     private Double latitude;
 
-    @SerializedName("longitude")
+    @SerializedName("long")
     @Expose
     private Double longitude;
 

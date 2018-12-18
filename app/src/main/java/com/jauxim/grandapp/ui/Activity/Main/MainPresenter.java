@@ -88,6 +88,10 @@ public class MainPresenter {
         view.removeWait();
         view.showLogoutSuccess(R.string.logout_success);
         view.redirectTologin();
+        view.getContext().stopService(new Intent(view.getContext(), GeoService.class));
+
+        Intent intent = new Intent(view.getContext(), GeoService.class);
+        view.getContext().stopService(intent);
     }
 
     public void showProfile() {
