@@ -90,6 +90,8 @@
     <string name="cancel">cancel</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
+    <string name="phone_bold"><b>Phone</b></string>
+    <string name="email_bold"><b>Email</b></string>
     <string name="address">Address</string>
     <string name="complete_name">Complete name</string>
     <string name="username">Username</string>
@@ -122,6 +124,4 @@
     <string name="user_joined_activity">User joined your activity</string>
     <string name="joined_activity_ended">Joined activity has ended</string>
     <string name="notifications">Notifications</string>
-    <string name="enabled">Enabled</string>
-    <string name="disabled">Disabled</string>
 </resources>

@@ -106,7 +106,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
             holder.time.setTextColor(rgb(11, 188, 37));
         }
 
-        holder.gauge.setText(activity.getnUsers() + "/" + activity.getMaxCapacity());
+        holder.gauge.setText(activity.getParticipants().size() + "/" + activity.getMaxCapacity());
 
         Glide.with(holder.image.getContext()).load(activity.getImage()).into(holder.image);
 

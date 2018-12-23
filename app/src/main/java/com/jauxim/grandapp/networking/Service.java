@@ -64,7 +64,7 @@ public class Service {
                 });
     }
 
-    public Subscription createActivityInfo(ActivityModel activityInfo, final ActivityInfoCallback callback,String auth) {
+    public Subscription createActivityInfo(ActivityModel activityInfo, final ActivityCreateCallback callback,String auth) {
         return networkService.createActivityInfo(activityInfo,auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -403,13 +403,13 @@ public class Service {
         return networkService.editProfileInfo(user.getId(),user,auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends UserModel>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
                     @Override
-                    public Observable<? extends UserModel> call(Throwable throwable) {
+                    public Observable<? extends Void> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<UserModel>() {
+                .subscribe(new Subscriber<Void>() {
                     @Override
                     public void onCompleted() {
 
@@ -422,8 +422,8 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(UserModel user) {
-                        callback.onSuccess(user);
+                    public void onNext(Void s) {
+                        callback.onSuccess();
 
                     }
                 });
@@ -600,6 +600,12 @@ public class Service {
         void onError(NetworkError networkError);
     }
 
+    public interface ActivityCreateCallback {
+        void onSuccess(ActivityModel activityModel);
+
+        void onError(NetworkError networkError);
+    }
+
     public interface DeleteActivityCallback {
         void onSuccess(String s);
 
@@ -631,7 +637,7 @@ public class Service {
     }
 
     public interface EditProfileCallback {
-        void onSuccess(UserModel userModel);
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }

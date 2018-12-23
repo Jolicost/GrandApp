@@ -36,7 +36,7 @@ public class ActivityEditPresenter {
                 activityInfo.setImagesUrl(imagesUrl);
                 Log.d("imagesResponse", "how many? "+activityInfo.getImagesUrl().size());
                 String auth = DataUtils.getAuthToken((Context) view);
-                Subscription subscription = service.createActivityInfo(activityInfo, new Service.ActivityInfoCallback() {
+                Subscription subscription = service.createActivityInfo(activityInfo, new Service.ActivityCreateCallback() {
                     @Override
                     public void onSuccess(ActivityModel activityModel) {
                         view.removeWait();

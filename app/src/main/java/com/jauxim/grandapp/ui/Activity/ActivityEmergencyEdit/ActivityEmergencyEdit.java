@@ -1,17 +1,14 @@
 package com.jauxim.grandapp.ui.Activity.ActivityEmergencyEdit;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.ActivityEmergency.ActivityEmergency;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -46,7 +43,7 @@ public class ActivityEmergencyEdit extends BaseActivity implements ActivityEmerg
         emergencyContactsRV.setAdapter(emergencyEditAdapter);
 
         presenter = new ActivityEmergencyEditPresenter(service, this);
-        presenter.getEmergencyContacts();
+
     }
 
     @Override
@@ -75,11 +72,6 @@ public class ActivityEmergencyEdit extends BaseActivity implements ActivityEmerg
     @Override
     public void showEmergencyContacts() {
         onBackPressed();
-    }
-
-    @Override
-    public void showEditSuccess(int edit_emergency_success) {
-        Dialog.createDialog(this).title(getString(edit_emergency_success)).description(getString(edit_emergency_success)).build();
     }
 
     @OnClick(R.id.ivClose)
@@ -120,5 +112,11 @@ public class ActivityEmergencyEdit extends BaseActivity implements ActivityEmerg
     @Override
     public void showEmptyError(int edit_empty_error) {
         Dialog.createDialog(this).title(getString(edit_empty_error)).description(getString(edit_empty_error)).build();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        presenter.getEmergencyContacts();
     }
 }

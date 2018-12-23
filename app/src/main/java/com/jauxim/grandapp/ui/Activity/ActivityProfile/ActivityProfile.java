@@ -2,10 +2,12 @@ package com.jauxim.grandapp.ui.Activity.ActivityProfile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -43,14 +45,17 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @BindView(R.id.ivEdit)
     ImageView ivEdit;
 
-    @BindView(R.id.tvNearActivityCreated)
-    TextView tvNearActivityCreated;
+    @BindView(R.id.swNear_activity_created)
+    SwitchCompat swNearActivityCreated;
 
-    @BindView(R.id.tvUserJoinedActivity)
-    TextView tvUserJoinedActivity;
+    @BindView(R.id.swUser_joined_activity)
+    SwitchCompat swUserJoinedActivity;
 
-    @BindView(R.id.tvJoinedActivityEnded)
-    TextView tvJoinedActivityEnded;
+    @BindView(R.id.swJoined_activity_ended)
+    SwitchCompat swJoinedActivityEnded;
+
+    @BindView(R.id.llNotifications)
+    LinearLayout llNotifications;
 
     private String profileId;
     private UserModel user;
@@ -65,13 +70,14 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         ButterKnife.bind(this);
 
         ivEdit.setVisibility(View.GONE);
+        llNotifications.setVisibility(View.GONE);
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             profileId = getIntent().getExtras().getString(Constants.PROFILE_ID);
         }
 
         presenter = new ActivityProfilePresenter(service, this);
-        presenter.getProfileInfo(profileId);
+
     }
 
     @Override
@@ -104,20 +110,19 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         user = DataUtils.getUserInfo(this); //user logged
 
         tvCompleteName.setText(userModel.getCompleteName());
-        if (userModel.getNotifications().getNearActivityCreated()) tvNearActivityCreated.setText(R.string.enabled);
-        else tvNearActivityCreated.setText(R.string.disabled);
 
-        if (userModel.getNotifications().getUserJoinedActivity()) tvUserJoinedActivity.setText(R.string.enabled);
-        else tvUserJoinedActivity.setText(R.string.disabled);
-
-        if (userModel.getNotifications().getJoinedActivityEnded()) tvJoinedActivityEnded.setText(R.string.enabled);
-        else tvJoinedActivityEnded.setText(R.string.disabled);
+        if (user.getNotifications() != null) {
+            swNearActivityCreated.setChecked(user.getNotifications().getNearActivityCreated());
+            swUserJoinedActivity.setChecked(user.getNotifications().getUserJoinedActivity());
+            swJoinedActivityEnded.setChecked(user.getNotifications().getJoinedActivityEnded());
+        }
 
         tvPhone.setText(userModel.getPhone());
         tvEmail.setText(userModel.getEmail());
         Glide.with(this).load(userModel.getProfilePic()).into(ivProfilePic);
         if (!TextUtils.isEmpty(userModel.getId()) && userModel.getId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
+            llNotifications.setVisibility(View.VISIBLE);
         }
     }
 
@@ -125,5 +130,11 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     public void editProfile() {
         Intent intent = new Intent(this, ActivityEditProfile.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        presenter.getProfileInfo(profileId);
     }
 }

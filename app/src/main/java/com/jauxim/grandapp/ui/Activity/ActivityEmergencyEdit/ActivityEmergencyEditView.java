@@ -18,8 +18,6 @@ public interface ActivityEmergencyEditView {
 
     void showEmergencyContacts();
 
-    void showEditSuccess(int edit_emergency_success);
-
     void addContact();
 
     void showEmptyError(int edit_empty_error);

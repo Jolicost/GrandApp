@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Activity.ActivityEditProfile;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
@@ -28,6 +31,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivityEditProfile extends BaseActivity implements ActivityEditProfileView {
     @Inject
@@ -43,7 +47,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
     EditText etEmail;
 
     @BindView(R.id.ivProfilePic)
-    ImageView ivProfilePic;
+    CircleImageView ivProfilePic;
 
     @BindView(R.id.ivEdit)
     ImageView ivEdit;
@@ -109,7 +113,13 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
         etCompleteName.setText(user.getCompleteName());
         etPhone.setText(user.getPhone());
         etEmail.setText(user.getEmail());
-        Glide.with(this).load(user.getProfilePic()).into(ivProfilePic);
+        //Glide.with(this).load(user.getProfilePic()).into(ivProfilePic);
+        Glide.with(this)
+                .load(user.getProfilePic())
+                .apply(RequestOptions.skipMemoryCacheOf(true))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                .into(ivProfilePic);
+
         if (user.getNotifications() != null) {
             swNear_activity_created.setChecked(user.getNotifications().getNearActivityCreated());
             swUser_joined_activity.setChecked(user.getNotifications().getUserJoinedActivity());
@@ -118,10 +128,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
     }
 
     @Override
-    public void getProfileInfo(String userId) {
-        Intent intent = new Intent(this, ActivityProfile.class);
-        intent.putExtra(Constants.PROFILE_ID, userId);
-        startActivity(intent);
+    public void getProfileInfo() {
         onBackPressed();
     }
 
@@ -147,6 +154,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
                     Bitmap bitmap = Utils.getBitmapFromUri(this, result.getUri());
                     base64Image = Utils.getBase64(bitmap);
                     ivProfilePic.setImageBitmap(bitmap);
+
                 } catch (Exception e) {
                 }
             } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {

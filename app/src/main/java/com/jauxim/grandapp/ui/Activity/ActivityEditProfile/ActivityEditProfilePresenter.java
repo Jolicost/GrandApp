@@ -36,9 +36,9 @@ public class ActivityEditProfilePresenter {
         String auth = DataUtils.getAuthToken((Context) view);
         Subscription subscription = service.editProfileInfo(userModel, new Service.EditProfileCallback() {
             @Override
-            public void onSuccess(UserModel userModel) {
+            public void onSuccess() {
                 view.removeWait();
-                view.getProfileInfo(userModel.getId());
+                view.getProfileInfo();
             }
 
             @Override

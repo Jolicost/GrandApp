@@ -22,10 +22,6 @@ public class ActivityListItemModel {
     @Expose
     private Long maxCapacity;
 
-    @SerializedName("nUsers")
-    @Expose
-    private Long nUsers;
-
     @SerializedName("images")
     @Expose
     private List<String> images;
@@ -41,6 +37,10 @@ public class ActivityListItemModel {
     @SerializedName("timestampStart")
     @Expose
     private Long timestampStart;
+
+    @SerializedName("participants")
+    @Expose
+    private List<String> participants;
 
     public String getId() {
         return id;
@@ -64,14 +64,6 @@ public class ActivityListItemModel {
 
     public void setMaxCapacity(Long maxCapacity) {
         this.maxCapacity = maxCapacity;
-    }
-
-    public Long getnUsers() {
-        return nUsers;
-    }
-
-    public void setnUsers(Long nUsers) {
-        this.nUsers = nUsers;
     }
 
     public String getImage() {
@@ -106,5 +98,13 @@ public class ActivityListItemModel {
 
     public void setTimestampStart(Long timestampStart) {
         this.timestampStart = timestampStart;
+    }
+
+    public List<String> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
     }
 }

@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.ui.Activity.ActivityProfile;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jauxim.grandapp.Utils.DataUtils;
@@ -29,7 +30,10 @@ public class ActivityProfilePresenter {
         Subscription subscription = service.getProfileInfo(id, new Service.ProfileInfoCallback() {
             @Override
             public void onSuccess(UserModel userModel) {
-                DataUtils.saveUserModel((Context)view, userModel);
+                String userid = DataUtils.getUserInfo((Context)view).getId();
+                if (!TextUtils.isEmpty(userModel.getId()) && userModel.getId().equals(userid)){
+                    DataUtils.saveUserModel((Context)view, userModel);
+                }
                 view.removeWait();
                 view.getProfileInfo(userModel);
             }

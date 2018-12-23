@@ -30,16 +30,16 @@ public interface NetworkService {
     @GET("v1/city")
     Observable<CityListResponse> getCityList(@Header(authKey) String auth);
 
-    @GET("/activities/{id}")
+    @GET("/normal/activities/{id}")
     Observable<ActivityModel> getActivityInfo(@Path("id") String activityId,@Header(authKey) String auth);
 
-    @DELETE("/activities/{id}")
+    @DELETE("/normal/activities/{id}")
     Observable<String> deleteActivity(@Path("id") String activityId,@Header(authKey) String auth);
 
     @POST("/activities")
     Observable<ActivityModel> createActivityInfo(@Body ActivityModel activityInfo,@Header(authKey) String auth);
 
-    @GET("/activities")
+    @GET("/normal/activities")
     Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth);
 
     @POST("/login")
@@ -60,16 +60,16 @@ public interface NetworkService {
     @POST("/login/facebook")
     Observable<LoginResponseModel> getLoginFacebookToken(@Body UserModel userModel);
 
-    @GET("/users/{id}")
+    @GET("/normal/users/{id}")
     Observable<UserModel> getProfileInfo(@Path("id") String userId,@Header(authKey) String auth);
 
-    @PUT("/users/{id}")
-    Observable<UserModel> editProfileInfo(@Path("id") String userId, @Body UserModel user,@Header(authKey) String auth);
+    @PUT("/normal/users/{id}")
+    Observable<Void> editProfileInfo(@Path("id") String userId, @Body UserModel user,@Header(authKey) String auth);
 
-    @GET("/users/{id}/emergency")
+    @GET("/normal/users/{id}/emergency")
     Observable<List<EmergencyContactsModel>> getEmergencyContacts(@Path("id") String userId, @Header(authKey) String auth);
 
-    @POST("/users/{id}/emergency")
+    @POST("/normal/users/{id}/emergency")
     Observable<Void> editEmergencyContacts(@Path("id") String userId, @Body List<EmergencyContactsModel> emergencyContactsList, @Header(authKey) String auth);
 
     @PUT("/geo")

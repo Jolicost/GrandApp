@@ -24,6 +24,7 @@
                 android:layout_height="40dp"
                 android:clickable="true"
                 android:layout_alignParentRight="true"
+                android:background="@drawable/btn_simple"
                 android:layout_centerInParent="true"
                 android:src="@drawable/ic_edit_white_24dp" />
 
@@ -49,6 +50,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:clickable="true"
+                android:background="@drawable/btn_simple"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:src="@drawable/ic_close" />

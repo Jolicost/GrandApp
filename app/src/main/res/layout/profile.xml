@@ -41,6 +41,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:clickable="true"
+                android:background="@drawable/btn_simple"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/ic_edit_white_24dp" />
 
@@ -49,6 +50,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:clickable="true"
+                android:background="@drawable/btn_simple"
                 android:src="@drawable/ic_close" />
 
         </RelativeLayout>
@@ -91,7 +93,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/email"
+                        android:text="@string/email_bold"
                         android:textSize="21dp" />
 
                     <TextView
@@ -111,7 +113,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/phone"
+                        android:text="@string/phone_bold"
                         android:textSize="21dp" />
 
                     <TextView
@@ -122,76 +124,86 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llNotifications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/notifications"
-                        android:textColor="@color/color_dark_text"
-                        android:textSize="32dp" />
+                        android:layout_marginTop="40dp"
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/notifications"
+                            android:textColor="@color/color_dark_text"
+                            android:textSize="32dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:orientation="vertical">
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/near_activity_created"
-                        android:textSize="21dp" />
+                        android:layout_marginTop="25dp">
 
-                    <TextView
-                        android:id="@+id/tvNearActivityCreated"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/near_activity_created"
+                            android:textSize="21dp" />
+
+                        <android.support.v7.widget.SwitchCompat
+                            android:id="@+id/swNear_activity_created"
+                            android:layout_alignParentRight="true"
+                            android:clickable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                   </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="21dp" />
-                </LinearLayout>
+                        android:layout_marginTop="25dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/user_joined_activity"
+                            android:textSize="21dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <android.support.v7.widget.SwitchCompat
+                            android:id="@+id/swUser_joined_activity"
+                            android:layout_alignParentRight="true"
+                            android:clickable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/user_joined_activity"
-                        android:textSize="21dp" />
+                        android:layout_marginTop="25dp">
 
-                    <TextView
-                        android:id="@+id/tvUserJoinedActivity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="21dp" />
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/joined_activity_ended"
+                            android:textSize="21dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:orientation="vertical">
+                        <android.support.v7.widget.SwitchCompat
+                            android:id="@+id/swJoined_activity_ended"
+                            android:layout_width="wrap_content"
+                            android:clickable="false"
+                            android:layout_alignParentRight="true"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="40dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/joined_activity_ended"
-                        android:textSize="21dp" />
-
-                    <TextView
-                        android:id="@+id/tvJoinedActivityEnded"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="40dp"
-                        android:textSize="21dp" />
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

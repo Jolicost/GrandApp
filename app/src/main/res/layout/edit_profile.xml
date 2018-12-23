@@ -16,14 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginLeft="30dp">
 
             <ImageView
                 android:id="@+id/ivEdit"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:clickable="true"
+                android:background="@drawable/btn_simple"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/ic_done_black_24dp" />
 
@@ -39,6 +39,7 @@
                 android:id="@+id/ivClose"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:background="@drawable/btn_simple"
                 android:clickable="true"
                 android:src="@drawable/ic_close" />
 
@@ -71,6 +72,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/color_dark_text"
                         android:text="@string/profile_picture"
                         android:textSize="21dp" />
 
@@ -109,11 +111,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/complete_name"
+                        android:textColor="@color/color_dark_text"
                         android:textSize="21dp" />
 
                     <EditText
                         android:id="@+id/etCompleteName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="21dp" />
 
@@ -129,11 +132,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/email"
+                        android:textColor="@color/color_dark_text"
                         android:textSize="21dp" />
 
                     <EditText
                         android:id="@+id/etEmail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="21dp" />
 
@@ -149,11 +153,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/phone"
+                        android:textColor="@color/color_dark_text"
                         android:textSize="21dp" />
 
                     <EditText
                         android:id="@+id/etPhone"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="21dp" />
 
@@ -174,11 +179,10 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="25dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -188,16 +192,16 @@
 
                     <android.support.v7.widget.SwitchCompat
                         android:id="@+id/swNear_activity_created"
+                        android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="25dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -207,16 +211,16 @@
 
                     <android.support.v7.widget.SwitchCompat
                         android:id="@+id/swUser_joined_activity"
+                        android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="25dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -227,10 +231,11 @@
                     <android.support.v7.widget.SwitchCompat
                         android:id="@+id/swJoined_activity_ended"
                         android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
         </RelativeLayout>
