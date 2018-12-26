@@ -38,9 +38,9 @@ public class ActivityEditPresenter {
                 String auth = DataUtils.getAuthToken((Context) view);
                 Subscription subscription = service.createActivityInfo(activityInfo, new Service.ActivityCreateCallback() {
                     @Override
-                    public void onSuccess(ActivityModel activityModel) {
+                    public void onSuccess() {
                         view.removeWait();
-                        view.createActivityInfoSuccess(activityModel);
+                        view.createActivityInfoSuccess();
                     }
 
                     @Override

@@ -55,7 +55,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     @BindView(R.id.bPrevious)
     Button bPrevious;
 
-    static private boolean demo_edit_mode = true;
+    static private boolean demo_edit_mode = false;
     //private ActivityStepsAdapter activityAdapter;
 
     private String title;
@@ -152,7 +152,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     }
 
     @Override
-    public void createActivityInfoSuccess(ActivityModel activityModel) {
+    public void createActivityInfoSuccess() {
         Dialog.createDialog(this).title("activity created").description("activity created succefully").onDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {

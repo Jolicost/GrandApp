@@ -36,8 +36,8 @@ public interface NetworkService {
     @DELETE("/normal/activities/{id}")
     Observable<String> deleteActivity(@Path("id") String activityId,@Header(authKey) String auth);
 
-    @POST("/activities")
-    Observable<ActivityModel> createActivityInfo(@Body ActivityModel activityInfo,@Header(authKey) String auth);
+    @POST("/normal/activities")
+    Observable<Void> createActivityInfo(@Body ActivityModel activityInfo,@Header(authKey) String auth);
 
     @GET("/normal/activities")
     Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth);

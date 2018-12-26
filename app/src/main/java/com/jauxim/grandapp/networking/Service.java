@@ -68,13 +68,13 @@ public class Service {
         return networkService.createActivityInfo(activityInfo,auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends ActivityModel>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
                     @Override
-                    public Observable<? extends ActivityModel> call(Throwable throwable) {
+                    public Observable<? extends Void> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<ActivityModel>() {
+                .subscribe(new Subscriber<Void>() {
                     @Override
                     public void onCompleted() {
 
@@ -87,8 +87,8 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(ActivityModel activityModel) {
-                        callback.onSuccess(activityModel);
+                    public void onNext(Void v) {
+                        callback.onSuccess();
 
                     }
                 });
@@ -601,7 +601,7 @@ public class Service {
     }
 
     public interface ActivityCreateCallback {
-        void onSuccess(ActivityModel activityModel);
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }

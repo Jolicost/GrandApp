@@ -12,7 +12,7 @@ public interface ActivityEditView {
 
     void onFailure(String appErrorMessage);
 
-    void createActivityInfoSuccess(ActivityModel activityModel);
+    void createActivityInfoSuccess();
 
     void getActivityInfoSuccess(ActivityModel activityModel);
 }
