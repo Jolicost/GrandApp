@@ -23,25 +23,46 @@ public class ActivityListPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void getActivityList() {
+    public void getActivityList(String mode) {
         view.showWait();
         String auth = DataUtils.getAuthToken(view.getContext());
-        Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
-            @Override
-            public void onSuccess(List<ActivityListItemModel> activities) {
-                view.removeWait();
-                view.getActivityListSuccess(activities);
-            }
+        if (mode.equals("mine")) {
+            Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
+                @Override
+                public void onSuccess(List<ActivityListItemModel> activities) {
+                    view.removeWait();
+                    activities.remove(0); //Testing (there is no getter yet)
+                    view.getActivityListSuccess(activities);
+                }
 
-            @Override
-            public void onError(NetworkError networkError) {
-                view.removeWait();
-                view.onFailure(networkError.getMessage());
-            }
+                @Override
+                public void onError(NetworkError networkError) {
+                    view.removeWait();
+                    view.onFailure(networkError.getMessage());
+                }
 
-        },auth);
+            }, auth);
 
-        subscriptions.add(subscription);
+            subscriptions.add(subscription);
+        }
+        else {
+            Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
+                @Override
+                public void onSuccess(List<ActivityListItemModel> activities) {
+                    view.removeWait();
+                    view.getActivityListSuccess(activities);
+                }
+
+                @Override
+                public void onError(NetworkError networkError) {
+                    view.removeWait();
+                    view.onFailure(networkError.getMessage());
+                }
+
+            },auth);
+
+            subscriptions.add(subscription);
+        }
     }
     public void onStop() {
         subscriptions.unsubscribe();

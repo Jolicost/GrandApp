@@ -8,6 +8,11 @@
             android:id="@+id/nav_activities"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/activities" />
+
+        <item
+            android:id="@+id/my_activities"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/my_activities" />
     </group>
 
     <item android:title="Session">

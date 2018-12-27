@@ -45,6 +45,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     private List<ActivityListItemModel> activitiesList = new ArrayList<>();
     private ActivityAdapter mAdapter;
 
+    private static String mode;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -56,6 +57,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     // TODO: Rename and change types and number of parameters
     public static ActivitiesList newInstance(String param1, String param2) {
         ActivitiesList fragment = new ActivitiesList();
+        mode = param2;
         return fragment;
     }
 
@@ -84,19 +86,19 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             //mBlogAdapter.setCallback(this);
         }
 
-        mAdapter = new ActivityAdapter(getActivity(), activitiesList);
+        mAdapter = new ActivityAdapter(getActivity(), activitiesList, mode);
         activityesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
         final ActivityListPresenter presenter = new ActivityListPresenter(service, this);
-        presenter.getActivityList();
+        presenter.getActivityList(mode);
 
 
         srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.getActivityList();
+                presenter.getActivityList(mode);
                 updateLocation();
             }
         });
