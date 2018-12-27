@@ -241,7 +241,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 .beginTransaction()
                 .disallowAddToBackStack()
                 //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.contain_main, ActivitiesList.newInstance("", mode), ActivitiesList.TAG)
+                .replace(R.id.contain_main, ActivitiesList.newInstance("", mode), ActivitiesList.TAG)
                 .commit();
     }
 
