@@ -237,7 +237,6 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     public void showActivitiesListFragment(String mode) {
         Log.d("listActivities", "setting fragment");
 
-        lockDrawer();
         getSupportFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
