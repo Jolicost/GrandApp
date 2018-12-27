@@ -18,6 +18,11 @@
                 android:title="@string/settings_profile" />
 
             <item
+                android:id="@+id/my_activities"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/my_activities" />
+
+            <item
                 android:id="@+id/emergency_contacts"
                 android:icon="@drawable/ic_contact_phone_black_24dp"
                 android:title="@string/emergency_contacts" />

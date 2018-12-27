@@ -142,10 +142,12 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         FragmentTransaction fragmentTransaction;
 
         if (id == R.id.nav_activities) {
-            showActivitiesListFragment();
+            showActivitiesListFragment("all");
         } else if (id == R.id.account_settings) {
             showProfile();
-        } else if (id == R.id.emergency_contacts) {
+        } else if (id == R.id.my_activities) {
+            showActivitiesListFragment("mine");
+        }else if (id == R.id.emergency_contacts) {
             showEmergencyContacts();
         } else if (id == R.id.logout) {
             presenter.logout();
@@ -232,7 +234,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         startActivity(intent);
     }
 
-    public void showActivitiesListFragment() {
+    public void showActivitiesListFragment(String mode) {
         Log.d("listActivities", "setting fragment");
 
         lockDrawer();
@@ -240,7 +242,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 .beginTransaction()
                 .disallowAddToBackStack()
                 //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.contain_main, ActivitiesList.newInstance("", ""), ActivitiesList.TAG)
+                .add(R.id.contain_main, ActivitiesList.newInstance("", mode), ActivitiesList.TAG)
                 .commit();
     }
 
