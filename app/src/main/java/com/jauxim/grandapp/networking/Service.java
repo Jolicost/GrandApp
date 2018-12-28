@@ -2,6 +2,7 @@ package com.jauxim.grandapp.networking;
 
 import android.util.Log;
 
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
@@ -94,8 +95,8 @@ public class Service {
                 });
     }
 
-    public Subscription getActivityList(final ActivityListCallback callback,String auth) {
-        return networkService.getActivityList(auth)
+    public Subscription getActivityList(final ActivityListCallback callback,String auth, int skip) {
+        return networkService.getActivityList(auth, Constants.ACTIVITIES_PAGE, skip)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {

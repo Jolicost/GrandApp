@@ -6,12 +6,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.custom.EndlessRecyclerViewScrollListener;
 import com.jauxim.grandapp.deps.Deps;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.networking.Service;
@@ -25,6 +28,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 
 public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
@@ -46,6 +51,10 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     private ActivityAdapter mAdapter;
 
     private static String mode;
+    private int page = 0;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -88,20 +97,33 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
         mAdapter = new ActivityAdapter(getActivity(), activitiesList, mode);
         activityesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        //activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
         final ActivityListPresenter presenter = new ActivityListPresenter(service, this);
-        presenter.getActivityList(mode);
+        presenter.getActivityList(mode, page);
 
 
         srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.getActivityList(mode);
+                page = 0;
+                presenter.getActivityList(mode, page);
                 updateLocation();
             }
         });
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), VERTICAL, false);
+        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager, 0) {
+            @Override
+            public void onLoadMore() {
+                page+= Constants.ACTIVITIES_PAGE;
+                Log.d("getActivityList", "onLoadMore");
+                presenter.getActivityList(mode, page);
+            }
+        };
+        activityesRecyclerView.addOnScrollListener(scrollListener);
+
         return view;
     }
 

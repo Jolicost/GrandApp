@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityListItemModel;
@@ -26,7 +27,8 @@ public class ActivityListPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void getActivityList(String mode) {
+    public void getActivityList(String mode, int page) {
+        Log.d("getActivityList", "page: "+page);
         view.showWait();
         String auth = DataUtils.getAuthToken(view.getContext());
         if (mode.equals(ACTIVITY_MINE)) {
@@ -44,7 +46,7 @@ public class ActivityListPresenter {
                     view.onFailure(networkError.getMessage());
                 }
 
-            }, auth);
+            }, auth, page);
 
             subscriptions.add(subscription);
         }
@@ -62,7 +64,7 @@ public class ActivityListPresenter {
                     view.onFailure(networkError.getMessage());
                 }
 
-            },auth);
+            },auth, page);
 
             subscriptions.add(subscription);
         }
