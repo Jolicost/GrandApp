@@ -12,6 +12,9 @@ import java.util.List;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.jauxim.grandapp.Constants.ACTIVITY_ALL;
+import static com.jauxim.grandapp.Constants.ACTIVITY_MINE;
+
 public class ActivityListPresenter {
     private final Service service;
     private final ActivitiesListView view;
@@ -26,7 +29,7 @@ public class ActivityListPresenter {
     public void getActivityList(String mode) {
         view.showWait();
         String auth = DataUtils.getAuthToken(view.getContext());
-        if (mode.equals("mine")) {
+        if (mode.equals(ACTIVITY_MINE)) {
             Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
                 @Override
                 public void onSuccess(List<ActivityListItemModel> activities) {
@@ -45,7 +48,7 @@ public class ActivityListPresenter {
 
             subscriptions.add(subscription);
         }
-        else {
+        else if (mode.equals(ACTIVITY_ALL)) {
             Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
                 @Override
                 public void onSuccess(List<ActivityListItemModel> activities) {

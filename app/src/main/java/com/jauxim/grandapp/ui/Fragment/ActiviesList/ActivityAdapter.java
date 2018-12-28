@@ -24,6 +24,7 @@ import java.util.List;
 import rx.Observer;
 
 import static android.graphics.Color.rgb;
+import static com.jauxim.grandapp.Constants.ACTIVITY_MINE;
 
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyViewHolder> {
 
@@ -122,7 +123,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
             }
         });
 
-        if (mode.equals("mine")) {
+        if (mode.equals(ACTIVITY_MINE)) {
             holder.vote.setVisibility(View.VISIBLE);
             holder.vote.setOnClickListener(new View.OnClickListener() {
                 @Override

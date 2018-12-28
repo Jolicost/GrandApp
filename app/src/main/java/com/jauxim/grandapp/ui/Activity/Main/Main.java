@@ -40,6 +40,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.jauxim.grandapp.Constants.ACTIVITY_ALL;
+import static com.jauxim.grandapp.Constants.ACTIVITY_MINE;
+
 public class Main extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
@@ -142,11 +145,11 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         FragmentTransaction fragmentTransaction;
 
         if (id == R.id.nav_activities) {
-            showActivitiesListFragment("all");
+            showActivitiesListFragment(ACTIVITY_ALL);
         } else if (id == R.id.account_settings) {
             showProfile();
         } else if (id == R.id.my_activities) {
-            showActivitiesListFragment("mine");
+            showActivitiesListFragment(ACTIVITY_MINE);
         }else if (id == R.id.emergency_contacts) {
             showEmergencyContacts();
         } else if (id == R.id.logout) {
