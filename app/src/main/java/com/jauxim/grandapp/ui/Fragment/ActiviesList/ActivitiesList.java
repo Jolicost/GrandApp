@@ -111,7 +111,6 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             public void onRefresh() {
                 page = 0;
                 presenter.getActivityList(mode, page);
-                updateLocation();
             }
         });
 

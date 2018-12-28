@@ -6,6 +6,6 @@ public class Constants {
     public static String PROFILE_ID = "profile_id";
     public static String ACTIVITY_MINE = "mine";
     public static String ACTIVITY_ALL = "all";
-    public static int ACTIVITIES_PAGE = 5;
+    public static int ACTIVITIES_PAGE = 7;
 
 }
