@@ -95,8 +95,10 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             //mBlogAdapter.setCallback(this);
         }
 
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), VERTICAL, false);
+
         mAdapter = new ActivityAdapter(getActivity(), activitiesList, mode);
-        activityesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        activityesRecyclerView.setLayoutManager(mLayoutManager);
         //activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
@@ -113,12 +115,11 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             }
         });
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), VERTICAL, false);
         scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager, 0) {
             @Override
             public void onLoadMore() {
                 page+= Constants.ACTIVITIES_PAGE;
-                Log.d("getActivityList", "onLoadMore");
+                Log.d("getActivityList", "onLoadMore "+page);
                 presenter.getActivityList(mode, page);
             }
         };
@@ -144,7 +145,9 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
     @Override
     public void getActivityListSuccess(List<ActivityListItemModel> activities) {
-        activitiesList.clear();
+        if (page == 0)
+            activitiesList.clear();
+
         activitiesList.addAll(activities);
         mAdapter.notifyDataSetChanged();
         srlRefresh.setRefreshing(false);

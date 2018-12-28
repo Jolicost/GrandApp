@@ -97,7 +97,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         Log.d("EndlessScroll", "onScrolled totalItemCount = " + totalItemCount);
         Log.d("EndlessScroll", "onScrolled (lastVisibleItemPosition + 1) == totalItemCount : " + ((lastVisibleItemPosition + 1) == totalItemCount));
 
-        if (!loading && (lastVisibleItemPosition) == totalItemCount) {
+        if (!loading && (lastVisibleItemPosition + 1) == totalItemCount) {
             Log.d("EndlessScroll", "onLoadMore = " + loading);
 
             onLoadMore();
