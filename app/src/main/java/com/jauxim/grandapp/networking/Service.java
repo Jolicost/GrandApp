@@ -549,6 +549,36 @@ public class Service {
                 });
     }
 
+    public Subscription voteActivity(Long rate, String activityId, final VoteActivityCallback callback,String auth) {
+        return networkService.voteActivity(activityId, rate, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
     public Subscription sendUserPosition(final BasicCallback callback, String auth, Double latitude, Double longitude) {
         LocationModel model = new LocationModel();
         model.setLatitude(latitude);
@@ -661,6 +691,12 @@ public class Service {
     }
 
     public interface UnJoinActivityCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface VoteActivityCallback {
         void onSuccess();
 
         void onError(NetworkError networkError);

@@ -83,6 +83,7 @@
     <string name="email_error">Enter a valid email</string>
     <string name="join">Join</string>
     <string name="unjoin">UnJoin</string>
+    <string name="vote">Vote</string>
     <string name="phone_number_hint">Phone number</string>
     <string name="accept">ACCEPT</string>
 
@@ -107,6 +108,10 @@
     <string name="fgt_pswd_title">Forget password</string>
     <string name="fgt_pswd_description">Write the email in witch you created you account and clic SEND. Then you will receive a e-mail with the new password writed. It\'s recomendable to change your password after this process.</string>
     <string name="settings_profile">Profile</string>
+
+    <string name="rate_title">Rate activity</string>
+    <string name="rate_description">How would you rate this activity?</string>
+    <string name="notnow">Not now</string>
 
     <string name="facebook_app_id">282493839277733</string>
     <string name="fb_login_protocol_scheme">fb282493839277733</string>

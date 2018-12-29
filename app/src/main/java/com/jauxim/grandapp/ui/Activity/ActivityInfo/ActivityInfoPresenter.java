@@ -149,4 +149,24 @@ public class ActivityInfoPresenter {
 
         subscriptions.add(subscription);
     }
+
+    public void voteActivity(Long rate, final String activityId) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.voteActivity(rate, activityId, new Service.VoteActivityCallback() {
+            @Override
+            public void onSuccess() {
+                getActivityInfo(activityId);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
+    }
 }

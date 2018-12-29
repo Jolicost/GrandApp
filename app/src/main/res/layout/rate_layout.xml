@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="@string/rate_title"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:textColor="@color/color_dark_text"
+        android:text="@string/rate_description"
+        android:textSize="17sp" />
+
+    <RatingBar
+        android:id="@+id/rbValue"
+        style="@style/Base.Widget.AppCompat.RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:progressBackgroundTint="@color/grey_light_1"
+        android:progressTint="@color/colorPrimary"
+        android:secondaryProgressTint="@color/colorPrimary"
+        android:layout_marginTop="3dp"
+        android:rating="0.0" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="7dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_border"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/notnow"
+            android:textAllCaps="true"
+            android:textColor="@color/color_gradient_button_start" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bVote"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="7dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_gradient"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/vote"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</LinearLayout>

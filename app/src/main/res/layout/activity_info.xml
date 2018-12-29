@@ -198,41 +198,58 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_alignParentRight="true"
+                            android:layout_centerHorizontal="true"
+                            android:orientation="vertical">
 
-                            <RatingBar
-                                android:id="@+id/rbValue"
-                                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:rating="4.2" />
+                                android:orientation="horizontal">
+
+                                <RatingBar
+                                    android:id="@+id/rbValue"
+                                    style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:rating="4.2" />
+
+                                <TextView
+                                    android:id="@+id/tvRatingValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
 
                             <TextView
-                                android:id="@+id/tvRatingValue"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:textSize="16sp" />
+                                android:gravity="center"
+                                android:text="Valore"
+                                android:textSize="18dp" />
+
+
                         </LinearLayout>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Valore"
-                            android:textSize="18dp" />
-
+                        <Button
+                            android:id="@+id/bVote"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:background="@drawable/button_gradient"
+                            android:text="@string/vote"
+                            android:layout_marginLeft="20dp"
+                            android:textColor="@color/white" />
 
                     </LinearLayout>
 

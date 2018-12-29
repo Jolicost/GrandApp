@@ -28,14 +28,13 @@ import static com.jauxim.grandapp.Constants.ACTIVITY_MINE;
 
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyViewHolder> {
 
-    private String mode;
     private List<ActivityListItemModel> activityList;
     public Activity context;
     private SingleShotLocationProvider.GPSCoordinates userLocation;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, gauge, distance, time, vote;
+        public TextView title, gauge, distance, time;
         public ImageView image;
 
         public MyViewHolder(View view) {
@@ -45,15 +44,14 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
             gauge = view.findViewById(R.id.tvGauge);
             title = view.findViewById(R.id.tvTitle);
             distance = view.findViewById(R.id.tvDistance);
-            vote = view.findViewById(R.id.tvVote);
 
         }
     }
 
-    public ActivityAdapter(Activity context, List<ActivityListItemModel> moviesList, String mode) {
+    public ActivityAdapter(Activity context, List<ActivityListItemModel> moviesList) {
         this.activityList = moviesList;
         this.context = context;
-        this.mode = mode;
+
         userLocation = DataUtils.getLocation(context);
         RxBus.instanceOf().getLocationObservable().subscribe(new Observer<SingleShotLocationProvider.GPSCoordinates>() {
             @Override
@@ -122,19 +120,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
                 context.startActivity(intent);
             }
         });
-
-        if (mode.equals(ACTIVITY_MINE)) {
-            holder.vote.setVisibility(View.VISIBLE);
-            holder.vote.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ActivityInfo.class);
-                    intent.putExtra(Constants.ACTIVITY_ID, activity.getId());
-                    context.startActivity(intent);
-                }
-            });
-        }
-        else holder.vote.setVisibility(View.GONE);
     }
 
     @Override

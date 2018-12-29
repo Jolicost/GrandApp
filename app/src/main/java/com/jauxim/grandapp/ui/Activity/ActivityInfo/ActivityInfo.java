@@ -106,6 +106,9 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.tvPointsUser)
     TextView tvPointsUser;
 
+    @BindView(R.id.bVote)
+    Button bVote;
+
     private String activityId;
     private String userActivityId;
     private MapView gMapView;
@@ -123,6 +126,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
         ivEdit.setVisibility(View.GONE);
         ivDelete.setVisibility(View.GONE);
+        bJoin.setVisibility(View.GONE);
+        bVote.setVisibility(View.GONE);
 
         gMapView = findViewById(R.id.soleViewMap);
         gMapView.onCreate(savedInstanceState);
@@ -193,16 +198,24 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         if (!TextUtils.isEmpty(activityModel.getUserId()) && userActivityId.equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
+            bVote.setVisibility(View.GONE);
             bJoin.setVisibility(View.GONE);
+            bVote.setVisibility(View.VISIBLE); //TESTING
         }else{
             bJoin.setVisibility(View.VISIBLE);
             List<String> p = activityModel.getParticipants();
 
-            if (joining(p,user.getId())) {
+            if (joining(p, user.getId())) {
                 showUnjoinText();
+                List<String> v = activityModel.getVotes();
+                if (voted(v, user.getId())) {
+                    bVote.setVisibility(View.GONE);
+                }
+                else bVote.setVisibility(View.VISIBLE);
             }
             else{
                 showJoinText();
+                bVote.setVisibility(View.GONE);
             }
         }
 
@@ -239,6 +252,13 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     private boolean joining(List<String> p, String userId) {
         for (int i = 0; i < p.size(); ++i){
             if (p.get(i).equals(userId)) return true;
+        }
+        return false;
+    }
+
+    private boolean voted(List<String> v, String userId) {
+        for (int i = 0; i < v.size(); ++i){
+            if (v.get(i).equals(userId)) return true;
         }
         return false;
     }
@@ -311,6 +331,18 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     void viewJoinClick() {
         if (bJoin.getText().toString().equals("Join")) presenter.join(activityId);
         else presenter.unjoin(activityId);
+    }
+
+    @OnClick(R.id.bVote)
+    void voteClick() {
+        RateDialog rd = new RateDialog(this);
+        rd.show();
+    }
+
+    public void voteActivity(Long rate) {
+        //presenter.voteActivity(rate, activityId);
+        Log.d("VOTE = ", String.valueOf(rate)); //TESTING
+
     }
 
     @Override

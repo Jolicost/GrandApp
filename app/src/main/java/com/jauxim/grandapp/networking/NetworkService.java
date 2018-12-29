@@ -80,4 +80,7 @@ public interface NetworkService {
 
     @POST("/normal/activities/{id}/leave")
     Observable<Void> leaveActivity(@Path("id") String activityId, @Header(authKey) String auth);
+
+    @POST("/normal/activities/{id}/rate")
+    Observable<Void> voteActivity(@Path("id") String activityId, @Body Long rate, @Header(authKey) String auth);
 }

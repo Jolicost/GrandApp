@@ -86,7 +86,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             //mBlogAdapter.setCallback(this);
         }
 
-        mAdapter = new ActivityAdapter(getActivity(), activitiesList, mode);
+        mAdapter = new ActivityAdapter(getActivity(), activitiesList);
         activityesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
