@@ -128,4 +128,27 @@
     <string name="filter">Filter</string>
     <string name="name">Name</string>
     <string name="reset">RESET</string>
+    <string name="distance">Distance</string>
+    <string name="sort">Sort by</string>
+    <string name="category">Category</string>
+
+    <string-array name="filter_sort">
+        <item>Create date asc</item>
+        <item>Create date desc</item>
+        <item>Start date asc</item>
+        <item>Start date desc</item>
+        <item>Price asc</item>
+        <item>Price desc</item>
+        <item>Name asc</item>
+        <item>Name desc</item>
+    </string-array>
+
+    <string-array name="filter_categories">
+        <item>All</item>
+        <item>Cars</item>
+        <item>Bikes</item>
+        <item>RVs</item>
+        <item>Trucks</item>
+        <item>Other Vehicles</item>
+    </string-array>
 </resources>

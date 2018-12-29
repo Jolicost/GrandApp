@@ -32,7 +32,7 @@
         <item name="android:typeface">serif</item>
     </style>
 
-    <style name="DialogWithoutMargins" parent="Theme.AppCompat.Dialog">
+    <style name="DialogWithoutMargins" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowMinWidthMajor">90%</item>
         <item name="android:windowMinWidthMinor">90%</item>
     </style>

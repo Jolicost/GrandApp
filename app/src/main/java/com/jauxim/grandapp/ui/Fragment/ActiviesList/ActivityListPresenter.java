@@ -36,7 +36,11 @@ public class ActivityListPresenter {
         if (filter!=null) {
             Log.d("infoFilter", "price low: " + filter.getMinPrice());
             Log.d("infoFilter", "price high: " + filter.getMaxPrice());
+            Log.d("infoFilter", "dist low: " + filter.getMinDistance());
+            Log.d("infoFilter", "dist high: " + filter.getMaxDistance());
             Log.d("infoFilter", "name: " + filter.getName());
+            Log.d("infoFilter", "sort: " + filter.getSort());
+            Log.d("infoFilter", "category: " + filter.getCategory());
         }
 
         if (mode.equals(ACTIVITY_MINE)) {
