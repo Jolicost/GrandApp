@@ -13,9 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.Constants;
@@ -23,10 +25,12 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.ActivityListItemModel;
+import com.jauxim.grandapp.models.FilterActivityModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.ActivityEmergency.ActivityEmergency;
+import com.jauxim.grandapp.ui.Activity.ActivityLogin.ForgotPasswordDialog;
 import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Init.Init;
@@ -63,6 +67,10 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     private MainPresenter presenter;
 
     private UserModel user;
+
+    private FilterActivityModel filterActivities;
+    private ActivitiesList activitiesFragment;
+    private FilterDialog filterDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,6 +134,13 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.filter_menu, menu);
+        return true;
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -133,6 +148,23 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         } else {
             super.onBackPressed();
         }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.filter){
+            if (filterDialog==null)
+                filterDialog = new FilterDialog(this);
+            filterDialog.show();
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -154,6 +186,9 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
             showEmergencyContacts();
         } else if (id == R.id.logout) {
             presenter.logout();
+        }else if (id == R.id.filter){
+            Toast.makeText(getApplicationContext(), "hola señor",
+                    Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -240,11 +275,12 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     public void showActivitiesListFragment(String mode) {
         Log.d("listActivities", "setting fragment");
 
+        activitiesFragment =  ActivitiesList.newInstance("", mode, filterActivities);
         getSupportFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
                 //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .replace(R.id.contain_main, ActivitiesList.newInstance("", mode), ActivitiesList.TAG)
+                .replace(R.id.contain_main, activitiesFragment, ActivitiesList.TAG)
                 .commit();
     }
 
@@ -272,5 +308,12 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     public void updateLocation() {
         if (presenter != null)
             presenter.updateLocation();
+    }
+
+    public void updateFilter(FilterActivityModel filter){
+        this.filterActivities = filter;
+        if (activitiesFragment!=null && activitiesFragment.isAdded()){
+            activitiesFragment.setFilter(filterActivities);
+        }
     }
 }

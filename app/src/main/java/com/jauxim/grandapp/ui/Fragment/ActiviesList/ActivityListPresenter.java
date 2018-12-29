@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityListItemModel;
+import com.jauxim.grandapp.models.FilterActivityModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
 
@@ -27,10 +28,17 @@ public class ActivityListPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
-    public void getActivityList(String mode, int page) {
+    public void getActivityList(String mode, int page, FilterActivityModel filter) {
         Log.d("getActivityList", "page: "+page);
         view.showWait();
         String auth = DataUtils.getAuthToken(view.getContext());
+
+        if (filter!=null) {
+            Log.d("infoFilter", "price low: " + filter.getMinPrice());
+            Log.d("infoFilter", "price high: " + filter.getMaxPrice());
+            Log.d("infoFilter", "name: " + filter.getName());
+        }
+
         if (mode.equals(ACTIVITY_MINE)) {
             Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
                 @Override

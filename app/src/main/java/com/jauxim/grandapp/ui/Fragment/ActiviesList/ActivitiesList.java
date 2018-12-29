@@ -17,6 +17,7 @@ import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.custom.EndlessRecyclerViewScrollListener;
 import com.jauxim.grandapp.deps.Deps;
 import com.jauxim.grandapp.models.ActivityListItemModel;
+import com.jauxim.grandapp.models.FilterActivityModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Fragment.BaseFragment;
@@ -54,6 +55,8 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     private int page = 0;
 
     private EndlessRecyclerViewScrollListener scrollListener;
+    private static FilterActivityModel filter;
+    private ActivityListPresenter presenter;
 
     /**
      * Use this factory method to create a new instance of
@@ -64,9 +67,10 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
      * @return A new instance of fragment ActivitiesList.
      */
     // TODO: Rename and change types and number of parameters
-    public static ActivitiesList newInstance(String param1, String param2) {
+    public static ActivitiesList newInstance(String param1, String param2, FilterActivityModel filterModel) {
         ActivitiesList fragment = new ActivitiesList();
         mode = param2;
+        filter = filterModel;
         return fragment;
     }
 
@@ -102,15 +106,15 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         //activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
-        final ActivityListPresenter presenter = new ActivityListPresenter(service, this);
-        presenter.getActivityList(mode, page);
+        presenter = new ActivityListPresenter(service, this);
+        presenter.getActivityList(mode, page, filter);
 
 
         srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 page = 0;
-                presenter.getActivityList(mode, page);
+                presenter.getActivityList(mode, page, filter);
             }
         });
 
@@ -119,7 +123,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             public void onLoadMore() {
                 page+= Constants.ACTIVITIES_PAGE;
                 Log.d("getActivityList", "onLoadMore "+page);
-                presenter.getActivityList(mode, page);
+                presenter.getActivityList(mode, page, filter);
             }
         };
         activityesRecyclerView.addOnScrollListener(scrollListener);
@@ -161,5 +165,11 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     @Override
     public Context getContext() {
         return getActivity();
+    }
+
+    public void setFilter(FilterActivityModel filter){
+        this.filter = filter;
+        page = 0;
+        presenter.getActivityList(mode, page, filter);
     }
 }

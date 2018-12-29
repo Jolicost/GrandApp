@@ -65,6 +65,7 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     implementation 'com.hbb20:ccp:2.2.0'
+    implementation 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
 
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'

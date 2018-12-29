@@ -125,4 +125,7 @@
     <string name="user_joined_activity">User joined your activity</string>
     <string name="joined_activity_ended">Joined activity has ended</string>
     <string name="notifications">Notifications</string>
+    <string name="filter">Filter</string>
+    <string name="name">Name</string>
+    <string name="reset">RESET</string>
 </resources>
