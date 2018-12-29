@@ -115,6 +115,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     ActivityInfoPresenter presenter;
 
     private UserModel user;
+    private boolean hasCapacity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -162,6 +163,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     public void getActivityInfoSuccess(final ActivityModel activityModel) {
         user = DataUtils.getUserInfo(this);
         userActivityId = activityModel.getUserId();
+        if (activityModel.getCapacity()<= activityModel.getParticipants().size()) hasCapacity = false;
+        else hasCapacity = true;
         presenter.getProfileInfo(userActivityId);
 
         tvUpperTag.setText(R.string.upperTag);
@@ -312,6 +315,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         bJoin.setText(getString(R.string.unjoin));
     }
 
+    @Override
+    public void showCapacityError(int capacity_error) {
+        Dialog.createDialog(this).title(getString(capacity_error)).description(getString(capacity_error)).build();
+    }
+
     @OnClick(R.id.ivClose)
     void closeButtonClick() {
         onBackPressed();
@@ -344,7 +352,10 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @OnClick(R.id.bJoin)
     void viewJoinClick() {
-        if (bJoin.getText().toString().equals("Join")) presenter.join(activityId);
+        if (bJoin.getText().toString().equals("Join")) {
+            if (hasCapacity) presenter.join(activityId);
+            else presenter.showCapacityError();
+        }
         else presenter.unjoin(activityId);
     }
 

@@ -86,6 +86,7 @@
     <string name="vote">Vote</string>
     <string name="phone_number_hint">Phone number</string>
     <string name="accept">ACCEPT</string>
+    <string name="capacity_error">Capacity Error</string>
 
     <string name="forgot_pwd">Forgot password?</string>
     <string name="send">send</string>

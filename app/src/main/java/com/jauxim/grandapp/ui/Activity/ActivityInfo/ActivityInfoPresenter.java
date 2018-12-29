@@ -171,4 +171,8 @@ public class ActivityInfoPresenter {
 
         subscriptions.add(subscription);
     }
+
+    public void showCapacityError() {
+        view.showCapacityError(R.string.capacity_error);
+    }
 }

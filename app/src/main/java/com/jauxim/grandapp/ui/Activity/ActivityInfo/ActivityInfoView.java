@@ -24,4 +24,6 @@ public interface ActivityInfoView {
     void showUnjoinText();
 
     void showJoinText();
+
+    void showCapacityError(int capacity_error);
 }

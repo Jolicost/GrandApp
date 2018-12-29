@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Fragment.ActiviesList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,6 +110,11 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         }
 
         holder.gauge.setText(activity.getParticipants().size() + "/" + activity.getMaxCapacity());
+        if (activity.getMaxCapacity() <= activity.getParticipants().size()) holder.gauge.setTextColor(rgb(216, 19, 19));
+        else {
+            holder.gauge.setTextAppearance(context, R.style.textDescription);
+            holder.gauge.setTextSize(18);
+        }
 
         Glide.with(holder.image.getContext()).load(activity.getImage()).into(holder.image);
 
