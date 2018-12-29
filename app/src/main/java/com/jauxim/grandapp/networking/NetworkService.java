@@ -10,6 +10,7 @@ import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.models.PhoneModel;
+import com.jauxim.grandapp.models.RateModel;
 import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
@@ -81,6 +82,6 @@ public interface NetworkService {
     @POST("/normal/activities/{id}/leave")
     Observable<Void> leaveActivity(@Path("id") String activityId, @Header(authKey) String auth);
 
-    @POST("/normal/activities/{id}/rate")
-    Observable<Void> voteActivity(@Path("id") String activityId, @Body Long rate, @Header(authKey) String auth);
+    @POST("/normal/activities/{id}/vote")
+    Observable<Void> voteActivity(@Path("id") String activityId, @Body RateModel rate, @Header(authKey) String auth);
 }

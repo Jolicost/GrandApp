@@ -9,6 +9,7 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.RateModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -153,7 +154,8 @@ public class ActivityInfoPresenter {
     public void voteActivity(Long rate, final String activityId) {
         view.showWait();
         String auth = DataUtils.getAuthToken((Context) view);
-        Subscription subscription = service.voteActivity(rate, activityId, new Service.VoteActivityCallback() {
+        RateModel rateModel = new RateModel(rate);
+        Subscription subscription = service.voteActivity(rateModel, activityId, new Service.VoteActivityCallback() {
             @Override
             public void onSuccess() {
                 getActivityInfo(activityId);

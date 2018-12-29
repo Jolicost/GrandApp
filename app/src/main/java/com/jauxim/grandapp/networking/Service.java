@@ -11,6 +11,7 @@ import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.models.PhoneModel;
+import com.jauxim.grandapp.models.RateModel;
 import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
@@ -549,7 +550,7 @@ public class Service {
                 });
     }
 
-    public Subscription voteActivity(Long rate, String activityId, final VoteActivityCallback callback,String auth) {
+    public Subscription voteActivity(RateModel rate, String activityId, final VoteActivityCallback callback, String auth) {
         return networkService.voteActivity(activityId, rate, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

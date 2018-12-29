@@ -74,6 +74,10 @@ public class ActivityModel {
     @Expose
     private List<String> votes;
 
+    @SerializedName("active")
+    @Expose
+    private List<String> active;
+
     private List<String> imagesBase64;
 
     public String getId() {
@@ -210,5 +214,13 @@ public class ActivityModel {
 
     public void setVotes(List<String> votes) {
         this.votes = votes;
+    }
+
+    public List<String> getActive() {
+        return active;
+    }
+
+    public void setActive(List<String> active) {
+        this.active = active;
     }
 }
