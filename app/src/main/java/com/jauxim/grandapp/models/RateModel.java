@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class RateModel {
 
-    @SerializedName("rate")
+    @SerializedName("rating")
     @Expose
     private Long rate;
 
