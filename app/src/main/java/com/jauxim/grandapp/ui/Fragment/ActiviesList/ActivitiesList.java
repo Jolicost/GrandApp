@@ -114,6 +114,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
             @Override
             public void onRefresh() {
                 page = 0;
+                scrollListener.resetState();
                 presenter.getActivityList(mode, page, filter);
             }
         });
@@ -170,6 +171,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     public void setFilter(FilterActivityModel filter){
         this.filter = filter;
         page = 0;
+        scrollListener.resetState();
         presenter.getActivityList(mode, page, filter);
     }
 }
