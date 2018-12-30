@@ -3,6 +3,8 @@ package com.jauxim.grandapp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
@@ -35,6 +37,10 @@ public class UserModel {
     @SerializedName("notifications")
     @Expose
     private NotificationsModel notifications;
+
+    @SerializedName("blocked")
+    @Expose
+    private List<String> blocked;
 
     @SerializedName("_id")
     @Expose
@@ -110,6 +116,14 @@ public class UserModel {
 
     public void setNotifications(NotificationsModel notifications) {
         this.notifications = notifications;
+    }
+
+    public List<String> getBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(List<String> blocked) {
+        this.blocked = blocked;
     }
 
     public String getId() {

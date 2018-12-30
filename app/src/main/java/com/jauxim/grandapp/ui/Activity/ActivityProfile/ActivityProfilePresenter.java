@@ -2,8 +2,8 @@ package com.jauxim.grandapp.ui.Activity.ActivityProfile;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
@@ -51,5 +51,55 @@ public class ActivityProfilePresenter {
 
     public void editProfile() {
         view.editProfile();
+    }
+
+    public void blockUser(final String profileId) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.blockUser(profileId, new Service.BlockUserCallback() {
+            @Override
+            public void onSuccess() {
+                UserModel user = DataUtils.getUserInfo((Context) view);
+                user.getBlocked().add(profileId);
+                DataUtils.saveUserModel((Context)view, user);
+                view.removeWait();
+                view.showUnblockText();
+                view.showBlockSuccess(R.string.block_success);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
+    }
+
+    public void unblockUser(final String profileId) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.unblockUser(profileId, new Service.UnblockUserCallback() {
+            @Override
+            public void onSuccess() {
+                UserModel user = DataUtils.getUserInfo((Context) view);
+                user.getBlocked().remove(profileId);
+                DataUtils.saveUserModel((Context)view, user);
+                view.removeWait();
+                view.showBlockText();
+                view.showBlockSuccess(R.string.unblock_success);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
     }
 }

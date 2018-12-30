@@ -632,6 +632,66 @@ public class Service {
                 });
     }
 
+    public Subscription blockUser(String userId, final BlockUserCallback callback, String auth) {
+        return networkService.blockUser(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
+    public Subscription unblockUser(String userId, final UnblockUserCallback callback, String auth) {
+        return networkService.unblockUser(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -723,6 +783,18 @@ public class Service {
     }
 
     public interface BasicCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface BlockUserCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface UnblockUserCallback {
         void onSuccess();
 
         void onError(NetworkError networkError);
