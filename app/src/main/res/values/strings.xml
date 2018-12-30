@@ -133,14 +133,14 @@
     <string name="category">Category</string>
 
     <string-array name="filter_sort">
-        <item>Create date asc</item>
         <item>Create date desc</item>
-        <item>Start date asc</item>
+        <item>Create date asc</item>
         <item>Start date desc</item>
-        <item>Price asc</item>
+        <item>Start date asc</item>
         <item>Price desc</item>
-        <item>Name asc</item>
+        <item>Price asc</item>
         <item>Name desc</item>
+        <item>Name asc</item>
     </string-array>
 
     <string-array name="filter_categories">

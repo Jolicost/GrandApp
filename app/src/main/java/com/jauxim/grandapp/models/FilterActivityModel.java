@@ -3,14 +3,14 @@ package com.jauxim.grandapp.models;
 public class FilterActivityModel {
 
     public @interface typeSort {
-        int SORT_CREATE_ASC = 0;
-        int SORT_CREATE_DESC = 1;
-        int SORT_START_ASC = 2;
-        int SORT_START_DESC = 3;
-        int SORT_PRICE_ASC = 4;
-        int SORT_PRICE_DESC = 5;
-        int SORT_NAME_ASC = 6;
-        int SORT_NAME_DESC = 7;
+        int SORT_CREATE_DESC = 0;
+        int SORT_CREATE_ASC = 1;
+        int SORT_START_DESC = 2;
+        int SORT_START_ASC = 3;
+        int SORT_PRICE_DESC = 4;
+        int SORT_PRICE_ASC = 5;
+        int SORT_NAME_DESC = 6;
+        int SORT_NAME_ASC = 7;
     }
 
     private String name;

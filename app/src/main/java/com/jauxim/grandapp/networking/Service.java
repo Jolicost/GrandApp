@@ -6,6 +6,7 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
+import com.jauxim.grandapp.models.FilterActivityModel;
 import com.jauxim.grandapp.models.LocationModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
@@ -95,8 +96,25 @@ public class Service {
                 });
     }
 
-    public Subscription getActivityList(final ActivityListCallback callback,String auth, int skip) {
-        return networkService.getActivityList(auth, Constants.ACTIVITIES_PAGE, skip)
+    public Subscription getActivityList(final ActivityListCallback callback, String auth, int skip, FilterActivityModel filter) {
+        Long minPrice = 0L;
+        Long maxPrice = 0L;
+        Long minDist = 0L;
+        Long maxDist = 0L;
+        int sortType = 0;
+        String name = null;
+
+        if (filter!=null){
+            minPrice = filter.getMinPrice();
+            maxPrice = filter.getMaxPrice();
+            minDist = filter.getMinDistance();
+            maxDist = filter.getMaxDistance();
+            sortType = filter.getSort();
+            name = filter.getName();
+        }
+
+        return networkService.getActivityList(auth, Constants.ACTIVITIES_PAGE, skip,
+                minPrice, maxPrice, sortType, minDist, maxDist, name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {
