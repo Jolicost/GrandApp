@@ -106,12 +106,16 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @BindView(R.id.tvPointsUser)
     TextView tvPointsUser;
 
+    @BindView(R.id.bVote)
+    Button bVote;
+
     private String activityId;
     private String userActivityId;
     private MapView gMapView;
     ActivityInfoPresenter presenter;
 
     private UserModel user;
+    private boolean hasCapacity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,6 +127,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
         ivEdit.setVisibility(View.GONE);
         ivDelete.setVisibility(View.GONE);
+        bJoin.setVisibility(View.GONE);
+        bVote.setVisibility(View.GONE);
 
         gMapView = findViewById(R.id.soleViewMap);
         gMapView.onCreate(savedInstanceState);
@@ -157,6 +163,8 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     public void getActivityInfoSuccess(final ActivityModel activityModel) {
         user = DataUtils.getUserInfo(this);
         userActivityId = activityModel.getUserId();
+        if (activityModel.getCapacity()<= activityModel.getParticipants().size()) hasCapacity = false;
+        else hasCapacity = true;
         presenter.getProfileInfo(userActivityId);
 
         tvUpperTag.setText(R.string.upperTag);
@@ -193,17 +201,24 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         if (!TextUtils.isEmpty(activityModel.getUserId()) && userActivityId.equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
+            bVote.setVisibility(View.GONE);
             bJoin.setVisibility(View.GONE);
+            //bVote.setVisibility(View.VISIBLE); //TESTING
         }else{
             bJoin.setVisibility(View.VISIBLE);
             List<String> p = activityModel.getParticipants();
 
-            if (joining(p,user.getId())) {
+            if (joining(p, user.getId())) {
                 showUnjoinText();
             }
             else{
                 showJoinText();
             }
+
+            if (canVote(activityModel)) {
+                bVote.setVisibility(View.VISIBLE);
+            }
+            else bVote.setVisibility(View.GONE);
         }
 
         List<String> urls = activityModel.getImagesUrl();
@@ -236,9 +251,32 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         }
     }
 
+    private boolean canVote(ActivityModel activityModel) {
+        List<String> v = activityModel.getVotes();
+        List<String> a = activityModel.getActive();
+        if (!voted(v, user.getId()) && active(a, user.getId()) && activityModel.getTimestampEnd()<=System.currentTimeMillis()) {
+            return true;
+        }
+        return false;
+    }
+
     private boolean joining(List<String> p, String userId) {
         for (int i = 0; i < p.size(); ++i){
             if (p.get(i).equals(userId)) return true;
+        }
+        return false;
+    }
+
+    private boolean voted(List<String> v, String userId) {
+        for (int i = 0; i < v.size(); ++i){
+            if (v.get(i).equals(userId)) return true;
+        }
+        return false;
+    }
+
+    private boolean active(List<String> a, String userId) {
+        for (int i = 0; i < a.size(); ++i){
+            if (a.get(i).equals(userId)) return true;
         }
         return false;
     }
@@ -277,6 +315,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         bJoin.setText(getString(R.string.unjoin));
     }
 
+    @Override
+    public void showCapacityError(int capacity_error) {
+        Dialog.createDialog(this).title(getString(capacity_error)).description(getString(capacity_error)).build();
+    }
+
     @OnClick(R.id.ivClose)
     void closeButtonClick() {
         onBackPressed();
@@ -309,8 +352,22 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @OnClick(R.id.bJoin)
     void viewJoinClick() {
-        if (bJoin.getText().toString().equals("Join")) presenter.join(activityId);
+        if (bJoin.getText().toString().equals("Join")) {
+            if (hasCapacity) presenter.join(activityId);
+            else presenter.showCapacityError();
+        }
         else presenter.unjoin(activityId);
+    }
+
+    @OnClick(R.id.bVote)
+    void voteClick() {
+        RateDialog rd = new RateDialog(this);
+        rd.show();
+    }
+
+    public void voteActivity(Long rate) {
+        presenter.voteActivity(rate, activityId);
+
     }
 
     @Override

@@ -38,6 +38,10 @@ public class ActivityListItemModel {
     @Expose
     private Long timestampStart;
 
+    @SerializedName("timestampEnd")
+    @Expose
+    private Long timestampEnd;
+
     @SerializedName("participants")
     @Expose
     private List<String> participants;
@@ -98,6 +102,14 @@ public class ActivityListItemModel {
 
     public void setTimestampStart(Long timestampStart) {
         this.timestampStart = timestampStart;
+    }
+
+    public Long getTimestampEnd() {
+        return timestampEnd;
+    }
+
+    public void setTimestampEnd(Long timestampEnd) {
+        this.timestampEnd = timestampEnd;
     }
 
     public List<String> getParticipants() {

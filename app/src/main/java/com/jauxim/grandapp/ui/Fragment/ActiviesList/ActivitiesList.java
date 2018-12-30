@@ -101,14 +101,13 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), VERTICAL, false);
 
-        mAdapter = new ActivityAdapter(getActivity(), activitiesList, mode);
+        mAdapter = new ActivityAdapter(getActivity(), activitiesList);
         activityesRecyclerView.setLayoutManager(mLayoutManager);
         //activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
 
         presenter = new ActivityListPresenter(service, this);
         presenter.getActivityList(mode, page, filter);
-
 
         srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

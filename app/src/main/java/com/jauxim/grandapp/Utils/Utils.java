@@ -114,11 +114,13 @@ public class Utils {
     }
     */
 
-    public static String getCountDownTime(Long millis) {
-        Long diff = System.currentTimeMillis() - millis;
+    public static String getCountDownTime(Long millis, Long milisEnd) {
+        Long diff = millis - System.currentTimeMillis();
 
-        if (diff < 0)
-            return "GONE!";
+        if (diff < 0) {
+            if (System.currentTimeMillis()> milisEnd) return "GONE!";
+            else return "IN CURSE";
+        }
 
         Long min = diff / (60 * 1000);
         if (min < 60)
