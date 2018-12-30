@@ -22,19 +22,26 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
+        <activity
+            android:name=".ui.Activity.Chat.Chat"
+            android:theme="@style/Theme.Design.Light.NoActionBar">
+        </activity>
+
         <activity
             android:name=".ui.Activity.ActivityLogin.ActivityLogin"
-            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.Design.Light.NoActionBar">
+        </activity>
 
         <activity
             android:name=".ui.Activity.Register.Register"
             android:theme="@style/Theme.Design.Light.NoActionBar">
-
         </activity>
 
         <activity
             android:name=".ui.Activity.Init.Init"
-            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.Design.Light.NoActionBar">
+        </activity>
 
         <activity
             android:name=".ui.Activity.ActivityProfile.ActivityProfile"

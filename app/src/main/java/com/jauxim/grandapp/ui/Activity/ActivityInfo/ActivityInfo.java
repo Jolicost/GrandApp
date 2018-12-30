@@ -1,13 +1,15 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.widget.Button;
+import android.widget.ImageView;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+import com.jauxim.grandapp.ui.Activity.Chat.Chat;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 
 import java.util.List;
@@ -93,6 +96,9 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @BindView(R.id.bJoin)
     Button bJoin;
+
+    @BindView(R.id.bMessage)
+    Button bMessage;
 
     @BindView(R.id.vProfile)
     RelativeLayout vProfile;
@@ -194,15 +200,18 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
             ivEdit.setVisibility(View.VISIBLE);
             ivDelete.setVisibility(View.VISIBLE);
             bJoin.setVisibility(View.GONE);
+            bMessage.setVisibility(View.VISIBLE);
         }else{
             bJoin.setVisibility(View.VISIBLE);
             List<String> p = activityModel.getParticipants();
 
             if (joining(p,user.getId())) {
                 showUnjoinText();
+                bMessage.setVisibility(View.VISIBLE);
             }
             else{
                 showJoinText();
+                bMessage.setVisibility(View.GONE);
             }
         }
 
@@ -282,6 +291,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         onBackPressed();
     }
 
+    @OnClick(R.id.bMessage)
+    public void chatClick(){
+        presenter.redirect_to_chat();
+    }
+
     @OnClick(R.id.ivEdit)
     void editButtonClick() {
         presenter.editActivity(activityId);
@@ -309,8 +323,14 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @OnClick(R.id.bJoin)
     void viewJoinClick() {
-        if (bJoin.getText().toString().equals("Join")) presenter.join(activityId);
-        else presenter.unjoin(activityId);
+        if (bJoin.getText().toString().equals("Join")) {
+            presenter.join(activityId);
+            bMessage.setVisibility(View.VISIBLE);
+        }
+        else {
+            presenter.unjoin(activityId);
+            bMessage.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -367,5 +387,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         super.onLowMemory();
         if (gMapView != null)
             gMapView.onLowMemory();
+    }
+
+    @Override
+    public void startChatActivity() {
+        Intent intent = new Intent(this, Chat.class);
+        startActivity(intent);
     }
 }
