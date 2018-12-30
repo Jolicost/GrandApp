@@ -367,18 +367,16 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @OnClick(R.id.bJoin)
     void viewJoinClick() {
         if (bJoin.getText().toString().equals("Join")) {
-            presenter.join(activityId);
-            bMessage.setVisibility(View.VISIBLE);
+            if (hasCapacity) {
+                presenter.join(activityId);
+                bMessage.setVisibility(View.VISIBLE);
+            }
+            else presenter.showCapacityError();
         }
         else {
             presenter.unjoin(activityId);
             bMessage.setVisibility(View.GONE);
         }
-        if (bJoin.getText().toString().equals("Join")) {
-            if (hasCapacity) presenter.join(activityId);
-            else presenter.showCapacityError();
-        }
-        else presenter.unjoin(activityId);
     }
 
     @OnClick(R.id.bVote)
