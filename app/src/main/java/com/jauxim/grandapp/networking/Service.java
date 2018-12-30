@@ -6,12 +6,14 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
+import com.jauxim.grandapp.models.FilterActivityModel;
 import com.jauxim.grandapp.models.LocationModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.models.PhoneModel;
+import com.jauxim.grandapp.models.RateModel;
 import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
@@ -95,8 +97,25 @@ public class Service {
                 });
     }
 
-    public Subscription getActivityList(final ActivityListCallback callback,String auth, int skip) {
-        return networkService.getActivityList(auth, Constants.ACTIVITIES_PAGE, skip)
+    public Subscription getActivityList(final ActivityListCallback callback, String auth, int skip, FilterActivityModel filter) {
+        Long minPrice = 0L;
+        Long maxPrice = 0L;
+        Long minDist = 0L;
+        Long maxDist = 0L;
+        int sortType = 0;
+        String name = null;
+
+        if (filter!=null){
+            minPrice = filter.getMinPrice();
+            maxPrice = filter.getMaxPrice();
+            minDist = filter.getMinDistance();
+            maxDist = filter.getMaxDistance();
+            sortType = filter.getSort();
+            name = filter.getName();
+        }
+
+        return networkService.getActivityList(auth, Constants.ACTIVITIES_PAGE, skip,
+                minPrice, maxPrice, sortType, minDist, maxDist, name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {
@@ -550,6 +569,36 @@ public class Service {
                 });
     }
 
+    public Subscription voteActivity(RateModel rate, String activityId, final VoteActivityCallback callback, String auth) {
+        return networkService.voteActivity(activityId, rate, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
     public Subscription sendUserPosition(final BasicCallback callback, String auth, Double latitude, Double longitude) {
         LocationModel model = new LocationModel();
         model.setLatitude(latitude);
@@ -662,6 +711,12 @@ public class Service {
     }
 
     public interface UnJoinActivityCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface VoteActivityCallback {
         void onSuccess();
 
         void onError(NetworkError networkError);

@@ -9,6 +9,7 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.RateModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -152,5 +153,30 @@ public class ActivityInfoPresenter {
         }, auth);
 
         subscriptions.add(subscription);
+    }
+
+    public void voteActivity(Long rate, final String activityId) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        RateModel rateModel = new RateModel(rate);
+        Subscription subscription = service.voteActivity(rateModel, activityId, new Service.VoteActivityCallback() {
+            @Override
+            public void onSuccess() {
+                getActivityInfo(activityId);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
+    }
+
+    public void showCapacityError() {
+        view.showCapacityError(R.string.capacity_error);
     }
 }

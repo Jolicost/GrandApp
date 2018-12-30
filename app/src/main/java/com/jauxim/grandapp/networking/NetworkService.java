@@ -10,6 +10,7 @@ import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.models.PhoneModel;
+import com.jauxim.grandapp.models.RateModel;
 import com.jauxim.grandapp.models.RegisterModel;
 import com.jauxim.grandapp.models.UserModel;
 
@@ -41,7 +42,9 @@ public interface NetworkService {
     Observable<Void> createActivityInfo(@Body ActivityModel activityInfo,@Header(authKey) String auth);
 
     @GET("/normal/activities")
-    Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth, @Query("limit") int limit, @Query("skip") int skip);
+    Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth, @Query("limit") int limit, @Query("skip") int skip,
+                                                            @Query("minPrice") Long minPrice, @Query("maxPrice") Long maxPrice, @Query("sort") int sort,
+                                                            @Query("distMin") Long distMin, @Query("distMax") Long distMax, @Query("title") String name);
 
     @POST("/login")
     Observable<LoginResponseModel> getLoginToken(@Body UserModel userModel);
@@ -81,4 +84,7 @@ public interface NetworkService {
 
     @POST("/normal/activities/{id}/leave")
     Observable<Void> leaveActivity(@Path("id") String activityId, @Header(authKey) String auth);
+
+    @POST("/normal/activities/{id}/vote")
+    Observable<Void> voteActivity(@Path("id") String activityId, @Body RateModel rate, @Header(authKey) String auth);
 }

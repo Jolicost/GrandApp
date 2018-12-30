@@ -101,7 +101,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), VERTICAL, false);
 
-        mAdapter = new ActivityAdapter(getActivity(), activitiesList, mode);
+        mAdapter = new ActivityAdapter(getActivity(), activitiesList);
         activityesRecyclerView.setLayoutManager(mLayoutManager);
         //activityesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         activityesRecyclerView.setAdapter(mAdapter);
@@ -109,11 +109,11 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         presenter = new ActivityListPresenter(service, this);
         presenter.getActivityList(mode, page, filter);
 
-
         srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 page = 0;
+                scrollListener.resetState();
                 presenter.getActivityList(mode, page, filter);
             }
         });
@@ -170,6 +170,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
     public void setFilter(FilterActivityModel filter){
         this.filter = filter;
         page = 0;
+        scrollListener.resetState();
         presenter.getActivityList(mode, page, filter);
     }
 }

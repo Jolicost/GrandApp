@@ -48,7 +48,8 @@ public class ActivityListPresenter {
                 @Override
                 public void onSuccess(List<ActivityListItemModel> activities) {
                     view.removeWait();
-                    activities.remove(0); //Testing (there is no getter yet)
+                    if (activities!=null && activities.size()>0)
+                        activities.remove(0); //Testing (there is no getter yet)
                     view.getActivityListSuccess(activities);
                 }
 
@@ -58,7 +59,7 @@ public class ActivityListPresenter {
                     view.onFailure(networkError.getMessage());
                 }
 
-            }, auth, page);
+            }, auth, page, filter);
 
             subscriptions.add(subscription);
         }
@@ -76,7 +77,7 @@ public class ActivityListPresenter {
                     view.onFailure(networkError.getMessage());
                 }
 
-            },auth, page);
+            },auth, page, filter);
 
             subscriptions.add(subscription);
         }
