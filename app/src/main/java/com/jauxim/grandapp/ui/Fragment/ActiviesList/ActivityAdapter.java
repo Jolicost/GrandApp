@@ -99,7 +99,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
         }
 
 
-        String countDownTime = Utils.getCountDownTime(activity.getTimestampStart());
+        String countDownTime = Utils.getCountDownTime(activity.getTimestampStart(), activity.getTimestampEnd());
 
         holder.time.setText(countDownTime);
 
