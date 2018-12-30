@@ -16,4 +16,10 @@ public interface ActivityProfileView {
     void getProfileInfo(UserModel userModel);
 
     void editProfile();
+
+    void showBlockSuccess(int block_success);
+
+    void showBlockText();
+
+    void showUnblockText();
 }

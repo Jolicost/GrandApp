@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
-import android.util.Log;
+
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +21,8 @@ import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEditProfile.ActivityEditProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -45,6 +49,9 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @BindView(R.id.ivEdit)
     ImageView ivEdit;
 
+    @BindView(R.id.ivSettings)
+    ImageView ivSettings;
+
     @BindView(R.id.swNear_activity_created)
     SwitchCompat swNearActivityCreated;
 
@@ -57,8 +64,16 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @BindView(R.id.llNotifications)
     LinearLayout llNotifications;
 
-    private String profileId;
-    private UserModel user;
+    @BindView(R.id.llEmail)
+    LinearLayout llEmail;
+
+    @BindView(R.id.llPhone)
+    LinearLayout llPhone;
+
+    private String profileId; //id of the user profile
+    private UserModel user; //user logged
+
+    private PopupMenu pop;
 
     ActivityProfilePresenter presenter;
 
@@ -70,7 +85,28 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         ButterKnife.bind(this);
 
         ivEdit.setVisibility(View.GONE);
+        ivSettings.setVisibility(View.GONE);
         llNotifications.setVisibility(View.GONE);
+        llPhone.setVisibility(View.GONE);
+        llEmail.setVisibility(View.GONE);
+
+        pop = new PopupMenu(ActivityProfile.this, ivSettings);
+        pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menuBlock:
+                        if (item.getTitle().toString().equals("Block")) {
+                            presenter.blockUser(profileId);
+                        }
+                        else presenter.unblockUser(profileId);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        pop.getMenuInflater().inflate(R.menu.profile_settings, pop.getMenu());
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             profileId = getIntent().getExtras().getString(Constants.PROFILE_ID);
@@ -105,31 +141,70 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         presenter.editProfile();
     }
 
+    @OnClick(R.id.ivSettings)
+    void settingsButtonClick() {
+        pop.show();
+    }
+
     @Override
     public void getProfileInfo(UserModel userModel) {
         user = DataUtils.getUserInfo(this); //user logged
 
         tvCompleteName.setText(userModel.getCompleteName());
-
-        if (user.getNotifications() != null) {
-            swNearActivityCreated.setChecked(user.getNotifications().getNearActivityCreated());
-            swUserJoinedActivity.setChecked(user.getNotifications().getUserJoinedActivity());
-            swJoinedActivityEnded.setChecked(user.getNotifications().getJoinedActivityEnded());
-        }
-
-        tvPhone.setText(userModel.getPhone());
-        tvEmail.setText(userModel.getEmail());
         Glide.with(this).load(userModel.getProfilePic()).into(ivProfilePic);
+
         if (!TextUtils.isEmpty(userModel.getId()) && userModel.getId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             llNotifications.setVisibility(View.VISIBLE);
+            llEmail.setVisibility(View.VISIBLE);
+            llPhone.setVisibility(View.VISIBLE);
+            if (user.getNotifications() != null) {
+                swNearActivityCreated.setChecked(user.getNotifications().getNearActivityCreated());
+                swUserJoinedActivity.setChecked(user.getNotifications().getUserJoinedActivity());
+                swJoinedActivityEnded.setChecked(user.getNotifications().getJoinedActivityEnded());
+            }
+            tvPhone.setText(userModel.getPhone());
+            tvEmail.setText(userModel.getEmail());
         }
+        else {
+            ivSettings.setVisibility(View.VISIBLE);
+            List<String> b = user.getBlocked();
+
+
+
+            if (blocked(b, userModel.getId())) {
+                showUnblockText();
+            }
+            else{
+                showBlockText();
+            }
+        }
+    }
+
+    private boolean blocked(List<String> b, String userId) {
+        for (int i = 0; i < b.size(); ++i){
+            if (b.get(i).equals(userId)) return true;
+        }
+        return false;
+    }
+
+    public void showBlockText() {
+        pop.getMenu().findItem(R.id.menuBlock).setTitle(getString(R.string.block));
+    }
+
+    public void showUnblockText() {
+        pop.getMenu().findItem(R.id.menuBlock).setTitle(getString(R.string.unblock));
     }
 
     @Override
     public void editProfile() {
         Intent intent = new Intent(this, ActivityEditProfile.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void showBlockSuccess(int block_success) {
+        Dialog.createDialog(this).title(getString(block_success)).description(getString(block_success)).build();
     }
 
     @Override
