@@ -151,6 +151,8 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         if (page == 0)
             activitiesList.clear();
 
+        if (mode.equals(Constants.ACTIVITY_MINE))
+            activitiesList.clear();
         activitiesList.addAll(activities);
         mAdapter.notifyDataSetChanged();
         srlRefresh.setRefreshing(false);

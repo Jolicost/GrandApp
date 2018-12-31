@@ -44,12 +44,11 @@ public class ActivityListPresenter {
         }
 
         if (mode.equals(ACTIVITY_MINE)) {
-            Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
+            Subscription subscription = service.getMyActivities(new Service.MyActivitiesCallback() {
                 @Override
                 public void onSuccess(List<ActivityListItemModel> activities) {
                     view.removeWait();
-                    if (activities!=null && activities.size()>0)
-                        activities.remove(0); //Testing (there is no getter yet)
+                    Log.d("activities size", String.valueOf(activities.size()));
                     view.getActivityListSuccess(activities);
                 }
 
@@ -59,10 +58,11 @@ public class ActivityListPresenter {
                     view.onFailure(networkError.getMessage());
                 }
 
-            }, auth, page, filter);
+            }, auth);
 
             subscriptions.add(subscription);
         }
+
         else if (mode.equals(ACTIVITY_ALL)) {
             Subscription subscription = service.getActivityList(new Service.ActivityListCallback() {
                 @Override

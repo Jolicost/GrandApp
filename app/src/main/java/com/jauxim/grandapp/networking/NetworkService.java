@@ -47,6 +47,9 @@ public interface NetworkService {
                                                             @Query("minPrice") Long minPrice, @Query("maxPrice") Long maxPrice, @Query("sort") int sort,
                                                             @Query("distMin") Long distMin, @Query("distMax") Long distMax, @Query("title") String name);
 
+    @GET("/normal/own/activities")
+    Observable<List<ActivityListItemModel>> getMyActivities(@Header(authKey) String auth);
+
     @POST("/login")
     Observable<LoginResponseModel> getLoginToken(@Body UserModel userModel);
 
