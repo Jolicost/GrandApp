@@ -74,6 +74,7 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     private UserModel user; //user logged
 
     private PopupMenu pop;
+    boolean isBlocked;
 
     ActivityProfilePresenter presenter;
 
@@ -96,10 +97,10 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menuBlock:
-                        if (item.getTitle().toString().equals("Block")) {
-                            presenter.blockUser(profileId);
+                        if (isBlocked) {
+                            presenter.unblockUser(profileId);
                         }
-                        else presenter.unblockUser(profileId);
+                        else presenter.blockUser(profileId);
                         return true;
                     default:
                         return false;
@@ -170,12 +171,12 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
             ivSettings.setVisibility(View.VISIBLE);
             List<String> b = user.getBlocked();
 
-
-
             if (blocked(b, userModel.getId())) {
+                isBlocked = true;
                 showUnblockText();
             }
             else{
+                isBlocked = false;
                 showBlockText();
             }
         }
