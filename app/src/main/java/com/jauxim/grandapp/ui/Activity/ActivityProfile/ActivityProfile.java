@@ -65,11 +65,8 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @BindView(R.id.llNotifications)
     LinearLayout llNotifications;
 
-    @BindView(R.id.llEmail)
-    LinearLayout llEmail;
-
-    @BindView(R.id.llPhone)
-    LinearLayout llPhone;
+    @BindView(R.id.llInfoUser)
+    LinearLayout llInfoUser;
 
     private String profileId; //id of the user profile
     private UserModel user; //user logged
@@ -89,8 +86,7 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         ivEdit.setVisibility(View.GONE);
         ivSettings.setVisibility(View.GONE);
         llNotifications.setVisibility(View.GONE);
-        llPhone.setVisibility(View.GONE);
-        llEmail.setVisibility(View.GONE);
+        llInfoUser.setVisibility(View.GONE);
 
         pop = new PopupMenu(ActivityProfile.this, ivSettings);
         pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -158,8 +154,8 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         if (!TextUtils.isEmpty(userModel.getId()) && userModel.getId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             llNotifications.setVisibility(View.VISIBLE);
-            llEmail.setVisibility(View.VISIBLE);
-            llPhone.setVisibility(View.VISIBLE);
+            llInfoUser.setVisibility(View.VISIBLE);
+
             if (user.getNotifications() != null) {
                 swNearActivityCreated.setChecked(user.getNotifications().getNearActivityCreated());
                 swUserJoinedActivity.setChecked(user.getNotifications().getUserJoinedActivity());
