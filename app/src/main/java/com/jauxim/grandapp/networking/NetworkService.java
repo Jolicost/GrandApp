@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.networking;
 
 
+import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
@@ -93,4 +94,7 @@ public interface NetworkService {
 
     @POST("/normal/users/{id}/unblock")
     Observable<Void> unblockUser(@Path("id") String userId, @Header(authKey) String auth);
+
+    @GET("/normal/users/{id}/achievements")
+    Observable<List<AchievementsModel>> getAchievements(@Path("id") String userId, @Header(authKey) String auth);
 }

@@ -17,6 +17,7 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEditProfile.ActivityEditProfile;
@@ -64,11 +65,8 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @BindView(R.id.llNotifications)
     LinearLayout llNotifications;
 
-    @BindView(R.id.llEmail)
-    LinearLayout llEmail;
-
-    @BindView(R.id.llPhone)
-    LinearLayout llPhone;
+    @BindView(R.id.llInfoUser)
+    LinearLayout llInfoUser;
 
     private String profileId; //id of the user profile
     private UserModel user; //user logged
@@ -88,8 +86,7 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         ivEdit.setVisibility(View.GONE);
         ivSettings.setVisibility(View.GONE);
         llNotifications.setVisibility(View.GONE);
-        llPhone.setVisibility(View.GONE);
-        llEmail.setVisibility(View.GONE);
+        llInfoUser.setVisibility(View.GONE);
 
         pop = new PopupMenu(ActivityProfile.this, ivSettings);
         pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -157,8 +154,8 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         if (!TextUtils.isEmpty(userModel.getId()) && userModel.getId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             llNotifications.setVisibility(View.VISIBLE);
-            llEmail.setVisibility(View.VISIBLE);
-            llPhone.setVisibility(View.VISIBLE);
+            llInfoUser.setVisibility(View.VISIBLE);
+
             if (user.getNotifications() != null) {
                 swNearActivityCreated.setChecked(user.getNotifications().getNearActivityCreated());
                 swUserJoinedActivity.setChecked(user.getNotifications().getUserJoinedActivity());
@@ -180,6 +177,7 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
                 showBlockText();
             }
         }
+        presenter.getAchievements(profileId);
     }
 
     private boolean blocked(List<String> b, String userId) {
@@ -195,6 +193,20 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
 
     public void showUnblockText() {
         pop.getMenu().findItem(R.id.menuBlock).setTitle(getString(R.string.unblock));
+    }
+
+    @Override
+    public void showAchievements(List<AchievementsModel> achievementsList) {
+        int size = achievementsList.size();
+        for (int i = 0; i < size; ++i){
+            int titleId = getResources().getIdentifier("tvTitleAch"+ String.valueOf(i+1), "id", getPackageName());
+            TextView tvTitleAch = findViewById(titleId);
+            tvTitleAch.setText(achievementsList.get(i).getTitle());
+
+            int imageId = getResources().getIdentifier("ivImageAch"+ String.valueOf(i+1), "id", getPackageName());
+            ImageView ivImageAch = findViewById(imageId);
+            Glide.with(this).load(achievementsList.get(i).getImage()).into(ivImageAch);
+        }
     }
 
     @Override

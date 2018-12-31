@@ -5,9 +5,12 @@ import android.text.TextUtils;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
+
+import java.util.List;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -90,6 +93,27 @@ public class ActivityProfilePresenter {
                 view.removeWait();
                 view.showBlockText();
                 view.showBlockSuccess(R.string.unblock_success);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                view.removeWait();
+                view.onFailure(networkError.getMessage());
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
+    }
+
+    public void getAchievements(String profileId) {
+        view.showWait();
+        String auth = DataUtils.getAuthToken((Context) view);
+        Subscription subscription = service.getAchievements(profileId, new Service.AchievementsCallback() {
+            @Override
+            public void onSuccess(List<AchievementsModel> achievementsList) {
+                view.removeWait();
+                view.showAchievements(achievementsList);
             }
 
             @Override
