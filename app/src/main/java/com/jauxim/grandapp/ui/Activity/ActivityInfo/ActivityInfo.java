@@ -448,7 +448,9 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Override
     public void startChatActivity() {
+        Log.d("Log", " Activity Id = " + activityId);
         Intent intent = new Intent(this, Chat.class);
+        intent.putExtra(Constants.ACTIVITY_ID, activityId);
         startActivity(intent);
     }
 }

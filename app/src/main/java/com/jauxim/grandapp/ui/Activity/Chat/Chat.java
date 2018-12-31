@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Activity.Chat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.UserModel;
@@ -20,29 +22,40 @@ import com.scaledrone.lib.Scaledrone;
 
 import java.util.Random;
 
-import butterknife.BindView;
-
 public class Chat extends AppCompatActivity implements RoomListener {
 
     // replace this with a real channelID from Scaledrone dashboard
     private String channelID = "p0gOL0KDsTT7G0Pd";
-    private String roomName = "observable-room";   //TODO posar el id de la activitat
+    private String roomName;
 
     private Scaledrone scaledrone;
     private MessageAdapter messageAdapter;
 
-    @BindView(R.id.editText)
-    EditText editText;
-
-    @BindView(R.id.messages_view)
-    ListView messagesView;
+    private EditText editText;
+    private ListView messagesView;
 
     private UserModel user;
+    private String activityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                activityId = null;
+            } else {
+                activityId = extras.getString(Constants.ACTIVITY_ID);
+            }
+        } else {
+            activityId = (String) savedInstanceState.getSerializable(Constants.ACTIVITY_ID);
+        }
+
+        Log.d("Log", " Room Id = " + activityId);
+
+        roomName = "observable-" + activityId;
 
         editText = (EditText) findViewById(R.id.editText);
 
@@ -52,13 +65,18 @@ public class Chat extends AppCompatActivity implements RoomListener {
 
         user = DataUtils.getUserInfo(this);
 
+        Log.d("Log", " User Id = " + user.getId());
+        Log.d("Log", " User Name = " + user.getCompleteName());
+
         MemberData data = new MemberData(user.getCompleteName(), getRandomColor());
+
+        Log.d("Log", " Data Name = " + data.toString());
 
         scaledrone = new Scaledrone(channelID, data);
         scaledrone.connect(new Listener() {
             @Override
             public void onOpen() {
-                System.out.println("Scaledrone connection open");
+                Log.d("Log","Scaledrone connection open");
                 scaledrone.subscribe(roomName, Chat.this);
             }
 
@@ -82,6 +100,9 @@ public class Chat extends AppCompatActivity implements RoomListener {
     public void sendMessage(View view) {
         String message = editText.getText().toString();
         if (message.length() > 0) {
+
+            Log.d("Log", " Room message Name = " + roomName);
+
             scaledrone.publish(roomName, message);
             editText.getText().clear();
         }
@@ -89,11 +110,13 @@ public class Chat extends AppCompatActivity implements RoomListener {
 
     @Override
     public void onOpen(Room room) {
+        Log.d("Log", " Conneted to room");
         System.out.println("Conneted to room");
     }
 
     @Override
     public void onOpenFailure(Room room, Exception ex) {
+        Log.d("Log", " Conneted to room FAILURE  " + ex.toString());
         System.err.println(ex);
     }
 
@@ -101,7 +124,11 @@ public class Chat extends AppCompatActivity implements RoomListener {
     public void onMessage(Room room, final JsonNode json, final Member member) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
+            Log.d("Log", " Member Data " + member.getClientData());
+            Log.d("Log", " Message " + json.asText());
+
             final MemberData data = mapper.treeToValue(member.getClientData(), MemberData.class);
+            Log.d("Log", " Member Data " + data.toString());
             boolean belongsToCurrentUser = member.getId().equals(scaledrone.getClientID());
             final Message message = new Message(json.asText(), data, belongsToCurrentUser);
             runOnUiThread(new Runnable() {
@@ -133,34 +160,5 @@ public class Chat extends AppCompatActivity implements RoomListener {
             sb.append(Integer.toHexString(r.nextInt()));
         }
         return sb.toString().substring(0, 7);
-    }
-}
-
-class MemberData {
-    private String name;
-    private String color;
-
-    public MemberData(String name, String color) {
-        this.name = name;
-        this.color = color;
-    }
-
-    public MemberData() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    @Override
-    public String toString() {
-        return "MemberData{" +
-                "name='" + name + '\'' +
-                ", color='" + color + '\'' +
-                '}';
     }
 }
