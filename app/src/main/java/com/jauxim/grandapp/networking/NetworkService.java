@@ -41,10 +41,14 @@ public interface NetworkService {
     @POST("/normal/activities")
     Observable<Void> createActivityInfo(@Body ActivityModel activityInfo, @Header(authKey) String auth);
 
+    @PUT("/normal/activities")
+    Observable<Void> editActivityInfo(@Body ActivityModel activityInfo, @Header(authKey) String auth);
+
     @GET("/normal/activities")
     Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth, @Query("limit") int limit, @Query("skip") int skip,
                                                             @Query("minPrice") Long minPrice, @Query("maxPrice") Long maxPrice, @Query("sort") int sort,
-                                                            @Query("distMin") Long distMin, @Query("distMax") Long distMax, @Query("title") String name);
+                                                            @Query("distMin") Long distMin, @Query("distMax") Long distMax, @Query("title") String name,
+                                                            @Query("activityType") String type);
 
     @POST("/login")
     Observable<LoginResponseModel> getLoginToken(@Body UserModel userModel);

@@ -1,5 +1,6 @@
 package com.jauxim.grandapp.networking;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jauxim.grandapp.Constants;
@@ -67,34 +68,65 @@ public class Service {
                 });
     }
 
-    public Subscription createActivityInfo(ActivityModel activityInfo, final ActivityCreateCallback callback,String auth) {
-        return networkService.createActivityInfo(activityInfo,auth)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
-                    @Override
-                    public Observable<? extends Void> call(Throwable throwable) {
-                        return Observable.error(throwable);
-                    }
-                })
-                .subscribe(new Subscriber<Void>() {
-                    @Override
-                    public void onCompleted() {
+    public Subscription createOrEditActivityInfo(ActivityModel activityInfo, final ActivityCreateCallback callback,String auth) {
 
-                    }
+        if (activityInfo!=null && !TextUtils.isEmpty(activityInfo.getId())){
+            return networkService.editActivityInfo(activityInfo, auth)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                        @Override
+                        public Observable<? extends Void> call(Throwable throwable) {
+                            return Observable.error(throwable);
+                        }
+                    })
+                    .subscribe(new Subscriber<Void>() {
+                        @Override
+                        public void onCompleted() {
 
-                    @Override
-                    public void onError(Throwable e) {
-                        callback.onError(new NetworkError(e));
+                        }
 
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            callback.onError(new NetworkError(e));
 
-                    @Override
-                    public void onNext(Void v) {
-                        callback.onSuccess();
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onNext(Void v) {
+                            callback.onSuccess();
+
+                        }
+                    });
+        }else {
+            return networkService.createActivityInfo(activityInfo, auth)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                        @Override
+                        public Observable<? extends Void> call(Throwable throwable) {
+                            return Observable.error(throwable);
+                        }
+                    })
+                    .subscribe(new Subscriber<Void>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            callback.onError(new NetworkError(e));
+
+                        }
+
+                        @Override
+                        public void onNext(Void v) {
+                            callback.onSuccess();
+
+                        }
+                    });
+        }
     }
 
     public Subscription getActivityList(final ActivityListCallback callback, String auth, int skip, FilterActivityModel filter) {
@@ -104,6 +136,7 @@ public class Service {
         Long maxDist = 0L;
         int sortType = 0;
         String name = null;
+        String type = null;
 
         if (filter!=null){
             minPrice = filter.getMinPrice();
@@ -112,10 +145,11 @@ public class Service {
             maxDist = filter.getMaxDistance();
             sortType = filter.getSort();
             name = filter.getName();
+            type = filter.getCategory();
         }
 
         return networkService.getActivityList(auth, Constants.ACTIVITIES_PAGE, skip,
-                minPrice, maxPrice, sortType, minDist, maxDist, name)
+                minPrice, maxPrice, sortType, minDist, maxDist, name, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {
