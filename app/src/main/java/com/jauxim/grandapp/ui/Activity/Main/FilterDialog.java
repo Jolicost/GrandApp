@@ -3,7 +3,6 @@ package com.jauxim.grandapp.ui.Activity.Main;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -129,7 +128,7 @@ public class FilterDialog extends Dialog {
     private void updatePrice(Number min, Number max) {
         if (rsbPrice.getSelectedMaxValue() != rsbPrice.getAbsoluteMaxValue()
                 || rsbPrice.getSelectedMinValue() != rsbPrice.getAbsoluteMinValue()) {
-            tvPriceValues.setText("[" + min + "€ - " + max + "€]");
+            tvPriceValues.setText("[" + min + "€ - " + (max.intValue() == rsbPrice.getAbsoluteMaxValue().intValue() ? getContext().getResources().getString(R.string.infinite) : (max+"€")) + "]");
         } else {
             tvPriceValues.setText("");
         }
@@ -142,7 +141,7 @@ public class FilterDialog extends Dialog {
     private void updateDistance(Number min, Number max) {
         if (rsbDistance.getSelectedMaxValue().intValue() != rsbDistance.getAbsoluteMaxValue().intValue()
                 || rsbDistance.getSelectedMinValue().intValue() != rsbDistance.getAbsoluteMinValue().intValue()) {
-            tvDistanceValues.setText("[" + min + "m - " + max + "m]");
+            tvDistanceValues.setText("[" + min + "m - " + (max.intValue() == rsbDistance.getAbsoluteMaxValue().intValue() ? getContext().getResources().getString(R.string.infinite) : (max+"m")) + "]");
         } else {
             tvDistanceValues.setText("");
         }
@@ -157,7 +156,10 @@ public class FilterDialog extends Dialog {
                 edited = true;
             }
 
-            filter.setMaxPrice(rsbPrice.getSelectedMaxValue().longValue());
+            if (rsbPrice.getSelectedMaxValue().intValue() != rsbPrice.getAbsoluteMaxValue().intValue())
+                filter.setMaxPrice(rsbPrice.getSelectedMaxValue().longValue());
+            else
+                filter.setMaxPrice(0L);
             filter.setMinPrice(rsbPrice.getSelectedMinValue().longValue());
         }
 
@@ -168,7 +170,10 @@ public class FilterDialog extends Dialog {
             }
 
 
-            filter.setMaxDistance(rsbDistance.getSelectedMaxValue().longValue());
+            if (rsbDistance.getSelectedMaxValue().intValue() != rsbDistance.getAbsoluteMaxValue().intValue())
+                filter.setMaxDistance(rsbDistance.getSelectedMaxValue().longValue());
+            else
+                filter.setMaxDistance(0L);
             filter.setMinDistance(rsbDistance.getSelectedMinValue().longValue());
         }
 
@@ -188,9 +193,10 @@ public class FilterDialog extends Dialog {
         if (sCategory!=null){
             if (sCategory.getSelectedItemPosition()>0){
                 edited = true;
+                filter.setCategory(sCategory.getSelectedItem().toString());
+            }else{
+                filter.setCategory(null);
             }
-
-            filter.setCategory(sCategory.getSelectedItemPosition());
         }
 
         if (!edited)
