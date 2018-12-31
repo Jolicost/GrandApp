@@ -3,6 +3,7 @@ package com.jauxim.grandapp.networking;
 import android.util.Log;
 
 import com.jauxim.grandapp.Constants;
+import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
@@ -632,6 +633,96 @@ public class Service {
                 });
     }
 
+    public Subscription blockUser(String userId, final BlockUserCallback callback, String auth) {
+        return networkService.blockUser(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
+    public Subscription unblockUser(String userId, final UnblockUserCallback callback, String auth) {
+        return networkService.unblockUser(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+
+                    }
+                });
+    }
+
+    public Subscription getAchievements(String userId, final AchievementsCallback callback, String auth) {
+        return networkService.getAchievements(userId, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<AchievementsModel>>>() {
+                    @Override
+                    public Observable<? extends List<AchievementsModel>> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<List<AchievementsModel>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(List<AchievementsModel> achievementsList) {
+                        callback.onSuccess(achievementsList);
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -724,6 +815,24 @@ public class Service {
 
     public interface BasicCallback {
         void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface BlockUserCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface UnblockUserCallback {
+        void onSuccess();
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface AchievementsCallback {
+        void onSuccess(List<AchievementsModel> achievementsList);
 
         void onError(NetworkError networkError);
     }

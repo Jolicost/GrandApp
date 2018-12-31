@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.networking;
 
 
+import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
@@ -33,13 +34,13 @@ public interface NetworkService {
     Observable<CityListResponse> getCityList(@Header(authKey) String auth);
 
     @GET("/normal/activities/{id}")
-    Observable<ActivityModel> getActivityInfo(@Path("id") String activityId,@Header(authKey) String auth);
+    Observable<ActivityModel> getActivityInfo(@Path("id") String activityId, @Header(authKey) String auth);
 
     @DELETE("/normal/activities/{id}")
-    Observable<String> deleteActivity(@Path("id") String activityId,@Header(authKey) String auth);
+    Observable<String> deleteActivity(@Path("id") String activityId, @Header(authKey) String auth);
 
     @POST("/normal/activities")
-    Observable<Void> createActivityInfo(@Body ActivityModel activityInfo,@Header(authKey) String auth);
+    Observable<Void> createActivityInfo(@Body ActivityModel activityInfo, @Header(authKey) String auth);
 
     @GET("/normal/activities")
     Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth, @Query("limit") int limit, @Query("skip") int skip,
@@ -65,7 +66,7 @@ public interface NetworkService {
     Observable<LoginResponseModel> getLoginFacebookToken(@Body UserModel userModel);
 
     @GET("/normal/users/{id}")
-    Observable<UserModel> getProfileInfo(@Path("id") String userId,@Header(authKey) String auth);
+    Observable<UserModel> getProfileInfo(@Path("id") String userId, @Header(authKey) String auth);
 
     @PUT("/normal/users/{id}")
     Observable<Void> editProfileInfo(@Path("id") String userId, @Body UserModel user,@Header(authKey) String auth);
@@ -87,4 +88,13 @@ public interface NetworkService {
 
     @POST("/normal/activities/{id}/vote")
     Observable<Void> voteActivity(@Path("id") String activityId, @Body RateModel rate, @Header(authKey) String auth);
+
+    @POST("/normal/users/{id}/block")
+    Observable<Void> blockUser(@Path("id") String userId, @Header(authKey) String auth);
+
+    @POST("/normal/users/{id}/unblock")
+    Observable<Void> unblockUser(@Path("id") String userId, @Header(authKey) String auth);
+
+    @GET("/normal/users/{id}/achievements")
+    Observable<List<AchievementsModel>> getAchievements(@Path("id") String userId, @Header(authKey) String auth);
 }

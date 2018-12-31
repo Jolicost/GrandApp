@@ -109,6 +109,11 @@
     <string name="fgt_pswd_title">Forget password</string>
     <string name="fgt_pswd_description">Write the email in witch you created you account and clic SEND. Then you will receive a e-mail with the new password writed. It\'s recomendable to change your password after this process.</string>
     <string name="settings_profile">Profile</string>
+    <string name="block">Block</string>
+    <string name="unblock">Unblock</string>
+    <string name="block_success">User blocked</string>
+    <string name="unblock_success">User unblocked</string>
+    <string name="achievements">Achievements</string>
 
     <string name="rate_title">Rate activity</string>
     <string name="rate_description">How would you rate this activity?</string>

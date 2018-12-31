@@ -55,6 +55,25 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/ivSettings"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:background="@drawable/btn_simple"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_settings_white_24dp" />
+
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tvCompleteName"
@@ -93,6 +112,189 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/achievements"
+                        android:textColor="@color/color_dark_text"
+                        android:textSize="32dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivImageAch1"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_margin="9dp"
+                                android:background="@drawable/circle_white"
+                                android:src="@drawable/ic_user_default" />
+
+                            <TextView
+                                android:id="@+id/tvTitleAch1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/color_dark_text"
+                                android:textSize="21dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivImageAch2"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_margin="9dp"
+                                android:background="@drawable/circle_white"
+                                android:src="@drawable/ic_user_default" />
+
+                            <TextView
+                                android:id="@+id/tvTitleAch2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/color_dark_text"
+                                android:textSize="21dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivImageAch3"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_margin="9dp"
+                                android:background="@drawable/circle_white"
+                                android:src="@drawable/ic_user_default" />
+
+                            <TextView
+                                android:id="@+id/tvTitleAch3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/color_dark_text"
+                                android:textSize="21dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivImageAch4"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_margin="9dp"
+                                android:background="@drawable/circle_white"
+                                android:src="@drawable/ic_user_default" />
+
+                            <TextView
+                                android:id="@+id/tvTitleAch4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/color_dark_text"
+                                android:textSize="21dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivImageAch5"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_margin="9dp"
+                                android:background="@drawable/circle_white"
+                                android:src="@drawable/ic_user_default" />
+
+                            <TextView
+                                android:id="@+id/tvTitleAch5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/color_dark_text"
+                                android:textSize="21dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/ivImageAch6"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_margin="9dp"
+                                android:background="@drawable/circle_white"
+                                android:src="@drawable/ic_user_default" />
+
+                            <TextView
+                                android:id="@+id/tvTitleAch6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/color_dark_text"
+                                android:textSize="21dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/email_bold"
                         android:textSize="21dp" />
 
@@ -105,6 +307,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
