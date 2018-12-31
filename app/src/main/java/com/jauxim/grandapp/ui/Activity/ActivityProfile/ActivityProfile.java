@@ -17,6 +17,7 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
+import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEditProfile.ActivityEditProfile;
@@ -180,6 +181,7 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
                 showBlockText();
             }
         }
+        presenter.getAchievements(profileId);
     }
 
     private boolean blocked(List<String> b, String userId) {
@@ -195,6 +197,20 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
 
     public void showUnblockText() {
         pop.getMenu().findItem(R.id.menuBlock).setTitle(getString(R.string.unblock));
+    }
+
+    @Override
+    public void showAchievements(List<AchievementsModel> achievementsList) {
+        int size = achievementsList.size();
+        for (int i = 0; i < size; ++i){
+            int titleId = getResources().getIdentifier("tvTitleAch"+ String.valueOf(i+1), "id", getPackageName());
+            TextView tvTitleAch = findViewById(titleId);
+            tvTitleAch.setText(achievementsList.get(i).getTitle());
+
+            int imageId = getResources().getIdentifier("ivImageAch"+ String.valueOf(i+1), "id", getPackageName());
+            ImageView ivImageAch = findViewById(imageId);
+            Glide.with(this).load(achievementsList.get(i).getImage()).into(ivImageAch);
+        }
     }
 
     @Override

@@ -113,6 +113,7 @@
     <string name="unblock">Unblock</string>
     <string name="block_success">User blocked</string>
     <string name="unblock_success">User unblocked</string>
+    <string name="achievements">Achievements</string>
 
     <string name="rate_title">Rate activity</string>
     <string name="rate_description">How would you rate this activity?</string>
