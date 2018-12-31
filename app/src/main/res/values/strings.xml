@@ -141,6 +141,7 @@
     <string name="distance">Distance</string>
     <string name="sort">Sort by</string>
     <string name="category">Category</string>
+    <string name="category_description">Select the category of the activity</string>
 
     <string-array name="filter_sort">
         <item>Create date desc</item>

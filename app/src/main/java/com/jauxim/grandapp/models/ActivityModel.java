@@ -46,9 +46,9 @@ public class ActivityModel {
     @Expose
     private String address;
 
-    @SerializedName("type")
+    @SerializedName("activityType")
     @Expose
-    private Long type;
+    private String activityType;
 
     @SerializedName("capacity")
     @Expose
@@ -152,12 +152,12 @@ public class ActivityModel {
         this.address = adress;
     }
 
-    public Long getType() {
-        return type;
+    public String getActivityType() {
+        return activityType;
     }
 
-    public void setType(Long type) {
-        this.type = type;
+    public void setActivityType(String activityType) {
+        this.activityType = activityType;
     }
 
     public Long getCapacity() {
