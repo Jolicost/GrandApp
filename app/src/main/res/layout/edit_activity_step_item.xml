@@ -174,7 +174,7 @@
         android:id="@+id/vLocation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -331,7 +331,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="@string/capacity_description"
                 android:textSize="@dimen/description_edit_size" />
@@ -340,7 +339,6 @@
                 android:id="@+id/etCapacity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:hint="@string/capacity_title"
                 android:inputType="number"
                 android:maxLines="1"
@@ -349,7 +347,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/price_title"
                 android:textSize="@dimen/title_edit_size"
                 android:textStyle="bold" />
@@ -357,7 +355,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="@string/price_description"
                 android:textSize="@dimen/description_edit_size" />
@@ -366,11 +363,34 @@
                 android:id="@+id/etPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:hint="@string/price_title"
                 android:inputType="number"
                 android:maxLines="1"
                 android:textSize="@dimen/description_edit_size" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/category"
+                android:textSize="@dimen/title_edit_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/category_description"
+                android:textSize="@dimen/description_edit_size" />
+
+            <Spinner
+                android:id="@+id/sCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/filter_categories"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
 
         </LinearLayout>
 
@@ -380,7 +400,7 @@
         android:id="@+id/vPreview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -448,6 +468,14 @@
 
             <TextView
                 android:id="@+id/tvPricePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textSize="@dimen/description_edit_size" />
+
+            <TextView
+                android:id="@+id/tvCategoryPreview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

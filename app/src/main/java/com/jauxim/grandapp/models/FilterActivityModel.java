@@ -21,7 +21,7 @@ public class FilterActivityModel {
     private Long startTime;
     private Long endTime;
     private int sort;
-    private int category;
+    private String category;
 
     public Long getMaxPrice() {
         return maxPrice;
@@ -87,11 +87,11 @@ public class FilterActivityModel {
         this.sort = sort;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 }
