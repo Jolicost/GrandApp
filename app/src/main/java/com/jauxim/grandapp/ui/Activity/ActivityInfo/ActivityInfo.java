@@ -1,6 +1,7 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -246,6 +247,18 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(activityModel.getLatitude(), activityModel.getLongitude()), 15.0f));
                     else
                         gMapView.setVisibility(View.GONE);
+
+                    googleMap.getUiSettings().setScrollGesturesEnabled(false);
+
+                    googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                        @Override
+                        public void onMapClick(LatLng latLng) {
+                            String url = "https://www.google.com/maps/dir/?api=1&destination="+activityModel.getLatitude()+","+activityModel.getLongitude()+"&travelmode=walking";
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(url));
+                            startActivity(i);
+                        }
+                    });
                 }
             });
         }

@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 public class AutoSwitcherViewPager extends ViewPager {
 
     private FixedSpeedScroller mScroller = null;
-    private int TIME_DELAY_INTERVAL = 5000;
+    private int TIME_DELAY_INTERVAL = 7500;
 
     private Runnable mSwither = new Runnable() {
 
