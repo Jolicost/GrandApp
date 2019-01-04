@@ -48,7 +48,7 @@ public interface NetworkService {
     @GET("/normal/activities")
     Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth, @Query("limit") int limit, @Query("skip") int skip,
                                                             @Query("minPrice") Long minPrice, @Query("maxPrice") Long maxPrice, @Query("sort") int sort,
-                                                            @Query("distMin") Long distMin, @Query("distMax") Long distMax, @Query("title") String name,
+                                                            @Query("minDist") Long distMin, @Query("maxDist") Long distMax, @Query("title") String name,
                                                             @Query("activityType") String type);
 
     @GET("/normal/own/activities")
