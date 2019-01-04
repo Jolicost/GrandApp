@@ -145,6 +145,16 @@
     <string name="category">Category</string>
     <string name="category_description">Select the category of the activity</string>
     <string name="infinite">infinite</string>
+    <string name="guide">Guide</string>
+
+    <string name="guide_menu_title">Main menu</string>
+    <string name="guide_menu_description">Press this button to see all the features of the app</string>
+
+    <string name="guide_create_title">Create new activity</string>
+    <string name="guide_create_description">Press this button to create a new activity that will be visible by other users</string>
+
+    <string name="guide_filter_title">Filter activities</string>
+    <string name="guide_filter_description">Press this button to add or remove any filter for the main activities list</string>
 
     <string-array name="filter_sort">
         <item>Create date desc</item>
@@ -186,6 +196,5 @@
         <item>WIN POINTS</item>
         <item>AND MUCH MORE</item>
     </string-array>
-
 
 </resources>
