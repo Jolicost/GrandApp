@@ -723,6 +723,36 @@ public class Service {
                 });
     }
 
+    public Subscription getHistorial(String activityId, String messageCount, final MessageCallback callback, String auth) {
+        return networkService.getHistorial(activityId, messageCount, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<String>>>() {
+                    @Override
+                    public Observable<? extends List<String>> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<List<String>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(List<String> messageList) {
+                        callback.onSuccess(messageList);
+
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -833,6 +863,12 @@ public class Service {
 
     public interface AchievementsCallback {
         void onSuccess(List<AchievementsModel> achievementsList);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface MessageCallback {
+        void onSuccess(List<String> messageList);
 
         void onError(NetworkError networkError);
     }

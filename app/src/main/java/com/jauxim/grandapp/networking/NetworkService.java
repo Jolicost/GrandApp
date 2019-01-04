@@ -97,4 +97,7 @@ public interface NetworkService {
 
     @GET("/normal/users/{id}/achievements")
     Observable<List<AchievementsModel>> getAchievements(@Path("id") String userId, @Header(authKey) String auth);
+
+    @GET("/normal/message/{id}/{messCount}")
+    Observable<List<String>> getHistorial(@Path("id") String activityId, @Path("messCount") String messCount, @Header(authKey) String auth);
 }

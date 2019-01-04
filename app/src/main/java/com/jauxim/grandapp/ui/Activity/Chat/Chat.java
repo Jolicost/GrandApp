@@ -1,5 +1,6 @@
 package com.jauxim.grandapp.ui.Activity.Chat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,13 +15,17 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.UserModel;
+import com.jauxim.grandapp.networking.Service;
 import com.scaledrone.lib.Listener;
 import com.scaledrone.lib.Member;
 import com.scaledrone.lib.Room;
 import com.scaledrone.lib.RoomListener;
 import com.scaledrone.lib.Scaledrone;
 
+import java.util.List;
 import java.util.Random;
+
+import javax.inject.Inject;
 
 public class Chat extends AppCompatActivity implements RoomListener {
 
@@ -36,6 +41,10 @@ public class Chat extends AppCompatActivity implements RoomListener {
 
     private UserModel user;
     private String activityId;
+
+    @Inject
+    public Service service;
+    ChatPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +104,18 @@ public class Chat extends AppCompatActivity implements RoomListener {
                 System.err.println(reason);
             }
         });
+
+        presenter = new ChatPresenter(service);
     }
 
     public void sendMessage(View view) {
         String message = editText.getText().toString();
         if (message.length() > 0) {
 
+            message = user.getId() + ";" + message;
+
             Log.d("Log", " Room message Name = " + roomName);
+            Log.d("Log", " Message Name = " + message);
 
             scaledrone.publish(roomName, message);
             editText.getText().clear();
@@ -120,6 +134,38 @@ public class Chat extends AppCompatActivity implements RoomListener {
         System.err.println(ex);
     }
 
+    public void getMessageHistorial(String activityId, String messageCount) {
+        String auth = DataUtils.getAuthToken((Context) this);
+
+        List<String> messageHistorial = presenter.getHistorial(activityId, messageCount, auth);
+
+        for (int i = 0; i < messageHistorial.size(); i++) {
+            try {
+
+                String elementMess = messageHistorial.get(i);
+
+                String messUserId[] = json.asText().split(";");
+
+                UserModel messageUser = presenter.getProfileInfo(messUserId[0], auth);
+
+                final MemberData data = new MemberData(messageUser.getCompleteName(), getRandomColor());
+
+                boolean belongsToCurrentUser = user.getId().equals(messUserId[0]);
+                final Message message = new Message(messUserId[1], data, belongsToCurrentUser);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageAdapter.add(message);
+                        messagesView.setSelection(messagesView.getCount() - 1);
+                    }
+                });
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void onMessage(Room room, final JsonNode json, final Member member) {
         final ObjectMapper mapper = new ObjectMapper();
@@ -129,8 +175,13 @@ public class Chat extends AppCompatActivity implements RoomListener {
 
             final MemberData data = mapper.treeToValue(member.getClientData(), MemberData.class);
             Log.d("Log", " Member Data " + data.toString());
-            boolean belongsToCurrentUser = member.getId().equals(scaledrone.getClientID());
-            final Message message = new Message(json.asText(), data, belongsToCurrentUser);
+
+            String messUserId[] = json.asText().split(";");
+            Log.d("Log", " User Id from message = " + messUserId[0]);
+
+            boolean belongsToCurrentUser = user.getId().equals(messUserId[0]);
+            final Message message = new Message(messUserId[1], data, belongsToCurrentUser);
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -141,16 +192,6 @@ public class Chat extends AppCompatActivity implements RoomListener {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-    }
-
-    private String getRandomName() {
-        String[] adjs = {"autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"};
-        String[] nouns = {"waterfall", "river", "breeze", "moon", "rain", "wind", "sea", "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn", "glitter", "forest", "hill", "cloud", "meadow", "sun", "glade", "bird", "brook", "butterfly", "bush", "dew", "dust", "field", "fire", "flower", "firefly", "feather", "grass", "haze", "mountain", "night", "pond", "darkness", "snowflake", "silence", "sound", "sky", "shape", "surf", "thunder", "violet", "water", "wildflower", "wave", "water", "resonance", "sun", "wood", "dream", "cherry", "tree", "fog", "frost", "voice", "paper", "frog", "smoke", "star"};
-        return (
-            adjs[(int) Math.floor(Math.random() * adjs.length)] +
-            "_" +
-            nouns[(int) Math.floor(Math.random() * nouns.length)]
-        );
     }
 
     private String getRandomColor() {
