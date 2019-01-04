@@ -147,7 +147,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 tvName.setText(user.getCompleteName());
 
             if (tvInfo != null)
-                tvInfo.setText(user.getPassword());
+                tvInfo.setText(user.getPoints()+" "+getString(R.string.points));
 
             if (civ != null)
                 Glide.with(this).load(user.getProfilePic()).into(civ);
