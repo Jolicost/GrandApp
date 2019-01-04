@@ -46,6 +46,10 @@ public class UserModel {
     @Expose
     private String id;
 
+    @SerializedName("points")
+    @Expose
+    private int points;
+
     public UserModel() {
         notifications = new NotificationsModel();
     }
@@ -132,5 +136,13 @@ public class UserModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }
