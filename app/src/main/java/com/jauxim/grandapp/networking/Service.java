@@ -13,6 +13,7 @@ import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
+import com.jauxim.grandapp.models.MessageModel;
 import com.jauxim.grandapp.models.PhoneModel;
 import com.jauxim.grandapp.models.RateModel;
 import com.jauxim.grandapp.models.RegisterModel;
@@ -727,13 +728,13 @@ public class Service {
         return networkService.getHistorial(activityId, messageCount, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<String>>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<MessageModel>>>() {
                     @Override
-                    public Observable<? extends List<String>> call(Throwable throwable) {
+                    public Observable<? extends List<MessageModel>> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<List<String>>() {
+                .subscribe(new Subscriber<List<MessageModel>>() {
                     @Override
                     public void onCompleted() {
 
@@ -746,7 +747,7 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(List<String> messageList) {
+                    public void onNext(List<MessageModel> messageList) {
                         callback.onSuccess(messageList);
 
                     }
@@ -868,7 +869,7 @@ public class Service {
     }
 
     public interface MessageCallback {
-        void onSuccess(List<String> messageList);
+        void onSuccess(List<MessageModel> messageList);
 
         void onError(NetworkError networkError);
     }

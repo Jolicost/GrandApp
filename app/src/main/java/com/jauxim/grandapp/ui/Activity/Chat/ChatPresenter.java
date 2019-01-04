@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.models.MessageModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
@@ -18,7 +19,7 @@ public class ChatPresenter {
     private final Service service;
     private CompositeSubscription subscriptions;
 
-    private List<String> messageHistorial;
+    private List<MessageModel> messageHistorial;
     private UserModel userInfo;
 
     public ChatPresenter(Service service) {
@@ -27,10 +28,10 @@ public class ChatPresenter {
     }
 
 
-    public List<String> getHistorial(String activityId, String messageCount, String auth) {
+    public List<MessageModel> getHistorial(String activityId, String messageCount, String auth) {
         Subscription subscription = service.getHistorial(activityId, messageCount, new Service.MessageCallback() {
             @Override
-            public void onSuccess(List<String> messageList) {
+            public void onSuccess(List<MessageModel> messageList) {
                 messageHistorial = messageList;
             }
 

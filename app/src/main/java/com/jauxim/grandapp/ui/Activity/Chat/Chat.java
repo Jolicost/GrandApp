@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.models.MessageModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.scaledrone.lib.Listener;
@@ -106,6 +107,8 @@ public class Chat extends AppCompatActivity implements RoomListener {
         });
 
         presenter = new ChatPresenter(service);
+
+        getMessageHistorial(activityId, "5");
     }
 
     public void sendMessage(View view) {
@@ -135,34 +138,42 @@ public class Chat extends AppCompatActivity implements RoomListener {
     }
 
     public void getMessageHistorial(String activityId, String messageCount) {
-        String auth = DataUtils.getAuthToken((Context) this);
+        String auth = DataUtils.getAuthToken( this);
 
-        List<String> messageHistorial = presenter.getHistorial(activityId, messageCount, auth);
+        Log.d("Log", " Historial 1");
+
+        List<MessageModel> messageHistorial = presenter.getHistorial(activityId, messageCount, auth);
+
+        Log.d("Log", " Historial 2");
 
         for (int i = 0; i < messageHistorial.size(); i++) {
-            try {
 
-                String elementMess = messageHistorial.get(i);
+            MessageModel elementMess = messageHistorial.get(i);
 
-                String messUserId[] = json.asText().split(";");
+            Log.d("Log", " Historial 3 " + elementMess.getData());
 
-                UserModel messageUser = presenter.getProfileInfo(messUserId[0], auth);
+            String messUserId[] = elementMess.getData().split(";");
 
-                final MemberData data = new MemberData(messageUser.getCompleteName(), getRandomColor());
+            UserModel messageUser = presenter.getProfileInfo(messUserId[0], auth);
 
-                boolean belongsToCurrentUser = user.getId().equals(messUserId[0]);
-                final Message message = new Message(messUserId[1], data, belongsToCurrentUser);
+            Log.d("Log", " Historial 4");
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        messageAdapter.add(message);
-                        messagesView.setSelection(messagesView.getCount() - 1);
-                    }
-                });
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+            final MemberData data = new MemberData(messageUser.getCompleteName(), getRandomColor());
+
+            Log.d("Log", " Historial 5");
+
+            boolean belongsToCurrentUser = user.getId().equals(messUserId[0]);
+            final Message message = new Message(messUserId[1], data, belongsToCurrentUser);
+
+            Log.d("Log", " Historial 6 " + message.getText());
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    messageAdapter.add(message);
+                    messagesView.setSelection(messagesView.getCount() - 1);
+                }
+            });
         }
     }
 
