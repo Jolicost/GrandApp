@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.Utils;
@@ -180,6 +181,7 @@ public class Register extends BaseActivity implements RegisterView {
     @Override
     public void startMainActivity() {
         Intent intent = new Intent(this, Main.class);
+        intent.putExtra(Constants.NEW_USER, true);
         startActivity(intent);
     }
 

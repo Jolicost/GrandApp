@@ -103,6 +103,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         presenter.updateLocation();
         chargeUserWithLogout();
         setUp();
+        initHelpIfNeeded();
     }
 
     public void chargeUserWithLogout() {
@@ -247,11 +248,6 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     }
 
     @Override
-    public void getActivityListSuccess(List<ActivityListItemModel> activities) {
-        //TODO: inflate the list
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         unlockDrawer();
@@ -365,7 +361,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 .enableFadeAnimation(true)
                 .performClick(false)
                 .setShape(shapeType)
-                .setDelayMillis(1000)
+                .setDelayMillis(200)
                 .setInfoText(text)
                 .setTarget(view)
                 .enableIcon(true)
@@ -377,18 +373,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     materialIntroView.dismiss();
-
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                onUserClicked(id);
-                            } catch (NullPointerException exception) {
-                            }
-                        }
-                    }, 0);
-
+                    onUserClicked(id);
                 }
                 return false;
             }
@@ -407,5 +392,13 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
 
     private String getStrings(int id1, int id2) {
         return getString(id1) + "\n\n" + getString(id2);
+    }
+
+    private void initHelpIfNeeded(){
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            if (getIntent().getExtras().getBoolean(Constants.NEW_USER)){
+                openGuide();
+            }
+        }
     }
 }

@@ -17,8 +17,6 @@ public interface MainView {
 
     void onFailure(String appErrorMessage);
 
-    void getActivityListSuccess(List<ActivityListItemModel> activities);
-
     void lockDrawer();
 
     void unlockDrawer();
