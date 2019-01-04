@@ -2,9 +2,13 @@ package com.jauxim.grandapp.ui.Activity.ActivityProfile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,11 +22,14 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.AchievementsModel;
+import com.jauxim.grandapp.models.BlockModel;
+import com.jauxim.grandapp.models.ChangePasswordModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEditProfile.ActivityEditProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,13 +75,22 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @BindView(R.id.llInfoUser)
     LinearLayout llInfoUser;
 
+    @BindView(R.id.llBlocks)
+    LinearLayout llBlocks;
+
+    @BindView(R.id.list_blocked_contacts)
+    RecyclerView blockedRV;
+
     private String profileId; //id of the user profile
     private UserModel user; //user logged
 
     private PopupMenu pop;
-    boolean isBlocked;
+    private boolean isBlocked;
+    private ChangePasswordDialog cpd;
 
-    ActivityProfilePresenter presenter;
+    private List<BlockModel> blockList = new ArrayList<>();
+    private ProfileBlocksAdapter blockAdapter;
+    private ActivityProfilePresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +103,7 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         ivSettings.setVisibility(View.GONE);
         llNotifications.setVisibility(View.GONE);
         llInfoUser.setVisibility(View.GONE);
+        llBlocks.setVisibility(View.GONE);
 
         pop = new PopupMenu(ActivityProfile.this, ivSettings);
         pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -109,6 +126,11 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         if (getIntent() != null && getIntent().getExtras() != null) {
             profileId = getIntent().getExtras().getString(Constants.PROFILE_ID);
         }
+
+        blockAdapter = new ProfileBlocksAdapter(ActivityProfile.this, blockList);
+        blockedRV.setLayoutManager(new LinearLayoutManager(this));
+        blockedRV.setItemAnimator(new DefaultItemAnimator());
+        blockedRV.setAdapter(blockAdapter);
 
         presenter = new ActivityProfilePresenter(service, this);
 
@@ -144,6 +166,12 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         pop.show();
     }
 
+    @OnClick(R.id.tvChangePassword)
+    void changePasswordClick() {
+        cpd = new ChangePasswordDialog(this);
+        cpd.show();
+    }
+
     @Override
     public void getProfileInfo(UserModel userModel) {
         user = DataUtils.getUserInfo(this); //user logged
@@ -151,10 +179,13 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         tvCompleteName.setText(userModel.getCompleteName());
         Glide.with(this).load(userModel.getProfilePic()).into(ivProfilePic);
 
+        List<String> b = user.getBlocked();
+
         if (!TextUtils.isEmpty(userModel.getId()) && userModel.getId().equals(user.getId())){
             ivEdit.setVisibility(View.VISIBLE);
             llNotifications.setVisibility(View.VISIBLE);
             llInfoUser.setVisibility(View.VISIBLE);
+            llBlocks.setVisibility(View.VISIBLE);
 
             if (user.getNotifications() != null) {
                 swNearActivityCreated.setChecked(user.getNotifications().getNearActivityCreated());
@@ -166,7 +197,6 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         }
         else {
             ivSettings.setVisibility(View.VISIBLE);
-            List<String> b = user.getBlocked();
 
             if (blocked(b, userModel.getId())) {
                 isBlocked = true;
@@ -178,6 +208,13 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
             }
         }
         presenter.getAchievements(profileId);
+
+        blockList.clear();
+        blockAdapter.notifyDataSetChanged();
+        for (int i = 0; i < b.size(); ++i){
+            presenter.getName(b.get(i));
+        }
+
     }
 
     private boolean blocked(List<String> b, String userId) {
@@ -210,6 +247,43 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     }
 
     @Override
+    public void setBlockedUsers(BlockModel blockModel) {
+        blockList.add(blockModel);
+        blockAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void resetErrors() {
+        cpd.resetErrors();
+    }
+
+    @Override
+    public void showOldPassError(int pass_error) {
+        cpd.showOldPassError(getString(pass_error));
+    }
+
+    @Override
+    public void showNewPassError(int pass_error) {
+        cpd.showNewPassError(getString(pass_error));
+    }
+
+    @Override
+    public void showNewRePassError(int pass_error) {
+        cpd.showNewRePassError(getString(pass_error));
+    }
+
+    @Override
+    public void showPass2Error(int pass2_error) {
+        cpd.showPass2Error(getString(pass2_error));
+    }
+
+    @Override
+    public void passwordChanged(int change_password_success) {
+        cpd.dismiss();
+        Dialog.createDialog(this).title(getString(change_password_success)).description(getString(change_password_success)).build();
+    }
+
+    @Override
     public void editProfile() {
         Intent intent = new Intent(this, ActivityEditProfile.class);
         startActivity(intent);
@@ -224,5 +298,9 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     public void onResume(){
         super.onResume();
         presenter.getProfileInfo(profileId);
+    }
+
+    public void changePassword(String pOld, String pNew, String pNewRe) {
+        presenter.changePassword(pOld, pNew, pNewRe);
     }
 }

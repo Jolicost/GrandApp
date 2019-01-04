@@ -7,6 +7,7 @@ import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.ChangePasswordModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.FilterActivityModel;
 import com.jauxim.grandapp.models.LocationModel;
@@ -394,7 +395,6 @@ public class Service {
     }
 
     public Subscription forgotPassword(PhoneModel phone, final ForgotPasswordCallback callback) {
-        Log.d("phoneNumber"," phone: "+phone.getPhone());
         return networkService.forgotPassword(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -786,6 +786,35 @@ public class Service {
                 });
     }
 
+    public Subscription changePassword(ChangePasswordModel cpm, final ChangePasswordCallback callback, String auth) {
+        return networkService.changePassword(cpm, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+                    }
+                });
+    }
+
     public interface GetCityListCallback {
         void onSuccess(CityListResponse cityListResponse);
 
@@ -902,6 +931,12 @@ public class Service {
 
     public interface AchievementsCallback {
         void onSuccess(List<AchievementsModel> achievementsList);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface ChangePasswordCallback {
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }

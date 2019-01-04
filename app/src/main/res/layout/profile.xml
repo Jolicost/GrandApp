@@ -92,9 +92,9 @@
         android:layout_height="wrap_content"
         android:fillViewport="true">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -343,6 +343,22 @@
                             android:layout_height="wrap_content"
                             android:textSize="21dp" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvChangePassword"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/change_password"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="21dp" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -422,11 +438,49 @@
                             android:layout_width="wrap_content"
                             android:clickable="false"
                             android:layout_alignParentRight="true"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="40dp"/>
+                            android:layout_height="wrap_content" />
 
                     </RelativeLayout>
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llBlocks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="40dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/blocked_users"
+                            android:textColor="@color/color_dark_text"
+                            android:textSize="32dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/list_blocked_contacts"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
