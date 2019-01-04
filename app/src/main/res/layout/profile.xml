@@ -343,6 +343,22 @@
                             android:layout_height="wrap_content"
                             android:textSize="21dp" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvChangePassword"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/change_password"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="21dp" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout

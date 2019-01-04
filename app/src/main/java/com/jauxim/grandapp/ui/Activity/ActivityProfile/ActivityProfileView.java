@@ -30,4 +30,16 @@ public interface ActivityProfileView {
     void showAchievements(List<AchievementsModel> achievementsList);
 
     void setBlockedUsers(BlockModel blockModel);
+
+    void resetErrors();
+
+    void showOldPassError(int pass_error);
+
+    void showNewPassError(int pass_error);
+
+    void showNewRePassError(int pass_error);
+
+    void showPass2Error(int pass2_error);
+
+    void passwordChanged(int change_password_success);
 }

@@ -23,6 +23,7 @@ import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.BlockModel;
+import com.jauxim.grandapp.models.ChangePasswordModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEditProfile.ActivityEditProfile;
@@ -84,7 +85,8 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     private UserModel user; //user logged
 
     private PopupMenu pop;
-    boolean isBlocked;
+    private boolean isBlocked;
+    private ChangePasswordDialog cpd;
 
     private List<BlockModel> blockList = new ArrayList<>();
     private ProfileBlocksAdapter blockAdapter;
@@ -162,6 +164,12 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     @OnClick(R.id.ivSettings)
     void settingsButtonClick() {
         pop.show();
+    }
+
+    @OnClick(R.id.tvChangePassword)
+    void changePasswordClick() {
+        cpd = new ChangePasswordDialog(this);
+        cpd.show();
     }
 
     @Override
@@ -245,6 +253,37 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     }
 
     @Override
+    public void resetErrors() {
+        cpd.resetErrors();
+    }
+
+    @Override
+    public void showOldPassError(int pass_error) {
+        cpd.showOldPassError(getString(pass_error));
+    }
+
+    @Override
+    public void showNewPassError(int pass_error) {
+        cpd.showNewPassError(getString(pass_error));
+    }
+
+    @Override
+    public void showNewRePassError(int pass_error) {
+        cpd.showNewRePassError(getString(pass_error));
+    }
+
+    @Override
+    public void showPass2Error(int pass2_error) {
+        cpd.showPass2Error(getString(pass2_error));
+    }
+
+    @Override
+    public void passwordChanged(int change_password_success) {
+        cpd.dismiss();
+        Dialog.createDialog(this).title(getString(change_password_success)).description(getString(change_password_success)).build();
+    }
+
+    @Override
     public void editProfile() {
         Intent intent = new Intent(this, ActivityEditProfile.class);
         startActivity(intent);
@@ -259,5 +298,9 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
     public void onResume(){
         super.onResume();
         presenter.getProfileInfo(profileId);
+    }
+
+    public void changePassword(String pOld, String pNew, String pNewRe) {
+        presenter.changePassword(pOld, pNew, pNewRe);
     }
 }

@@ -4,6 +4,7 @@ package com.jauxim.grandapp.networking;
 import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.ChangePasswordModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.LocationModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
@@ -65,6 +66,9 @@ public interface NetworkService {
 
     @POST("/forgotPassword")
     Observable<Void> forgotPassword(@Body PhoneModel phone);
+
+    @POST("/changePassword")
+    Observable<Void> changePassword(@Body ChangePasswordModel cpm, @Header(authKey) String auth);
 
     @POST("/login/google")
     Observable<LoginResponseModel> getLoginGoogleToken(@Body UserModel userModel);
