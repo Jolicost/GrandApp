@@ -13,7 +13,7 @@ public interface ActivityLoginView {
 
     void showLoginError(int login_error);
 
-    void startMainActivity();
+    void startMainActivity(boolean newUser);
 
     void resetErrors();
 

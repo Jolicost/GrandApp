@@ -35,6 +35,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.hbb20.CountryCodePicker;
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.models.UserModel;
@@ -211,8 +212,9 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     }
 
     @Override
-    public void startMainActivity() {
+    public void startMainActivity(boolean newUser) {
         Intent intent = new Intent(this, Main.class);
+        intent.putExtra(Constants.NEW_USER, newUser);
         startActivity(intent);
         finishAffinity();
     }

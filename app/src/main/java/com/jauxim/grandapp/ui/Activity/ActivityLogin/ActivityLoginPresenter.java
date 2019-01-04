@@ -54,7 +54,7 @@ public class ActivityLoginPresenter {
                 Log.d("authSaving", "is token?" + loginResponseModel.isAuth()+" getted token: "+loginResponseModel.getToken());
                 DataUtils.saveUserModel((Context)view, loginResponseModel.getUser());
                 view.removeWait();
-                view.startMainActivity();
+                view.startMainActivity(false);
             }
 
             @Override
@@ -76,7 +76,7 @@ public class ActivityLoginPresenter {
                 Log.d("authSaving", "is token?" + loginResponseModel.isAuth()+" getted token: "+loginResponseModel.getToken());
                 DataUtils.saveUserModel((Context)view, loginResponseModel.getUser());
                 view.removeWait();
-                view.startMainActivity();
+                view.startMainActivity(loginResponseModel.getNewUser());
             }
 
             @Override
@@ -98,7 +98,7 @@ public class ActivityLoginPresenter {
                 Log.d("authSaving", "is token?" + loginResponseModel.isAuth()+" getted token: "+loginResponseModel.getToken());
                 DataUtils.saveUserModel((Context)view, loginResponseModel.getUser());
                 view.removeWait();
-                view.startMainActivity();
+                view.startMainActivity(loginResponseModel.getNewUser());
             }
 
             @Override
