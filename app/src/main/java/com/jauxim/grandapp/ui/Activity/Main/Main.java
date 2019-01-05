@@ -337,6 +337,8 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         this.filterActivities = filter;
         if (activitiesFragment!=null && activitiesFragment.isAdded()){
             activitiesFragment.setFilter(filterActivities);
+            if (filterDialog!=null && filter==null)
+                filterDialog = new FilterDialog(this);
         }
     }
 

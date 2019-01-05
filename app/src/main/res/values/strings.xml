@@ -167,6 +167,9 @@
     <string name="guide_filter_title">Filter activities</string>
     <string name="guide_filter_description">Press this button to add or remove any filter for the main activities list</string>
     <string name="points">points</string>
+    <string name="reset_filter">RESET FILTER</string>
+    <string name="no_activities_description">There aren\'t any activity near or you have your filter too strong. Try it again reseteing the filter values</string>
+    <string name="no_activities_title">No Activities found</string>
 
     <string-array name="filter_sort">
         <item>Create date desc</item>

@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 
@@ -47,6 +48,9 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
     @BindView(R.id.srlRefresh)
     SwipeRefreshLayout srlRefresh;
+
+    @BindView(R.id.layout_no_activities)
+    View layoutNoActivities;
 
     private List<ActivityListItemModel> activitiesList = new ArrayList<>();
     private ActivityAdapter mAdapter;
@@ -107,13 +111,11 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activityesRecyclerView.setAdapter(mAdapter);
 
         presenter = new ActivityListPresenter(service, this);
-        presenter.getActivityList(mode, page, filter);
 
         srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 0;
-                scrollListener.resetState();
+                resetPager();
                 presenter.getActivityList(mode, page, filter);
             }
         });
@@ -156,6 +158,12 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
         activitiesList.addAll(activities);
         mAdapter.notifyDataSetChanged();
         srlRefresh.setRefreshing(false);
+
+        if (activitiesList.size()==0){
+            layoutNoActivities.setVisibility(View.VISIBLE);
+        }else{
+            layoutNoActivities.setVisibility(View.GONE);
+        }
     }
 
     private void updateLocation() {
@@ -171,8 +179,30 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
     public void setFilter(FilterActivityModel filter){
         this.filter = filter;
+        resetPager();
+        presenter.getActivityList(mode, page, filter);
+    }
+
+    @OnClick(R.id.bResetFilter)
+    public void resetFilter(){
+        if (getActivity() instanceof Main){
+            ((Main)getActivity()).updateFilter(null);
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d("onResumeList", "on resume list activities");
+        if (presenter!=null) {
+            Log.d("onResumeList", "presenter not null");
+            resetPager();
+            presenter.getActivityList(mode, page, filter);
+        }
+    }
+
+    private void resetPager(){
         page = 0;
         scrollListener.resetState();
-        presenter.getActivityList(mode, page, filter);
     }
 }

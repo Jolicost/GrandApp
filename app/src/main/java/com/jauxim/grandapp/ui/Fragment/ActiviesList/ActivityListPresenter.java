@@ -48,7 +48,7 @@ public class ActivityListPresenter {
                 @Override
                 public void onSuccess(List<ActivityListItemModel> activities) {
                     view.removeWait();
-                    Log.d("activities size", String.valueOf(activities.size()));
+                    Log.d("onResumeList", "size: "+String.valueOf(activities.size()));
                     view.getActivityListSuccess(activities);
                 }
 
@@ -68,6 +68,7 @@ public class ActivityListPresenter {
                 @Override
                 public void onSuccess(List<ActivityListItemModel> activities) {
                     view.removeWait();
+                    Log.d("onResumeList", "size: "+String.valueOf(activities.size()));
                     view.getActivityListSuccess(activities);
                 }
 
