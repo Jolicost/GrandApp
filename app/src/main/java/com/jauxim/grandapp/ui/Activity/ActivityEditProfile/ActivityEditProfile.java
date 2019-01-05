@@ -72,6 +72,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
         ButterKnife.bind(this);
 
         presenter = new ActivityEditProfilePresenter(service, this);
+        presenter.getProfileInfo();
     }
 
     @OnClick(R.id.ivClose)
@@ -162,9 +163,4 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
         }
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        presenter.getProfileInfo();
-    }
 }
