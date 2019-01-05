@@ -55,6 +55,9 @@
     <string name="invalid_time_title">Invalid start time</string>
     <string name="invalid_time_description">The start time is not choosed or its already past. Please, try it again</string>
 
+    <string name="invalid_endtime_title">Invalid end time</string>
+    <string name="invalid_endtime_description">The end time is not choosed or its lower than start time. Please, try it again</string>
+
     <string name="invalid_capacity_title">Invalid Capacity</string>
     <string name="invalid_capacity_description">Capacity not valid or is empty. Please try it again</string>
 

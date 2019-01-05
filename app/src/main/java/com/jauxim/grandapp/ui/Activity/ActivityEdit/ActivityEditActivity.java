@@ -250,6 +250,11 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                     Dialog.createDialog(this).title(getString(R.string.invalid_time_title)).description(getString(R.string.invalid_time_description)).build();
                     return false;
                 }
+
+                if (timeEnd==null ||timeEnd < timeStart){
+                    Dialog.createDialog(this).title(getString(R.string.invalid_endtime_title)).description(getString(R.string.invalid_endtime_description)).build();
+                    return false;
+                }
                 break;
             case STEP_CAPACITYPRICE:
                 capacity = Long.parseLong(getInputCapacity());
