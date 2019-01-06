@@ -103,6 +103,7 @@
                         android:id="@+id/re_completeName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:importantForAutofill="noExcludeDescendants"
                         android:hint="Complete Name" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -116,6 +117,7 @@
                         android:id="@+id/re_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:importantForAutofill="noExcludeDescendants"
                         android:hint="E-mail"
                         android:inputType="textPersonName" />
                 </android.support.design.widget.TextInputLayout>

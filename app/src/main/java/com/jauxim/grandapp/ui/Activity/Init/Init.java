@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -36,6 +37,9 @@ public class Init extends BaseActivity implements InitView {
     @BindView(R.id.iv2)
     ImageView ivLogo;
 
+    @BindView(R.id.initViewPager)
+    ViewPager initViewPager;
+
     private InitPresenter presenter;
 
     @Override
@@ -48,16 +52,18 @@ public class Init extends BaseActivity implements InitView {
         getDeps().inject(this);
         ButterKnife.bind(this);
 
+
         presenter = new InitPresenter(service, this);
+        initViewPager.setAdapter(new InitialViewPagerAdapter(this));
     }
 
     @OnClick(R.id.bLoginInit)
-    public void loginClick(){
+    public void loginClick() {
         presenter.redirect_to_login();
     }
 
     @OnClick(R.id.bRegisterInit)
-    public void registerClick(){
+    public void registerClick() {
         presenter.redirect_to_register();
     }
 
@@ -78,14 +84,14 @@ public class Init extends BaseActivity implements InitView {
 
     @Override
     public void startLoginActivity() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Intent intent = new Intent(Init.this, ActivityLogin.class);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     Init.this,
                     ivLogo,
                     ViewCompat.getTransitionName(ivLogo));
             startActivity(intent, options.toBundle());
-        }else {
+        } else {
             Intent intent = new Intent(this, ActivityLogin.class);
             startActivity(intent);
         }
@@ -93,14 +99,14 @@ public class Init extends BaseActivity implements InitView {
 
     @Override
     public void startRegisterActivity() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Intent intent = new Intent(Init.this, Register.class);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     Init.this,
                     ivLogo,
                     ViewCompat.getTransitionName(ivLogo));
             startActivity(intent, options.toBundle());
-        }else {
+        } else {
             Intent intent = new Intent(this, Register.class);
             startActivity(intent);
         }

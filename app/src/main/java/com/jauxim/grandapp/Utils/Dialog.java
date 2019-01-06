@@ -172,7 +172,8 @@ public class Dialog {
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
-                    dismissListener.onDismiss(null);
+                    if (dismissListener!=null)
+                        dismissListener.onDismiss(null);
                 }
             });
         }

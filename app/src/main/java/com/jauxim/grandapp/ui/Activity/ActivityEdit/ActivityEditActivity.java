@@ -17,7 +17,6 @@ import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.SingleShotLocationProvider;
 import com.jauxim.grandapp.models.ActivityModel;
-import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
@@ -68,6 +67,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     private Long capacity;
     private Long price;
+    private String category;
 
     private ActivityEditPresenter presenter;
 
@@ -190,6 +190,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
         model.setCapacity(capacity);
         model.setPrice(price);
         model.setTimestampEnd(timeEnd);
+        model.setActivityType(category);
 
     }
 
@@ -249,10 +250,16 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
                     Dialog.createDialog(this).title(getString(R.string.invalid_time_title)).description(getString(R.string.invalid_time_description)).build();
                     return false;
                 }
+
+                if (timeEnd==null ||timeEnd < timeStart){
+                    Dialog.createDialog(this).title(getString(R.string.invalid_endtime_title)).description(getString(R.string.invalid_endtime_description)).build();
+                    return false;
+                }
                 break;
             case STEP_CAPACITYPRICE:
                 capacity = Long.parseLong(getInputCapacity());
                 price = Long.parseLong(getInputPrice());
+                category = getInputCategory();
                 if ((capacity == null || capacity <= 0 ) && !demo_edit_mode) {
                     Dialog.createDialog(this).title(getString(R.string.invalid_capacity_title)).description(getString(R.string.invalid_capacity_description)).build();
                     return false;
@@ -372,6 +379,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             return null;
         }
 
+        private String getCategory() {
+            if (capacityPriceFragment != null)
+                return capacityPriceFragment.getCategory();
+            return null;
+        }
+
         public void updateAndSetModel(){
             updateModel();
             if (previewFragment!=null)
@@ -396,6 +409,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
             if (capacityPriceFragment!=null) {
                 capacityPriceFragment.setCapacity(activityModel.getCapacity());
                 capacityPriceFragment.setPrice(activityModel.getPrice());
+                capacityPriceFragment.setCategory(activityModel.getActivityType());
             }
         }
     }
@@ -420,6 +434,12 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
     public String getInputPrice() {
         if (activityPageAdapter != null)
             return activityPageAdapter.getPrice();
+        return null;
+    }
+
+    public String getInputCategory() {
+        if (activityPageAdapter != null)
+            return activityPageAdapter.getCategory();
         return null;
     }
 

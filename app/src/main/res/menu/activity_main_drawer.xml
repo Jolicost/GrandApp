@@ -29,6 +29,13 @@
                 android:title="@string/emergency_contacts" />
 
             <item
+                android:id="@+id/help"
+                android:checkable="false"
+                android:checked="false"
+                android:icon="@drawable/ic_help_outline_black_24dp"
+                android:title="@string/guide" />
+
+            <item
                 android:id="@+id/logout"
                 android:icon="@drawable/ic_power_off"
                 android:title="@string/log_out" />

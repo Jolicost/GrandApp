@@ -4,6 +4,7 @@ package com.jauxim.grandapp.networking;
 import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.ChangePasswordModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.LocationModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
@@ -43,10 +44,17 @@ public interface NetworkService {
     @POST("/normal/activities")
     Observable<Void> createActivityInfo(@Body ActivityModel activityInfo, @Header(authKey) String auth);
 
+    @PUT("/normal/activities")
+    Observable<Void> editActivityInfo(@Body ActivityModel activityInfo, @Header(authKey) String auth);
+
     @GET("/normal/activities")
     Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth, @Query("limit") int limit, @Query("skip") int skip,
                                                             @Query("minPrice") Long minPrice, @Query("maxPrice") Long maxPrice, @Query("sort") int sort,
-                                                            @Query("distMin") Long distMin, @Query("distMax") Long distMax, @Query("title") String name);
+                                                            @Query("minDist") Long distMin, @Query("maxDist") Long distMax, @Query("title") String name,
+                                                            @Query("activityType") String type);
+
+    @GET("/normal/own/activities")
+    Observable<List<ActivityListItemModel>> getMyActivities(@Header(authKey) String auth);
 
     @POST("/login")
     Observable<LoginResponseModel> getLoginToken(@Body UserModel userModel);
@@ -59,6 +67,9 @@ public interface NetworkService {
 
     @POST("/forgotPassword")
     Observable<Void> forgotPassword(@Body PhoneModel phone);
+
+    @POST("/changePassword")
+    Observable<Void> changePassword(@Body ChangePasswordModel cpm, @Header(authKey) String auth);
 
     @POST("/login/google")
     Observable<LoginResponseModel> getLoginGoogleToken(@Body UserModel userModel);

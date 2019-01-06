@@ -76,5 +76,6 @@ dependencies {
     implementation 'com.pusher:push-notifications-android:1.0.2'
     compile 'com.scaledrone:scaledrone-java:0.5.0'
 
+    implementation 'com.github.iammert:MaterialIntroView:1.6.0'
 }
 apply plugin: 'com.google.gms.google-services'

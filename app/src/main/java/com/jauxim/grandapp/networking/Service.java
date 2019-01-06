@@ -1,11 +1,13 @@
 package com.jauxim.grandapp.networking;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.models.AchievementsModel;
 import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.ActivityModel;
+import com.jauxim.grandapp.models.ChangePasswordModel;
 import com.jauxim.grandapp.models.EmergencyContactsModel;
 import com.jauxim.grandapp.models.FilterActivityModel;
 import com.jauxim.grandapp.models.LocationModel;
@@ -69,34 +71,65 @@ public class Service {
                 });
     }
 
-    public Subscription createActivityInfo(ActivityModel activityInfo, final ActivityCreateCallback callback,String auth) {
-        return networkService.createActivityInfo(activityInfo,auth)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
-                    @Override
-                    public Observable<? extends Void> call(Throwable throwable) {
-                        return Observable.error(throwable);
-                    }
-                })
-                .subscribe(new Subscriber<Void>() {
-                    @Override
-                    public void onCompleted() {
+    public Subscription createOrEditActivityInfo(ActivityModel activityInfo, final ActivityCreateCallback callback,String auth) {
 
-                    }
+        if (activityInfo!=null && !TextUtils.isEmpty(activityInfo.getId())){
+            return networkService.editActivityInfo(activityInfo, auth)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                        @Override
+                        public Observable<? extends Void> call(Throwable throwable) {
+                            return Observable.error(throwable);
+                        }
+                    })
+                    .subscribe(new Subscriber<Void>() {
+                        @Override
+                        public void onCompleted() {
 
-                    @Override
-                    public void onError(Throwable e) {
-                        callback.onError(new NetworkError(e));
+                        }
 
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            callback.onError(new NetworkError(e));
 
-                    @Override
-                    public void onNext(Void v) {
-                        callback.onSuccess();
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onNext(Void v) {
+                            callback.onSuccess();
+
+                        }
+                    });
+        }else {
+            return networkService.createActivityInfo(activityInfo, auth)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                        @Override
+                        public Observable<? extends Void> call(Throwable throwable) {
+                            return Observable.error(throwable);
+                        }
+                    })
+                    .subscribe(new Subscriber<Void>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            callback.onError(new NetworkError(e));
+
+                        }
+
+                        @Override
+                        public void onNext(Void v) {
+                            callback.onSuccess();
+
+                        }
+                    });
+        }
     }
 
     public Subscription getActivityList(final ActivityListCallback callback, String auth, int skip, FilterActivityModel filter) {
@@ -106,6 +139,7 @@ public class Service {
         Long maxDist = 0L;
         int sortType = 0;
         String name = null;
+        String type = null;
 
         if (filter!=null){
             minPrice = filter.getMinPrice();
@@ -114,10 +148,11 @@ public class Service {
             maxDist = filter.getMaxDistance();
             sortType = filter.getSort();
             name = filter.getName();
+            type = filter.getCategory();
         }
 
         return networkService.getActivityList(auth, Constants.ACTIVITIES_PAGE, skip,
-                minPrice, maxPrice, sortType, minDist, maxDist, name)
+                minPrice, maxPrice, sortType, minDist, maxDist, name, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {
@@ -146,6 +181,35 @@ public class Service {
                 });
     }
 
+    public Subscription getMyActivities(final MyActivitiesCallback callback, String auth) {
+        return networkService.getMyActivities(auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<ActivityListItemModel>>>() {
+                    @Override
+                    public Observable<? extends List<ActivityListItemModel>> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<List<ActivityListItemModel>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(List<ActivityListItemModel> activityModel) {
+                        callback.onSuccess(activityModel);
+
+                    }
+                });
+    }
 
     public Subscription getCityList(final GetCityListCallback callback,String auth) {
 
@@ -332,7 +396,6 @@ public class Service {
     }
 
     public Subscription forgotPassword(PhoneModel phone, final ForgotPasswordCallback callback) {
-        Log.d("phoneNumber"," phone: "+phone.getPhone());
         return networkService.forgotPassword(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -724,6 +787,35 @@ public class Service {
                 });
     }
 
+    public Subscription changePassword(ChangePasswordModel cpm, final ChangePasswordCallback callback, String auth) {
+        return networkService.changePassword(cpm, auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
+                    @Override
+                    public Observable<? extends Void> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<Void>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new NetworkError(e));
+
+                    }
+
+                    @Override
+                    public void onNext(Void s) {
+                        callback.onSuccess();
+                    }
+                });
+    }
+
     public Subscription getHistorial(String activityId, String messageCount, final MessageCallback callback, String auth) {
         Log.d("Log", " Inside Inside Historial 1");
         return networkService.getHistorial(activityId, messageCount, auth)
@@ -792,6 +884,12 @@ public class Service {
     }
 
     public interface ActivityListCallback {
+        void onSuccess(List<ActivityListItemModel> activityModel);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface MyActivitiesCallback {
         void onSuccess(List<ActivityListItemModel> activityModel);
 
         void onError(NetworkError networkError);
@@ -871,6 +969,12 @@ public class Service {
 
     public interface MessageCallback {
         void onSuccess(List<MessageModel> messageList);
+
+        void onError(NetworkError networkError);
+    }
+
+    public interface ChangePasswordCallback {
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }

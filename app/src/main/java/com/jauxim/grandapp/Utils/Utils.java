@@ -10,8 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Base64;
+import android.view.View;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
@@ -31,6 +34,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -204,5 +208,24 @@ public class Utils {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 60, out);
         return BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+    }
+
+    public static View getToolbarNavigationIcon(Toolbar toolbar){
+        //check if contentDescription previously was set
+        boolean hadContentDescription = TextUtils.isEmpty(toolbar.getNavigationContentDescription());
+        String contentDescription = !hadContentDescription ? toolbar.getNavigationContentDescription().toString() : "navigationIcon";
+        toolbar.setNavigationContentDescription(contentDescription);
+        ArrayList<View> potentialViews = new ArrayList<View>();
+        //find the view based on it's content description, set programatically or with android:contentDescription
+        toolbar.findViewsWithText(potentialViews,contentDescription, View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION);
+        //Nav icon is always instantiated at this point because calling setNavigationContentDescription ensures its existence
+        View navIcon = null;
+        if(potentialViews.size() > 0){
+            navIcon = potentialViews.get(0); //navigation icon is ImageButton
+        }
+        //Clear content description if not previously present
+        if(hadContentDescription)
+            toolbar.setNavigationContentDescription(null);
+        return navIcon;
     }
 }

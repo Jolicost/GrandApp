@@ -55,6 +55,9 @@
     <string name="invalid_time_title">Invalid start time</string>
     <string name="invalid_time_description">The start time is not choosed or its already past. Please, try it again</string>
 
+    <string name="invalid_endtime_title">Invalid end time</string>
+    <string name="invalid_endtime_description">The end time is not choosed or its lower than start time. Please, try it again</string>
+
     <string name="invalid_capacity_title">Invalid Capacity</string>
     <string name="invalid_capacity_description">Capacity not valid or is empty. Please try it again</string>
 
@@ -107,13 +110,22 @@
     <string name="contacts">Contacts</string>
 
     <string name="fgt_pswd_title">Forget password</string>
-    <string name="fgt_pswd_description">Write the email in witch you created you account and clic SEND. Then you will receive a e-mail with the new password writed. It\'s recomendable to change your password after this process.</string>
+    <string name="fgt_pswd_description">Write the phone number in witch you created you account and clic SEND. Then you will receive an e-mail with the new password. It\'s recomendable to change your password after this process.</string>
     <string name="settings_profile">Profile</string>
     <string name="block">Block</string>
     <string name="unblock">Unblock</string>
     <string name="block_success">User blocked</string>
     <string name="unblock_success">User unblocked</string>
     <string name="achievements">Achievements</string>
+    <string name="user_info">Information</string>
+    <string name="blocked_users">Blocked Users</string>
+    <string name="change_password">Change password</string>
+    <string name="change_pswd_description">Write the actual password first and then the new password 2 times and click CHANGE.</string>
+    <string name="change">change</string>
+    <string name="password_old">Old Password</string>
+    <string name="password_new">New Password</string>
+    <string name="password_new_re">Repeat New Password</string>
+    <string name="change_password_success">Password changed</string>
 
     <string name="rate_title">Rate activity</string>
     <string name="rate_description">How would you rate this activity?</string>
@@ -143,6 +155,22 @@
     <string name="sort">Sort by</string>
     <string name="category">Category</string>
     <string name="message">Chat</string>
+    <string name="category_description">Select the category of the activity</string>
+    <string name="infinite">infinite</string>
+    <string name="guide">Guide</string>
+
+    <string name="guide_menu_title">Main menu</string>
+    <string name="guide_menu_description">Press this button to see all the features of the app</string>
+
+    <string name="guide_create_title">Create new activity</string>
+    <string name="guide_create_description">Press this button to create a new activity that will be visible by other users</string>
+
+    <string name="guide_filter_title">Filter activities</string>
+    <string name="guide_filter_description">Press this button to add or remove any filter for the main activities list</string>
+    <string name="points">points</string>
+    <string name="reset_filter">RESET FILTER</string>
+    <string name="no_activities_description">There aren\'t any activity near or you have your filter too strong. Try it again reseteing the filter values</string>
+    <string name="no_activities_title">No Activities found</string>
 
     <string-array name="filter_sort">
         <item>Create date desc</item>
@@ -156,7 +184,7 @@
     </string-array>
 
     <string-array name="filter_categories">
-        <item>All</item>
+        <item>None</item>
         <item>Cars</item>
         <item>Bikes</item>
         <item>RVs</item>

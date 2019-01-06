@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,10 +45,19 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.mobiwise.materialintro.prefs.PreferencesManager;
+import co.mobiwise.materialintro.shape.Focus;
+import co.mobiwise.materialintro.shape.FocusGravity;
+import co.mobiwise.materialintro.shape.ShapeType;
+import co.mobiwise.materialintro.view.MaterialIntroView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.jauxim.grandapp.Constants.ACTIVITY_ALL;
 import static com.jauxim.grandapp.Constants.ACTIVITY_MINE;
+import static com.jauxim.grandapp.Constants.INTRO_FOCUS_FILTER_ACT;
+import static com.jauxim.grandapp.Constants.INTRO_FOCUS_MENU;
+import static com.jauxim.grandapp.Constants.INTRO_FOCUS_NEW_ACT;
+import static com.jauxim.grandapp.Utils.Utils.getToolbarNavigationIcon;
 
 public class Main extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
@@ -73,6 +84,13 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     private ActivitiesList activitiesFragment;
     private FilterDialog filterDialog;
 
+    MaterialIntroView materialIntroView;
+
+    private View filter_menu;
+    private View hamburger_menu;
+
+    ActionBarDrawerToggle toggle;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +107,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         presenter.updateLocation();
         chargeUserWithLogout();
         setUp();
+        initHelpIfNeeded();
     }
 
     public void chargeUserWithLogout() {
@@ -105,7 +124,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
             }
         });
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -117,6 +136,8 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
 
         View headerLayout = navigationView.getHeaderView(0); // 0-index header
         setUserInfo(headerLayout);
+
+        hamburger_menu = getToolbarNavigationIcon(toolbar);
     }
 
 
@@ -130,7 +151,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
                 tvName.setText(user.getCompleteName());
 
             if (tvInfo != null)
-                tvInfo.setText(user.getPassword());
+                tvInfo.setText(user.getPoints()+" "+getString(R.string.points));
 
             if (civ != null)
                 Glide.with(this).load(user.getProfilePic()).into(civ);
@@ -141,6 +162,14 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.filter_menu, menu);
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                filter_menu = findViewById(R.id.filter);
+            }
+        });
+
         return true;
     }
 
@@ -188,11 +217,10 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
             showActivitiesListFragment(ACTIVITY_MINE);
         }else if (id == R.id.emergency_contacts) {
             showEmergencyContacts();
+        } else if (id==R.id.help){
+            openGuide();
         } else if (id == R.id.logout) {
             presenter.logout();
-        }else if (id == R.id.filter){
-            Toast.makeText(getApplicationContext(), "hola señor",
-                    Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -221,11 +249,6 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     @Override
     public void onFailure(String appErrorMessage) {
         Dialog.createDialog(this).title("server error").description(appErrorMessage).build();
-    }
-
-    @Override
-    public void getActivityListSuccess(List<ActivityListItemModel> activities) {
-        //TODO: inflate the list
     }
 
     @Override
@@ -318,6 +341,70 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         this.filterActivities = filter;
         if (activitiesFragment!=null && activitiesFragment.isAdded()){
             activitiesFragment.setFilter(filterActivities);
+            if (filterDialog!=null && filter==null)
+                filterDialog = new FilterDialog(this);
+        }
+    }
+
+    private void openGuide(){
+        if (materialIntroView != null)
+            materialIntroView.dismiss();
+
+        showIntro(hamburger_menu, INTRO_FOCUS_MENU, getStrings(R.string.guide_menu_title, R.string.guide_menu_description), ShapeType.RECTANGLE);
+    }
+
+    public void showIntro(View view, final String id, String text, ShapeType shapeType) {
+
+        new PreferencesManager(this).resetAll();
+
+        if (materialIntroView != null)
+            materialIntroView.dismiss();
+
+        materialIntroView = new MaterialIntroView.Builder(this)
+                .enableDotAnimation(false)
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(Focus.ALL)
+                .enableFadeAnimation(true)
+                .performClick(false)
+                .setShape(shapeType)
+                .setDelayMillis(200)
+                .setInfoText(text)
+                .setTarget(view)
+                .enableIcon(true)
+                .setUsageId(id) //THIS SHOULD BE UNIQUE ID
+                .show();
+
+        materialIntroView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    materialIntroView.dismiss();
+                    onUserClicked(id);
+                }
+                return false;
+            }
+        });
+
+    }
+
+    public void onUserClicked(String materialIntroViewId) {
+        if (materialIntroViewId == INTRO_FOCUS_MENU)
+            showIntro(fab, INTRO_FOCUS_NEW_ACT, getStrings(R.string.guide_create_title, R.string.guide_create_description), ShapeType.CIRCLE);
+        else if (materialIntroViewId == INTRO_FOCUS_NEW_ACT)
+            showIntro(filter_menu, INTRO_FOCUS_FILTER_ACT, getStrings(R.string.guide_filter_title, R.string.guide_filter_description), ShapeType.RECTANGLE);
+        else if (materialIntroViewId == INTRO_FOCUS_FILTER_ACT)
+            materialIntroView.dismiss();
+    }
+
+    private String getStrings(int id1, int id2) {
+        return getString(id1) + "\n\n" + getString(id2);
+    }
+
+    private void initHelpIfNeeded(){
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            if (getIntent().getExtras().getBoolean(Constants.NEW_USER)){
+                openGuide();
+            }
         }
     }
 }

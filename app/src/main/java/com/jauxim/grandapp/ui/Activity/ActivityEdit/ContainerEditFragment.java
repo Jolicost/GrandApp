@@ -15,8 +15,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -84,8 +87,11 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
     private TextView tvEndDatePreview;
     private TextView tvCapacityPreview;
     private TextView tvPricePreview;
+    private TextView tvCategoryPreview;
 
     private TextView tvAdress;
+
+    private Spinner sCategory;
 
     public @interface stepsEditActivity {
         int STEP_TITLE = 0;
@@ -121,6 +127,8 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
         tvEndDatePreview = view.findViewById(R.id.tvEndDatePreview);
         tvCapacityPreview = view.findViewById(R.id.tvCapacityPreview);
         tvPricePreview = view.findViewById(R.id.tvPricePreview);
+        tvCategoryPreview = view.findViewById(R.id.tvCategoryPreview);
+        sCategory = view.findViewById(R.id.sCategory);
 
         switch (position) {
             case STEP_TITLE:
@@ -482,6 +490,24 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             etPrice.setText(String.valueOf(price));
     }
 
+    public String getCategory(){
+        if (sCategory!=null)
+            return sCategory.getSelectedItem().toString();
+        return "";
+    }
+
+    public void setCategory(String category){
+        if (sCategory!=null) {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.filter_categories, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sCategory.setAdapter(adapter);
+            if (category != null) {
+                int spinnerPosition = adapter.getPosition(category);
+                sCategory.setSelection(spinnerPosition);
+            }
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -558,6 +584,7 @@ public class ContainerEditFragment extends Fragment implements View.OnClickListe
             tvEndDatePreview.setText("not defined");
         tvCapacityPreview.setText(model.getCapacity()+"");
         tvPricePreview.setText(model.getPrice()+"");
+        tvCategoryPreview.setText(model.getActivityType());
         Log.d("pagerThing", "updateAndSetModel ");
     }
 }

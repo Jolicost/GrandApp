@@ -6,13 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
+import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.Dialog;
 import com.jauxim.grandapp.Utils.Utils;
@@ -26,7 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.internal.Util;
 
 public class Register extends BaseActivity implements RegisterView {
 
@@ -180,6 +179,7 @@ public class Register extends BaseActivity implements RegisterView {
     @Override
     public void startMainActivity() {
         Intent intent = new Intent(this, Main.class);
+        intent.putExtra(Constants.NEW_USER, true);
         startActivity(intent);
     }
 

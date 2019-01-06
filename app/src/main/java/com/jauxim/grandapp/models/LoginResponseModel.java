@@ -17,6 +17,10 @@ public class LoginResponseModel {
     @Expose
     private UserModel user;
 
+    @SerializedName("newUser")
+    @Expose
+    private boolean newUser;
+
     public boolean isAuth() {
         return auth;
     }
@@ -39,5 +43,13 @@ public class LoginResponseModel {
 
     public void setUser(UserModel user) {
         this.user = user;
+    }
+
+    public boolean getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(boolean newUser) {
+        this.newUser = newUser;
     }
 }
