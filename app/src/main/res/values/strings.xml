@@ -196,4 +196,24 @@
     <string name="button_label">Send</string>
     <string name="toast_message">Hurra!</string>
     <string name="input_placeholder">Write a message</string>
+
+    <string-array name="main_viewpager_strings">
+        <item>To the coolest social grandparents app!</item>
+        <item>Keep your location to your family or friends</item>
+        <item>Find and join all the near activities you most like</item>
+        <item>Meet with people who are in the activity</item>
+        <item>Create public or private activities of whatever you want</item>
+        <item>Get points every time you join a activity</item>
+        <item>Join now to the community to see more features!</item>
+    </string-array>
+
+    <string-array name="main_viewpager_strings_titles">
+        <item>WELCOME</item>
+        <item>STAY SECURE</item>
+        <item>JOIN NEAR ACTIVITIES</item>
+        <item>MEET NEW PEOPLE LIKE YOU</item>
+        <item>CREATE NEW ACTIVITIES</item>
+        <item>WIN POINTS</item>
+        <item>AND MUCH MORE</item>
+    </string-array>
 </resources>
