@@ -17,6 +17,7 @@ import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.MessageModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
+import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.scaledrone.lib.Listener;
 import com.scaledrone.lib.Member;
 import com.scaledrone.lib.Room;
@@ -28,7 +29,9 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-public class Chat extends AppCompatActivity implements RoomListener {
+import butterknife.ButterKnife;
+
+public class Chat extends BaseActivity implements RoomListener {
 
     // replace this with a real channelID from Scaledrone dashboard
     private String channelID = "p0gOL0KDsTT7G0Pd";
@@ -48,9 +51,12 @@ public class Chat extends AppCompatActivity implements RoomListener {
     ChatPresenter presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
+
+        getDeps().inject(this);
+        ButterKnife.bind(this);
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -108,7 +114,7 @@ public class Chat extends AppCompatActivity implements RoomListener {
 
         presenter = new ChatPresenter(service);
 
-        getMessageHistorial(activityId, "5");
+        getMessageHistorial(roomName, "5");
     }
 
     public void sendMessage(View view) {

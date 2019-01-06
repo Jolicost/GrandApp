@@ -2,6 +2,7 @@ package com.jauxim.grandapp.ui.Activity.Chat;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.models.MessageModel;
@@ -29,15 +30,19 @@ public class ChatPresenter {
 
 
     public List<MessageModel> getHistorial(String activityId, String messageCount, String auth) {
+
+        Log.d("Log", " Inside Historial 1");
+
         Subscription subscription = service.getHistorial(activityId, messageCount, new Service.MessageCallback() {
             @Override
             public void onSuccess(List<MessageModel> messageList) {
                 messageHistorial = messageList;
+                Log.d("Log", " ERROR  1    Inside Historial 1");
             }
 
             @Override
             public void onError(NetworkError networkError) {
-                //todo
+                Log.d("Log", " ERROR  2    Inside Historial 1");
             }
         }, auth);
 

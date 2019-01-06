@@ -35,6 +35,7 @@ import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Init.Init;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
+import com.pusher.pushnotifications.PushNotifications;
 
 import java.util.List;
 
@@ -78,6 +79,9 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         setContentView(R.layout.activity_main);
         getDeps().inject(this);
         ButterKnife.bind(this);
+
+        PushNotifications.start(getApplicationContext(), "2fd264ad-d328-4d0a-9c7d-344b458fa29d");
+        PushNotifications.subscribe("hello");
 
         setSupportActionBar(toolbar);
 

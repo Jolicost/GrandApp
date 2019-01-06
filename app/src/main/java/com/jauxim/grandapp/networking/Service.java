@@ -725,6 +725,7 @@ public class Service {
     }
 
     public Subscription getHistorial(String activityId, String messageCount, final MessageCallback callback, String auth) {
+        Log.d("Log", " Inside Inside Historial 1");
         return networkService.getHistorial(activityId, messageCount, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
