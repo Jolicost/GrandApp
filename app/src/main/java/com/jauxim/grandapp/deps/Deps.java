@@ -10,6 +10,7 @@ import com.jauxim.grandapp.ui.Activity.ActivityEmergencyEdit.ActivityEmergencyEd
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ActivityLogin;
 import com.jauxim.grandapp.ui.Activity.ActivityLogin.ForgotPasswordDialog;
 import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
+import com.jauxim.grandapp.ui.Activity.Chat.Chat;
 import com.jauxim.grandapp.ui.Activity.Init.Init;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 import com.jauxim.grandapp.ui.Activity.ActivityInfo.ActivityInfo;
@@ -38,4 +39,5 @@ public interface Deps {
     void inject(ActivityEmergency activityEmergency);
     void inject(ActivityEmergencyEdit activityEmergencyEdit);
     void inject(GeoService geoService);
+    void inject(Chat chat);
 }

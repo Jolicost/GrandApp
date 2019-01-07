@@ -11,6 +11,7 @@ import com.jauxim.grandapp.models.LoginResponseModel;
 import com.jauxim.grandapp.models.CityListResponse;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
+import com.jauxim.grandapp.models.MessageModel;
 import com.jauxim.grandapp.models.PhoneModel;
 import com.jauxim.grandapp.models.RateModel;
 import com.jauxim.grandapp.models.RegisterModel;
@@ -108,4 +109,7 @@ public interface NetworkService {
 
     @GET("/normal/users/{id}/achievements")
     Observable<List<AchievementsModel>> getAchievements(@Path("id") String userId, @Header(authKey) String auth);
+
+    @GET("/normal/message/{id}/{messCount}")
+    Observable<List<MessageModel>> getHistorial(@Path("id") String activityId, @Path("messCount") String messCount, @Header(authKey) String auth);
 }

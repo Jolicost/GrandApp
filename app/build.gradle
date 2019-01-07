@@ -20,6 +20,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "int", "CACHETIME", "432000" // 5days
         signingConfig signingConfigs.config
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -31,7 +32,7 @@ android {
             signingConfig signingConfigs.config
         }
     }
-    buildToolsVersion '28.0.3'
+    buildToolsVersion '27.0.3'
     productFlavors {
     }
 }
@@ -45,7 +46,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
     testImplementation 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.7.22'
@@ -66,10 +67,13 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     implementation 'com.hbb20:ccp:2.2.0'
     implementation 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
-
-    implementation 'com.google.firebase:firebase-auth:16.0.3'
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.facebook.android:facebook-login:[4,5)'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.pusher:push-notifications-android:1.0.2'
     implementation 'com.github.iammert:MaterialIntroView:1.6.0'
+    compile 'com.scaledrone:scaledrone-java:0.5.0'
 }
 apply plugin: 'com.google.gms.google-services'

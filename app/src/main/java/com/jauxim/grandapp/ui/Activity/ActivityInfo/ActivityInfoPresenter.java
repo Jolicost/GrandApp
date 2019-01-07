@@ -33,6 +33,10 @@ public class ActivityInfoPresenter {
         this.subscriptions = new CompositeSubscription();
     }
 
+    public void redirect_to_chat() {
+        view.startChatActivity();
+    }
+
     public void getActivityInfo(String id) {
         view.showWait();
         String auth = DataUtils.getAuthToken((Context) view);

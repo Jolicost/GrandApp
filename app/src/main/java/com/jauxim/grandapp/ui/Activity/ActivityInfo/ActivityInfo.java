@@ -1,14 +1,16 @@
 package com.jauxim.grandapp.ui.Activity.ActivityInfo;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.widget.Button;
+import android.widget.ImageView;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
+import com.jauxim.grandapp.ui.Activity.Chat.Chat;
 import com.jauxim.grandapp.ui.Activity.Main.Main;
 
 import java.util.List;
@@ -94,6 +97,9 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @BindView(R.id.bJoin)
     Button bJoin;
+
+    @BindView(R.id.bMessage)
+    Button bMessage;
 
     @BindView(R.id.vProfile)
     RelativeLayout vProfile;
@@ -204,6 +210,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
             ivDelete.setVisibility(View.VISIBLE);
             bVote.setVisibility(View.GONE);
             bJoin.setVisibility(View.GONE);
+            bMessage.setVisibility(View.VISIBLE);
             //bVote.setVisibility(View.VISIBLE); //TESTING
         }else{
             bJoin.setVisibility(View.VISIBLE);
@@ -211,9 +218,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
             if (joining(p, user.getId())) {
                 showUnjoinText();
+                bMessage.setVisibility(View.VISIBLE);
             }
             else{
                 showJoinText();
+                bMessage.setVisibility(View.GONE);
             }
 
             if (canVote(activityModel)) {
@@ -338,6 +347,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         onBackPressed();
     }
 
+    @OnClick(R.id.bMessage)
+    public void chatClick(){
+        presenter.redirect_to_chat();
+    }
+
     @OnClick(R.id.ivEdit)
     void editButtonClick() {
         presenter.editActivity(activityId);
@@ -366,10 +380,16 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @OnClick(R.id.bJoin)
     void viewJoinClick() {
         if (bJoin.getText().toString().equals("Join")) {
-            if (hasCapacity) presenter.join(activityId);
+            if (hasCapacity) {
+                presenter.join(activityId);
+                bMessage.setVisibility(View.VISIBLE);
+            }
             else presenter.showCapacityError();
         }
-        else presenter.unjoin(activityId);
+        else {
+            presenter.unjoin(activityId);
+            bMessage.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.bVote)
@@ -437,5 +457,13 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         super.onLowMemory();
         if (gMapView != null)
             gMapView.onLowMemory();
+    }
+
+    @Override
+    public void startChatActivity() {
+        Log.d("Log", " Activity Id = " + activityId);
+        Intent intent = new Intent(this, Chat.class);
+        intent.putExtra(Constants.ACTIVITY_ID, activityId);
+        startActivity(intent);
     }
 }

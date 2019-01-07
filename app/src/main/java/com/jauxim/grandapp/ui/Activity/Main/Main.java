@@ -19,26 +19,22 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
 import com.jauxim.grandapp.Utils.Dialog;
-import com.jauxim.grandapp.models.ActivityListItemModel;
 import com.jauxim.grandapp.models.FilterActivityModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.ActivityEdit.ActivityEditActivity;
 import com.jauxim.grandapp.ui.Activity.ActivityEmergency.ActivityEmergency;
-import com.jauxim.grandapp.ui.Activity.ActivityLogin.ForgotPasswordDialog;
 import com.jauxim.grandapp.ui.Activity.ActivityProfile.ActivityProfile;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
 import com.jauxim.grandapp.ui.Activity.Init.Init;
 import com.jauxim.grandapp.ui.Fragment.ActiviesList.ActivitiesList;
-
-import java.util.List;
+import com.pusher.pushnotifications.PushNotifications;
 
 import javax.inject.Inject;
 
@@ -94,6 +90,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         getDeps().inject(this);
         ButterKnife.bind(this);
 
@@ -104,6 +101,10 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
         chargeUserWithLogout();
         setUp();
         initHelpIfNeeded();
+
+        PushNotifications.start(getApplicationContext(), "2fd264ad-d328-4d0a-9c7d-344b458fa29d");
+        PushNotifications.subscribe("hello");
+        PushNotifications.subscribe(user.getId());
     }
 
     public void chargeUserWithLogout() {

@@ -25,5 +25,7 @@ public interface ActivityInfoView {
 
     void showJoinText();
 
+    void startChatActivity();
+
     void showCapacityError(int capacity_error);
 }

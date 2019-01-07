@@ -73,7 +73,7 @@
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="3dp"
                     android:background="@drawable/button_border"
                     android:text="@string/join"
                     android:textColor="@color/colorPrimary" />
@@ -324,6 +324,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/bMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_border"
+                    android:text="@string/message"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 
