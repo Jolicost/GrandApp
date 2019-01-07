@@ -428,13 +428,13 @@ public class Service {
         return networkService.deleteActivity(activityId, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends String>>() {
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
                     @Override
-                    public Observable<? extends String> call(Throwable throwable) {
+                    public Observable<? extends Void> call(Throwable throwable) {
                         return Observable.error(throwable);
                     }
                 })
-                .subscribe(new Subscriber<String>() {
+                .subscribe(new Subscriber<Void>() {
                     @Override
                     public void onCompleted() {
 
@@ -447,8 +447,8 @@ public class Service {
                     }
 
                     @Override
-                    public void onNext(String s) {
-                        callback.onSuccess(s);
+                    public void onNext(Void s) {
+                        callback.onSuccess();
 
                     }
                 });
@@ -872,7 +872,7 @@ public class Service {
     }
 
     public interface DeleteActivityCallback {
-        void onSuccess(String s);
+        void onSuccess();
 
         void onError(NetworkError networkError);
     }
