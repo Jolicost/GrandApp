@@ -110,6 +110,9 @@ public interface NetworkService {
     @GET("/normal/users/{id}/achievements")
     Observable<List<AchievementsModel>> getAchievements(@Path("id") String userId, @Header(authKey) String auth);
 
-    @GET("/normal/message/{id}/{messCount}")
-    Observable<List<MessageModel>> getHistorial(@Path("id") String activityId, @Path("messCount") String messCount, @Header(authKey) String auth);
+    @GET("/normal/message/{id}")
+    Observable<List<MessageModel>> getHistorial(@Path("id") String activityId, @Header(authKey) String auth);
+
+    @PUT("/normal/activities/{id}/message")
+    Observable<Void> incrementActMessage(@Path("id") String activityId, @Header(authKey) String auth);
 }

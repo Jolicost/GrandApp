@@ -1,8 +1,6 @@
 package com.jauxim.grandapp.ui.Activity.Chat;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jauxim.grandapp.Constants;
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
-import com.jauxim.grandapp.models.MessageModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.Service;
 import com.jauxim.grandapp.ui.Activity.BaseActivity;
@@ -24,7 +21,6 @@ import com.scaledrone.lib.Room;
 import com.scaledrone.lib.RoomListener;
 import com.scaledrone.lib.Scaledrone;
 
-import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -32,6 +28,11 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 
 public class Chat extends BaseActivity implements RoomListener {
+
+    @Inject
+    public Service service;
+
+    private ChatPresenter presenter;
 
     // replace this with a real channelID from Scaledrone dashboard
     private String channelID = "p0gOL0KDsTT7G0Pd";
@@ -45,10 +46,6 @@ public class Chat extends BaseActivity implements RoomListener {
 
     private UserModel user;
     private String activityId;
-
-    @Inject
-    public Service service;
-    ChatPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +78,8 @@ public class Chat extends BaseActivity implements RoomListener {
 
         user = DataUtils.getUserInfo(this);
 
+        presenter = new ChatPresenter(service, user, messagesView, messageAdapter);
+
         Log.d("Log", " User Id = " + user.getId());
         Log.d("Log", " User Name = " + user.getCompleteName());
 
@@ -112,9 +111,9 @@ public class Chat extends BaseActivity implements RoomListener {
             }
         });
 
-        presenter = new ChatPresenter(service);
-
-        getMessageHistorial(roomName, "5");
+        hideProgress();
+        getMessageHistorial(roomName);
+        showProgress();
     }
 
     public void sendMessage(View view) {
@@ -126,6 +125,9 @@ public class Chat extends BaseActivity implements RoomListener {
             Log.d("Log", " Room message Name = " + roomName);
             Log.d("Log", " Message Name = " + message);
 
+            String auth = DataUtils.getAuthToken( this);
+
+            presenter.incrementActMessage(activityId, auth);
             scaledrone.publish(roomName, message);
             editText.getText().clear();
         }
@@ -143,44 +145,14 @@ public class Chat extends BaseActivity implements RoomListener {
         System.err.println(ex);
     }
 
-    public void getMessageHistorial(String activityId, String messageCount) {
+    public void getMessageHistorial(String activityId) {
         String auth = DataUtils.getAuthToken( this);
 
         Log.d("Log", " Historial 1");
 
-        List<MessageModel> messageHistorial = presenter.getHistorial(activityId, messageCount, auth);
+        presenter.getHistorial(activityId, auth);
 
         Log.d("Log", " Historial 2");
-
-        for (int i = 0; i < messageHistorial.size(); i++) {
-
-            MessageModel elementMess = messageHistorial.get(i);
-
-            Log.d("Log", " Historial 3 " + elementMess.getData());
-
-            String messUserId[] = elementMess.getData().split(";");
-
-            UserModel messageUser = presenter.getProfileInfo(messUserId[0], auth);
-
-            Log.d("Log", " Historial 4");
-
-            final MemberData data = new MemberData(messageUser.getCompleteName(), getRandomColor());
-
-            Log.d("Log", " Historial 5");
-
-            boolean belongsToCurrentUser = user.getId().equals(messUserId[0]);
-            final Message message = new Message(messUserId[1], data, belongsToCurrentUser);
-
-            Log.d("Log", " Historial 6 " + message.getText());
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    messageAdapter.add(message);
-                    messagesView.setSelection(messagesView.getCount() - 1);
-                }
-            });
-        }
     }
 
     @Override
