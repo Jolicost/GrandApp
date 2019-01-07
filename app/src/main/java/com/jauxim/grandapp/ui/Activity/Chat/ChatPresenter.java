@@ -35,29 +35,32 @@ public class ChatPresenter extends BaseActivity {
     }
 
 
-    public void getHistorial(String activityId, String messageCount, final String auth) {
+    public void getHistorial(String activityId, final String auth) {
 
         Log.d("Log", " Inside Historial 1");
 
-        Subscription subscription = service.getHistorial(activityId, messageCount, new Service.MessageCallback() {
+        Subscription subscription = service.getHistorial(activityId, new Service.MessageCallback() {
             @Override
             public void onSuccess(List<MessageModel> messageList) {
-                messageHistorial = messageList;
+                messageHistorial.clear();
+                messageHistorial.addAll(messageList);
 
-                Log.d("Log", " ERROR  1    Inside Historial 1");
+                if(!messageHistorial.isEmpty()) {
+                    Log.d("Log", " ERROR  1    Inside Historial 1");
 
-                for (int i = 0; i < messageHistorial.size(); i++) {
+                    for (int i = 0; i < messageHistorial.size(); i++) {
 
-                    MessageModel elementMess = messageHistorial.get(i);
+                        MessageModel elementMess = messageHistorial.get(i);
 
-                    Log.d("Log", " Historial 3 " + elementMess.getData());
+                        Log.d("Log", " Historial 3 " + elementMess.getData());
 
-                    String messUserId[] = elementMess.getData().split(";");
+                        String messUserId[] = elementMess.getData().split(";");
 
-                    getProfileInfo(messUserId[0], messUserId[1], auth);
+                        getProfileInfo(messUserId[0], messUserId[1], auth);
 
-                    Log.d("Log", " Historial 4");
+                        Log.d("Log", " Historial 4");
 
+                    }
                 }
             }
 

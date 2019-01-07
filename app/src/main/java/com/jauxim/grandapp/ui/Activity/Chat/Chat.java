@@ -112,7 +112,7 @@ public class Chat extends BaseActivity implements RoomListener {
         });
 
         hideProgress();
-        getMessageHistorial(roomName, "5");
+        getMessageHistorial(roomName);
         showProgress();
     }
 
@@ -142,12 +142,12 @@ public class Chat extends BaseActivity implements RoomListener {
         System.err.println(ex);
     }
 
-    public void getMessageHistorial(String activityId, String messageCount) {
+    public void getMessageHistorial(String activityId) {
         String auth = DataUtils.getAuthToken( this);
 
         Log.d("Log", " Historial 1");
 
-        presenter.getHistorial(activityId, messageCount, auth);
+        presenter.getHistorial(activityId, auth);
 
         Log.d("Log", " Historial 2");
     }
