@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.jauxim.grandapp.R;
 import com.jauxim.grandapp.Utils.DataUtils;
+import com.jauxim.grandapp.Utils.Utils;
 import com.jauxim.grandapp.models.ImageBase64Model;
 import com.jauxim.grandapp.models.ImageUrlModel;
 import com.jauxim.grandapp.models.LoginResponseModel;
@@ -39,7 +40,7 @@ public class RegisterPresenter {
             view.showUserError(R.string.phone_error);
             error = true;
         }
-        if (email.isEmpty()) {
+        if (!Utils.isValidEmailAddress(email)) {
             view.showEmailError(R.string.email_error);
             error = true;
         }

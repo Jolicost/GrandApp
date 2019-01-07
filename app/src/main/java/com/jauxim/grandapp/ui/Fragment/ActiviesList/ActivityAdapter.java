@@ -111,10 +111,14 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
 
         if (activity.getParticipants()!=null)
         holder.gauge.setText(activity.getParticipants().size() + "/" + activity.getMaxCapacity());
-        if (activity.getMaxCapacity() <= activity.getParticipants().size()) holder.gauge.setTextColor(rgb(216, 19, 19));
-        else {
-            holder.gauge.setTextAppearance(context, R.style.textDescription);
-            holder.gauge.setTextSize(18);
+
+        if (activity.getMaxCapacity()!=null && activity!=null) {
+            if (activity.getMaxCapacity() <= activity.getParticipants().size())
+                holder.gauge.setTextColor(rgb(216, 19, 19));
+            else {
+                holder.gauge.setTextAppearance(context, R.style.textDescription);
+                holder.gauge.setTextSize(18);
+            }
         }
 
         Glide.with(holder.image.getContext()).load(activity.getImage()).into(holder.image);
