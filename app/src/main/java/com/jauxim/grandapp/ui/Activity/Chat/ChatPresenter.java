@@ -45,21 +45,23 @@ public class ChatPresenter extends BaseActivity {
                 messageHistorial.clear();
                 messageHistorial.addAll(messageList);
 
-                if(!messageHistorial.isEmpty()) {
-                    Log.d("Log", " ERROR  1    Inside Historial 1");
+                if(messageHistorial != null) {
+                    if(!messageHistorial.isEmpty()) {
+                        Log.d("Log", " ERROR  1    Inside Historial 1");
 
-                    for (int i = 0; i < messageHistorial.size(); i++) {
+                        for (int i = 0; i < messageHistorial.size(); i++) {
 
-                        MessageModel elementMess = messageHistorial.get(i);
+                            MessageModel elementMess = messageHistorial.get(i);
 
-                        Log.d("Log", " Historial 3 " + elementMess.getData());
+                            Log.d("Log", " Historial 3 " + elementMess.getData());
 
-                        String messUserId[] = elementMess.getData().split(";");
+                            String messUserId[] = elementMess.getData().split(";");
 
-                        getProfileInfo(messUserId[0], messUserId[1], auth);
+                            getProfileInfo(messUserId[0], messUserId[1], auth);
 
-                        Log.d("Log", " Historial 4");
+                            Log.d("Log", " Historial 4");
 
+                        }
                     }
                 }
             }
@@ -95,6 +97,23 @@ public class ChatPresenter extends BaseActivity {
                         messagesView.setSelection(messagesView.getCount() - 1);
                     }
                 });
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+                //todo
+            }
+
+        }, auth);
+
+        subscriptions.add(subscription);
+    }
+
+    public void incrementActMessage(String activityId, String auth) {
+        Subscription subscription = service.incrementActMessage(activityId, new Service.IncrementCallback() {
+            @Override
+            public void onSuccess() {
+
             }
 
             @Override

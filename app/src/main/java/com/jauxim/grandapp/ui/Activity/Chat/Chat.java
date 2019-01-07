@@ -125,6 +125,9 @@ public class Chat extends BaseActivity implements RoomListener {
             Log.d("Log", " Room message Name = " + roomName);
             Log.d("Log", " Message Name = " + message);
 
+            String auth = DataUtils.getAuthToken( this);
+
+            presenter.incrementActMessage(activityId, auth);
             scaledrone.publish(roomName, message);
             editText.getText().clear();
         }
