@@ -45,7 +45,7 @@ public interface NetworkService {
     Observable<Void> createActivityInfo(@Body ActivityModel activityInfo, @Header(authKey) String auth);
 
     @PUT("/normal/activities")
-    Observable<Void> editActivityInfo(@Body ActivityModel activityInfo, @Header(authKey) String auth);
+    Observable<Void> editActivityInfo(@Path("id") String activityId, @Body ActivityModel activityInfo, @Header(authKey) String auth);
 
     @GET("/normal/activities")
     Observable<List<ActivityListItemModel>> getActivityList(@Header(authKey) String auth, @Query("limit") int limit, @Query("skip") int skip,

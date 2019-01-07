@@ -74,7 +74,7 @@ public class Service {
     public Subscription createOrEditActivityInfo(ActivityModel activityInfo, final ActivityCreateCallback callback,String auth) {
 
         if (activityInfo!=null && !TextUtils.isEmpty(activityInfo.getId())){
-            return networkService.editActivityInfo(activityInfo, auth)
+            return networkService.editActivityInfo(activityInfo.getId(), activityInfo, auth)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .onErrorResumeNext(new Func1<Throwable, Observable<? extends Void>>() {
