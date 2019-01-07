@@ -816,9 +816,9 @@ public class Service {
                 });
     }
 
-    public Subscription getHistorial(String activityId, String messageCount, final MessageCallback callback, String auth) {
+    public Subscription getHistorial(String activityId, final MessageCallback callback, String auth) {
         Log.d("Log", " Inside Inside Historial 1");
-        return networkService.getHistorial(activityId, messageCount, auth)
+        return networkService.getHistorial(activityId, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<MessageModel>>>() {
