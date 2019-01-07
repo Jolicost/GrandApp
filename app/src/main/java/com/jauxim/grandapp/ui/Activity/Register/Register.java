@@ -181,6 +181,7 @@ public class Register extends BaseActivity implements RegisterView {
         Intent intent = new Intent(this, Main.class);
         intent.putExtra(Constants.NEW_USER, true);
         startActivity(intent);
+        finishAffinity();
     }
 
     @Override
