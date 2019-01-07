@@ -57,14 +57,14 @@
                     android:tint="@color/color_grey_2" />
 
                 <TextView
-                    android:id="@+id/tvUpperTag"
+                    android:id="@+id/tvTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignLeft="@+id/close_button"
-                    android:layout_alignParentStart="true"
+                    android:layout_marginRight="90dp"
+                    android:layout_toEndOf="@+id/ivClose"
                     android:gravity="center"
-                    android:hint="Information"
-                    android:textSize="18sp"
+                    android:hint="title"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -91,21 +91,22 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/tvTitle"
+                        android:id="@+id/tvCategory"
                         android:layout_width="288dp"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
                         android:layout_margin="10dp"
-                        android:hint="Title"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:layout_toStartOf="@+id/tvPrice"
+                        android:hint="Category"
+                        android:textSize="22sp"/>
 
                     <TextView
                         android:id="@+id/tvPrice"
-                        android:layout_width="73dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="10dp"
-                        android:layout_toEndOf="@+id/tvTitle"
                         android:hint="Free"
                         android:textSize="22sp" />
 
@@ -246,9 +247,9 @@
                             android:id="@+id/bVote"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
+                            android:layout_marginLeft="20dp"
                             android:background="@drawable/button_gradient"
                             android:text="@string/vote"
-                            android:layout_marginLeft="20dp"
                             android:textColor="@color/white" />
 
                     </LinearLayout>
@@ -338,10 +339,10 @@
 
             <RelativeLayout
                 android:id="@+id/vProfile"
-                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#EFEFEF">
+                android:background="#EFEFEF"
+                android:clickable="true">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/userImage"

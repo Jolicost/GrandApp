@@ -50,11 +50,11 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @Inject
     public Service service;
 
-    @BindView(R.id.tvUpperTag)
-    TextView tvUpperTag;
-
     @BindView(R.id.tvTitle)
     TextView tvTitle;
+
+    @BindView(R.id.tvCategory)
+    TextView tvCategory;
 
     @BindView(R.id.tvPrice)
     TextView tvPrice;
@@ -174,11 +174,15 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         else hasCapacity = true;
         presenter.getProfileInfo(userActivityId);
 
-        tvUpperTag.setText(R.string.upperTag);
-
         tvTitle.setText(activityModel.getTitle());
 
         tvDescription.setText(activityModel.getDescription());
+
+        if (!TextUtils.isEmpty(activityModel.getActivityType()))
+            tvCategory.setText(activityModel.getActivityType());
+        else{
+            tvCategory.setVisibility(View.GONE);
+        }
 
         Long price = activityModel.getPrice();
         if(price == 0) {
