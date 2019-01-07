@@ -66,7 +66,7 @@ public class Chat extends BaseActivity implements RoomListener {
             activityId = (String) savedInstanceState.getSerializable(Constants.ACTIVITY_ID);
         }
 
-        Log.d("Log", " Room Id = " + activityId);
+        Log.d("chatInfo", " Room Id = " + activityId);
 
         roomName = "observable-" + activityId;
 
@@ -78,20 +78,21 @@ public class Chat extends BaseActivity implements RoomListener {
 
         user = DataUtils.getUserInfo(this);
 
-        presenter = new ChatPresenter(service, user, messagesView, messageAdapter);
+        presenter = new ChatPresenter(this, service, user, messagesView, messageAdapter);
 
-        Log.d("Log", " User Id = " + user.getId());
-        Log.d("Log", " User Name = " + user.getCompleteName());
+        Log.d("chatInfo", " User Id = " + user.getId());
+        Log.d("chatInfo", " User Name = " + user.getCompleteName());
 
         MemberData data = new MemberData(user.getCompleteName(), getRandomColor());
 
-        Log.d("Log", " Data Name = " + data.toString());
+        Log.d("chatInfo", " Data Name = " + data.toString());
 
         scaledrone = new Scaledrone(channelID, data);
         scaledrone.connect(new Listener() {
             @Override
             public void onOpen() {
-                Log.d("Log","Scaledrone connection open");
+                hideProgress();
+                Log.d("chatInfo","Scaledrone connection open");
                 scaledrone.subscribe(roomName, Chat.this);
             }
 
@@ -111,9 +112,7 @@ public class Chat extends BaseActivity implements RoomListener {
             }
         });
 
-        hideProgress();
         getMessageHistorial(roomName);
-        showProgress();
     }
 
     public void sendMessage(View view) {
@@ -122,8 +121,8 @@ public class Chat extends BaseActivity implements RoomListener {
 
             message = user.getId() + ";" + message;
 
-            Log.d("Log", " Room message Name = " + roomName);
-            Log.d("Log", " Message Name = " + message);
+            Log.d("chatInfo", " Room message Name = " + roomName);
+            Log.d("chatInfo", " Message Name = " + message);
 
             String auth = DataUtils.getAuthToken( this);
 
@@ -135,38 +134,39 @@ public class Chat extends BaseActivity implements RoomListener {
 
     @Override
     public void onOpen(Room room) {
-        Log.d("Log", " Conneted to room");
+        Log.d("chatInfo", " Conneted to room");
         System.out.println("Conneted to room");
     }
 
     @Override
     public void onOpenFailure(Room room, Exception ex) {
-        Log.d("Log", " Conneted to room FAILURE  " + ex.toString());
+        Log.d("chatInfo", " Conneted to room FAILURE  " + ex.toString());
         System.err.println(ex);
     }
 
     public void getMessageHistorial(String activityId) {
         String auth = DataUtils.getAuthToken( this);
 
-        Log.d("Log", " Historial 1");
+        Log.d("chatInfo", " Historial 1");
 
+        showProgress();
         presenter.getHistorial(activityId, auth);
 
-        Log.d("Log", " Historial 2");
+        Log.d("chatInfo", " Historial 2");
     }
 
     @Override
     public void onMessage(Room room, final JsonNode json, final Member member) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            Log.d("Log", " Member Data " + member.getClientData());
-            Log.d("Log", " Message " + json.asText());
+            Log.d("chatInfo", " Member Data " + member.getClientData());
+            Log.d("chatInfo", " Message " + json.asText());
 
             final MemberData data = mapper.treeToValue(member.getClientData(), MemberData.class);
-            Log.d("Log", " Member Data " + data.toString());
+            Log.d("chatInfo", " Member Data " + data.toString());
 
             String messUserId[] = json.asText().split(";");
-            Log.d("Log", " User Id from message = " + messUserId[0]);
+            Log.d("chatInfo", " User Id from message = " + messUserId[0]);
 
             boolean belongsToCurrentUser = user.getId().equals(messUserId[0]);
             final Message message = new Message(messUserId[1], data, belongsToCurrentUser);
