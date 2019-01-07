@@ -72,7 +72,7 @@ public class ActivityInfoPresenter {
         String auth = DataUtils.getAuthToken((Context) view);
         Subscription subscription = service.deleteActivity(activityId, new Service.DeleteActivityCallback() {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess() {
                 view.removeWait();
                 view.backToMainView();
             }

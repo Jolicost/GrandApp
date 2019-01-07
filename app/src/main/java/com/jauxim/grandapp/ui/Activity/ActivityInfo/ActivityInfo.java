@@ -320,6 +320,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
     @Override
     public void getProfileInfo(UserModel userModel) {
         tvUserCompleteName.setText(userModel.getCompleteName());
+        tvPointsUser.setText(userModel.getPoints()+" "+getResources().getString(R.string.points));
         Glide.with(this).load(userModel.getProfilePic()).into(userImage);
     }
 

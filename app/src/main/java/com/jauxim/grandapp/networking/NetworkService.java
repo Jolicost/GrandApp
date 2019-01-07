@@ -39,12 +39,12 @@ public interface NetworkService {
     Observable<ActivityModel> getActivityInfo(@Path("id") String activityId, @Header(authKey) String auth);
 
     @DELETE("/normal/activities/{id}")
-    Observable<String> deleteActivity(@Path("id") String activityId, @Header(authKey) String auth);
+    Observable<Void> deleteActivity(@Path("id") String activityId, @Header(authKey) String auth);
 
     @POST("/normal/activities")
     Observable<Void> createActivityInfo(@Body ActivityModel activityInfo, @Header(authKey) String auth);
 
-    @PUT("/normal/activities")
+    @PUT("/normal/activities/{id}")
     Observable<Void> editActivityInfo(@Path("id") String activityId, @Body ActivityModel activityInfo, @Header(authKey) String auth);
 
     @GET("/normal/activities")
