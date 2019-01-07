@@ -106,9 +106,6 @@
     <string name="profile_picture_desc">Click the profile image to change it</string>
     <string name="activity_creator">Creator</string>
 
-    <string name="emergency">Emergency</string>
-    <string name="contacts">Contacts</string>
-
     <string name="fgt_pswd_title">Forget password</string>
     <string name="fgt_pswd_description">Write the phone number in witch you created you account and clic SEND. Then you will receive an e-mail with the new password. It\'s recomendable to change your password after this process.</string>
     <string name="settings_profile">Profile</string>

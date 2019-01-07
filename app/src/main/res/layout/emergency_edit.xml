@@ -13,51 +13,49 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp">
+            android:layout_height="56dp"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp">
 
             <ImageView
                 android:id="@+id/ivEdit"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:clickable="true"
-                android:background="@drawable/btn_simple"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
+                android:background="@drawable/btn_simple"
+                android:clickable="true"
+                android:padding="10dp"
                 android:src="@drawable/ic_done_black_24dp" />
 
             <TextView
                 android:id="@+id/vEmergency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text= "@string/emergency"
-                android:textColor="#FFF"
                 android:layout_centerHorizontal="true"
-                android:textSize="31dp" />
-            <TextView
-                android:layout_below="@id/vEmergency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text= "@string/contacts"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/ivEdit"
+                android:layout_toEndOf="@id/ivClose"
+                android:gravity="center"
+                android:text="@string/emergency_contacts"
                 android:textColor="#FFF"
-                android:layout_centerHorizontal="true"
-                android:textSize="31dp" />
+                android:textSize="25sp" />
 
             <ImageView
                 android:id="@+id/ivClose"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:clickable="true"
-                android:background="@drawable/btn_simple"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
+                android:background="@drawable/btn_simple"
+                android:clickable="true"
+                android:padding="10dp"
                 android:src="@drawable/ic_close" />
 
         </RelativeLayout>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -73,22 +71,24 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_emergency_edit"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
-            android:layout_alignParentBottom="true"
             android:orientation="vertical">
+
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/add_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
                 android:layout_gravity="right"
+                android:backgroundTint="@color/colorPrimary"
                 app:srcCompat="@drawable/ic_add_white" />
 
         </LinearLayout>
