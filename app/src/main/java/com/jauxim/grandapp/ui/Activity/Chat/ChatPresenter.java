@@ -62,7 +62,6 @@ public class ChatPresenter {
                         }
                     }
                 }
-                Log.d("chatInfo", " Historial 3.5   Null Historial or empty" );
             }
 
             @Override
@@ -85,7 +84,7 @@ public class ChatPresenter {
 
                 Log.d("chatInfo", " Historial 5 " + userInfo.getCompleteName());
 
-                final MemberData data = new MemberData(userInfo.getCompleteName(), getRandomColor());
+                final MemberData data = new MemberData(userInfo.getCompleteName(), getRandomColor(), userInfo.getProfilePic());
 
                 boolean belongsToCurrentUser = user.getId().equals(userInfo.getId());
                 final Message message = new Message(userMessage, data, belongsToCurrentUser);

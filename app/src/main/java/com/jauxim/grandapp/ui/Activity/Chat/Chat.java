@@ -82,7 +82,7 @@ public class Chat extends BaseActivity implements RoomListener {
         Log.d("chatInfo", " User Id = " + user.getId());
         Log.d("chatInfo", " User Name = " + user.getCompleteName());
 
-        MemberData data = new MemberData(user.getCompleteName(), getRandomColor());
+        MemberData data = new MemberData(user.getCompleteName(), getRandomColor(), user.getProfilePic());
 
         Log.d("chatInfo", " Data Name = " + data.toString());
 
