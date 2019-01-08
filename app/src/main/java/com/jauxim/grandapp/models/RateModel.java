@@ -7,17 +7,17 @@ public class RateModel {
 
     @SerializedName("rating")
     @Expose
-    private Long rate;
+    private float rate;
 
-    public RateModel(Long rate) {
+    public RateModel(float rate) {
         this.rate = rate;
     }
 
-    public Long getRate() {
+    public float getRate() {
         return rate;
     }
 
-    public void setRate(Long rate) {
+    public void setRate(float rate) {
         this.rate = rate;
     }
 }

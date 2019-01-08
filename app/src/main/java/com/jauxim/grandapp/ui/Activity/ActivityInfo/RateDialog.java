@@ -45,8 +45,9 @@ public class RateDialog extends Dialog {
 
     @OnClick(R.id.bVote)
     public void voteClick(){
-        Long rate = (long) rbValue.getRating();
-        c.voteActivity(rate);
-        dismiss();
+        if (rbValue!=null) {
+            c.voteActivity(rbValue.getRating());
+            dismiss();
+        }
     }
 }

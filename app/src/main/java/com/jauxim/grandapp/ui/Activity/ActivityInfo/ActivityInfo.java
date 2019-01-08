@@ -193,7 +193,9 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
             tvPrice.setTextColor(rgb(216, 19, 19));
         }
 
-        tvRatingValue.setText(activityModel.getRating()+"");
+        if (activityModel.getVotes()!=null) {
+            tvRatingValue.setText(activityModel.getVotes().size() + "");
+        }
         tvDirection.setText(activityModel.getAddress());
         rbValue.setRating(activityModel.getRating());
 
@@ -403,7 +405,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
         rd.show();
     }
 
-    public void voteActivity(Long rate) {
+    public void voteActivity(float rate) {
         presenter.voteActivity(rate, activityId);
 
     }

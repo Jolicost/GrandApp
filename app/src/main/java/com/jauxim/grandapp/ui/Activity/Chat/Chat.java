@@ -26,6 +26,7 @@ import java.util.Random;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class Chat extends BaseActivity implements RoomListener {
 
@@ -190,5 +191,10 @@ public class Chat extends BaseActivity implements RoomListener {
             sb.append(Integer.toHexString(r.nextInt()));
         }
         return sb.toString().substring(0, 7);
+    }
+
+    @OnClick(R.id.ivClose)
+    public void onCloe(){
+        onBackPressed();
     }
 }

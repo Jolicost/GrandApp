@@ -155,7 +155,7 @@ public class ActivityInfoPresenter {
         subscriptions.add(subscription);
     }
 
-    public void voteActivity(Long rate, final String activityId) {
+    public void voteActivity(float rate, final String activityId) {
         view.showWait();
         String auth = DataUtils.getAuthToken((Context) view);
         RateModel rateModel = new RateModel(rate);
