@@ -66,9 +66,8 @@ public class Chat extends BaseActivity implements RoomListener {
             activityId = (String) savedInstanceState.getSerializable(Constants.ACTIVITY_ID);
         }
 
-        Log.d("chatInfo", " Room Id = " + activityId);
-
         roomName = "observable-" + activityId;
+        Log.d("chatInfo", " Room Id = " + roomName);
 
         editText = (EditText) findViewById(R.id.editText);
 
@@ -123,6 +122,7 @@ public class Chat extends BaseActivity implements RoomListener {
 
             Log.d("chatInfo", " Room message Name = " + roomName);
             Log.d("chatInfo", " Message Name = " + message);
+            Log.d("chatInfo", " Message count incremented");
 
             String auth = DataUtils.getAuthToken( this);
 

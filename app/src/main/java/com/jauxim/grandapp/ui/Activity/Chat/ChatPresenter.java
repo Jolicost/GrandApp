@@ -8,18 +8,21 @@ import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
+import static java.util.Collections.reverse;
+
 public class ChatPresenter {
 
     private final Service service;
     private CompositeSubscription subscriptions;
 
-    private List<MessageModel> messageHistorial;
+    private List<MessageModel> messageHistorial = new ArrayList<>();
     private UserModel userInfo;
     private UserModel user;
     private MessageAdapter messageAdapter;
@@ -38,32 +41,34 @@ public class ChatPresenter {
 
     public void getHistorial(String activityId, final String auth) {
 
-        Log.d("Log", " Inside Historial 1");
+        Log.d("chatInfo", " Inside Historial 1");
 
         Subscription subscription = service.getHistorial(activityId, new Service.MessageCallback() {
             @Override
             public void onSuccess(List<MessageModel> messageList) {
-                messageHistorial.clear();
                 messageHistorial.addAll(messageList);
+                reverse(messageHistorial);
                 chatView.hideProgress();
 
                 if (messageHistorial != null) {
                     if (!messageHistorial.isEmpty()) {
-                        Log.d("Log", " ERROR  1    Inside Historial 1");
+                        Log.d("chatInfo", " ERROR  1    Inside Historial 1");
 
                         for (MessageModel messageModel : messageHistorial) {
-                            Log.d("Log", " Historial 3 " + messageModel.getData());
+                            Log.d("chatInfo", " Historial 3 " + messageModel.getData());
                             String messUserId[] = messageModel.getData().split(";");
                             getProfileInfo(messUserId[0], messUserId[1], auth);
-                            Log.d("Log", " Historial 4");
+                            Log.d("chatInfo", " Historial 4");
                         }
                     }
                 }
+                Log.d("chatInfo", " Historial 3.5   Null Historial or empty" );
             }
 
             @Override
             public void onError(NetworkError networkError) {
-                Log.d("Log", " ERROR  2    Inside Historial 1");
+                Log.d("chatInfo", " ERROR  2    Inside Historial 1");
+                Log.d("chatInfo", " ERROR  2  " + networkError);
             }
         }, auth);
 
@@ -71,19 +76,21 @@ public class ChatPresenter {
     }
 
     public void getProfileInfo(String id, final String userMessage, String auth) {
+        Log.d("chatInfo", " Historial 7 ");
+
         Subscription subscription = service.getProfileInfo(id, new Service.ProfileInfoCallback() {
             @Override
             public void onSuccess(UserModel userModel) {
                 userInfo = userModel;
 
-                Log.d("Log", " Historial 5 " + userInfo.getCompleteName());
+                Log.d("chatInfo", " Historial 5 " + userInfo.getCompleteName());
 
                 final MemberData data = new MemberData(userInfo.getCompleteName(), getRandomColor());
 
                 boolean belongsToCurrentUser = user.getId().equals(userInfo.getId());
                 final Message message = new Message(userMessage, data, belongsToCurrentUser);
 
-                Log.d("Log", " Historial 6 " + message.getText());
+                Log.d("chatInfo", " Historial 6 " + message.getText());
 
                 chatView.runOnUiThread(new Runnable() {
                     @Override
@@ -97,6 +104,8 @@ public class ChatPresenter {
             @Override
             public void onError(NetworkError networkError) {
                 //todo
+
+                Log.d("chatInfo", " ERROR  3  " + networkError);
             }
 
         }, auth);
