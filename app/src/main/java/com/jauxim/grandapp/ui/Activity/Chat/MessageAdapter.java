@@ -2,18 +2,19 @@ package com.jauxim.grandapp.ui.Activity.Chat;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jauxim.grandapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MessageAdapter extends BaseAdapter {
@@ -59,15 +60,17 @@ public class MessageAdapter extends BaseAdapter {
             holder.messageBody.setText(message.getText());
         } else {
             convertView = messageInflater.inflate(R.layout.their_message, null);
-            holder.avatar = (View) convertView.findViewById(R.id.avatar);
+            holder.avatar = (CircleImageView) convertView.findViewById(R.id.avatar);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.messageBody = (TextView) convertView.findViewById(R.id.message_body);
             convertView.setTag(holder);
 
             holder.name.setText(message.getData().getName());
             holder.messageBody.setText(message.getText());
-            GradientDrawable drawable = (GradientDrawable) holder.avatar.getBackground();
-            drawable.setColor(Color.parseColor(message.getData().getColor()));
+
+            if (message.getData().getIvProfilePic() != null) {
+                Glide.with(context).load(message.getData().getIvProfilePic()).into((CircleImageView) holder.avatar);
+            }
         }
 
         return convertView;
