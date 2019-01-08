@@ -181,6 +181,7 @@
     </string-array>
 
     <string-array name="filter_categories">
+        <item>None</item>
         <item>Dance</item>
         <item>Party</item>
         <item>Sports</item>

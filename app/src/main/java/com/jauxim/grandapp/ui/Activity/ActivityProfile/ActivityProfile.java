@@ -238,11 +238,15 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
         for (int i = 0; i < size; ++i){
             int titleId = getResources().getIdentifier("tvTitleAch"+ String.valueOf(i+1), "id", getPackageName());
             TextView tvTitleAch = findViewById(titleId);
-            tvTitleAch.setText(achievementsList.get(i).getTitle());
+            if (tvTitleAch !=null)
+                tvTitleAch.setText(achievementsList.get(i).getTitle());
 
             int imageId = getResources().getIdentifier("ivImageAch"+ String.valueOf(i+1), "id", getPackageName());
+
             ImageView ivImageAch = findViewById(imageId);
-            Glide.with(this).load(achievementsList.get(i).getImage()).into(ivImageAch);
+            if (ivImageAch!=null) {
+                Glide.with(this).load(achievementsList.get(i).getImage()).into(ivImageAch);
+            }
         }
     }
 

@@ -7,7 +7,6 @@ import com.jauxim.grandapp.models.MessageModel;
 import com.jauxim.grandapp.models.UserModel;
 import com.jauxim.grandapp.networking.NetworkError;
 import com.jauxim.grandapp.networking.Service;
-import com.jauxim.grandapp.ui.Activity.BaseActivity;
 
 import java.util.List;
 import java.util.Random;
@@ -15,7 +14,7 @@ import java.util.Random;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-public class ChatPresenter extends BaseActivity {
+public class ChatPresenter {
 
     private final Service service;
     private CompositeSubscription subscriptions;
@@ -25,9 +24,11 @@ public class ChatPresenter extends BaseActivity {
     private UserModel user;
     private MessageAdapter messageAdapter;
     private ListView messagesView;
+    private Chat chatView;
 
-    public ChatPresenter(Service service, UserModel user, ListView messagesView ,MessageAdapter messageAdapter) {
+    public ChatPresenter(Chat chatView, Service service, UserModel user, ListView messagesView, MessageAdapter messageAdapter) {
         this.service = service;
+        this.chatView = chatView;
         this.subscriptions = new CompositeSubscription();
         this.user = user;
         this.messagesView = messagesView;
@@ -44,23 +45,17 @@ public class ChatPresenter extends BaseActivity {
             public void onSuccess(List<MessageModel> messageList) {
                 messageHistorial.clear();
                 messageHistorial.addAll(messageList);
+                chatView.hideProgress();
 
-                if(messageHistorial != null) {
-                    if(!messageHistorial.isEmpty()) {
+                if (messageHistorial != null) {
+                    if (!messageHistorial.isEmpty()) {
                         Log.d("Log", " ERROR  1    Inside Historial 1");
 
-                        for (int i = 0; i < messageHistorial.size(); i++) {
-
-                            MessageModel elementMess = messageHistorial.get(i);
-
-                            Log.d("Log", " Historial 3 " + elementMess.getData());
-
-                            String messUserId[] = elementMess.getData().split(";");
-
+                        for (MessageModel messageModel : messageHistorial) {
+                            Log.d("Log", " Historial 3 " + messageModel.getData());
+                            String messUserId[] = messageModel.getData().split(";");
                             getProfileInfo(messUserId[0], messUserId[1], auth);
-
                             Log.d("Log", " Historial 4");
-
                         }
                     }
                 }
@@ -90,7 +85,7 @@ public class ChatPresenter extends BaseActivity {
 
                 Log.d("Log", " Historial 6 " + message.getText());
 
-                runOnUiThread(new Runnable() {
+                chatView.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         messageAdapter.add(message);
@@ -129,7 +124,7 @@ public class ChatPresenter extends BaseActivity {
     private String getRandomColor() {
         Random r = new Random();
         StringBuffer sb = new StringBuffer("#");
-        while(sb.length() < 7){
+        while (sb.length() < 7) {
             sb.append(Integer.toHexString(r.nextInt()));
         }
         return sb.toString().substring(0, 7);
