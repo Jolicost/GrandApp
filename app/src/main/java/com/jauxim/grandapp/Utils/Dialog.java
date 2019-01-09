@@ -178,4 +178,8 @@ public class Dialog {
             });
         }
     }
+
+    public static void showGeneralErrorDialog(Context context, String info){
+        Dialog.createDialog(context).title(context.getString(R.string.general_error_title)).description(context.getString(R.string.general_error_description)+"\n"+info).build();
+    }
 }

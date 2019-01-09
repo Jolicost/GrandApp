@@ -145,7 +145,7 @@ public class ActivitiesList extends BaseFragment implements ActivitiesListView {
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(getActivity()).title("server error in act. list").description(appErrorMessage).build();
+        Dialog.showGeneralErrorDialog(getActivity(), appErrorMessage);
     }
 
     @Override

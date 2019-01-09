@@ -245,7 +245,7 @@ public class Main extends BaseActivity implements MainView, NavigationView.OnNav
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error").description(appErrorMessage).build();
+        Dialog.showGeneralErrorDialog(this, appErrorMessage);
     }
 
     @Override

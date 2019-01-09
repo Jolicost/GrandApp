@@ -148,7 +148,7 @@ public class ActivityEditActivity extends BaseActivity implements ActivityEditVi
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error").description(appErrorMessage).build();
+        Dialog.showGeneralErrorDialog(this, appErrorMessage);
     }
 
     @Override

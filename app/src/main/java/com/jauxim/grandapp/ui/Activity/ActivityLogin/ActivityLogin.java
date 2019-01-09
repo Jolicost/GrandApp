@@ -178,7 +178,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error int act. info").description(appErrorMessage).build();
+        Dialog.showGeneralErrorDialog(this, appErrorMessage);
     }
 
     @Override
@@ -208,7 +208,7 @@ public class ActivityLogin extends BaseActivity implements ActivityLoginView {
     @Override
     public void showLoginError(int login_error) {
         removeWait();
-        Dialog.createDialog(this).title(getString(login_error)).description(getString(login_error)).build();
+        Dialog.showGeneralErrorDialog(this, "");
     }
 
     @Override

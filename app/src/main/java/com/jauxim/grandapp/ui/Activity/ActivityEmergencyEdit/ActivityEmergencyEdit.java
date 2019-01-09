@@ -58,7 +58,7 @@ public class ActivityEmergencyEdit extends BaseActivity implements ActivityEmerg
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error int act. edit emergency").description(appErrorMessage).build();
+        Dialog.showGeneralErrorDialog(this, appErrorMessage);
     }
 
     @Override

@@ -168,6 +168,8 @@
     <string name="reset_filter">RESET FILTER</string>
     <string name="no_activities_description">There aren\'t any activity near or you have your filter too strong. Try it again reseteing the filter values</string>
     <string name="no_activities_title">No Activities found</string>
+    <string name="general_error_title">unexpected error</string>
+    <string name="general_error_description">Something was wrong. Please, try it again</string>
 
     <string-array name="filter_sort">
         <item>Create date desc</item>

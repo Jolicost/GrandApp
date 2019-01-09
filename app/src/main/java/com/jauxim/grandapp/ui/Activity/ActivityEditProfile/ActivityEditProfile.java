@@ -106,7 +106,7 @@ public class ActivityEditProfile extends BaseActivity implements ActivityEditPro
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error int act. edit profile").description(appErrorMessage).build();
+        Dialog.showGeneralErrorDialog(this, appErrorMessage);
     }
 
     @Override

@@ -163,7 +163,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error int act. info").description(appErrorMessage).build();
+        Dialog.showGeneralErrorDialog(this, appErrorMessage);
     }
 
     @Override
@@ -346,7 +346,7 @@ public class ActivityInfo extends BaseActivity implements ActivityInfoView {
 
     @Override
     public void showCapacityError(int capacity_error) {
-        Dialog.createDialog(this).title(getString(capacity_error)).description(getString(capacity_error)).build();
+        Dialog.showGeneralErrorDialog(this, "");
     }
 
     @OnClick(R.id.ivClose)

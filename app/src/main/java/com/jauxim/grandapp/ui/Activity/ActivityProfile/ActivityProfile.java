@@ -148,7 +148,7 @@ public class ActivityProfile extends BaseActivity implements ActivityProfileView
 
     @Override
     public void onFailure(String appErrorMessage) {
-        Dialog.createDialog(this).title("server error int act. profile").description(appErrorMessage).build();
+        Dialog.showGeneralErrorDialog(this, appErrorMessage);
     }
 
     @OnClick(R.id.ivClose)
