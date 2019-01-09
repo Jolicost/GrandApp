@@ -32,7 +32,7 @@ public class ActivityModel {
 
     @SerializedName("rating")
     @Expose
-    private Long rating;
+    private float rating;
 
     @SerializedName("lat")
     @Expose
@@ -120,11 +120,11 @@ public class ActivityModel {
         this.user = user;
     }
 
-    public Long getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(Long rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
