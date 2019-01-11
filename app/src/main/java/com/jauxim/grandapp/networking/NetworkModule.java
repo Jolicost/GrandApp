@@ -59,9 +59,7 @@ public class NetworkModule {
                     }
                 })
                 .cache(cache)
-
                 .build();
-
 
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASEURL)
@@ -69,7 +67,6 @@ public class NetworkModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-
                 .build();
     }
 
@@ -77,9 +74,10 @@ public class NetworkModule {
     @Singleton
     @SuppressWarnings("unused")
     public NetworkService providesNetworkService(
-             Retrofit retrofit) {
+            Retrofit retrofit) {
         return retrofit.create(NetworkService.class);
     }
+
     @Provides
     @Singleton
     @SuppressWarnings("unused")

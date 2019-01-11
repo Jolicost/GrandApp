@@ -1,0 +1,214 @@
+<resources>
+    <string name="app_name">GRANDAPP</string>
+    <string name="activities">Ocupaciones</string>
+    <string name="my_activities">Mis actividades</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="update">ACTUALIZAR</string>
+    <string name="next">SIGUIENTE</string>
+    <string name="previous">ANTERIOR</string>
+    <string name="title">TÍTULO</string>
+    <string name="title_write">escribe el título aquí</string>
+    <string name="description_write">escribe la descripción aquí</string>
+    <string name="title_description">Escribe el título de la actividad. Debe ser breve (entre 5 y 8 palabras) para reanudar la acción principal de la actividad que desea crear.</string>
+    <string name="description">DESCRIPCIÓN</string>
+    <string name="description_description">Escribe la descripción de la actividad. Esto debe ser lo suficientemente largo para describir entre 5 y 8 líneas los detalles de la actividad.\nNo escriba información sobre dónde o cuándo, ¡lo hará en los próximos pasos!</string>
+
+    <string name="photos">Las fotos</string>
+    <string name="photos_description">Sube o toma algunas fotos de la actividad. Deberá subir como mínimo 1 foto o 4 como máximo. Para hacerlo, haga clic en una de las cuatro imágenes de la cámara a continuación:</string>
+
+    <string name="date_title">Elige la fecha</string>
+    <string name="date_description">Elija la fecha de inicio y finalización de la actividad haciendo clic en ellos. Si no sabes la fecha de finalización, déjala en blanco. La fecha de finalización debe ser anterior a la inicial.</string>
+    <string name="date_not_choosed">No elegido</string>
+    <string name="initial_date">Fecha inicial:</string>
+    <string name="end_date">Fecha final:</string>
+
+    <string name="title_location_permission">Permiso de ubicación</string>
+    <string name="text_location_permission">Permitir que GRANDAPP acceda a tu ubicación?</string>
+    <string name="ok">De acuerdo</string>
+    <string name="free_price">Gratis</string>
+    <string name="upperTag">Información</string>
+    <string name="images_title">Agregar algunas imagenes</string>
+    <string name="location_title">Elija la ubicación de su actividad</string>
+    <string name="capacity_title">Capacidad</string>
+    <string name="capacity_description">Escribe la capacidad de las personas para la actividad.</string>
+    <string name="price_title">Precio</string>
+    <string name="price_description">Escribe el precio de la actividad.</string>
+    <string name="preview_title">Avance</string>
+
+    <string name="invalid_title_title">Titulo invalido</string>
+    <string name="invalid_title_description">El título es demasiado corto o está vacío. Por favor inténtalo de nuevo</string>
+
+    <string name="invalid_description_title">Descripción inválida</string>
+    <string name="invalid_description_description">La descripción es demasiado corta o está vacía. Por favor inténtalo de nuevo</string>
+
+    <string name="invalid_images_title">Imágenes inválidas</string>
+    <string name="invalid_images_description">No hay ninguna foto tomada. Por favor toma uno y vuelve a intentarlo</string>
+
+    <string name="invalid_location_title">Locación inválida</string>
+    <string name="invalid_location_description">La ubicación no es válida. Por favor mueva el mapa y vuelva a intentarlo</string>
+
+    <string name="invalid_time_title">Hora de inicio no válida</string>
+    <string name="invalid_time_description">La hora de inicio no se elige o ya está pasada. Por favor, inténtalo de nuevo</string>
+
+    <string name="invalid_endtime_title">Hora de finalización no válida</string>
+    <string name="invalid_endtime_description">La hora de finalización no se elige o es inferior a la hora de inicio. Por favor, inténtalo de nuevo</string>
+
+    <string name="invalid_capacity_title">Capacidad inválida</string>
+    <string name="invalid_capacity_description">La capacidad no es válida o está vacía. Por favor inténtalo de nuevo</string>
+
+    <string name="invalid_price_title">Precio no válido</string>
+    <string name="invalid_price_description">El precio no es válido o está vacío. Por favor inténtalo de nuevo</string>
+
+    <string name="title_activity_maps">Mapa</string>
+    <string name="phone_error">Ingresa número telefónico</string>
+    <string name="pass_error">Ingrese una contraseña válida</string>
+    <string name="name_error">Ingrese un nombre válido</string>
+    <string name="pass2_error">Las contraseñas no coinciden</string>
+    <string name="login_error">Error de inicio de sesion</string>
+    <string name="login_success">Acceso exitoso</string>
+    <string name="logout_success">Éxito de cierre de sesión</string>
+    <string name="forgotpsw_success">Contraseña enviada</string>
+    <string name="login_button">INICIAR SESIÓN</string>
+    <string name="login_button_google">CON GOOGLE</string>
+    <string name="login_button_facebook">CON FACEBOOK</string>
+    <string name="register_button">REGÍSTRATE</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="username_hint">Nombre de usuario</string>
+    <string name="not_a_member">¿No es un miembro?</string>
+    <string name="register_message">Regístrate ahora</string>
+    <string name="welcomeRegister">¡Bienvenido!</string>
+    <string name="welcomeLoginr">¡Hola!</string>
+    <string name="email_error">Introduzca un correo electrónico válido</string>
+    <string name="join">Unirse</string>
+    <string name="unjoin">Unir</string>
+    <string name="vote">Votar</string>
+    <string name="phone_number_hint">Número de teléfono</string>
+    <string name="accept">ACEPTAR</string>
+    <string name="capacity_error">Error de capacidad</string>
+
+    <string name="forgot_pwd">¿Se te olvidó tu contraseña?</string>
+    <string name="send">enviar</string>
+    <string name="cancel">cancelar</string>
+    <string name="phone">Teléfono</string>
+    <string name="email">Email</string>
+    <string name="phone_bold"><b>Phone</b></string>
+    <string name="email_bold"><b>Email</b></string>
+    <string name="address">Dirección</string>
+    <string name="complete_name">Nombre completo</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="profile_picture">Foto de perfil</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="profile_picture_desc">Haz clic en la imagen de perfil para cambiarla.</string>
+    <string name="activity_creator">Creador</string>
+
+    <string name="fgt_pswd_title">Contraseña olvidada</string>
+    <string name="fgt_pswd_description">Escriba el número de teléfono en el que creó su cuenta y haga clic en ENVIAR. Luego recibirás un correo electrónico con la nueva contraseña. Es recomendable cambiar tu contraseña después de este proceso.</string>
+    <string name="settings_profile">Perfil</string>
+    <string name="block">Bloquear</string>
+    <string name="unblock">Desatascar</string>
+    <string name="block_success">Usuario bloqueado</string>
+    <string name="unblock_success">Usuario desbloqueado</string>
+    <string name="achievements">Logros</string>
+    <string name="user_info">Información</string>
+    <string name="blocked_users">Usuarios bloqueados</string>
+    <string name="change_password">Cambia la contraseña</string>
+    <string name="change_pswd_description">Escriba la contraseña real primero y luego la nueva contraseña 2 veces y haga clic en CAMBIAR.</string>
+    <string name="change">cambio</string>
+    <string name="password_old">Contraseña anterior</string>
+    <string name="password_new">Nueva contraseña</string>
+    <string name="password_new_re">Repita la nueva contraseña</string>
+    <string name="change_password_success">contraseña cambiada</string>
+
+    <string name="rate_title">Actividad de tasa</string>
+    <string name="rate_description">¿Cómo calificaría esta actividad?</string>
+    <string name="notnow">Ahora no</string>
+
+    <string name="emergency_contacts">Contactos de emergencia</string>
+    <string name="edit_emergency_success">Contactos de emergencia actualizados con éxito.</string>
+    <string name="edit_empty_error">Los campos de alias o teléfono no pueden estar vacíos</string>
+    <string name="alias">Alias</string>
+    <string name="log_out">Cerrar sesión</string>
+
+    <string name="dialog_no">No</string>
+    <string name="dialog_yes">Sí</string>
+    <string name="dialog_title_delete_act">Eliminar actividad</string>
+    <string name="dialog_desc_delete_act">¿Estás seguro de que quieres eliminar esta actividad?</string>
+
+    <string name="near_activity_created">Búsqueda de las actividades creadas.</string>
+    <string name="user_joined_activity">Usuario se unió a tu actividad.</string>
+    <string name="joined_activity_ended">Actividad unida ha terminado</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="filter">Filtrar</string>
+    <string name="name">Nombre</string>
+    <string name="reset">REINICIAR</string>
+    <string name="distance">Distancia</string>
+    <string name="sort">Ordenar por</string>
+    <string name="category">Categoría</string>
+    <string name="message">Charla</string>
+    <string name="category_description">Selecciona la categoría de la actividad.</string>
+    <string name="infinite">infinito</string>
+    <string name="guide">Guía</string>
+
+    <string name="guide_menu_title">Menú principal</string>
+    <string name="guide_menu_description">Presiona este botón para ver todas las características de la aplicación.</string>
+
+    <string name="guide_create_title">Crear nueva actividad</string>
+    <string name="guide_create_description">Presione este botón para crear una nueva actividad que será visible para otros usuarios</string>
+
+    <string name="guide_filter_title">Actividades de filtro</string>
+    <string name="guide_filter_description">Presione este botón para agregar o eliminar cualquier filtro para la lista de actividades principales</string>
+    <string name="points">puntos</string>
+    <string name="reset_filter">Filtro de reinicio</string>
+    <string name="no_activities_description">No hay ninguna actividad cerca o tienes tu filtro demasiado fuerte. Inténtalo de nuevo resetiendo los valores del filtro.</string>
+    <string name="no_activities_title">No se encontraron actividades</string>
+    <string name="general_error_title">error inesperado</string>
+    <string name="general_error_description">Algo ha ido mal. Por favor, inténtalo de nuevo</string>
+
+    <string-array name="filter_sort">
+        <item>Crear fecha desc</item>
+        <item>Crear fecha asc</item>
+        <item>Fecha de inicio desc</item>
+        <item>Fecha de inicio asc</item>
+        <item>Precio desc</item>
+        <item>Precio asc</item>
+        <item>Nombre desc</item>
+        <item>Nombre asc</item>
+    </string-array>
+
+    <string-array name="filter_categories">
+        <item>Ninguna</item>
+        <item>Danza</item>
+        <item>Partido</item>
+        <item>Deportes</item>
+        <item>Música</item>
+        <item>Arte</item>
+        <item>Hablar</item>
+        <item>Beber</item>
+    </string-array>
+
+    <string name="count_initial_value">0</string>
+    <string name="button_label">Enviar</string>
+    <string name="toast_message">Hurchatra!</string>
+    <string name="input_placeholder">Escribe un mensaje</string>
+    <string name="chat">Conversacion</string>
+
+    <string-array name="main_viewpager_strings">
+        <item>A la mejor aplicación de abuelos sociales!</item>
+        <item>Mantén tu ubicación a tu familia o amigos</item>
+        <item>Encuentra y únete a todas las actividades cercanas que más te gusten.</item>
+        <item>Reunirse con las personas que están en la actividad.</item>
+        <item>Crea actividades públicas o privadas de lo que quieras.</item>
+        <item>Consigue puntos cada vez que te unes a una actividad.</item>
+        <item>¡Únete ahora a la comunidad para ver más características!</item>
+    </string-array>
+
+    <string-array name="main_viewpager_strings_titles">
+        <item>BIENVENIDO</item>
+        <item>MANTENTE SEGURO</item>
+        <item>ÚNETE A LAS ACTIVIDADES</item>
+        <item>CONOCE NUEVAS PERSONAS COMO TÚ</item>
+        <item>CREA NUEVAS ACTIVIDADES</item>
+        <item>GANA PUNTOS</item>
+        <item>Y MUCHO MÁS</item>
+    </string-array>
+</resources>

@@ -1,0 +1,214 @@
+<resources>
+    <string name="app_name">GRANDAPP</string>
+    <string name="activities">Activitats</string>
+    <string name="my_activities">Les meves activitats</string>
+    <string name="action_settings">Configuració</string>
+    <string name="update">ACTUALITZACIÓ</string>
+    <string name="next">PRÒXIM</string>
+    <string name="previous">ANTERIOR</string>
+    <string name="title">TITLE</string>
+    <string name="title_write">escriu el títol aquí</string>
+    <string name="description_write">escriviu la descripció aquí</string>
+    <string name="title_description">Escriu el títol de l`activitat. Això ha de ser curt (entre 5 i 8 paraules) per reprendre l`acció principal de l`activitat que voleu crear</string>
+    <string name="description">DESCRIPCIÓ</string>
+    <string name="description_description">Escriure la descripció de l`activitat. Això ha de ser suficient per descriure entre 5 i 8 línies els detalls de l`activitat. \ N No escriviu informació sobre l`on o quan, ho farà en els propers passos.</string>
+
+    <string name="photos">FOTOGRAFIES</string>
+    <string name="photos_description">Carregueu o feu algunes fotos de l`activitat. Haureu de penjar com a mínim 1 foto o 4 com a màxim. Per fer-ho feu clic a una de les quatre imatges de la càmera a continuació:</string>
+
+    <string name="date_title">Tria la data</string>
+    <string name="date_description">Trieu la data d`inici i finalització de l`activitat fent clic a ells. Si no coneixes la data de finalització, deixeu-ho buit. La data de finalització ha de ser anterior a la inicial.</string>
+    <string name="date_not_choosed">No es tria</string>
+    <string name="initial_date">Data inicial:</string>
+    <string name="end_date">Data de finalització:</string>
+
+    <string name="title_location_permission">Permís d`ubicació</string>
+    <string name="text_location_permission">Voleu que GRANDAPP accedeixi a la teva ubicació?</string>
+    <string name="ok">D`acord</string>
+    <string name="free_price">Gratuït</string>
+    <string name="upperTag">Informació</string>
+    <string name="images_title">Afegiu algunes imatges</string>
+    <string name="location_title">Trieu la ubicació de la vostra activitat</string>
+    <string name="capacity_title">Capacitat</string>
+    <string name="capacity_description">Escriure la capacitat de les persones per a l`activitat</string>
+    <string name="price_title">Preu</string>
+    <string name="price_description">Escriu el preu de l`activitat</string>
+    <string name="preview_title">Vista prèvia</string>
+
+    <string name="invalid_title_title">Títol no vàlid</string>
+    <string name="invalid_title_description">El títol és massa curt o està buit. Torna-ho a provar</string>
+
+    <string name="invalid_description_title">Descripció no vàlida</string>
+    <string name="invalid_description_description">La descripció és massa curta o s`utilitza. Torna-ho a provar</string>
+
+    <string name="invalid_images_title">Imatges no vàlides</string>
+    <string name="invalid_images_description">No hi ha cap foto presa. Feu-ne un i torneu-ho a provar</string>
+
+    <string name="invalid_location_title">Ubicació no vàlida</string>
+    <string name="invalid_location_description">La ubicació no és vàlida. Mou el mapa i torna-ho a provar</string>
+
+    <string name="invalid_time_title">Hora d`inici no vàlida</string>
+    <string name="invalid_time_description">L`hora d`inici no es tria o ja és anterior. Torna-ho a provar</string>
+
+    <string name="invalid_endtime_title">Hora de finalització no vàlida</string>
+    <string name="invalid_endtime_description">L`hora de finalització no es tria ni és inferior a l`hora d`inici. Torna-ho a provar</string>
+
+    <string name="invalid_capacity_title">Capacitat no vàlida</string>
+    <string name="invalid_capacity_description">La capacitat no és vàlida o està buida. Torna-ho a provar</string>
+
+    <string name="invalid_price_title">Preu no vàlid</string>
+    <string name="invalid_price_description">El preu no és vàlid o està buit. Torna-ho a provar</string>
+
+    <string name="title_activity_maps">Mapa</string>
+    <string name="phone_error">Introduïu el número de telèfon</string>
+    <string name="pass_error">Introduïu una contrasenya vàlida</string>
+    <string name="name_error">Introduïu un nom vàlid</string>
+    <string name="pass2_error">Les contrasenyes no coincideixen</string>
+    <string name="login_error">Error a l`iniciar sessió</string>
+    <string name="login_success">Accedir a l`èxit</string>
+    <string name="logout_success">Tancar l`èxit</string>
+    <string name="forgotpsw_success">Contrasenya enviada</string>
+    <string name="login_button">INICIAR SESSIÓ</string>
+    <string name="login_button_google">AMB GOOGLE</string>
+    <string name="login_button_facebook">AMB FACEBOOK</string>
+    <string name="register_button">REGISTRA`T</string>
+    <string name="password_hint">Contrasenya</string>
+    <string name="username_hint">Nom d`usuari</string>
+    <string name="not_a_member">No ets membre?</string>
+    <string name="register_message">Inscriviu-vos ara</string>
+    <string name="welcomeRegister">Benvinguda!</string>
+    <string name="welcomeLoginr">Bon dia!</string>
+    <string name="email_error">Introdueix un correu electrònic vàlid</string>
+    <string name="join">Entra</string>
+    <string name="unjoin">Surt</string>
+    <string name="vote">Votació</string>
+    <string name="phone_number_hint">Número de telèfon</string>
+    <string name="accept">ACEPTAR</string>
+    <string name="capacity_error">Error de capacitat</string>
+
+    <string name="forgot_pwd">Has oblidat la contrasenya?</string>
+    <string name="send">enviar</string>
+    <string name="cancel">cancel·lar</string>
+    <string name="phone">Telèfon</string>
+    <string name="email">Correu electrònic</string>
+    <string name="phone_bold"><b>Telèfon</b></string>
+    <string name="email_bold"><b>Email</b></string>
+    <string name="address">adreça</string>
+    <string name="complete_name">Nom complet</string>
+    <string name="username">Nom d`usuari</string>
+    <string name="profile_picture">Imatge de perfil</string>
+    <string name="edit_profile">Edita el perfil</string>
+    <string name="profile_picture_desc">Fes clic a la imatge de perfil per canviar-la</string>
+    <string name="activity_creator">Creador</string>
+
+    <string name="fgt_pswd_title">Oblida la contrasenya</string>
+    <string name="fgt_pswd_description">Escriu el número de telèfon amb la bruixa que heu creat el vostre compte i feu clic a ENVIAR. A continuació, rebrà un correu electrònic amb la nova contrasenya. Es recomana canviar la vostra contrasenya després d`aquest procés.</string>
+    <string name="settings_profile">Perfil</string>
+    <string name="block">Bloquejar</string>
+    <string name="unblock">Desbloquejar</string>
+    <string name="block_success">Usuari bloquejat</string>
+    <string name="unblock_success">Usuari desbloquejat</string>
+    <string name="achievements">Assoliments</string>
+    <string name="user_info">Informació</string>
+    <string name="blocked_users">Usuaris bloquejats</string>
+    <string name="change_password">Canvia la contrasenya</string>
+    <string name="change_pswd_description">Escriviu primer la contrasenya i després la nova contrasenya 2 vegades i feu clic a CANVIAR.</string>
+    <string name="change">canviar</string>
+    <string name="password_old">contrasenya antiga</string>
+    <string name="password_new">nova contrasenya</string>
+    <string name="password_new_re">Repetiu la contrasenya nova</string>
+    <string name="change_password_success">S`ha canviat la contrasenya</string>
+
+    <string name="rate_title">Valora l`activitat</string>
+    <string name="rate_description">Com valoreu aquesta activitat?</string>
+    <string name="notnow">Ara no</string>
+
+    <string name="emergency_contacts">Contactes d`emergència</string>
+    <string name="edit_emergency_success">Els contactes d`emergència s`han actualitzat correctament</string>
+    <string name="edit_empty_error">Els àlies o els camps del telèfon no poden estar buits</string>
+    <string name="alias">Àlies</string>
+    <string name="log_out">Tancar sessió</string>
+
+    <string name="dialog_no">No</string>
+    <string name="dialog_yes">Sí</string>
+    <string name="dialog_title_delete_act">Elimina l`activitat</string>
+    <string name="dialog_desc_delete_act">Esteu segur que voleu suprimir aquesta activitat?</string>
+
+    <string name="near_activity_created">Prop de les activitats creades</string>
+    <string name="user_joined_activity">L`usuari s`ha unit a la vostra activitat</string>
+    <string name="joined_activity_ended">S`ha acabat l`activitat unificada</string>
+    <string name="notifications">Notificacions</string>
+    <string name="filter">Filtre</string>
+    <string name="name">Nom</string>
+    <string name="reset">RESTAURAR</string>
+    <string name="distance">Distància</string>
+    <string name="sort">Ordenar per</string>
+    <string name="category">Categoria</string>
+    <string name="message">Xat</string>
+    <string name="category_description">Seleccioneu la categoria de l`activitat</string>
+    <string name="infinite">infinit</string>
+    <string name="guide">Guia</string>
+
+    <string name="guide_menu_title">Menú principal</string>
+    <string name="guide_menu_description">Premeu aquest botó per veure totes les funcions de l`aplicació</string>
+
+    <string name="guide_create_title">Crea una activitat nova</string>
+    <string name="guide_create_description">Premeu aquest botó per crear una nova activitat que altres usuaris podran veure</string>
+
+    <string name="guide_filter_title">Activitats del filtre</string>
+    <string name="guide_filter_description">Premeu aquest botó per afegir o treure qualsevol filtre per a la llista d`activitats principals</string>
+    <string name="points">punts</string>
+    <string name="reset_filter">RESTAURAR EL FILTRE</string>
+    <string name="no_activities_description">No hi ha cap activitat a prop o tens el filtre massa fort. Torneu-ho a provar reiniciant els valors del filtre</string>
+    <string name="no_activities_title">No s`ha trobat cap activitat</string>
+    <string name="general_error_title">error inesperat</string>
+    <string name="general_error_description">Alguna cosa ha anat malament. Torna-ho a provar</string>
+
+    <string-array name="filter_sort">
+        <item>Crea la desc</item>
+        <item>Crea una data asc</item>
+        <item>Data d`inici desc</item>
+        <item>Data d`inici asc</item>
+        <item>Preu desc</item>
+        <item>Preu asc</item>
+        <item>Nom desc</item>
+        <item>Nom asc</item>
+    </string-array>
+
+    <string-array name="filter_categories">
+        <item>Cap</item>
+        <item>Dansa</item>
+        <item>Festa</item>
+        <item>Esports</item>
+        <item>Música</item>
+        <item>Art</item>
+        <item>Parlar</item>
+        <item>Beure</item>
+    </string-array>
+
+    <string name="count_initial_value">0</string>
+    <string name="button_label">Enviar</string>
+    <string name="toast_message">Hurchatra!</string>
+    <string name="input_placeholder">Escriure un missatge</string>
+    <string name="chat">Conversa</string>
+
+    <string-array name="main_viewpager_strings">
+        <item>A la millor aplicació social dels avis!</item>
+        <item>Manteniu la vostra ubicació a la vostra família o amics</item>
+        <item>Cerca i uneix-te a totes les activitats properes que més t`agradin</item>
+        <item>Coneixeu-vos amb les persones que hi estan a l`activitat</item>
+        <item>Creeu activitats públiques o privades del que vulgueu</item>
+        <item>Obteniu punts cada vegada que us uniu a una activitat</item>
+        <item>Uneix-te ara a la comunitat per veure més funcions.</item>
+    </string-array>
+
+    <string-array name="main_viewpager_strings_titles">
+        <item>BENVINGUDA</item>
+        <item>ESTIGUI SEGUR</item>
+        <item>ÚS DE LES ACTIVITATS</item>
+        <item>TROBAR GENT COM A TU</item>
+        <item>CREA NOVES ACTIVITATS</item>
+        <item>GUANYA PUNTS</item>
+        <item>I MOLT MÉS</item>
+    </string-array>
+</resources>

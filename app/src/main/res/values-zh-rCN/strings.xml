@@ -1,0 +1,216 @@
+<resources>
+    <string name="app_name">GRANDAPP</string>
+    <string name="activities">活动</string>
+    <string name="my_activities">我的活动</string>
+    <string name="action_settings">设置</string>
+    <string name="update">UPDATE</string>
+    <string name="next">下一个</string>
+    <string name="previous">以前</string>
+    <string name="title">标题</string>
+    <string name="title_write">在这里写标题</string>
+    <string name="description_write">在这里写下描述</string>
+    <string name="title_description">写下活动的标题。这必须很短（在5到8个单词之间）以恢复您要创建的活动的主要操作</string>
+    <string name="description">描述</string>
+    <string name="description_description">写下活动的描述。这必须足够长，以便在5到8行之间描述活动的细节。\ n不要写下有关何时何地的信息，您将在接下来的步骤中完成！</string>
+
+    <string name="photos">相片</string>
+    <string name="photos_description">上传或拍摄活动的一些照片。您需要上传至少1张照片或最多4张照片。要执行此操作，请单击以下四个摄像机图像中的一个：</string>
+
+    <string name="date_title">选择日期</string>
+    <string name="date_description">选择单击它们的活动的开始和结束日期。如果您不知道结束日期，请将其清空。结束日期必须早于初始日期。</string>
+    <string name="date_not_choosed">没有选择</string>
+    <string name="initial_date">初始日期：</string>
+    <string name="end_date">结束日期：</string>
+
+    <string name="title_location_permission">位置许可</string>
+    <string name="text_location_permission">允许GRANDAPP访问您的位置？</string>
+    <string name="ok">好</string>
+    <string name="free_price">自由</string>
+    <string name="upperTag">信息</string>
+    <string name="images_title">添加一些图像</string>
+    <string name="location_title">选择您的活动地点</string>
+    <string name="capacity_title">容量</string>
+    <string name="capacity_description">写出活动的人的能力</string>
+    <string name="price_title">价钱</string>
+    <string name="price_description">写下活动的价格</string>
+    <string name="preview_title">预习</string>
+
+    <string name="invalid_title_title">标题无效</string>
+    <string name="invalid_title_description">标题太短或空。请再试一次</string>
+
+    <string name="invalid_description_title">描述无效</string>
+    <string name="invalid_description_description">描述太短或太真实。请再试一次</string>
+
+    <string name="invalid_images_title">图片无效</string>
+    <string name="invalid_images_description">没有拍照。请拿一个再试一次</string>
+
+    <string name="invalid_location_title">无效的位置</string>
+    <string name="invalid_location_description">位置无效。请移动地图并再试一次</string>
+
+    <string name="invalid_time_title">开始时间无效</string>
+    <string name="invalid_time_description">没有选择开始时间或已经过去。请再试一次</string>
+
+    <string name="invalid_endtime_title">结束时间无效</string>
+    <string name="invalid_endtime_description">结束时间未选择或低于开始时间。请再试一次</string>
+
+    <string name="invalid_capacity_title">无效容量</string>
+    <string name="invalid_capacity_description">容量无效或为空。请再试一次</string>
+
+    <string name="invalid_price_title">价格无效</string>
+    <string name="invalid_price_description">价格无效或为空。请再试一次</string>
+
+    <string name="title_activity_maps">地图</string>
+    <string name="phone_error">输入电话号码</string>
+    <string name="pass_error">输入有效密码</string>
+    <string name="name_error">输入有效名称</string>
+    <string name="pass2_error">密码不匹配</string>
+    <string name="login_error">登录失败</string>
+    <string name="login_success">登录成功</string>
+    <string name="logout_success">退出成功</string>
+    <string name="forgotpsw_success">密码已发送</string>
+    <string name="login_button">登录</string>
+    <string name="login_button_google">GOOGLE登录</string>
+    <string name="login_button_facebook">FACEBOOK登入</string>
+    <string name="register_button">注册</string>
+    <string name="password_hint">密码</string>
+    <string name="username_hint">用户名</string>
+    <string name="not_a_member">非会员？</string>
+    <string name="register_message">立即注册</string>
+    <string name="welcomeRegister">欢迎！</string>
+    <string name="welcomeLoginr">嗨，您好！</string>
+    <string name="email_error">输入有效的电子邮件</string>
+    <string name="join">加入</string>
+    <string name="unjoin">取消连接</string>
+    <string name="vote">投票</string>
+    <string name="phone_number_hint">电话号码</string>
+    <string name="accept">接受</string>
+    <string name="capacity_error">容量错误</string>
+
+    <string name="forgot_pwd">忘记密码？</string>
+    <string name="send">发送</string>
+    <string name="cancel">取消</string>
+    <string name="phone">电话</string>
+    <string name="email">电子邮件</string>
+    <string name="phone_bold"><b>Phone</b></string>
+    <string name="email_bold"><b>Email</b></string>
+    <string name="address">地址</string>
+    <string name="complete_name">全名</string>
+    <string name="username">用户名</string>
+    <string name="profile_picture">个人资料图片</string>
+    <string name="edit_profile">编辑个人资料</string>
+    <string name="profile_picture_desc">单击配置文件图像以进行更改</string>
+    <string name="activity_creator">创造者</string>
+
+    <string name="fgt_pswd_title">忘记密码</string>
+    <string name="fgt_pswd_description">写下您创建帐户的女巫的电话号码，然后发送。然后，您将收到一封包含新密码的电子邮件。在此过程之后更改密码是值得推荐的。</string>
+    <string name="settings_profile">轮廓</string>
+    <string name="block">块</string>
+    <string name="unblock">解除封锁</string>
+    <string name="block_success">用户被阻止</string>
+    <string name="unblock_success">用户畅通无阻</string>
+    <string name="achievements">成就</string>
+    <string name="user_info">信息</string>
+    <string name="blocked_users">被阻止的用户</string>
+    <string name="change_password">更改密码</string>
+    <string name="change_pswd_description">首先写入实际密码，然后输入新密码2次，然后单击“更改”。</string>
+    <string name="change">更改</string>
+    <string name="password_old">旧密码</string>
+    <string name="password_new">新密码</string>
+    <string name="password_new_re">重复新密码</string>
+    <string name="change_password_success">密码已更改</string>
+
+    <string name="rate_title">评价活动</string>
+    <string name="rate_description">您如何评价此活动？</string>
+    <string name="notnow">现在不要</string>
+
+    <string name="facebook_app_id">282493839277733</string>
+    <string name="fb_login_protocol_scheme">fb282493839277733</string>
+    <string name="emergency_contacts">紧急联系人</string>
+    <string name="edit_emergency_success">紧急联系人已成功更新</string>
+    <string name="edit_empty_error">别名或电话字段不能为空</string>
+    <string name="alias">别号</string>
+    <string name="log_out">登出</string>
+
+    <string name="dialog_no">没有</string>
+    <string name="dialog_yes">是</string>
+    <string name="dialog_title_delete_act">删除活动</string>
+    <string name="dialog_desc_delete_act">您确定要删除此活动吗？</string>
+
+    <string name="near_activity_created">近期活动已创建</string>
+    <string name="user_joined_activity">用户加入了您的活动</string>
+    <string name="joined_activity_ended">加入的活动已经结束</string>
+    <string name="notifications">通知</string>
+    <string name="filter">过滤</string>
+    <string name="name">Name</string>
+    <string name="reset">重启</string>
+    <string name="distance">距离</string>
+    <string name="sort">排序方式</string>
+    <string name="category">类别</string>
+    <string name="message">聊</string>
+    <string name="category_description">选择活动的类别</string>
+    <string name="infinite">无穷</string>
+    <string name="guide">指南</string>
+
+    <string name="guide_menu_title">主菜单</string>
+    <string name="guide_menu_description">按此按钮可查看应用程序的所有功能</string>
+
+    <string name="guide_create_title">创建新活动</string>
+    <string name="guide_create_description">按此按钮可创建其他用户可以看到的新活动</string>
+
+    <string name="guide_filter_title">过滤活动</string>
+    <string name="guide_filter_description">按此按钮可添加或删除主要活动列表的任何过滤器</string>
+    <string name="points">点</string>
+    <string name="reset_filter">重置过滤器</string>
+    <string name="no_activities_description">附近没有任何活动，或者您的过滤器过于强大。再次尝试重新设置过滤器值</string>
+    <string name="no_activities_title">找不到活动</string>
+    <string name="general_error_title">意外的错误</string>
+    <string name="general_error_description">出事了。请再试一次</string>
+
+    <string-array name="filter_sort">
+        <item>创建日期desc</item>
+        <item>创建日期asc</item>
+        <item>开始日期desc</item>
+        <item>开始日期asc</item>
+        <item>价格描述</item>
+        <item>价格asc</item>
+        <item>名称desc</item>
+        <item>姓名asc</item>
+    </string-array>
+
+    <string-array name="filter_categories">
+        <item>没有</item>
+        <item>舞蹈</item>
+        <item>派对</item>
+        <item>体育</item>
+        <item>音乐</item>
+        <item>艺术</item>
+        <item>谈论</item>
+        <item>喝</item>
+    </string-array>
+
+    <string name="count_initial_value">0</string>
+    <string name="button_label">发送</string>
+    <string name="toast_message">Hurchatra！</string>
+    <string name="input_placeholder">写一个信息</string>
+    <string name="chat">会话</string>
+
+    <string-array name="main_viewpager_strings">
+        <item>致最酷的社交祖父母app！</item>
+        <item>保持您的位置给您的家人或朋友</item>
+        <item>查找并加入您最喜欢的所有近距离活动</item>
+        <item>与活动中的人会面</item>
+        <item>创建任何您想要的公共或私人活动</item>
+        <item>每次加入活动时获得积分</item>
+        <item>现在加入社区，查看更多功能！</item>
+    </string-array>
+
+    <string-array name="main_viewpager_strings_titles">
+        <item>欢迎</item>
+        <item>保持安全</item>
+        <item>加入附近的活动</item>
+        <item>让新人喜欢你</item>
+        <item>创建新的活动</item>
+        <item>获胜点</item>
+        <item>以及更多</item>
+    </string-array>
+</resources>
